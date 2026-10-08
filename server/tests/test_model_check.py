@@ -47,8 +47,13 @@ def settings(**overrides: Any) -> Settings:
 
 
 def run_check(s: Settings, handler: Handler | None = None) -> list[str]:
-    client = fake_client(handler) if handler else None
-    return asyncio.run(check_models(s, client))
+    async def run() -> list[str]:
+        if handler is None:
+            return await check_models(s)
+        async with fake_client(handler) as client:
+            return await check_models(s, client)
+
+    return asyncio.run(run())
 
 
 def test_missing_models_keeps_order() -> None:
@@ -100,3 +105,73 @@ def test_network_failure_logs_error_without_raising(caplog: pytest.LogCaptureFix
 
     assert run_check(settings(), offline) == []
     assert "could not reach the Anthropic API" in caplog.text
+
+
+@pytest.mark.parametrize("status_code", [403, 429, 500, 503])
+def test_status_errors_do_not_stop_startup(
+    status_code: int, caplog: pytest.LogCaptureFixture
+) -> None:
+    def unavailable(request: httpx2.Request) -> httpx2.Response:
+        return httpx2.Response(
+            status_code,
+            json={"type": "error", "error": {"type": "api_error", "message": "unavailable"}},
+        )
+
+    assert run_check(settings(), unavailable) == []
+    assert f"Models API returned {status_code}" in caplog.text
+
+
+def test_timeout_is_nonfatal(caplog: pytest.LogCaptureFixture) -> None:
+    def timeout(request: httpx2.Request) -> httpx2.Response:
+        raise httpx2.ReadTimeout("timed out", request=request)
+
+    assert run_check(settings(), timeout) == []
+    assert "could not reach the Anthropic API" in caplog.text
+
+
+def test_models_on_later_pages_are_not_reported_missing(caplog: pytest.LogCaptureFixture) -> None:
+    requests: list[httpx2.Request] = []
+
+    def paginated(request: httpx2.Request) -> httpx2.Response:
+        requests.append(request)
+        assert request.url.path == "/v1/models"
+        if len(requests) == 1:
+            assert "after_id" not in request.url.params
+            return httpx2.Response(
+                200,
+                json={
+                    "data": [model("claude-sonnet-5-5")],
+                    "has_more": True,
+                    "first_id": "claude-sonnet-5-5",
+                    "last_id": "claude-sonnet-5-5",
+                },
+            )
+        assert len(requests) == 2
+        assert request.url.params["after_id"] == "claude-sonnet-5-5"
+        return httpx2.Response(
+            200,
+            json={
+                "data": [model("claude-haiku-5-5")],
+                "has_more": False,
+                "first_id": "claude-haiku-5-5",
+                "last_id": "claude-haiku-5-5",
+            },
+        )
+
+    assert run_check(settings(), paginated) == []
+    assert len(requests) == 2
+    assert caplog.records == []
+
+
+def test_mock_mode_does_not_construct_a_client(monkeypatch: pytest.MonkeyPatch) -> None:
+    def forbidden_client(**kwargs: Any) -> None:
+        raise AssertionError("Mock mode must not create an API client")
+
+    monkeypatch.setattr(anthropic, "AsyncAnthropic", forbidden_client)
+
+    assert run_check(settings(mock_ai=True, anthropic_api_key="test-key")) == []
+
+
+def test_empty_api_key_logs_error(caplog: pytest.LogCaptureFixture) -> None:
+    assert run_check(settings(anthropic_api_key="")) == []
+    assert "ANTHROPIC_API_KEY is not set" in caplog.text

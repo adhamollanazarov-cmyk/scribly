@@ -1,3 +1,4 @@
+import anthropic
 import pytest
 from fastapi.testclient import TestClient
 
@@ -47,10 +48,16 @@ def test_settings_defaults() -> None:
 
 
 def test_app_starts_in_mock_mode_without_api_call(monkeypatch: pytest.MonkeyPatch) -> None:
+    def forbidden_client(**kwargs: object) -> None:
+        raise AssertionError("Mock startup must not create an API client")
+
     monkeypatch.setenv("MOCK_AI", "1")
+    monkeypatch.setitem(Settings.model_config, "env_file", None)
+    monkeypatch.setattr(anthropic, "AsyncAnthropic", forbidden_client)
     get_settings.cache_clear()
 
-    with TestClient(create_app()) as client:  # runs the startup model check
-        assert client.get("/health").json()["mock_ai"] is True
-
-    get_settings.cache_clear()
+    try:
+        with TestClient(create_app()) as client:  # runs the startup model check
+            assert client.get("/health").json()["mock_ai"] is True
+    finally:
+        get_settings.cache_clear()
