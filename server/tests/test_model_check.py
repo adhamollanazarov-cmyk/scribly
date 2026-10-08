@@ -96,7 +96,7 @@ def test_rejected_key_logs_error_without_raising(caplog: pytest.LogCaptureFixtur
         return httpx2.Response(401, json=body)
 
     assert run_check(settings(), unauthorized) == []
-    assert "rejected (401)" in caplog.text
+    assert "status=401 error_type=AuthenticationError" in caplog.text
 
 
 def test_network_failure_logs_error_without_raising(caplog: pytest.LogCaptureFixture) -> None:
@@ -104,7 +104,7 @@ def test_network_failure_logs_error_without_raising(caplog: pytest.LogCaptureFix
         raise httpx2.ConnectError("offline", request=request)
 
     assert run_check(settings(), offline) == []
-    assert "could not reach the Anthropic API" in caplog.text
+    assert "status=unavailable error_type=APIConnectionError" in caplog.text
 
 
 @pytest.mark.parametrize("status_code", [403, 429, 500, 503])
@@ -118,7 +118,7 @@ def test_status_errors_do_not_stop_startup(
         )
 
     assert run_check(settings(), unavailable) == []
-    assert f"Models API returned {status_code}" in caplog.text
+    assert f"status={status_code} error_type=" in caplog.text
 
 
 def test_timeout_is_nonfatal(caplog: pytest.LogCaptureFixture) -> None:
@@ -126,7 +126,7 @@ def test_timeout_is_nonfatal(caplog: pytest.LogCaptureFixture) -> None:
         raise httpx2.ReadTimeout("timed out", request=request)
 
     assert run_check(settings(), timeout) == []
-    assert "could not reach the Anthropic API" in caplog.text
+    assert "status=unavailable error_type=APITimeoutError" in caplog.text
 
 
 def test_models_on_later_pages_are_not_reported_missing(caplog: pytest.LogCaptureFixture) -> None:

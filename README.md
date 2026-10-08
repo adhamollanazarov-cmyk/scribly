@@ -15,7 +15,8 @@ tests/fixtures/lessons/   golden lessons
 ## Prerequisites (Windows 11)
 
 - Python 3.12 and [uv](https://docs.astral.sh/uv/): `winget install astral-sh.uv`
-- Node.js 22 or newer: `winget install OpenJS.NodeJS.LTS`
+- Node.js 22.22.2+ on the 22.x line, 24.15.0+ on the 24.x line, or 26+:
+  `winget install OpenJS.NodeJS.LTS`. These versions satisfy the locked web tooling.
 - Git
 
 All commands below are for **Windows PowerShell**, one per line, starting from the

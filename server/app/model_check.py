@@ -1,13 +1,16 @@
 """Startup check: are the configured Claude models available to this API key?"""
 
+import asyncio
 import logging
 from collections.abc import Iterable
+from contextlib import AsyncExitStack
 
 import anthropic
 
 from app.settings import Settings
 
 logger = logging.getLogger(__name__)
+MODEL_CHECK_TIMEOUT_SECONDS = 10.0
 
 
 def missing_models(configured: Iterable[str], available: Iterable[str]) -> list[str]:
@@ -24,27 +27,37 @@ async def check_models(
 ) -> list[str]:
     """Log an error for each configured model the API does not list.
 
-    Never raises: a failed check must not stop the server. Returns the missing ids.
+    Provider errors and timeouts do not stop startup. Returns the missing ids.
+    Injected clients remain caller-owned; internally created clients are closed.
     """
     if settings.mock_ai:
         return []
-    if client is None:
-        key = settings.anthropic_api_key
-        if key is None or not key.get_secret_value():
-            logger.error("ANTHROPIC_API_KEY is not set. Set it in .env or use MOCK_AI=1.")
-            return []
-        client = anthropic.AsyncAnthropic(api_key=key.get_secret_value())
-
     try:
-        available = await list_model_ids(client)
-    except anthropic.AuthenticationError:
-        logger.error("Model check failed: ANTHROPIC_API_KEY was rejected (401).")
+        # One deadline covers all pages, rather than resetting per HTTP request.
+        async with asyncio.timeout(MODEL_CHECK_TIMEOUT_SECONDS), AsyncExitStack() as stack:
+            if client is None:
+                key = settings.anthropic_api_key
+                if key is None or not key.get_secret_value():
+                    logger.error("ANTHROPIC_API_KEY is not set. Set it in .env or use MOCK_AI=1.")
+                    return []
+                client = await stack.enter_async_context(
+                    anthropic.AsyncAnthropic(
+                        api_key=key.get_secret_value(),
+                        timeout=MODEL_CHECK_TIMEOUT_SECONDS,
+                        max_retries=0,
+                    )
+                )
+            available = await list_model_ids(client)
+    except anthropic.APIError as error:
+        # Exception class names are SDK-controlled; messages and bodies are not.
+        logger.error(
+            "Model check failed: status=%s error_type=%s",
+            getattr(error, "status_code", "unavailable"),
+            type(error).__name__,
+        )
         return []
-    except anthropic.APIStatusError as e:
-        logger.error("Model check failed: Models API returned %s: %s", e.status_code, e.message)
-        return []
-    except anthropic.APIConnectionError:
-        logger.error("Model check failed: could not reach the Anthropic API.")
+    except TimeoutError:
+        logger.error("Model check failed: status=unavailable error_type=TimeoutError")
         return []
 
     configured = {"LESSON_MODEL": settings.lesson_model, "FAST_MODEL": settings.fast_model}

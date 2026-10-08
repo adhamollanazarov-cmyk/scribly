@@ -4,6 +4,8 @@ One entry per non-obvious decision or new dependency. Newest on top.
 
 | Date | Decision | Why | Agent |
 |---|---|---|---|
+| 2026-10-09 | Startup model check uses one 10-second deadline across pagination, zero SDK retries, and an async context for owned clients; provider errors log only status and SDK exception class | Keep startup bounded, close connections, and avoid provider-controlled content in logs; injected clients remain caller-owned | codex |
+| 2026-10-09 | Web Node engines: `^22.22.2` or `^24.15.0` or `>=26.0.0` | Matches the strictest locked tooling requirements (jsdom and its CSS dependencies); excludes unsupported older patches and odd releases below 26 | codex |
 | 2026-10-08 | Startup check: when `MOCK_AI=0`, list models via the Models API once and log an error if `LESSON_MODEL` or `FAST_MODEL` is missing; never blocks startup | A wrong model id should show up at startup, not on the first lesson request | founder |
 | 2026-10-08 | Dep (server): `anthropic` (official SDK, 1.x) | Models API check now; Messages API in Phase 1. SDK handles pagination, retries and typed errors | claude |
 | 2026-10-08 | `FAST_MODEL` stays `claude-haiku-5-5` (a same-day change to `claude-haiku-4-5` was reverted) | Haiku 5.5 exists and costs $0.10/$0.50 per MTok vs $1/$5 for Haiku 4.5 (5x more for prompts over 100K tokens) | founder |

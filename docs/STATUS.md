@@ -2,6 +2,14 @@
 
 Update this file at the end of every task (newest entry on top, 3–8 lines).
 
+## 2026-10-09 — codex — scaffold review fixes
+**Done:** Committed the original review tests/status separately as `72f2b9b` on `codex/scaffold-review`, then resolved all four findings.
+- Model checks have one 10-second deadline across pagination, zero SDK retries, nonfatal timeout handling, safe status/SDK-type logging, and async cleanup of owned clients; injected clients remain caller-owned.
+- Aligned package/lockfile engines and README to Node ^22.22.2 || ^24.15.0 || >=26.0.0; checked version boundaries against every locked dependency's engine requirement. No dependency versions changed.
+**Checks:** PowerShell 5.1, Node 24.19.0, MOCK_AI=1: 37 pytest (12 new timeout/privacy/lifecycle cases), ruff lint/format, mypy, 5 Vitest, eslint+tsc, Prettier, and 1 Chromium Playwright test pass.
+**Next:** Phase 1 lesson engine; schema/model/fixture consistency and Gauss playback remain deferred to Phases 1–2.
+**Found issues:** None outstanding from the scaffold review; no new dependencies, secrets, captured images, or lesson contract changes.
+
 ## 2026-10-09 — codex — scaffold review
 **Done:** Reviewed `claude/scaffold` (`699d790`) against docs-only baseline `a6a57a8` on `codex/scaffold-review`; no high-severity issues or production changes. Added 12 server tests and 2 locale tests; strengthened mock startup isolation and closed test clients.
 **Checks:** PowerShell 5.1, MOCK_AI=1: 25 pytest, ruff lint/format, mypy, 5 Vitest, eslint+tsc, Prettier, and 1 Chromium Playwright test pass. No tracked secrets/captured media found; lesson schema/models/fixtures and Gauss playback are deferred to Phases 1–2.
