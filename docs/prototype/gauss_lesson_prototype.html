@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scribbly prototype — Gauss's law</title>
+<!-- Reference prototype only: look and feel of hand-drawn strokes, pen-following mascot,
+     narration + subtitles. Uses browser speechSynthesis; the real app uses server TTS. -->
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fafaf7;--surface:#f1efe8;--border:#d3d1c7;--text:#2c2c2a;--muted:#5f5e5a;--radius:8px}
+@media (prefers-color-scheme:dark){:root{--bg:#1f1f1d;--surface:#2c2c2a;--border:#444441;--text:#f1efe8;--muted:#b4b2a9}}
+body{margin:0;padding:16px;background:var(--bg);color:var(--text);font-family:system-ui,sans-serif;max-width:720px;margin-inline:auto}
+.hand{font-family:'Caveat',cursive}
+.btn{font-size:14px;padding:6px 14px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);color:var(--text);cursor:pointer}
+select{font-size:13px;padding:4px 6px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);color:var(--text);max-width:240px}
+</style>
+</head>
+<body>
+<svg id="b" viewBox="0 0 680 400" width="100%" style="display:block;color:var(--text);border:1px solid var(--border);border-radius:12px"><g id="layer"></g>
+<g id="m" style="transform:translate(610px,370px);transition:transform .6s ease">
+<line x1="4" y1="-6" x2="18" y2="-20" stroke="#534AB7" stroke-width="4" stroke-linecap="round"/>
+<line x1="0" y1="0" x2="12" y2="-16" stroke="#EF9F27" stroke-width="5" stroke-linecap="round"/>
+<circle cx="0" cy="0" r="2.5" fill="#444441"/>
+<path d="M38 -56 Q42 -68 51 -65" stroke="#7F77DD" stroke-width="3" fill="none" stroke-linecap="round"/>
+<circle cx="51" cy="-65" r="3.5" fill="#EF9F27"/>
+<circle cx="38" cy="-30" r="26" fill="#7F77DD"/>
+<ellipse id="e1" cx="30" cy="-34" rx="6.5" ry="6.5" fill="#fff"/><ellipse id="e2" cx="46" cy="-34" rx="6.5" ry="6.5" fill="#fff"/>
+<circle id="p1" cx="31" cy="-33" r="3" fill="#26215C"/><circle id="p2" cx="47" cy="-33" r="3" fill="#26215C"/>
+<circle cx="30" cy="-34" r="9" fill="none" stroke="#26215C" stroke-width="1.5"/><circle cx="46" cy="-34" r="9" fill="none" stroke="#26215C" stroke-width="1.5"/>
+<line x1="37" y1="-35" x2="39" y2="-35" stroke="#26215C" stroke-width="1.5"/>
+<path id="mouth" d="M31 -19 Q38 -14 45 -19" stroke="#26215C" stroke-width="2" fill="none" stroke-linecap="round"/>
+</g></svg>
+<div style="min-height:56px;margin-top:10px;padding:10px 12px;border-radius:var(--radius);background:var(--surface)"><div id="sen" style="font-size:16px">Hi! I'm Scribbly. Press "Start lesson".</div><div id="suz" style="font-size:13px;color:var(--muted);margin-top:4px">Salom! Men Scribbly. "Start lesson" tugmasini bosing.</div></div>
+<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:10px;font-size:13px;color:var(--muted)">
+<button id="play" class="btn" onclick="play()">Start lesson</button>
+<button class="btn" onclick="testVoice()">Test voice</button>
+<label><input type="checkbox" id="von" checked> Voice</label>
+<label for="vs">Voice</label><select id="vs" onchange="setVoice()"></select>
+<label for="sp">Speed</label><input id="sp" type="range" min="0.5" max="1.5" step="0.1" value="1" oninput="document.getElementById('spv').textContent=this.value+'x'"><span id="spv">1x</span>
+<span id="step">0/6</span>
+</div>
+<script>
+const S='http://www.w3.org/2000/svg',L=document.getElementById('layer'),M=document.getElementById('m'),mouth=document.getElementById('mouth');
+const CX=340,CY=210,CO='#D85A30',PU='#7F77DD',GR='#639922',REST=[610,370];
+let run=0,voice=null,voices=[],talkT=null;
+const rnd=a=>(Math.random()*2-1)*a,sleep=ms=>new Promise(r=>setTimeout(r,ms)),SP=()=>+document.getElementById('sp').value;
+function mk(t,a){const e=document.createElementNS(S,t);for(const k in a)e.setAttribute(k,a[k]);L.appendChild(e);return e}
+function place(x,y){M.style.transition='none';M.style.transform=`translate(${x}px,${y}px)`}
+async function glide(x,y,ms){M.style.transition=`transform ${ms}ms ease-in-out`;M.style.transform=`translate(${x}px,${y}px)`;await sleep(ms)}
+function lp(x1,y1,x2,y2){return `M${x1} ${y1}Q${(x1+x2)/2+rnd(3)} ${(y1+y2)/2+rnd(3)} ${x2} ${y2}`}
+function cp(cx,cy,r){let d='';const s=Math.random()*6.28;for(let a=0;a<=6.6;a+=0.12){const rr=r+rnd(1.4);d+=(a?'L':'M')+(cx+rr*Math.cos(s+a)).toFixed(1)+' '+(cy+rr*Math.sin(s+a)).toFixed(1)}return d}
+async function stroke(d,c,w,dur){const p=mk('path',{d,fill:'none',stroke:c,'stroke-width':w,'stroke-linecap':'round','stroke-linejoin':'round'});const len=p.getTotalLength();p.style.strokeDasharray=len;p.style.strokeDashoffset=len;const s=p.getPointAtLength(0);await glide(s.x,s.y,450/SP());dur=dur/SP();
+await new Promise(res=>{const t0=performance.now();function f(t){const k=Math.min(1,(t-t0)/dur);p.style.strokeDashoffset=len*(1-k);const pt=p.getPointAtLength(len*k);place(pt.x,pt.y);if(k<1)requestAnimationFrame(f);else res()}requestAnimationFrame(f)});return p}
+async function write(x,y,s,size,fill){const t=mk('text',{x,y,class:'hand','font-size':size,fill,'dominant-baseline':'central'});await glide(x,y+size*0.3,400/SP());for(let i=1;i<=s.length;i++){t.textContent=s.slice(0,i);place(x+t.getComputedTextLength(),y+size*0.3);await sleep(130/SP())}}
+async function dot(x,y){await glide(x,y,300/SP());const c=mk('circle',{cx:x,cy:y,r:0,fill:GR});for(let r=0;r<=6;r++){c.setAttribute('r',r);await sleep(40/SP())}}
+const ang=k=>Math.PI/8+k*Math.PI/4;
+async function dots(R){for(let k=0;k<8;k++){await dot(CX+R*Math.cos(ang(k)),CY+R*Math.sin(ang(k)));await sleep(250/SP())}}
+async function surf(R,dur){const p=await stroke(cp(CX,CY,R),PU,2.2,dur);p.style.strokeDasharray='7 5';p.style.strokeDashoffset=0}
+const steps=[
+{en:"This is a positive charge. Let's call it Q.",uz:"Mana bu musbat zaryad. Uni Q deb belgilaymiz.",draw:async()=>{await stroke(cp(CX,CY,16),CO,3,1600);await write(CX-7,CY,'+',26,CO);await write(CX+24,CY-30,'Q',28,CO)}},
+{en:"Electric field lines go out from the charge in every direction.",uz:"Zaryaddan har tomonga elektr maydon chiziqlari chiqadi.",draw:async()=>{for(let k=0;k<8;k++){const a=ang(k),c=Math.cos(a),s=Math.sin(a),x1=CX+24*c,y1=CY+24*s,x2=CX+150*c,y2=CY+150*s;const w1x=x2-10*Math.cos(a-0.45),w1y=y2-10*Math.sin(a-0.45),w2x=x2-10*Math.cos(a+0.45),w2y=y2-10*Math.sin(a+0.45);await stroke(lp(x1,y1,x2,y2)+` M${w1x} ${w1y}L${x2} ${y2}L${w2x} ${w2y}`,CO,1.8,900)}}},
+{en:"Now let's wrap the charge in a closed surface. This is called a Gaussian surface.",uz:"Endi zaryadni yopiq sirt bilan o'raymiz. Bu Gauss sirti deyiladi.",draw:async()=>{await surf(75,3000)}},
+{en:"How many lines cross the surface? Let's count: eight. This number is the electric flux.",uz:"Sirtdan nechta chiziq chiqyapti? Sanaymiz: sakkizta. Shu son elektr oqimi deyiladi.",draw:async()=>{await dots(75)}},
+{en:"If we make the surface bigger, still eight lines come out. So the flux does not depend on the size of the surface.",uz:"Sirtni kattalashtirsak ham, yana sakkizta chiziq chiqadi. Demak, oqim sirtning kattaligiga bog'liq emas.",draw:async()=>{await surf(130,3400);await dots(130)}},
+{en:"The flux depends only on the charge inside. This is Gauss's law: the flux equals Q divided by epsilon naught.",uz:"Oqim faqat ichidagi zaryadga bog'liq. Mana Gauss qonuni: oqim teng Q bo'lingan epsilon nolga.",draw:async()=>{await write(48,52,'Φ = Q / ε₀',38,'currentColor');await stroke(lp(48,80,196,82),PU,2.5,1000)}}
+];
+function score(v){const n=v.name.toLowerCase(),l=v.lang.toLowerCase();let s=0;if(l.startsWith('en-us'))s+=60;else if(l.startsWith('en-gb'))s+=55;else if(l.startsWith('en'))s+=50;if(/natural|neural|online/.test(n))s+=30;if(/google/.test(n))s+=10;return s}
+function loadVoices(){if(!('speechSynthesis' in window))return;const all=speechSynthesis.getVoices();voices=all.filter(v=>/^en/i.test(v.lang));if(!voices.length)voices=all;voices.sort((a,b)=>score(b)-score(a));const sel=document.getElementById('vs');sel.innerHTML=voices.map((v,i)=>`<option value="${i}">${v.name} (${v.lang})</option>`).join('')||'<option>No voice found</option>';setVoice()}
+function setVoice(){voice=voices[+document.getElementById('vs').value]||null}
+if('speechSynthesis' in window){speechSynthesis.onvoiceschanged=loadVoices}loadVoices();
+function talk(on){clearInterval(talkT);let o=false;if(on){talkT=setInterval(()=>{o=!o;mouth.setAttribute('d',o?'M31 -19 Q38 -9 45 -19 Q38 -15 31 -19':'M31 -19 Q38 -15 45 -19');mouth.setAttribute('fill',o?'#26215C':'none')},150)}else{mouth.setAttribute('d','M31 -19 Q38 -14 45 -19');mouth.setAttribute('fill','none')}}
+setInterval(()=>{['e1','e2'].forEach(id=>document.getElementById(id).setAttribute('ry',1));['p1','p2'].forEach(id=>document.getElementById(id).setAttribute('opacity',0));setTimeout(()=>{['e1','e2'].forEach(id=>document.getElementById(id).setAttribute('ry',6.5));['p1','p2'].forEach(id=>document.getElementById(id).setAttribute('opacity',1))},140)},3200);
+function say(st){return new Promise(res=>{const on=document.getElementById('von').checked&&('speechSynthesis' in window)&&voice;const txt=st.en;const done=()=>{clearTimeout(fb);talk(false);res()};const fb=setTimeout(done,txt.length*(on?110:65)/Math.min(1,SP())+1000);if(!on)return;try{const u=new SpeechSynthesisUtterance(txt);u.voice=voice;u.lang=voice.lang;u.rate=0.9;u.pitch=1.08;u.onstart=()=>talk(true);u.onend=done;speechSynthesis.speak(u)}catch(e){}})}
+function testVoice(){if(!('speechSynthesis' in window))return;speechSynthesis.cancel();say({en:"Hello! I am Scribbly, your little physics teacher."})}
+async function play(){const id=++run;L.innerHTML='';talk(false);if('speechSynthesis' in window)speechSynthesis.cancel();document.getElementById('play').textContent='Restart';
+for(let i=0;i<steps.length;i++){if(id!==run)return;const st=steps[i];document.getElementById('step').textContent=(i+1)+'/6';document.getElementById('sen').textContent=st.en;document.getElementById('suz').textContent=st.uz;await Promise.all([say(st),st.draw()]);if(id!==run)return;await sleep(900/SP())}
+await glide(REST[0],REST[1],700);document.getElementById('sen').textContent="That's it! Any questions? Press \"Restart\" to watch again.";document.getElementById('suz').textContent="Dars tugadi! Savolingiz bo'lsa, so'rang."}
+</script>
+</body>
+</html>
