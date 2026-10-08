@@ -43,7 +43,7 @@ server makes one MP3 per step (TTS) → web plays audio while drawing strokes in
 - AI output must be validated with Pydantic; on failure retry once with the
   validation error, then return a clear error. Never render unvalidated JSON.
 - Models come from env: `LESSON_MODEL` (default `claude-sonnet-5-5`),
-  `FAST_MODEL` (default `claude-haiku-5-5`). Use prompt caching for the long
+  `FAST_MODEL` (default `claude-haiku-4-5`). Use prompt caching for the long
   system prompt. Never hardcode API keys; read `ANTHROPIC_API_KEY` from `.env`.
 - **Mock mode**: `MOCK_AI=1` serves golden fixtures with no API calls. All UI work
   and tests must run in mock mode.
@@ -80,15 +80,30 @@ server makes one MP3 per step (TTS) → web plays audio while drawing strokes in
   glasses, holds a pencil (see `docs/SPEC.md`).
 
 ## 6. Commands (keep this section updated when they change)
+One command per line: works in Windows PowerShell 5.1 (no `&&`) and in bash.
+Each block starts from the repo root.
 ```
-# server
-cd server && uv sync && uv run fastapi dev app/main.py      # http://localhost:8000
-cd server && uv run pytest && uv run ruff check . && uv run mypy app
-# web
-cd web && npm install && npm run dev                          # http://localhost:5173
-cd web && npm test && npm run lint && npx playwright test
+# server — run (http://localhost:8000)
+cd server
+uv sync
+uv run fastapi dev app/main.py
+# server — checks
+uv run pytest
+uv run ruff check .
+uv run ruff format --check .
+uv run mypy app
+# web — run (http://localhost:5173)
+cd web
+npm install
+npx playwright install chromium     # once, after install or Playwright upgrade
+npm run dev
+# web — checks
+npm test
+npm run lint                        # eslint + tsc
+npm run format:check
+npx playwright test
 # mock mode (no API key needed)
-MOCK_AI=1   (Windows PowerShell: $env:MOCK_AI="1")
+$env:MOCK_AI="1"                    # PowerShell;  bash: export MOCK_AI=1
 ```
 The founder develops on **Windows 11**: every command and script must work in
 PowerShell. Avoid bash-only scripts.

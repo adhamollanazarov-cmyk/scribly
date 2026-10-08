@@ -30,3 +30,7 @@ server/.cache/
 Thumbs.db
 .vscode/
 .idea/
+
+# test / build output
+coverage/
+*.tsbuildinfo
