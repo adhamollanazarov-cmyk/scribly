@@ -18,7 +18,7 @@ class Settings(BaseSettings):
 
     anthropic_api_key: SecretStr | None = None
     lesson_model: str = "claude-sonnet-5-5"
-    fast_model: str = "claude-haiku-4-5"
+    fast_model: str = "claude-haiku-5-5"
     mock_ai: bool = False
     tts_voice: str = "en-US-AriaNeural"
 

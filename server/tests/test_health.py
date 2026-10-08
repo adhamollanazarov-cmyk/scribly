@@ -4,15 +4,6 @@ from fastapi.testclient import TestClient
 from app.main import create_app
 from app.settings import Settings, get_settings
 
-SETTING_VARS = ("ANTHROPIC_API_KEY", "LESSON_MODEL", "FAST_MODEL", "MOCK_AI", "TTS_VOICE")
-
-
-@pytest.fixture(autouse=True)
-def clean_env(monkeypatch: pytest.MonkeyPatch) -> None:
-    """Keep the developer's shell variables out of the tests."""
-    for name in SETTING_VARS:
-        monkeypatch.delenv(name, raising=False)
-
 
 def client_with(settings: Settings) -> TestClient:
     app = create_app()
@@ -51,5 +42,15 @@ def test_settings_defaults() -> None:
     settings = Settings(_env_file=None)
 
     assert settings.lesson_model == "claude-sonnet-5-5"
-    assert settings.fast_model == "claude-haiku-4-5"
+    assert settings.fast_model == "claude-haiku-5-5"
     assert settings.tts_voice == "en-US-AriaNeural"
+
+
+def test_app_starts_in_mock_mode_without_api_call(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("MOCK_AI", "1")
+    get_settings.cache_clear()
+
+    with TestClient(create_app()) as client:  # runs the startup model check
+        assert client.get("/health").json()["mock_ai"] is True
+
+    get_settings.cache_clear()

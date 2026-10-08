@@ -4,7 +4,9 @@ One entry per non-obvious decision or new dependency. Newest on top.
 
 | Date | Decision | Why | Agent |
 |---|---|---|---|
-| 2026-10-08 | `FAST_MODEL` default is `claude-haiku-4-5` (AGENTS.md said `claude-haiku-5-5`) | `claude-haiku-5-5` does not exist; Haiku 4.5 is the latest Haiku | claude |
+| 2026-10-08 | Startup check: when `MOCK_AI=0`, list models via the Models API once and log an error if `LESSON_MODEL` or `FAST_MODEL` is missing; never blocks startup | A wrong model id should show up at startup, not on the first lesson request | founder |
+| 2026-10-08 | Dep (server): `anthropic` (official SDK, 1.x) | Models API check now; Messages API in Phase 1. SDK handles pagination, retries and typed errors | claude |
+| 2026-10-08 | `FAST_MODEL` stays `claude-haiku-5-5` (a same-day change to `claude-haiku-4-5` was reverted) | Haiku 5.5 exists and costs $0.10/$0.50 per MTok vs $1/$5 for Haiku 4.5 (5x more for prompts over 100K tokens) | founder |
 | 2026-10-08 | AGENTS.md §6 commands written one per line, no `&&` | The founder's machine has Windows PowerShell 5.1, where `&&` is a parse error | claude |
 | 2026-10-08 | `.gitattributes` forces LF line endings | Git on Windows checks out CRLF by default, which would fail `prettier --check` | claude |
 | 2026-10-08 | Dep (server): `fastapi[standard]` | Provides `fastapi dev`, uvicorn and the httpx test client in one install | claude |

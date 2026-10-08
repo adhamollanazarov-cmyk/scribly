@@ -43,7 +43,7 @@ server makes one MP3 per step (TTS) → web plays audio while drawing strokes in
 - AI output must be validated with Pydantic; on failure retry once with the
   validation error, then return a clear error. Never render unvalidated JSON.
 - Models come from env: `LESSON_MODEL` (default `claude-sonnet-5-5`),
-  `FAST_MODEL` (default `claude-haiku-4-5`). Use prompt caching for the long
+  `FAST_MODEL` (default `claude-haiku-5-5`). Use prompt caching for the long
   system prompt. Never hardcode API keys; read `ANTHROPIC_API_KEY` from `.env`.
 - **Mock mode**: `MOCK_AI=1` serves golden fixtures with no API calls. All UI work
   and tests must run in mock mode.
