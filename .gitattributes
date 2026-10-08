@@ -1,0 +1,5 @@
+# Keep LF in the repo and working tree so prettier/ruff checks pass on Windows clones.
+* text=auto eol=lf
+*.png binary
+*.mp3 binary
+*.wav binary
