@@ -1,0 +1,178 @@
+{
+  "version": "1",
+  "id": "6f1c2b9e-0d3a-4c7e-9b1a-3e5f7a9c2d41",
+  "title": "Gauss's law",
+  "level": "simple",
+  "source": { "type": "topic", "text": "Explain Gauss's law" },
+  "steps": [
+    {
+      "id": "s1",
+      "kind": "explain",
+      "say": "Let's start with one positive point charge. We call its charge capital Q.",
+      "subtitles": {
+        "uz": "Bitta musbat nuqtaviy zaryaddan boshlaymiz. Uning zaryadini katta Q deb belgilaymiz."
+      },
+      "draw": [
+        {
+          "id": "q1",
+          "type": "template",
+          "name": "point_charge",
+          "params": { "x": 450, "y": 500, "sign": "+", "r": 18, "name": "Q" },
+          "at": 0.1
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "kind": "explain",
+      "say": "A positive charge sends electric field lines straight out in every direction, like spokes on a wheel. Here are twelve of them.",
+      "subtitles": {
+        "uz": "Musbat zaryad elektr maydon chiziqlarini g'ildirak kegaylari kabi hamma tomonga to'g'ri chiqaradi. Mana ulardan o'n ikkitasi."
+      },
+      "draw": [
+        {
+          "id": "lines1",
+          "type": "template",
+          "name": "radial_field_lines",
+          "params": {
+            "x": 450,
+            "y": 500,
+            "n": 12,
+            "r_start": 30,
+            "r_end": 300,
+            "direction": "out"
+          },
+          "at": 0.15
+        }
+      ]
+    },
+    {
+      "id": "s3",
+      "kind": "explain",
+      "say": "Now imagine a closed bubble around the charge. It is not real, just a tool. We call it a Gaussian surface.",
+      "subtitles": {
+        "uz": "Endi zaryad atrofida yopiq pufakni tasavvur qiling. U haqiqiy emas, faqat vosita. Uni Gauss sirti deymiz."
+      },
+      "draw": [
+        {
+          "id": "surface1",
+          "type": "template",
+          "name": "gaussian_sphere",
+          "params": { "cx": 450, "cy": 500, "r": 130, "name": "Gaussian surface" },
+          "at": 0.1
+        }
+      ]
+    },
+    {
+      "id": "s4",
+      "kind": "explain",
+      "say": "Electric flux measures how much field pokes through a surface. We write it as phi. Here, twelve lines cross the bubble, so the flux is twelve lines' worth.",
+      "subtitles": {
+        "uz": "Elektr oqimi sirtdan qancha maydon o'tishini ko'rsatadi. Uni fi (Φ) bilan belgilaymiz. Bu yerda pufakdan o'n ikkita chiziq o'tadi, demak oqim o'n ikki chiziqqa teng."
+      },
+      "draw": [
+        { "id": "phi-label", "type": "text", "x": 790, "y": 250, "text": "flux = Φ", "at": 0.3 },
+        {
+          "id": "count",
+          "type": "math",
+          "x": 790,
+          "y": 320,
+          "latex": "\\Phi \\propto 12\\ \\text{lines}",
+          "color": "accent",
+          "at": 0.6
+        }
+      ]
+    },
+    {
+      "id": "s5",
+      "kind": "checkpoint",
+      "say": "Here is a bigger bubble around the same charge. Your turn: what happens to the flux through it?",
+      "subtitles": {
+        "uz": "Mana shu zaryad atrofida kattaroq pufak. Navbat sizda: undan o'tadigan oqim qanday o'zgaradi?"
+      },
+      "draw": [
+        {
+          "id": "surface2",
+          "type": "template",
+          "name": "gaussian_sphere",
+          "params": { "cx": 450, "cy": 500, "r": 230, "name": "bigger surface" },
+          "at": 0.1
+        }
+      ],
+      "checkpoint": {
+        "question": "The bigger surface surrounds the same charge. The flux through it...",
+        "type": "choice",
+        "choices": ["doubles", "stays the same", "halves"],
+        "answer": 1,
+        "hint": "Count the lines that cross the bigger bubble.",
+        "reexplain_hint": "Use the count-the-lines picture again: every line that crosses the small bubble also crosses the big one."
+      }
+    },
+    {
+      "id": "s6",
+      "kind": "explain",
+      "say": "Same lines, same flux. Flux depends only on the charge inside: phi equals Q over epsilon zero. For three nanocoulombs, that is about 339 newton meters squared per coulomb.",
+      "subtitles": {
+        "uz": "Chiziqlar bir xil, oqim ham bir xil. Oqim faqat ichkaridagi zaryadga bog'liq: fi Q ni epsilon nolga bo'linganiga teng. Uch nanokulon uchun bu taxminan 339 N·m²/C."
+      },
+      "draw": [
+        {
+          "id": "eps-label",
+          "type": "text",
+          "x": 790,
+          "y": 430,
+          "text": "ε₀ = 8.85 × 10⁻¹² C²/(N·m²)",
+          "at": 0.0
+        },
+        {
+          "id": "formula",
+          "type": "math",
+          "x": 790,
+          "y": 510,
+          "latex": "\\Phi = \\dfrac{Q}{\\varepsilon_0}",
+          "size": 40,
+          "at": 0.3
+        },
+        {
+          "id": "example",
+          "type": "math",
+          "x": 790,
+          "y": 610,
+          "latex": "Q = 3\\ \\text{nC} \\;\\Rightarrow\\; \\Phi \\approx 338.8\\ \\text{N}\\cdot\\text{m}^2/\\text{C}",
+          "at": 0.65
+        }
+      ]
+    },
+    {
+      "id": "s7",
+      "kind": "summary",
+      "say": "To sum up: flux counts field lines through a closed surface. Any closed surface around the same charge gives the same flux, Q over epsilon zero.",
+      "subtitles": {
+        "uz": "Xulosa: oqim yopiq sirtdan o'tgan maydon chiziqlarini sanaydi. Shu zaryad atrofidagi har qanday yopiq sirt bir xil oqim beradi: Q ni epsilon nolga bo'lingani."
+      },
+      "draw": [
+        { "id": "formula-hl", "type": "highlight", "target_id": "formula", "at": 0.5 },
+        {
+          "id": "summary",
+          "type": "text",
+          "x": 790,
+          "y": 720,
+          "text": "any closed surface around Q → same Φ",
+          "color": "accent",
+          "at": 0.7
+        }
+      ]
+    }
+  ],
+  "calcs": [
+    {
+      "id": "c1",
+      "expr": "q/epsilon_0",
+      "values": { "q": 3e-9, "epsilon_0": 8.854e-12 },
+      "expected": 338.8,
+      "unit": "N*m**2/C",
+      "rel_tol": 0.01,
+      "used_in_steps": ["s6"]
+    }
+  ]
+}

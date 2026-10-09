@@ -8,6 +8,8 @@ schema and the fixtures in sync in the same change.
 ## Canvas
 Virtual 1600 × 1000, origin top-left, units = px. The renderer scales to fit.
 Side area for interrupt branches: x 1100–1600.
+Angles (templates) are degrees, counter-clockwise from +x as seen on screen (y points down).
+`text` and `math` are anchored at (x, y) = left end of the text baseline.
 
 ## Lesson
 ```json
@@ -32,14 +34,22 @@ Side area for interrupt branches: x 1100–1600.
   "draw": [ Primitive ],
   "focus": { "x": 0, "y": 0, "w": 1600, "h": 1000 },
   "checkpoint": Checkpoint | null,
-  "sliders": [ Slider ]
+  "sliders": [ Slider ],
+  "warning": "unverified" | null
 }
 ```
+- `say`: at most 30 words, written to be spoken (words, not symbols: "phi", not "Φ").
+- `kind: "checkpoint"` if and only if `checkpoint` is set. No more than 4 steps in a row
+  without a checkpoint (a final `summary` is exempt).
+- `warning`: set by the server only (see Calc). Never set by the AI.
 - `focus` (optional): area the renderer zooms/pans to for this step.
 - Audio duration of `say` drives drawing speed; each primitive may set `at`
   (0–1, fraction of the narration when it starts). Default: evenly spaced.
 
-## Primitive (all have `id`, `type`, optional `color`, `at`, `label`)
+## Primitive (all have `id`, `type`, optional `color`, `at`, `label`, `group`)
+Ids are unique across the whole lesson and use only letters, digits, `_` and `-`.
+`group` is set by the server on primitives that came from a template (see Templates);
+the AI never sets it.
 `color` is a semantic token, never a hex: `ink | accent | charge_pos | charge_neg |
 field | surface | force | highlight | wrong | right`.
 
@@ -58,10 +68,33 @@ field | surface | force | highlight | wrong | right`.
 | `math` | x, y, latex, size? (KaTeX) |
 | `axes` | x, y, w, h, xlabel, ylabel |
 | `plot` | axes_id, expr (SymPy, variable x), x_min, x_max |
-| `highlight` | target_id (draws a loose circle around another primitive) |
+| `highlight` | target_id (draws a loose circle around another primitive or group) |
 | `mark_wrong` | target_id, reason (red circle + short note) |
-| `erase` | target_id |
+| `erase` | target_id (a primitive or a whole group) |
 | `template` | name, params (expanded server-side into the types above) |
+
+Unknown fields are rejected everywhere (`additionalProperties: false`).
+`target_id` must name a primitive or group drawn **earlier** (earlier step, or earlier
+in the same step's `draw`). Checked after template expansion.
+
+`plot` is not drawable yet: it has no y-range and the browser cannot evaluate SymPy.
+Use the `axes_plot` template, which the server samples into a `curve`.
+
+## Templates
+Expanded by the server (`server/app/lesson/templates.py`) before anything is streamed.
+Each child gets id `<template id>-<part>` and `group: "<template id>"`; the template's
+`at` is copied to every child, its `color` (if set) overrides the children's colors, and
+its `label` goes on the first child. Use the child ids below for slider `binds`.
+
+| name | params (defaults) | children |
+|---|---|---|
+| `point_charge` | x, y, sign `+`/`-` (`+`), r (16), name? | `-charge` circle, `-sign-h` line, `-sign-v` line (only for `+`) |
+| `radial_field_lines` | x, y, n (8, max 36), r_start (30), r_end (200), direction `out`/`in`, angle_offset (0) | `-1` … `-n` arrows |
+| `gaussian_sphere` | cx, cy, r, name? | `-sphere` dashed circle |
+| `charged_plane` | x, y (centre), length (600), orientation `vertical`/`horizontal`, sign, n (5), field_length (120) | `-plane` line, `-q1` … `-qn` points, `-e1` … `-e2n` arrows (both sides) |
+| `incline_block` | x, y (right-angle corner, bottom-left), base (500), angle_deg (30), block (80) | `-incline` polyline, `-block` polyline, `-angle` text |
+| `free_body` | x, y, size (40), forces: [{name, angle_deg, length}] (1–8) | `-body` rect, `-f1` … `-fn` vectors |
+| `axes_plot` | x, y (top-left of box), w, h, xlabel, ylabel, expr (in x), x_min, x_max, y_min?, y_max?, samples (41) | `-axes` axes, `-curve` curve |
 
 ## Checkpoint
 ```json
@@ -77,24 +110,42 @@ field | surface | force | highlight | wrong | right`.
 }
 ```
 
+`choice`: at least 2 `choices`, `answer` is the index of the correct one.
+`number`: `answer` is the value, `unit` is required, `tolerance` is relative.
+
 ## Slider
 ```json
 { "id": "radius", "label": "Surface radius", "min": 60, "max": 300, "value": 150,
-  "binds": ["surface1.r"] }
+  "binds": ["surface1-sphere.r"] }
 ```
+`min ≤ value ≤ max`. Each bind is `<primitive id>.<field>` and must name a real field of
+a primitive drawn earlier (template children by their expanded ids).
 
 ## Calc (verified by the server with SymPy before audio is generated)
 ```json
 { "id": "c1", "expr": "q/epsilon_0", "values": { "q": 3e-9, "epsilon_0": 8.854e-12 },
-  "expected": 338.8, "unit": "N*m**2/C", "rel_tol": 0.01, "used_in_steps": ["s5"] }
+  "expected": 338.8, "unit": "N*m**2/C", "rel_tol": 0.01, "used_in_steps": ["s6"] }
 ```
 Mismatch → regenerate once → still wrong → step gets `"warning": "unverified"`
-and the narration says the number is not verified.
+and the narration says the number is not verified ("I could not verify this number."
+is appended to `say`). Passes when |value − expected| ≤ rel_tol·|expected|.
+`expr` may use only the names in `values`, `+ - * / ^ ( )`, numbers, and
+sqrt, sin, cos, tan, asin, acos, atan, exp, log, pi, E (max 200 characters).
+`unit` is not checked dimensionally yet.
 
 ## Streaming
-`POST /lessons` returns `text/event-stream`: `event: meta` (title, step count
-estimate), then `event: step` per validated step (with `audio_url`), then
-`event: done`. Errors: `event: error` with a human-readable message.
+`POST /lessons` body `{ "type": "topic" | "problem", "text": "..." }` returns
+`text/event-stream`:
+
+| event | data |
+|---|---|
+| `meta` | `{ id, title, level, step_count }` |
+| `step` | a Step (templates already expanded, calcs verified) plus `audio_url` |
+| `done` | `{ id }` |
+| `error` | `{ message }`: human-readable, safe to show; the stream ends |
+
+`audio_url` is `/audio/<64 hex>.mp3` (cacheable forever), or `null` if speech failed
+for that step; the renderer then times the drawing without audio.
 
 ## Interrupt
 `POST /lessons/{id}/ask` body `{ step_id, question, board: [Primitive ids] }` →

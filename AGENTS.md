@@ -92,6 +92,7 @@ uv run pytest
 uv run ruff check .
 uv run ruff format --check .
 uv run mypy app
+uv run python -m scripts.gen_schema  # after changing app/lesson/models.py
 # web — run (http://localhost:5173)
 cd web
 npm install
