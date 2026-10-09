@@ -1,6 +1,14 @@
 import pytest
 
-SETTING_VARS = ("ANTHROPIC_API_KEY", "LESSON_MODEL", "FAST_MODEL", "MOCK_AI", "TTS_VOICE")
+SETTING_VARS = (
+    "ANTHROPIC_API_KEY",
+    "LESSON_MODEL",
+    "FAST_MODEL",
+    "MOCK_AI",
+    "TTS_VOICE",
+    "TTS_RATE",
+    "AUDIO_CACHE_DIR",
+)
 
 
 @pytest.fixture(autouse=True)

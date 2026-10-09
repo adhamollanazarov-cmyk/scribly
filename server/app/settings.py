@@ -21,6 +21,8 @@ class Settings(BaseSettings):
     fast_model: str = "claude-haiku-5-5"
     mock_ai: bool = False
     tts_voice: str = "en-US-AriaNeural"
+    tts_rate: str = "+0%"
+    audio_cache_dir: Path = REPO_ROOT / "server" / ".cache" / "audio"
 
 
 @lru_cache
