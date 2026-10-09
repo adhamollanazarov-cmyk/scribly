@@ -4,6 +4,14 @@ One entry per non-obvious decision or new dependency. Newest on top.
 
 | Date | Decision | Why | Agent |
 |---|---|---|---|
+| 2026-10-09 | Template children are `<template id>-<part>` with `group` = template id; `highlight`/`mark_wrong`/`erase` may target a group | Lets the AI erase or circle a whole template ("the field lines") while slider binds still name a concrete primitive | claude (approved by founder) |
+| 2026-10-09 | `step` SSE event carries `audio_url: null` when TTS fails | One TTS hiccup should not end the lesson; the renderer times drawing without audio | claude (approved by founder) |
+| 2026-10-09 | `axes_plot` is sampled server-side into a `curve`; bare `plot` is left undrawable for now | The browser cannot run SymPy and `plot` has no y-range | claude (approved by founder) |
+| 2026-10-09 | Teaching rules enforced in validation: `say` ≤ 30 words, ≤ 4 steps without a checkpoint (summary exempt), `extra="forbid"` | Invalid AI output fails early and the Phase 1b retry gets a precise error | claude |
+| 2026-10-09 | Calc/plot expressions: allow-list check, then SymPy parses with `evaluate=False`, then our own float evaluator walks the tree (`app/lesson/safe_expr.py`) | SymPy's parser calls `eval`, and letting SymPy evaluate untrusted input hangs on `9^9^9^9`; floats overflow instantly instead | claude |
+| 2026-10-09 | Dep (server): `sympy` | Calc verification and plot sampling (AGENTS §3) | claude |
+| 2026-10-09 | Dep (server): `edge-tts` | Default TTS provider (founder decision 2026-10-08) | claude |
+| 2026-10-09 | SSE via FastAPI's built-in `fastapi.sse.EventSourceResponse` | No extra dependency; typed `ServerSentEvent` | claude |
 | 2026-10-09 | Startup model check uses one 10-second deadline across pagination, zero SDK retries, and an async context for owned clients; provider errors log only status and SDK exception class | Keep startup bounded, close connections, and avoid provider-controlled content in logs; injected clients remain caller-owned | codex |
 | 2026-10-09 | Web Node engines: `^22.22.2` or `^24.15.0` or `>=26.0.0` | Matches the strictest locked tooling requirements (jsdom and its CSS dependencies); excludes unsupported older patches and odd releases below 26 | codex |
 | 2026-10-08 | Startup check: when `MOCK_AI=0`, list models via the Models API once and log an error if `LESSON_MODEL` or `FAST_MODEL` is missing; never blocks startup | A wrong model id should show up at startup, not on the first lesson request | founder |

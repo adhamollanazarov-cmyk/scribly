@@ -2,6 +2,12 @@
 
 Update this file at the end of every task (newest entry on top, 3–8 lines).
 
+## 2026-10-09 — claude — Phase 1a lesson engine (no AI)
+**Done:** Pydantic lesson models and generated `shared/lesson.schema.json` (`uv run python -m scripts.gen_schema`; a test fails if stale). Hand-written `gauss_law.json` (7 steps, 1 checkpoint, calc 338.8 N·m²/C, uz subtitles). 7 templates, safe SymPy calc verification, TTSProvider + edge-tts + hashed audio cache, `POST /lessons` SSE in mock mode, `GET /audio/{key}.mp3`. Schema gaps filled and documented: `group`, nullable `audio_url`, `warning`.
+**Checks:** PowerShell 5.1: 133 pytest, ruff, format, mypy; web 5 Vitest, eslint+tsc, Prettier, 1 Playwright. Live: uvicorn + real edge-tts streamed meta at 0.0 s, step 1 at 2.7 s, all 7 steps by 37.9 s; MP3s served as audio/mpeg.
+**Next:** Phase 1b: Claude lesson generation with prompt caching, retry once on validation error, the 3 CLAUDE.md test inputs.
+**Found issues:** med — edge-tts takes 2.6–12.5 s per step on this network, so later steps can arrive after the previous narration ends; synthesize step N+1 while step N is sent (Phase 1b). low — bare `plot` primitive is undrawable (no y-range, browser has no SymPy); propose server-side sampling into `curve` with explicit y_min/y_max. low — calc `unit` is not checked dimensionally. low — PyPI downloads on this machine are very slow (~1.6 MB/min at times); `uv sync` for sympy took most of an hour.
+
 ## 2026-10-09 — codex — scaffold review fixes
 **Done:** Committed the original review tests/status separately as `72f2b9b` on `codex/scaffold-review`, then resolved all four findings.
 - Model checks have one 10-second deadline across pagination, zero SDK retries, nonfatal timeout handling, safe status/SDK-type logging, and async cleanup of owned clients; injected clients remain caller-owned.
