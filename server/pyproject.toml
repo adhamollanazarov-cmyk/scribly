@@ -5,8 +5,10 @@ description = "Scribbly lesson server: lesson generation, TTS, verification"
 requires-python = ">=3.12,<3.13"
 dependencies = [
     "anthropic>=1.12.1",
+    "edge-tts>=7.2.8",
     "fastapi[standard]>=0.115",
     "pydantic-settings>=2.6",
+    "sympy>=1.14.0",
 ]
 
 [dependency-groups]
@@ -31,6 +33,11 @@ select = ["E", "F", "I", "UP", "B", "SIM"]
 python_version = "3.12"
 strict = true
 plugins = ["pydantic.mypy"]
+
+[[tool.mypy.overrides]]
+# SymPy ships no type stubs or py.typed marker.
+module = ["sympy", "sympy.*"]
+ignore_missing_imports = true
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
