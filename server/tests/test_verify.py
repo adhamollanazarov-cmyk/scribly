@@ -1,5 +1,7 @@
 from typing import Any
 
+import pytest
+
 from app.lesson.fixtures import load_fixture
 from app.lesson.models import Calc, Lesson
 from app.lesson.verify import UNVERIFIED_NOTE, apply_verification, verify_calc, verify_lesson
@@ -73,3 +75,28 @@ def test_passing_calcs_leave_lesson_unchanged() -> None:
     lesson = Lesson.model_validate(load_fixture("gauss_law"))
 
     assert apply_verification(lesson, verify_lesson(lesson)) == lesson
+
+
+@pytest.mark.parametrize(
+    "overrides",
+    [
+        {"expected": float("nan")},
+        {"expected": float("inf")},
+        {"expected": float("-inf")},
+        {"rel_tol": float("inf")},
+    ],
+)
+def test_non_finite_comparison_inputs_cannot_be_verified(overrides: dict[str, float]) -> None:
+    result = verify_calc(calc(**overrides))
+
+    assert not result.ok
+    assert result.error is not None and "finite" in result.error
+
+
+@pytest.mark.parametrize(("expr", "ok"), [("0", True), ("1e-12", False)])
+def test_zero_expected_value_has_no_implicit_absolute_tolerance(expr: str, ok: bool) -> None:
+    assert verify_calc(calc(expr=expr, expected=0)).ok is ok
+
+
+def test_tolerance_boundary_is_inclusive() -> None:
+    assert verify_calc(calc(expr="1.5", expected=1, rel_tol=0.5)).ok

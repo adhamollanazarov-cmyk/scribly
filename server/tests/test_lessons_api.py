@@ -12,7 +12,7 @@ from app.lesson.fixtures import load_fixture
 from app.lesson.models import StreamedStep
 from app.lesson.pipeline import prepare_lesson
 from app.main import create_app
-from app.routes.lessons import NOT_AVAILABLE, get_tts_provider, lesson_events
+from app.routes.lessons import GENERIC_ERROR, NOT_AVAILABLE, get_tts_provider, lesson_events
 from app.settings import Settings, get_settings
 from app.tts import AudioCache, TTSError
 
@@ -161,3 +161,71 @@ def test_each_step_is_sent_before_the_next_step_is_narrated(tmp_path: Path) -> N
 
     steps = [calls for name, calls in seen if name == "step"]
     assert steps == [1, 2, 3, 4, 5, 6, 7]  # one TTS call per step, then that step is sent
+
+
+@pytest.mark.parametrize(
+    "key",
+    [
+        "..\\..\\.env",
+        "C:\\Windows\\win.ini",
+        "\\\\localhost\\share\\file",
+        "0" * 64 + ":private",
+        "0" * 64 + "%00",
+        "0" * 64 + "%0a",
+        "0" * 64 + "%5c..%5c.env",
+        "0" * 64 + "%252f..%252f.env",
+    ],
+)
+def test_audio_rejects_windows_paths_and_encoded_suffixes(client: TestClient, key: str) -> None:
+    assert client.get(f"/audio/{key}.mp3").status_code == 404
+
+
+def test_audio_response_has_expected_cache_headers(client: TestClient) -> None:
+    audio_url = next(data["audio_url"] for name, data in stream(client) if name == "step")
+    response = client.get(audio_url)
+
+    assert response.headers["cache-control"] == "public, max-age=31536000, immutable"
+    assert response.headers["content-type"] == "audio/mpeg"
+
+
+def test_cache_write_error_is_safe_and_does_not_end_the_lesson(
+    client: TestClient, monkeypatch: pytest.MonkeyPatch, caplog: pytest.LogCaptureFixture
+) -> None:
+    marker = "SYNTHETIC_PRIVATE_INPUT"
+
+    def fail_write(self: AudioCache, path: Path, data: bytes) -> None:
+        raise PermissionError(marker)
+
+    monkeypatch.setattr(AudioCache, "_write_atomic", fail_write)
+    events = stream(client)
+
+    assert events[-1][0] == "done"
+    assert all(data["audio_url"] is None for name, data in events if name == "step")
+    assert "PermissionError" in caplog.text
+    assert marker not in caplog.text
+    assert marker not in json.dumps(events)
+
+
+def test_unexpected_fixture_failure_has_generic_public_error(
+    client: TestClient, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    def broken_fixture(name: str) -> dict[str, Any]:
+        raise OSError("SYNTHETIC_PRIVATE_INPUT")
+
+    monkeypatch.setattr("app.routes.lessons.load_fixture", broken_fixture)
+    assert stream(client) == [("error", {"message": GENERIC_ERROR})]
+
+
+@pytest.mark.xfail(strict=True, reason="R3: template validation cause leaks raw input to logs")
+def test_template_error_does_not_log_raw_input(
+    client: TestClient, monkeypatch: pytest.MonkeyPatch, caplog: pytest.LogCaptureFixture
+) -> None:
+    raw = load_fixture("gauss_law")
+    raw["steps"][0]["draw"][0]["params"]["unexpected"] = "SYNTHETIC_PRIVATE_INPUT"
+    monkeypatch.setattr("app.routes.lessons.load_fixture", lambda name: raw)
+
+    events = stream(client)
+
+    assert events[0][0] == "error"
+    assert "SYNTHETIC_PRIVATE_INPUT" not in json.dumps(events)
+    assert "SYNTHETIC_PRIVATE_INPUT" not in caplog.text

@@ -1,5 +1,6 @@
 """Check every `calc` with SymPy before any number is spoken (AGENTS.md §3, rule 4)."""
 
+import math
 from dataclasses import dataclass
 
 from app.lesson.models import Calc, Lesson
@@ -17,6 +18,10 @@ class CalcResult:
 
 
 def verify_calc(calc: Calc) -> CalcResult:
+    if not math.isfinite(calc.expected) or not math.isfinite(calc.rel_tol):
+        return CalcResult(
+            calc.id, ok=False, value=None, error="expected value and tolerance must be finite"
+        )
     try:
         value = evaluate_text(calc.expr, calc.values)
     except ExpressionError as e:

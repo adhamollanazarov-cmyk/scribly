@@ -3,6 +3,7 @@
 SymPy's parser calls eval(), so input is allow-listed before it reaches the parser.
 """
 
+import ast
 import math
 import re
 from collections.abc import Callable, Iterable, Mapping
@@ -17,6 +18,7 @@ from sympy.parsing.sympy_parser import (
 )
 
 MAX_LENGTH = 200
+MAX_DEPTH = 32
 ALLOWED_CHARS = re.compile(r"^[A-Za-z0-9_+\-*/^().,\s]*$")
 IDENTIFIER = re.compile(r"[A-Za-z_][A-Za-z0-9_]*")
 ATTRIBUTE_ACCESS = re.compile(r"\.\s*[A-Za-z_]")
@@ -53,6 +55,7 @@ class ExpressionError(ValueError):
 def parse(text: str, variables: Iterable[str]) -> sympy.Expr:
     names = set(variables)
     _check_text(text, names)
+    _check_syntax(text)
     local_dict = {name: sympy.Symbol(name) for name in names}
     global_dict = {"__builtins__": {}, **PARSER_NAMES, **FUNCTIONS}
     try:
@@ -119,6 +122,45 @@ def _to_float(expr: sympy.Basic, values: Mapping[str, float]) -> float:
 
 def evaluate_text(text: str, values: Mapping[str, float]) -> float:
     return evaluate(parse(text, values.keys()), values)
+
+
+def _check_syntax(text: str) -> None:
+    """Only operators SymPy rewrites unevaluated may reach its eval-based parser.
+
+    In particular, FloorDiv leaves its subtree untouched by evaluate=False, allowing
+    an input such as `9^9^9^9//1` to perform eager, unbounded integer arithmetic.
+    """
+    try:
+        tree = ast.parse(text.replace("^", "**").strip(), mode="eval")
+    except (SyntaxError, ValueError, RecursionError) as e:
+        raise ExpressionError(f"cannot parse {text!r}") from e
+
+    def check(node: ast.AST, depth: int = 0) -> None:
+        if depth > MAX_DEPTH:
+            raise ExpressionError("expression is too deeply nested")
+        match node:
+            case ast.Constant(value=value) if isinstance(value, int | float) and not isinstance(
+                value, bool
+            ):
+                if not math.isfinite(value):
+                    raise ExpressionError("numeric literals must be finite")
+            case ast.Name():
+                pass  # Names have already passed the lexical allow-list.
+            case ast.BinOp(left=left, op=op, right=right) if isinstance(
+                op, ast.Add | ast.Sub | ast.Mult | ast.Div | ast.Pow
+            ):
+                check(left, depth + 1)
+                check(right, depth + 1)
+            case ast.UnaryOp(op=op, operand=operand) if isinstance(op, ast.UAdd | ast.USub):
+                check(operand, depth + 1)
+            case ast.Call(func=ast.Name(id=name), args=[arg], keywords=[]) if (
+                name in FUNCTIONS and name not in ("pi", "E")
+            ):
+                check(arg, depth + 1)
+            case _:
+                raise ExpressionError("unsupported expression syntax")
+
+    check(tree.body)
 
 
 def _check_text(text: str, names: set[str]) -> None:

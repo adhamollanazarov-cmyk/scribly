@@ -161,3 +161,27 @@ def test_fixture_is_not_mutated_by_validation() -> None:
     Lesson.model_validate(raw)
 
     assert raw == before
+
+
+@pytest.mark.xfail(
+    strict=True, reason="R5: Pydantic accepts from_ but the shared schema requires from"
+)
+def test_vector_rejects_python_attribute_name_in_json() -> None:
+    with pytest.raises(ValidationError):
+        VectorPrim.model_validate(
+            {"id": "v", "type": "vector", "from_": [0, 0], "to": [10, 0], "name": "E"}
+        )
+
+
+@pytest.mark.xfail(strict=True, reason="R6: intermediate summaries bypass checkpoint spacing")
+def test_only_final_summary_is_exempt_from_checkpoint_spacing() -> None:
+    steps = [step(f"s{i}", "summary") for i in range(1, 7)]
+    with pytest.raises(ValidationError, match="without a checkpoint"):
+        Lesson.model_validate(lesson(*steps))
+
+
+@pytest.mark.xfail(strict=True, reason="R8: non-finite drawing coordinates serialize as null")
+def test_non_finite_drawing_coordinate_is_rejected() -> None:
+    bad = step("s1", draw=[{"id": "p", "type": "point", "x": float("inf"), "y": 1}])
+    with pytest.raises(ValidationError):
+        Lesson.model_validate(lesson(bad))

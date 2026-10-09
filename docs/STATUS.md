@@ -2,6 +2,12 @@
 
 Update this file at the end of every task (newest entry on top, 3–8 lines).
 
+## 2026-10-10 — codex — Phase 1a review
+**Done:** Reviewed `claude/phase1a` (`9bdb6be`) against `main` (`097f15f`) on `codex/phase1a-review`. Fixed only two high-severity findings: floor-division bypass of unevaluated SymPy parsing, and non-finite expected values/tolerances falsely passing calc verification. Added 57 test cases; report: `docs/reviews/2026-10-10-phase1a.md`.
+**Checks:** PowerShell 5.1, MOCK_AI=1: 185 pytest passed, 5 strict xfails documenting unfixed medium findings; ruff lint/format, mypy, unchanged regenerated schema; 5 Vitest, ESLint+tsc, Prettier, 1 Chromium smoke test passed. Tracked credential/media scan passed; no real API/TTS calls or contract/dependency changes.
+**Found issues:** med — raw template/exception content in logs; supplied warning suppresses spoken disclaimer; `from_` accepted contrary to shared schema; intermediate summaries bypass checkpoint spacing; non-finite drawing coordinates serialize as null. low — Gauss playback E2E is absent while the web remains a Phase 2 placeholder.
+**Next:** Human merges the review branch; address medium findings before Phase 1b and add real Gauss audio/drawing playback coverage with the Phase 2 renderer. Full findings include reviewed file:line locations, reproductions and suggested fixes.
+
 ## 2026-10-09 — claude — Phase 1a lesson engine (no AI)
 **Done:** Pydantic lesson models and generated `shared/lesson.schema.json` (`uv run python -m scripts.gen_schema`; a test fails if stale). Hand-written `gauss_law.json` (7 steps, 1 checkpoint, calc 338.8 N·m²/C, uz subtitles). 7 templates, safe SymPy calc verification, TTSProvider + edge-tts + hashed audio cache, `POST /lessons` SSE in mock mode, `GET /audio/{key}.mp3`. Schema gaps filled and documented: `group`, nullable `audio_url`, `warning`.
 **Checks:** PowerShell 5.1: 133 pytest, ruff, format, mypy; web 5 Vitest, eslint+tsc, Prettier, 1 Playwright. Live: uvicorn + real edge-tts streamed meta at 0.0 s, step 1 at 2.7 s, all 7 steps by 37.9 s; MP3s served as audio/mpeg.
