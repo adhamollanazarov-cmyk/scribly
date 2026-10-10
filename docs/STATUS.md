@@ -2,6 +2,13 @@
 
 Update this file at the end of every task (newest entry on top, 3–8 lines).
 
+## 2026-10-10 — founder — plan update after Phase 1a + physics audit
+**Done:** Phase 1a merged. Added docs/COVERAGE.md (path to any physics problem) and
+Phase 7; split Phase 1 remainder into 1b (generation quality from the audit) and 1c
+(grid layout, audio prefetch). Prompts in PROMPTS.md.
+**Next:** Phase 1b (Claude Code). Audit evidence stays on branch codex/physics-audit.
+**Found issues:** none new.
+
 ## 2026-10-10 — codex — Phase 1a medium findings fixed
 **Done:** Fixed all five medium findings on `codex/phase1a-review`: safe exception-type-only lesson logs, raw server-field rejection and idempotent spoken warnings, canonical JSON aliases, final-summary-only checkpoint exemption, finite primitive/focus/template geometry. Converted all five strict xfails into normal passing tests; added boundary tests and `force_vector.json` contract fixture.
 **Checks:** PowerShell 5.1, MOCK_AI=1: 219 pytest passed with no skips/xfails; ruff lint/format, mypy, regenerated schema; 5 Vitest, ESLint+tsc, Prettier and 1 Chromium smoke test passed. Updated schema docs and review resolutions; no dependencies or real API/TTS calls.

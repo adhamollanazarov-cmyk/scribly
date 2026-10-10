@@ -19,24 +19,66 @@ All commands in AGENTS.md §6 must work on Windows. No features yet.
 Show me the plan first, then build, then run every check and report results.
 ```
 
-## Phase 1 — Lesson engine  ·  Claude Code
+## Phase 1a — Lesson engine without AI  ·  Claude Code  ✅ done 2026-10-10
+Merged to main (models, schema, Gauss fixture, templates, SymPy verify, edge-tts,
+SSE). See docs/STATUS.md.
+
+## Phase 1b — Real lesson generation (quality first)  ·  Claude Code
 ```
-Implement Phase 1 from docs/SPEC.md.
-1. Pydantic models for the lesson schema (docs/LESSON_SCHEMA.md) in
-   server/app/lesson/models.py; generate shared/lesson.schema.json from them.
-2. Lesson system prompt (server/app/lesson/prompt.md) that enforces AGENTS.md §4
-   teaching rules and the schema. Use prompt caching.
-3. POST /lessons streaming SSE (meta, step, done, error). Validate every step;
-   retry once with the validation error on failure.
-4. Template expansion (start with point_charge, radial_field_lines,
-   gaussian_sphere, charged_plane, incline_block, free_body, axes_plot).
-5. Calc verification with SymPy (see schema "Calc").
-6. TTSProvider interface + EdgeTTSProvider (en-US-AriaNeural), cached by hash.
-7. MOCK_AI=1 serves tests/fixtures/lessons/gauss_law.json. Write that fixture by hand:
-   6–8 steps (charge, field lines, Gaussian surface, count lines = flux, bigger
-   surface same flux, Φ = Q/ε₀, one checkpoint, one calc).
-Tests: schema validation, template expansion, calc verify pass/fail, SSE order,
-mock mode. Run the three test inputs from CLAUDE.md and show me the lessons.
+Phase 1b on a new branch claude/phase1b from main. Real lesson generation.
+Read AGENTS.md, docs/SPEC.md, docs/LESSON_SCHEMA.md, docs/COVERAGE.md and the
+physics audit (do NOT merge that branch, just read it):
+  git show codex/physics-audit:docs/audits/2026-10-09-provisional/REPORT.md
+Show the plan first, then build. Needs ANTHROPIC_API_KEY in .env.
+
+1. Reliable JSON: 7 of 10 audit lessons failed validation. Use structured outputs /
+   strict tool use with the lesson JSON schema so format errors are impossible by
+   construction; keep Pydantic validation + one retry with the exact error.
+   Check the current Anthropic docs for Sonnet 5.5 request options (the audit found
+   that `thinking: disabled` is rejected) before choosing settings.
+2. Result ledger: say, labels, checkpoint answers and summaries reference calc
+   results as placeholders ({c1}, {c1:3sf}) instead of writing computed numbers.
+   The server fills them from SymPy-verified values, so the same number is identical
+   everywhere and used_in_steps is derived automatically. A raw computed number in
+   say or labels is a lint error. Given data from the problem may be written as is.
+3. Teaching-rule lint in code, not only in the prompt (AGENTS §4): say target ≤26
+   words (30 hard limit), ≤4 steps without a checkpoint, every symbol used in a
+   formula must be introduced earlier by a drawn legend entry (design a `symbol`
+   primitive: symbol, meaning, SI unit), units on every physical number.
+   Violations → regenerate only that step with the list of violations.
+4. Calc grammar: only allow-listed functions; tell the model explicitly (no abs,
+   Min; use `lam` not `lambda`). Unsupported expressions are rejected with a clear
+   message the retry can use.
+5. Lesson system prompt server/app/lesson/prompt.md: AGENTS §4, the schema, the
+   template catalogue with parameters, the audit's proposed blocks (adapted), and
+   explicit safeguards for the audit failures: dipole on-axis field, keep full
+   precision until the final rounding (projectile), checkpoint answers must match
+   the exact wording (pendulum "full swings" is an integer), diagram angles must
+   match labels or say "not to scale". Prompt caching on.
+6. Real generation streamed step by step into the existing SSE endpoint (MOCK_AI=0).
+7. Eval bank v0 (docs/COVERAGE.md §4): tests/eval/problems.yaml with 30 problems:
+   the audit's 10 (use its reference-results.json as expected values) + 20 new
+   (mechanics, kinematics graphs, circuits). Runner scripts/eval.py, report
+   docs/eval/<date>.md with pass rate per topic, cost and latency.
+8. Run the eval once. Show me the report, total cost, and the 3 worst lessons.
+Tests: ledger fill/lint, rule lint, symbol legend, grammar errors, prompt-output
+parsing, eval runner on 2 mocked problems. Run all AGENTS §6 checks, commit,
+update docs/STATUS.md and docs/DECISIONS.md.
+```
+
+## Phase 1c — Grid layout + faster audio  ·  Claude Code
+```
+Phase 1c on a new branch claude/phase1c from main (after 1b is merged).
+1. Grid coordinates + layout engine (docs/COVERAGE.md §2): the AI writes positions
+   as [col,row] grid cells; the server converts to px; labels use label_side and are
+   auto-placed; overlap and out-of-canvas checks; auto-fix or regenerate the step
+   once with the problem list. Update LESSON_SCHEMA.md, models, shared schema,
+   fixtures and the prompt.
+2. Audio prefetch: generate TTS for step N+1 while step N is being sent, so the next
+   step is ready before the current narration ends (1a measured 2.6–12.5 s per step).
+3. Re-run the eval from 1b; layout problems must drop and no topic may lose >5 points.
+Tests for layout (overlaps, clamping, label placement) and prefetch ordering.
+Run all AGENTS §6 checks, commit, update docs/STATUS.md.
 ```
 
 ## Phase 2 — Board, voice, mascot  ·  Claude Code
@@ -105,6 +147,17 @@ results), next-day review with 2–3 questions on weak topics, level switch
 and PDF notes. Add tests for review scheduling and export.
 ```
 
+## Phase 7 — Coverage of all physics  ·  Claude Code
+```
+Implement docs/COVERAGE.md §3, §6 and grow §4. One small branch per item:
+a) claude/templates-<group>: add the remaining templates group by group (mechanics,
+   kinematics, electrostatics, circuits, magnetism, waves/optics, thermo, modern).
+   Each template: unit test + fixture lesson + 5 eval problems using it.
+b) claude/3d-subset: three.js 3D subset (COVERAGE §6) inside the board, driven by new
+   primitive types (axes3d, vector3d, coil3d, surface3d). Update the schema.
+c) After each group: run the full eval, attach the report, list topics below target.
+```
+
 ---
 
 ## Codex — review after every Claude Code phase
@@ -118,7 +171,8 @@ Then, on a new branch codex/<task>, add the missing tests and fix only high-seve
 issues. Run all checks from AGENTS.md §6 and report results. Update docs/STATUS.md.
 ```
 
-## Codex — physics accuracy audit (after Phase 1 and Phase 4)
+## Codex — physics accuracy audit (after Phase 1b and Phase 4)
+First run (provisional prompt): branch codex/physics-audit, 2026-10-09.
 ```
 Read AGENTS.md §4. Generate lessons (real API, not mock) for these 10 problems:
 Gauss's law for a sphere, an infinite line charge and an infinite plane; Coulomb
@@ -127,6 +181,15 @@ dielectric; incline with friction; projectile range; simple pendulum period;
 series-parallel circuit. For each, check every number, unit and claim by hand or
 with SymPy. Report a table: problem, errors found, which rule in §4 was broken.
 Propose concrete edits to server/app/lesson/prompt.md (do not apply them).
+```
+
+## Codex — eval gate (every PR that touches prompt, models, templates or layout)
+```
+Read docs/COVERAGE.md §4. Run the eval on main and on <branch> (same problems,
+same models). Compare per topic: pass rate, numbers correct, layout problems, cost,
+latency. If any topic drops by more than 5 points or the overall rate drops, mark the
+PR "blocked" and list the failing problems with reasons. Write the comparison to
+docs/eval/<date>-<branch>.md. Do not change prompts yourself.
 ```
 
 ## Codex — security and privacy (before the university pilot)
@@ -152,6 +215,14 @@ Open http://localhost:5173 and play the Gauss's law lesson three times at speeds
 6. Time from click to first stroke (target < 3 s with real API).
 Write findings to docs/STATUS.md under "Found issues" (severity + screenshot name).
 Fix only small CSS/layout issues on branch ag/<task>.
+```
+
+## Antigravity — visual check of the eval lessons (after Phase 2 and Phase 7)
+```
+Start the app with MOCK_AI=0. Open the 10 lessons with the lowest visual or layout
+scores from the latest docs/eval report. For each: screenshot every step and judge
+overlaps, readability, and whether the drawing matches the narration. Add findings
+to that eval report under "Visual review". Do not change code.
 ```
 
 ## Antigravity — competitor comparison (once, after Phase 3)

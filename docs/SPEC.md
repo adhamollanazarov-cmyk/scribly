@@ -34,6 +34,9 @@ mistake", verified numbers, Uzbek/Russian subtitles, Windows.
 
 ## 5. Features by phase
 ### Phase 1 — Lesson engine (web)
+Split into 1a (no AI, done), 1b (real generation: structured outputs, result
+ledger, teaching-rule lint, eval bank v0) and 1c (grid layout, audio prefetch).
+Driven by the 2026-10-09 physics audit (branch codex/physics-audit).
 - Input: topic or problem text. Output: streamed lesson JSON (see LESSON_SCHEMA.md).
 - Template library for common physics scenes (expanded server-side, deterministic):
   `point_charge`, `radial_field_lines`, `gaussian_sphere`, `gaussian_cylinder`,
@@ -88,9 +91,16 @@ mistake", verified numbers, Uzbek/Russian subtitles, Windows.
 - Export a lesson as video (canvas captureStream + audio → WebM/MP4) and PDF notes.
   Exported videos can feed the founder's YouTube channel.
 
+### Phase 7 — Coverage of all physics
+- Plan and targets: `docs/COVERAGE.md` (template library to ~40 scenes, eval bank
+  to 200 problems, visual QA loop, 3D subset, "bad lesson" feedback).
+- Goal: any school or university physics problem, measured per topic.
+
 ## 6. Success metrics for the founder pilot
 - Founder can explain Gauss's law back after one lesson (self-test 3/3).
 - First stroke < 3 s; zero wrong numbers in 20 test problems.
+- Eval bank (COVERAGE §4): ≥ 90 % numbers correct, ≥ 85 % overall pass on
+  mechanics, electrostatics and circuits.
 - Pilot: 10 of 20 classmates come back on their own within a week.
 
 ## 7. Out of scope for now
