@@ -7,6 +7,7 @@ step fix can act on.
 """
 
 import keyword
+import re
 from dataclasses import dataclass, field
 from typing import Any
 
@@ -15,6 +16,7 @@ from pydantic import ValidationError
 from app.lesson.draft import CheckpointDraft, StepDraft, TextArg, contract_primitive
 from app.lesson.ledger import CALC_ID, Context, Entry, LedgerError, answer_value, fill
 from app.lesson.lint import (
+    Given,
     LintState,
     Violation,
     legend_symbols,
@@ -39,6 +41,7 @@ from app.lesson.verify import CalcResult, verify_calc
 LATEX_KEYS = {"latex"}
 RAW_KEYS = {"symbol", "expr", "sign", "direction", "orientation"}  # not prose, not filled
 DEFAULT_REL_TOL = 0.01
+CALC_NAME = re.compile(r"\b(c\d+)\b")
 CHECKPOINT_TOLERANCE = 0.02
 
 
@@ -176,10 +179,16 @@ def _check_calcs(draft: StepDraft, state: LessonState, out: Checked) -> None:
                 )
             )
             continue
+        known = {**state.ledger, **out.entries}
+        values = {v.name: v.value for v in calc.values}
+        # Earlier results used by name (c1) come in at full precision, never retyped.
+        for name in set(CALC_NAME.findall(calc.expr)) - values.keys():
+            if name in known:
+                values[name] = known[name].value
         model = Calc(
             id=calc.id,
             expr=calc.expr,
-            values={v.name: v.value for v in calc.values},
+            values=values,
             expected=calc.expected,
             unit=calc.unit or "1",
             rel_tol=DEFAULT_REL_TOL,
@@ -189,8 +198,10 @@ def _check_calcs(draft: StepDraft, state: LessonState, out: Checked) -> None:
         out.results.append(result)
         if not result.ok:
             out.violations.append(violation("calc", f"calc {calc.id}: {result.error}"))
+        inputs_ok = all(known[n].verified for n in CALC_NAME.findall(calc.expr) if n in known)
         if result.value is not None:
-            out.entries[calc.id] = Entry(result.value, model.unit, calc.unit_spoken, result.ok)
+            verified = result.ok and inputs_ok
+            out.entries[calc.id] = Entry(result.value, model.unit, calc.unit_spoken, verified)
 
 
 def _valid_name(name: str) -> bool:
@@ -256,7 +267,11 @@ def fill_step(draft: StepDraft, ledger: dict[str, Entry]) -> tuple[StepDraft, se
 
 
 def _lint_numbers(draft: StepDraft, state: LessonState) -> list[Violation]:
-    givens = state.lint.givens
+    # Inputs declared in calcs (e.g. a hypothetical 3 nC in a topic lesson) are stated
+    # data, not results, so they may be written as they are.
+    inputs = [v for c in state.calcs for v in c.values.values()]
+    inputs += [v.value for c in draft.calcs for v in c.values]
+    givens = state.lint.givens + [Given(value, has_unit=False) for value in inputs]
     out = lint_numbers(draft.say, f"step {draft.id} say", givens)
     for lang in ("uz", "ru"):
         text = getattr(draft.subtitles, lang)

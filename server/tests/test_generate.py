@@ -155,6 +155,33 @@ def test_wrong_calc_is_fixed_then_marked_unverified_if_still_wrong() -> None:
     assert s4.warning == "unverified"
 
 
+def test_a_calc_can_use_an_earlier_result_at_full_precision() -> None:
+    field = calc("c2", "c1/(4*pi*R^2)", {"R": 0.2}, 674.08, "N/C", "newtons per coulomb")
+    steps = good_steps()
+    steps.insert(4, step("s4b", "On the surface the field is {c2}.", calcs=[field]))
+    metrics = Metrics()
+
+    events = run(FakeLLM([draft_json(steps)]), metrics)
+
+    s4b = next(s for s in steps_of(events) if s.id == "s4b")
+    assert s4b.say == "On the surface the field is 674 newtons per coulomb."
+    assert metrics.lesson is not None
+    c2 = metrics.lesson.calcs[1]
+    assert c2.values["c1"] == pytest.approx(3e-9 / 8.854e-12, rel=1e-12)
+
+
+def test_example_inputs_declared_in_calcs_may_be_written_as_they_are() -> None:
+    example = calc("c2", "q2/eps0", {"q2": 5e-9, "eps0": 8.854e-12}, 564.72, "N*m**2/C",
+                   "newton meters squared per coulomb")  # fmt: skip
+    steps = good_steps()
+    steps.insert(4, step("s4b", "For example, 5 nanocoulombs gives {c2}.", calcs=[example]))
+    metrics = Metrics()
+
+    run(FakeLLM([draft_json(steps)]), metrics)
+
+    assert metrics.fixes == 0
+
+
 def test_unsupported_function_message_reaches_the_fix() -> None:
     bad = calc(
         "c1",

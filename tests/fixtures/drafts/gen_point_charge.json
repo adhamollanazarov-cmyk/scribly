@@ -1,0 +1,985 @@
+{
+ "note": "Recorded Claude replies (lesson draft, then step fixes) for the CLAUDE.md prompt tests, 2026-10-10. Replayed offline by tests/test_generated_fixtures.py.",
+ "source": {
+  "type": "problem",
+  "text": "A point charge of 3 nC sits at the center of a sphere of radius 0.2 m. Find the electric flux through the sphere and the field on its surface."
+ },
+ "replies": [
+  {
+   "title": "Flux and field of a point charge: Gauss's law",
+   "level": "university",
+   "steps": [
+    {
+     "id": "s1",
+     "kind": "explain",
+     "calcs": [],
+     "say": "A 3 nC point charge sits at the center of a sphere of radius 0.2 m. We want the flux and the surface field.",
+     "subtitles": {
+      "uz": "3 nC nuqtaviy zaryad radiusi 0.2 m bo'lgan sferaning markazida turibdi. Oqim va sirtdagi maydonni topamiz.",
+      "ru": "Точечный заряд 3 нКл находится в центре сферы радиусом 0,2 м. Найдём поток и поле на поверхности."
+     },
+     "draw": [
+      {
+       "id": "gs1",
+       "type": "gaussian_sphere",
+       "color": "surface",
+       "label": "R = 0.2 m",
+       "at": 0.0,
+       "num": [
+        {
+         "k": "cx",
+         "v": 380
+        },
+        {
+         "k": "cy",
+         "v": 400
+        },
+        {
+         "k": "r",
+         "v": 200
+        }
+       ],
+       "txt": [
+        {
+         "k": "name",
+         "v": ""
+        }
+       ],
+       "pts": []
+      },
+      {
+       "id": "pc1",
+       "type": "point_charge",
+       "color": "charge_pos",
+       "label": "3 nC",
+       "at": 0.4,
+       "num": [
+        {
+         "k": "x",
+         "v": 380
+        },
+        {
+         "k": "y",
+         "v": 400
+        },
+        {
+         "k": "r",
+         "v": 16
+        }
+       ],
+       "txt": [
+        {
+         "k": "sign",
+         "v": "+"
+        },
+        {
+         "k": "name",
+         "v": ""
+        }
+       ],
+       "pts": []
+      }
+     ],
+     "checkpoints": []
+    },
+    {
+     "id": "s2",
+     "kind": "explain",
+     "calcs": [],
+     "say": "By symmetry the field lines point radially outward, perpendicular to the sphere everywhere, with the same strength at every point of the surface.",
+     "subtitles": {
+      "uz": "Simmetriya tufayli maydon chiziqlari radial yo'nalgan, sferaga hamma joyda perpendikulyar va kuchi bir xil.",
+      "ru": "По симметрии силовые линии направлены радиально наружу, перпендикулярно сфере, и поле одинаково во всех точках поверхности."
+     },
+     "draw": [
+      {
+       "id": "fl1",
+       "type": "radial_field_lines",
+       "color": "field",
+       "label": "",
+       "at": 0.2,
+       "num": [
+        {
+         "k": "x",
+         "v": 380
+        },
+        {
+         "k": "y",
+         "v": 400
+        },
+        {
+         "k": "n",
+         "v": 8
+        },
+        {
+         "k": "r_start",
+         "v": 30
+        },
+        {
+         "k": "r_end",
+         "v": 260
+        }
+       ],
+       "txt": [
+        {
+         "k": "direction",
+         "v": "out"
+        }
+       ],
+       "pts": []
+      }
+     ],
+     "checkpoints": []
+    },
+    {
+     "id": "s3",
+     "kind": "explain",
+     "calcs": [],
+     "say": "Electric flux measures how much field passes through a surface. Here the flux is phi.",
+     "subtitles": {
+      "uz": "Elektr oqimi sirt orqali o'tuvchi maydon miqdorini o'lchaydi. Bu yerda oqim phi.",
+      "ru": "Электрический поток измеряет, сколько поля проходит через поверхность. Здесь поток равен phi."
+     },
+     "draw": [
+      {
+       "id": "sym-phi",
+       "type": "symbol",
+       "color": "ink",
+       "label": "",
+       "at": 0.0,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 60
+        }
+       ],
+       "txt": [
+        {
+         "k": "symbol",
+         "v": "\\Phi"
+        },
+        {
+         "k": "meaning",
+         "v": "electric flux"
+        },
+        {
+         "k": "unit",
+         "v": "N·m²/C"
+        }
+       ],
+       "pts": []
+      },
+      {
+       "id": "sym-e",
+       "type": "symbol",
+       "color": "ink",
+       "label": "",
+       "at": 0.2,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 105
+        }
+       ],
+       "txt": [
+        {
+         "k": "symbol",
+         "v": "E"
+        },
+        {
+         "k": "meaning",
+         "v": "electric field"
+        },
+        {
+         "k": "unit",
+         "v": "N/C"
+        }
+       ],
+       "pts": []
+      },
+      {
+       "id": "sym-a",
+       "type": "symbol",
+       "color": "ink",
+       "label": "",
+       "at": 0.4,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 150
+        }
+       ],
+       "txt": [
+        {
+         "k": "symbol",
+         "v": "A"
+        },
+        {
+         "k": "meaning",
+         "v": "sphere surface area"
+        },
+        {
+         "k": "unit",
+         "v": "m²"
+        }
+       ],
+       "pts": []
+      },
+      {
+       "id": "flux-def",
+       "type": "math",
+       "color": "accent",
+       "label": "",
+       "at": 0.6,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 260
+        }
+       ],
+       "txt": [
+        {
+         "k": "latex",
+         "v": "\\Phi = E A"
+        }
+       ],
+       "pts": []
+      }
+     ],
+     "checkpoints": []
+    },
+    {
+     "id": "s4",
+     "kind": "checkpoint",
+     "calcs": [],
+     "say": "Quick check before we use Gauss's law.",
+     "subtitles": {
+      "uz": "Gauss qonunidan foydalanishdan oldin qisqa tekshiruv.",
+      "ru": "Короткая проверка перед использованием закона Гаусса."
+     },
+     "draw": [],
+     "checkpoints": [
+      {
+       "question": "Why can we write the flux simply as E times A for this sphere?",
+       "type": "choice",
+       "choices": [
+        "E is perpendicular to the surface and has the same magnitude everywhere on it",
+        "The sphere is a conductor",
+        "E is zero on the surface",
+        "The charge is spread over the sphere"
+       ],
+       "answer": "0",
+       "hint": "Think about the direction and size of E at each point of the surface.",
+       "reexplain_hint": "Picture standing on the sphere: every point looks identical, and the field always points straight away from the center, like spokes of a ball."
+      }
+     ]
+    },
+    {
+     "id": "s5",
+     "kind": "explain",
+     "calcs": [],
+     "say": "Gauss's law: the flux equals the enclosed charge divided by epsilon zero. Only the charge inside matters, not the radius.",
+     "subtitles": {
+      "uz": "Gauss qonuni: oqim ichkaridagi zaryadni epsilon nolga bo'lganga teng. Faqat ichkaridagi zaryad muhim, radius emas.",
+      "ru": "Закон Гаусса: поток равен заряду внутри, делённому на epsilon zero. Важен только заряд внутри, а не радиус."
+     },
+     "draw": [
+      {
+       "id": "sym-q",
+       "type": "symbol",
+       "color": "ink",
+       "label": "",
+       "at": 0.0,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 195
+        }
+       ],
+       "txt": [
+        {
+         "k": "symbol",
+         "v": "Q_{\\text{enc}}"
+        },
+        {
+         "k": "meaning",
+         "v": "enclosed charge"
+        },
+        {
+         "k": "unit",
+         "v": "C"
+        }
+       ],
+       "pts": []
+      },
+      {
+       "id": "sym-eps",
+       "type": "symbol",
+       "color": "ink",
+       "label": "",
+       "at": 0.1,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 240
+        }
+       ],
+       "txt": [
+        {
+         "k": "symbol",
+         "v": "\\varepsilon_0"
+        },
+        {
+         "k": "meaning",
+         "v": "permittivity of free space"
+        },
+        {
+         "k": "unit",
+         "v": "C²/(N·m²)"
+        }
+       ],
+       "pts": []
+      },
+      {
+       "id": "gauss",
+       "type": "math",
+       "color": "accent",
+       "label": "",
+       "at": 0.4,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 340
+        }
+       ],
+       "txt": [
+        {
+         "k": "latex",
+         "v": "\\Phi = \\frac{Q_{\\text{enc}}}{\\varepsilon_0}"
+        }
+       ],
+       "pts": []
+      }
+     ],
+     "checkpoints": []
+    },
+    {
+     "id": "s6",
+     "kind": "explain",
+     "calcs": [
+      {
+       "id": "c1",
+       "expr": "Q/eps0",
+       "values": [
+        {
+         "name": "Q",
+         "value": 3e-09
+        },
+        {
+         "name": "eps0",
+         "value": 8.854e-12
+        }
+       ],
+       "expected": 338.83,
+       "unit": "N*m**2/C",
+       "unit_spoken": "newton meters squared per coulomb"
+      }
+     ],
+     "say": "With Q equal to 3 nanocoulombs, the flux is {c1}.",
+     "subtitles": {
+      "uz": "Q = 3 nanokulon bo'lganda oqim {c1} ga teng.",
+      "ru": "При Q, равном 3 нанокулона, поток равен {c1}."
+     },
+     "draw": [
+      {
+       "id": "flux-val",
+       "type": "math",
+       "color": "right",
+       "label": "",
+       "at": 0.5,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 440
+        }
+       ],
+       "txt": [
+        {
+         "k": "latex",
+         "v": "\\Phi = \\frac{3\\times 10^{-9}\\,\\text{C}}{\\varepsilon_0} = {c1}"
+        }
+       ],
+       "pts": []
+      }
+     ],
+     "checkpoints": []
+    },
+    {
+     "id": "s7",
+     "kind": "explain",
+     "calcs": [
+      {
+       "id": "c2",
+       "expr": "4*pi*R^2",
+       "values": [
+        {
+         "name": "R",
+         "value": 0.2
+        }
+       ],
+       "expected": 0.502655,
+       "unit": "m**2",
+       "unit_spoken": "square meters"
+      }
+     ],
+     "say": "The sphere's surface area is four pi R squared, which is {c2}.",
+     "subtitles": {
+      "uz": "Sferaning sirt yuzi to'rt pi R kvadrat, ya'ni {c2}.",
+      "ru": "Площадь поверхности сферы равна четыре пи R в квадрате, то есть {c2}."
+     },
+     "draw": [
+      {
+       "id": "area-eq",
+       "type": "math",
+       "color": "accent",
+       "label": "",
+       "at": 0.4,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 560
+        }
+       ],
+       "txt": [
+        {
+         "k": "latex",
+         "v": "A = 4\\pi R^2 = {c2}"
+        }
+       ],
+       "pts": []
+      }
+     ],
+     "checkpoints": []
+    },
+    {
+     "id": "s8",
+     "kind": "explain",
+     "calcs": [
+      {
+       "id": "c3",
+       "expr": "c1/c2",
+       "values": [],
+       "expected": 674.0,
+       "unit": "N/C",
+       "unit_spoken": "newtons per coulomb"
+      }
+     ],
+     "say": "Since flux equals E times A, the field on the surface is E equals flux over area, which is {c3}.",
+     "subtitles": {
+      "uz": "Oqim E ko'paytirilgan A ga teng, shuning uchun sirtdagi maydon oqimning yuzga nisbati, ya'ni {c3}.",
+      "ru": "Поток равен E умножить на A, поэтому поле на поверхности равно потоку, делённому на площадь: {c3}."
+     },
+     "draw": [
+      {
+       "id": "e-eq",
+       "type": "math",
+       "color": "right",
+       "label": "",
+       "at": 0.4,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 660
+        }
+       ],
+       "txt": [
+        {
+         "k": "latex",
+         "v": "E = \\frac{\\Phi}{A} = {c3}"
+        }
+       ],
+       "pts": []
+      },
+      {
+       "id": "hl-e",
+       "type": "highlight",
+       "color": "highlight",
+       "label": "",
+       "at": 0.8,
+       "num": [],
+       "txt": [
+        {
+         "k": "target_id",
+         "v": "e-eq"
+        }
+       ],
+       "pts": []
+      }
+     ],
+     "checkpoints": []
+    },
+    {
+     "id": "s9",
+     "kind": "checkpoint",
+     "calcs": [
+      {
+       "id": "c4",
+       "expr": "c1/(4*pi*(2*R)^2)",
+       "values": [
+        {
+         "name": "R",
+         "value": 0.2
+        }
+       ],
+       "expected": 168.5,
+       "unit": "N/C",
+       "unit_spoken": "newtons per coulomb"
+      }
+     ],
+     "say": "Now test yourself on a larger sphere.",
+     "subtitles": {
+      "uz": "Endi kattaroq sfera bilan o'zingizni sinab ko'ring.",
+      "ru": "Теперь проверьте себя на сфере большего размера."
+     },
+     "draw": [],
+     "checkpoints": [
+      {
+       "question": "The sphere is replaced by one of radius 0.4 m around the same charge. The flux stays {c1}. What is the field on the new surface, in N/C?",
+       "type": "number",
+       "choices": [],
+       "answer": "{c4:3sf}",
+       "hint": "Use E equals flux divided by four pi R squared with the new R.",
+       "reexplain_hint": "Compare with the field at 0.2 m: doubling the radius makes the area four times bigger while the flux is unchanged, so the field is divided by four."
+      }
+     ]
+    },
+    {
+     "id": "s10",
+     "kind": "explain",
+     "calcs": [
+      {
+       "id": "c5",
+       "expr": "k*Q/R^2",
+       "values": [
+        {
+         "name": "k",
+         "value": 8988000000.0
+        },
+        {
+         "name": "Q",
+         "value": 3e-09
+        },
+        {
+         "name": "R",
+         "value": 0.2
+        }
+       ],
+       "expected": 674.1,
+       "unit": "N/C",
+       "unit_spoken": "newtons per coulomb"
+      }
+     ],
+     "say": "Cross-check with Coulomb's law: E equals k Q over R squared gives {c5}, matching the Gauss result. The field points radially outward.",
+     "subtitles": {
+      "uz": "Kulon qonuni bilan tekshiramiz: E = kQ/R kvadrat {c5} beradi, Gauss natijasiga mos. Maydon radial tashqariga yo'nalgan.",
+      "ru": "Проверка по закону Кулона: E равно kQ делить на R в квадрате даёт {c5}, как и по Гауссу. Поле направлено радиально наружу."
+     },
+     "draw": [
+      {
+       "id": "check-eq",
+       "type": "math",
+       "color": "accent",
+       "label": "",
+       "at": 0.3,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 760
+        }
+       ],
+       "txt": [
+        {
+         "k": "latex",
+         "v": "E = \\frac{kQ}{R^2} = {c5}"
+        }
+       ],
+       "pts": []
+      }
+     ],
+     "checkpoints": []
+    },
+    {
+     "id": "s11",
+     "kind": "summary",
+     "calcs": [],
+     "say": "Summary: the flux is {c1}, the surface field is {c3}, pointing radially outward. The flux does not depend on the radius.",
+     "subtitles": {
+      "uz": "Xulosa: oqim {c1}, sirtdagi maydon {c3}, radial tashqariga yo'nalgan. Oqim radiusga bog'liq emas.",
+      "ru": "Итог: поток равен {c1}, поле на поверхности {c3}, направлено радиально наружу. Поток не зависит от радиуса."
+     },
+     "draw": [
+      {
+       "id": "sum-flux",
+       "type": "math",
+       "color": "right",
+       "label": "",
+       "at": 0.3,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 860
+        }
+       ],
+       "txt": [
+        {
+         "k": "latex",
+         "v": "\\Phi = {c1}"
+        }
+       ],
+       "pts": []
+      },
+      {
+       "id": "sum-e",
+       "type": "math",
+       "color": "right",
+       "label": "",
+       "at": 0.6,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 920
+        }
+       ],
+       "txt": [
+        {
+         "k": "latex",
+         "v": "E = {c3}"
+        }
+       ],
+       "pts": []
+      }
+     ],
+     "checkpoints": []
+    }
+   ]
+  },
+  {
+   "steps": [
+    {
+     "id": "s7",
+     "kind": "explain",
+     "calcs": [
+      {
+       "id": "c2",
+       "expr": "4*pi*R^2",
+       "values": [
+        {
+         "name": "R",
+         "value": 0.2
+        }
+       ],
+       "expected": 0.502655,
+       "unit": "m**2",
+       "unit_spoken": "square meters"
+      }
+     ],
+     "say": "The sphere's surface area is four pi R squared, which is {c2}.",
+     "subtitles": {
+      "uz": "Sferaning sirt yuzi to'rt pi R kvadrat, ya'ni {c2}.",
+      "ru": "Площадь поверхности сферы равна четыре пи R в квадрате, то есть {c2}."
+     },
+     "draw": [
+      {
+       "id": "sym-r",
+       "type": "symbol",
+       "color": "ink",
+       "label": "",
+       "at": 0.0,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 285
+        }
+       ],
+       "txt": [
+        {
+         "k": "symbol",
+         "v": "R"
+        },
+        {
+         "k": "meaning",
+         "v": "sphere radius"
+        },
+        {
+         "k": "unit",
+         "v": "m"
+        }
+       ],
+       "pts": []
+      },
+      {
+       "id": "area-eq",
+       "type": "math",
+       "color": "accent",
+       "label": "",
+       "at": 0.4,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 560
+        }
+       ],
+       "txt": [
+        {
+         "k": "latex",
+         "v": "A = 4\\pi R^2 = {c2}"
+        }
+       ],
+       "pts": []
+      }
+     ],
+     "checkpoints": []
+    }
+   ]
+  },
+  {
+   "steps": [
+    {
+     "id": "s9",
+     "kind": "checkpoint",
+     "calcs": [
+      {
+       "id": "c4",
+       "expr": "c1/(4*pi*(2*R)^2)",
+       "values": [
+        {
+         "name": "R",
+         "value": 0.2
+        }
+       ],
+       "expected": 168.5,
+       "unit": "N/C",
+       "unit_spoken": "newtons per coulomb"
+      },
+      {
+       "id": "c5",
+       "expr": "2*R",
+       "values": [
+        {
+         "name": "R",
+         "value": 0.2
+        }
+       ],
+       "expected": 0.4,
+       "unit": "m",
+       "unit_spoken": "meters"
+      }
+     ],
+     "say": "Now test yourself on a larger sphere.",
+     "subtitles": {
+      "uz": "Endi kattaroq sfera bilan o'zingizni sinab ko'ring.",
+      "ru": "Теперь проверьте себя на сфере большего размера."
+     },
+     "draw": [],
+     "checkpoints": [
+      {
+       "question": "The sphere is replaced by one of radius {c5} around the same charge. The flux stays {c1}. What is the field on the new surface, in N/C?",
+       "type": "number",
+       "choices": [],
+       "answer": "{c4:3sf}",
+       "hint": "Use E equals flux divided by four pi R squared with the new R.",
+       "reexplain_hint": "Compare with the field at the first radius: doubling the radius makes the area four times bigger while the flux is unchanged, so the field is divided by four."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "steps": [
+    {
+     "id": "s10",
+     "kind": "explain",
+     "calcs": [
+      {
+       "id": "c6",
+       "expr": "k*Q/R^2",
+       "values": [
+        {
+         "name": "k",
+         "value": 8988000000.0
+        },
+        {
+         "name": "Q",
+         "value": 3e-09
+        },
+        {
+         "name": "R",
+         "value": 0.2
+        }
+       ],
+       "expected": 674.1,
+       "unit": "N/C",
+       "unit_spoken": "newtons per coulomb"
+      }
+     ],
+     "say": "Cross-check with Coulomb's law: E equals k Q over R squared gives {c6}, matching the Gauss result. The field points radially outward.",
+     "subtitles": {
+      "uz": "Kulon qonuni bilan tekshiramiz: E = kQ/R kvadrat {c6} beradi, Gauss natijasiga mos. Maydon radial tashqariga yo'nalgan.",
+      "ru": "Проверка по закону Кулона: E равно kQ делить на R в квадрате даёт {c6}, как и по Гауссу. Поле направлено радиально наружу."
+     },
+     "draw": [
+      {
+       "id": "sym-k",
+       "type": "symbol",
+       "color": "ink",
+       "label": "",
+       "at": 0.0,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 330
+        }
+       ],
+       "txt": [
+        {
+         "k": "symbol",
+         "v": "k"
+        },
+        {
+         "k": "meaning",
+         "v": "Coulomb constant"
+        },
+        {
+         "k": "unit",
+         "v": "N·m²/C²"
+        }
+       ],
+       "pts": []
+      },
+      {
+       "id": "sym-q-pt",
+       "type": "symbol",
+       "color": "ink",
+       "label": "",
+       "at": 0.1,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 375
+        }
+       ],
+       "txt": [
+        {
+         "k": "symbol",
+         "v": "Q"
+        },
+        {
+         "k": "meaning",
+         "v": "point charge"
+        },
+        {
+         "k": "unit",
+         "v": "C"
+        }
+       ],
+       "pts": []
+      },
+      {
+       "id": "check-eq",
+       "type": "math",
+       "color": "accent",
+       "label": "",
+       "at": 0.3,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 760
+        }
+       ],
+       "txt": [
+        {
+         "k": "latex",
+         "v": "E = \\frac{kQ}{R^2} = {c6}"
+        }
+       ],
+       "pts": []
+      }
+     ],
+     "checkpoints": []
+    }
+   ]
+  }
+ ]
+}

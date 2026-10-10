@@ -1,0 +1,669 @@
+{
+ "note": "Recorded Claude replies (lesson draft, then step fixes) for the CLAUDE.md prompt tests, 2026-10-10. Replayed offline by tests/test_generated_fixtures.py.",
+ "source": {
+  "type": "problem",
+  "text": "Check this ChatGPT solution and explain it. Problem: a point charge q = 4.0 nC sits at the centre of a cube of side 0.30 m. Find the electric flux through one face of the cube. ChatGPT answer: Step 1: By Gauss's law the total flux through the closed cube is q/epsilon_0 = 4.0e-9 / 8.854e-12 = 451.8 N m^2/C. Step 2: The cube has 6 identical faces, and by symmetry each face gets the same share. Step 3: Flux through one face = 451.8 / 3 = 150.6 N m^2/C."
+ },
+ "replies": [
+  {
+   "title": "Checking the flux through one face of a cube",
+   "level": "university",
+   "steps": [
+    {
+     "id": "s1",
+     "kind": "explain",
+     "calcs": [],
+     "say": "A point charge sits at the centre of a cube. We will check the given solution step by step, starting with the setup.",
+     "subtitles": {
+      "uz": "Nuqtaviy zaryad kubning markazida joylashgan. Berilgan yechimni qadamma-qadam tekshiramiz.",
+      "ru": "Точечный заряд находится в центре куба. Проверим данное решение шаг за шагом."
+     },
+     "draw": [
+      {
+       "id": "cube",
+       "type": "rect",
+       "color": "surface",
+       "label": "cube, side 0.30 m",
+       "at": 0.0,
+       "num": [
+        {
+         "k": "x",
+         "v": 200
+        },
+        {
+         "k": "y",
+         "v": 300
+        },
+        {
+         "k": "w",
+         "v": 300
+        },
+        {
+         "k": "h",
+         "v": 300
+        },
+        {
+         "k": "dashed",
+         "v": 0
+        }
+       ],
+       "txt": [],
+       "pts": []
+      },
+      {
+       "id": "charge",
+       "type": "point_charge",
+       "color": "charge_pos",
+       "label": "",
+       "at": 0.4,
+       "num": [
+        {
+         "k": "x",
+         "v": 350
+        },
+        {
+         "k": "y",
+         "v": 450
+        },
+        {
+         "k": "r",
+         "v": 16
+        }
+       ],
+       "txt": [
+        {
+         "k": "sign",
+         "v": "+"
+        },
+        {
+         "k": "name",
+         "v": "q"
+        }
+       ],
+       "pts": []
+      }
+     ],
+     "checkpoints": []
+    },
+    {
+     "id": "s2",
+     "kind": "explain",
+     "calcs": [
+      {
+       "id": "c1",
+       "expr": "q/eps0",
+       "values": [
+        {
+         "name": "q",
+         "value": 4e-09
+        },
+        {
+         "name": "eps0",
+         "value": 8.854e-12
+        }
+       ],
+       "expected": 451.7926,
+       "unit": "N*m**2/C",
+       "unit_spoken": "newton meters squared per coulomb"
+      }
+     ],
+     "say": "Step one: Gauss's law gives total flux through the closed cube as q over epsilon zero, which is {c1}. This step is correct.",
+     "subtitles": {
+      "uz": "Birinchi qadam: Gauss qonuniga ko'ra kub orqali umumiy oqim q/epsilon nol, ya'ni {c1}. Bu qadam to'g'ri.",
+      "ru": "Шаг первый: по закону Гаусса полный поток через куб равен q/эпсилон ноль, то есть {c1}. Этот шаг верен."
+     },
+     "draw": [
+      {
+       "id": "sym-q",
+       "type": "symbol",
+       "color": "ink",
+       "label": "",
+       "at": 0.0,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 60
+        }
+       ],
+       "txt": [
+        {
+         "k": "symbol",
+         "v": "q"
+        },
+        {
+         "k": "meaning",
+         "v": "enclosed charge"
+        },
+        {
+         "k": "unit",
+         "v": "C"
+        }
+       ],
+       "pts": []
+      },
+      {
+       "id": "sym-eps",
+       "type": "symbol",
+       "color": "ink",
+       "label": "",
+       "at": 0.1,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 105
+        }
+       ],
+       "txt": [
+        {
+         "k": "symbol",
+         "v": "\\varepsilon_0"
+        },
+        {
+         "k": "meaning",
+         "v": "permittivity of free space"
+        },
+        {
+         "k": "unit",
+         "v": "C²/(N·m²)"
+        }
+       ],
+       "pts": []
+      },
+      {
+       "id": "sym-phi",
+       "type": "symbol",
+       "color": "ink",
+       "label": "",
+       "at": 0.2,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 150
+        }
+       ],
+       "txt": [
+        {
+         "k": "symbol",
+         "v": "\\Phi"
+        },
+        {
+         "k": "meaning",
+         "v": "electric flux"
+        },
+        {
+         "k": "unit",
+         "v": "N·m²/C"
+        }
+       ],
+       "pts": []
+      },
+      {
+       "id": "gauss-eq",
+       "type": "math",
+       "color": "accent",
+       "label": "",
+       "at": 0.5,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 260
+        }
+       ],
+       "txt": [
+        {
+         "k": "latex",
+         "v": "\\Phi = \\frac{q}{\\varepsilon_0} = {c1}"
+        }
+       ],
+       "pts": []
+      },
+      {
+       "id": "ok1",
+       "type": "highlight",
+       "color": "right",
+       "label": "",
+       "at": 0.8,
+       "num": [],
+       "txt": [
+        {
+         "k": "target_id",
+         "v": "gauss-eq"
+        }
+       ],
+       "pts": []
+      }
+     ],
+     "checkpoints": []
+    },
+    {
+     "id": "s3",
+     "kind": "explain",
+     "calcs": [],
+     "say": "Step two: six identical faces, and by symmetry each face gets the same share. This reasoning is also correct.",
+     "subtitles": {
+      "uz": "Ikkinchi qadam: oltita bir xil yoq, simmetriya tufayli har biri teng ulush oladi. Bu fikr ham to'g'ri.",
+      "ru": "Шаг второй: шесть одинаковых граней, и по симметрии каждая получает равную долю. Это рассуждение тоже верно."
+     },
+     "draw": [
+      {
+       "id": "face-top",
+       "type": "highlight",
+       "color": "highlight",
+       "label": "1 of 6 faces",
+       "at": 0.3,
+       "num": [],
+       "txt": [
+        {
+         "k": "target_id",
+         "v": "cube"
+        }
+       ],
+       "pts": []
+      },
+      {
+       "id": "sym-eq",
+       "type": "text",
+       "color": "ink",
+       "label": "",
+       "at": 0.6,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 340
+        },
+        {
+         "k": "size",
+         "v": 28
+        }
+       ],
+       "txt": [
+        {
+         "k": "text",
+         "v": "6 identical faces: equal shares"
+        }
+       ],
+       "pts": []
+      }
+     ],
+     "checkpoints": []
+    },
+    {
+     "id": "s4",
+     "kind": "checkpoint",
+     "calcs": [],
+     "say": "Quick check before we reach the final step. Think about what symmetry tells you.",
+     "subtitles": {
+      "uz": "Oxirgi qadamdan oldin tezkor tekshiruv. Simmetriya nima deyishini o'ylang.",
+      "ru": "Быстрая проверка перед последним шагом. Подумайте, что говорит симметрия."
+     },
+     "draw": [],
+     "checkpoints": [
+      {
+       "question": "The total flux is shared equally among how many faces of the cube?",
+       "type": "choice",
+       "choices": [
+        "3",
+        "4",
+        "6",
+        "8"
+       ],
+       "answer": "2",
+       "hint": "Count the faces of a cube.",
+       "reexplain_hint": "Picture a die: every one of its sides is a face, and each side looks the same from the centre."
+      }
+     ]
+    },
+    {
+     "id": "s5",
+     "kind": "explain",
+     "calcs": [
+      {
+       "id": "c2",
+       "expr": "c1/6",
+       "values": [],
+       "expected": 75.29877,
+       "unit": "N*m**2/C",
+       "unit_spoken": "newton meters squared per coulomb"
+      }
+     ],
+     "say": "Step three is wrong. Total flux divided by six gives the correct flux through one face: {c2}.",
+     "subtitles": {
+      "uz": "Uchinchi qadam xato. Umumiy oqimni oltiga bo'lsak, bitta yoq orqali to'g'ri oqim chiqadi: {c2}.",
+      "ru": "Шаг три неверен. Полный поток, делённый на шесть, даёт правильный поток через одну грань: {c2}."
+     },
+     "draw": [
+      {
+       "id": "wrong3",
+       "type": "text",
+       "color": "ink",
+       "label": "",
+       "at": 0.0,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 420
+        },
+        {
+         "k": "size",
+         "v": 28
+        }
+       ],
+       "txt": [
+        {
+         "k": "text",
+         "v": "ChatGPT: divide by 3"
+        }
+       ],
+       "pts": []
+      },
+      {
+       "id": "mw3",
+       "type": "mark_wrong",
+       "color": "wrong",
+       "label": "",
+       "at": 0.2,
+       "num": [],
+       "txt": [
+        {
+         "k": "target_id",
+         "v": "wrong3"
+        },
+        {
+         "k": "reason",
+         "v": "six faces, not three"
+        }
+       ],
+       "pts": []
+      },
+      {
+       "id": "right3",
+       "type": "math",
+       "color": "right",
+       "label": "",
+       "at": 0.6,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 520
+        }
+       ],
+       "txt": [
+        {
+         "k": "latex",
+         "v": "\\Phi_{\\text{face}} = \\frac{\\Phi}{6} = {c2}"
+        }
+       ],
+       "pts": []
+      }
+     ],
+     "checkpoints": []
+    },
+    {
+     "id": "s6",
+     "kind": "explain",
+     "calcs": [
+      {
+       "id": "c3",
+       "expr": "c1/3",
+       "values": [],
+       "expected": 150.5975,
+       "unit": "N*m**2/C",
+       "unit_spoken": "newton meters squared per coulomb"
+      }
+     ],
+     "say": "Dividing by three gives {c3}, which is double the true value. That would be the flux through two faces together.",
+     "subtitles": {
+      "uz": "Uchga bo'lish {c3} beradi, bu haqiqiy qiymatdan ikki baravar katta. Bu ikki yoq orqali umumiy oqimdir.",
+      "ru": "Деление на три даёт {c3}, что вдвое больше истинного значения. Это поток через две грани вместе."
+     },
+     "draw": [
+      {
+       "id": "two-faces",
+       "type": "text",
+       "color": "wrong",
+       "label": "",
+       "at": 0.4,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 620
+        },
+        {
+         "k": "size",
+         "v": 28
+        }
+       ],
+       "txt": [
+        {
+         "k": "text",
+         "v": "divide by 3 = flux of 2 faces"
+        }
+       ],
+       "pts": []
+      }
+     ],
+     "checkpoints": []
+    },
+    {
+     "id": "s7",
+     "kind": "checkpoint",
+     "calcs": [],
+     "say": "Now test yourself on the corrected result.",
+     "subtitles": {
+      "uz": "Endi tuzatilgan natija bo'yicha o'zingizni sinab ko'ring.",
+      "ru": "Теперь проверьте себя на исправленном результате."
+     },
+     "draw": [],
+     "checkpoints": [
+      {
+       "question": "What is the correct flux through one face, in newton meters squared per coulomb?",
+       "type": "number",
+       "choices": [],
+       "answer": "{c2:3sf}",
+       "hint": "Total flux divided by the number of faces.",
+       "reexplain_hint": "The faces share the total equally. Divide the total flux by six, not by three."
+      }
+     ]
+    },
+    {
+     "id": "s8",
+     "kind": "summary",
+     "calcs": [],
+     "say": "Summary: steps one and two were correct, but dividing by three was wrong. Divide by six to get {c2} per face.",
+     "subtitles": {
+      "uz": "Xulosa: birinchi va ikkinchi qadamlar to'g'ri, ammo uchga bo'lish xato. Har bir yoq uchun oltiga bo'ling: {c2}.",
+      "ru": "Итог: шаги один и два верны, но деление на три ошибочно. Делим на шесть, получаем {c2} на грань."
+     },
+     "draw": [
+      {
+       "id": "final",
+       "type": "math",
+       "color": "right",
+       "label": "",
+       "at": 0.5,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 720
+        }
+       ],
+       "txt": [
+        {
+         "k": "latex",
+         "v": "\\Phi_{\\text{face}} = {c2}"
+        }
+       ],
+       "pts": []
+      }
+     ],
+     "checkpoints": []
+    }
+   ]
+  },
+  {
+   "steps": [
+    {
+     "id": "s5",
+     "kind": "explain",
+     "calcs": [
+      {
+       "id": "c2",
+       "expr": "c1/6",
+       "values": [],
+       "expected": 75.29877,
+       "unit": "N*m**2/C",
+       "unit_spoken": "newton meters squared per coulomb"
+      }
+     ],
+     "say": "Step three is wrong. Total flux divided by six gives the correct flux through one face: {c2}.",
+     "subtitles": {
+      "uz": "Uchinchi qadam xato. Umumiy oqimni oltiga bo'lsak, bitta yoq orqali to'g'ri oqim chiqadi: {c2}.",
+      "ru": "Шаг три неверен. Полный поток, делённый на шесть, даёт правильный поток через одну грань: {c2}."
+     },
+     "draw": [
+      {
+       "id": "sym-phi-face",
+       "type": "symbol",
+       "color": "ink",
+       "label": "",
+       "at": 0.0,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 195
+        }
+       ],
+       "txt": [
+        {
+         "k": "symbol",
+         "v": "\\Phi_{\\text{face}}"
+        },
+        {
+         "k": "meaning",
+         "v": "flux through one face"
+        },
+        {
+         "k": "unit",
+         "v": "N·m²/C"
+        }
+       ],
+       "pts": []
+      },
+      {
+       "id": "wrong3",
+       "type": "text",
+       "color": "ink",
+       "label": "",
+       "at": 0.1,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 420
+        },
+        {
+         "k": "size",
+         "v": 28
+        }
+       ],
+       "txt": [
+        {
+         "k": "text",
+         "v": "ChatGPT: divide by 3"
+        }
+       ],
+       "pts": []
+      },
+      {
+       "id": "mw3",
+       "type": "mark_wrong",
+       "color": "wrong",
+       "label": "",
+       "at": 0.3,
+       "num": [],
+       "txt": [
+        {
+         "k": "target_id",
+         "v": "wrong3"
+        },
+        {
+         "k": "reason",
+         "v": "six faces, not three"
+        }
+       ],
+       "pts": []
+      },
+      {
+       "id": "right3",
+       "type": "math",
+       "color": "right",
+       "label": "",
+       "at": 0.6,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 520
+        }
+       ],
+       "txt": [
+        {
+         "k": "latex",
+         "v": "\\Phi_{\\text{face}} = \\frac{\\Phi}{6} = {c2}"
+        }
+       ],
+       "pts": []
+      }
+     ],
+     "checkpoints": []
+    }
+   ]
+  }
+ ]
+}

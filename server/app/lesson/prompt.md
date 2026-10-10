@@ -70,8 +70,11 @@ A spoken placeholder is several words long. Count them toward the 26.
 
 You may write numbers that are given in the problem as they are (also rescaled, e.g.
 3 nC as 3 \times 10^{-9} C), small whole numbers used for counting (two charges, step 3),
-simple coefficients in formulas (2, 4, 1/2), and standard constants. Any other number
-in `say`, a label, `text`, `math` or a checkpoint is an error.
+simple coefficients in formulas (2, 4, 1/2), and standard constants. For a topic (no
+given data), you may choose example values: say they are an example, and declare each
+one as an input in the `values` of a calc in that step or earlier; then it may be
+written as it is. Any other number in `say`, a label, `text`, `math` or a checkpoint is
+an error.
 
 A calc:
 ```
@@ -87,9 +90,10 @@ Rules for calcs:
 - A step may use placeholders for calcs of that step and of any earlier step.
 - Make a calc for every computed result, every unit conversion you show, every
   intermediate number you show, and every numerical checkpoint answer.
-- Keep full precision in intermediate values: a later calc uses the given values and
-  repeats the earlier expression (or uses the full-precision value), never a rounded
-  display value. Round only when displaying, with the placeholder format.
+- Keep full precision in intermediate values. A later calc may use an earlier calc's
+  id as a name in `expr` (e.g. `c1/(4*pi*R^2)`) without listing it in `values`: the
+  server substitutes the full-precision result. Never type a rounded earlier result
+  into `values`. Round only when displaying, with the placeholder format.
 - The same result is always the same placeholder, so the number is identical in
   narration, board, checkpoint and summary.
 - Never change the inputs or the expression just to make `expected` match.

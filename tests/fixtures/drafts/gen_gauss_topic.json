@@ -1,0 +1,994 @@
+{
+ "note": "Recorded Claude replies (lesson draft, then step fixes) for the CLAUDE.md prompt tests, 2026-10-10. Replayed offline by tests/test_generated_fixtures.py.",
+ "source": {
+  "type": "topic",
+  "text": "Explain Gauss's law"
+ },
+ "replies": [
+  {
+   "title": "Gauss's Law",
+   "level": "university",
+   "steps": [
+    {
+     "id": "s1",
+     "kind": "explain",
+     "calcs": [],
+     "say": "Gauss's law links the electric flux through a closed surface to the charge inside that surface.",
+     "subtitles": {
+      "uz": "Gauss qonuni yopiq sirt orqali o'tuvchi elektr oqimini sirt ichidagi zaryad bilan bog'laydi.",
+      "ru": "Закон Гаусса связывает поток электрического поля через замкнутую поверхность с зарядом внутри неё."
+     },
+     "draw": [
+      {
+       "id": "q1",
+       "type": "point_charge",
+       "color": "charge_pos",
+       "label": "",
+       "at": 0.2,
+       "num": [
+        {
+         "k": "x",
+         "v": 350
+        },
+        {
+         "k": "y",
+         "v": 400
+        },
+        {
+         "k": "r",
+         "v": 18
+        }
+       ],
+       "txt": [
+        {
+         "k": "sign",
+         "v": "+"
+        },
+        {
+         "k": "name",
+         "v": "Q"
+        }
+       ],
+       "pts": []
+      },
+      {
+       "id": "gs1",
+       "type": "gaussian_sphere",
+       "color": "surface",
+       "label": "closed surface",
+       "at": 0.5,
+       "num": [
+        {
+         "k": "cx",
+         "v": 350
+        },
+        {
+         "k": "cy",
+         "v": 400
+        },
+        {
+         "k": "r",
+         "v": 220
+        }
+       ],
+       "txt": [
+        {
+         "k": "name",
+         "v": ""
+        }
+       ],
+       "pts": []
+      },
+      {
+       "id": "fl1",
+       "type": "radial_field_lines",
+       "color": "field",
+       "label": "",
+       "at": 0.8,
+       "num": [
+        {
+         "k": "x",
+         "v": 350
+        },
+        {
+         "k": "y",
+         "v": 400
+        },
+        {
+         "k": "n",
+         "v": 8
+        },
+        {
+         "k": "r_start",
+         "v": 40
+        },
+        {
+         "k": "r_end",
+         "v": 280
+        }
+       ],
+       "txt": [
+        {
+         "k": "direction",
+         "v": "out"
+        }
+       ],
+       "pts": []
+      }
+     ],
+     "checkpoints": []
+    },
+    {
+     "id": "s2",
+     "kind": "explain",
+     "calcs": [],
+     "say": "Electric flux measures how much field passes through a surface. Field lines going outward count positive, lines going inward count negative.",
+     "subtitles": {
+      "uz": "Elektr oqimi sirt orqali qancha maydon o'tishini o'lchaydi. Tashqariga chiqqan chiziqlar musbat, ichkariga kirganlar manfiy hisoblanadi.",
+      "ru": "Электрический поток измеряет, сколько поля проходит через поверхность. Линии наружу считаются положительными, внутрь — отрицательными."
+     },
+     "draw": [
+      {
+       "id": "sym-phi",
+       "type": "symbol",
+       "color": "ink",
+       "label": "",
+       "at": 0.1,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 60
+        }
+       ],
+       "txt": [
+        {
+         "k": "symbol",
+         "v": "\\Phi"
+        },
+        {
+         "k": "meaning",
+         "v": "electric flux"
+        },
+        {
+         "k": "unit",
+         "v": "N·m²/C"
+        }
+       ],
+       "pts": []
+      },
+      {
+       "id": "sym-e",
+       "type": "symbol",
+       "color": "ink",
+       "label": "",
+       "at": 0.3,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 105
+        }
+       ],
+       "txt": [
+        {
+         "k": "symbol",
+         "v": "E"
+        },
+        {
+         "k": "meaning",
+         "v": "electric field"
+        },
+        {
+         "k": "unit",
+         "v": "N/C"
+        }
+       ],
+       "pts": []
+      },
+      {
+       "id": "sym-a",
+       "type": "symbol",
+       "color": "ink",
+       "label": "",
+       "at": 0.5,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 150
+        }
+       ],
+       "txt": [
+        {
+         "k": "symbol",
+         "v": "A"
+        },
+        {
+         "k": "meaning",
+         "v": "surface area"
+        },
+        {
+         "k": "unit",
+         "v": "m²"
+        }
+       ],
+       "pts": []
+      },
+      {
+       "id": "flux-def",
+       "type": "math",
+       "color": "accent",
+       "label": "",
+       "at": 0.7,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 260
+        }
+       ],
+       "txt": [
+        {
+         "k": "latex",
+         "v": "\\Phi = E A"
+        }
+       ],
+       "pts": []
+      }
+     ],
+     "checkpoints": []
+    },
+    {
+     "id": "s3",
+     "kind": "explain",
+     "calcs": [],
+     "say": "For a general surface we add up small pieces. The flux is the closed surface integral of E dot dA.",
+     "subtitles": {
+      "uz": "Umumiy sirt uchun kichik bo'laklarni qo'shamiz. Oqim E skalyar dA ning yopiq sirt bo'yicha integralidir.",
+      "ru": "Для произвольной поверхности суммируем малые участки. Поток — это интеграл E скалярно dA по замкнутой поверхности."
+     },
+     "draw": [
+      {
+       "id": "flux-int",
+       "type": "math",
+       "color": "accent",
+       "label": "",
+       "at": 0.5,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 340
+        }
+       ],
+       "txt": [
+        {
+         "k": "latex",
+         "v": "\\Phi = \\oint \\vec{E}\\cdot d\\vec{A}"
+        }
+       ],
+       "pts": []
+      }
+     ],
+     "checkpoints": []
+    },
+    {
+     "id": "s4",
+     "kind": "checkpoint",
+     "calcs": [],
+     "say": "Quick check on flux before we continue.",
+     "subtitles": {
+      "uz": "Davom etishdan oldin oqim bo'yicha qisqa tekshiruv.",
+      "ru": "Быстрая проверка по потоку перед продолжением."
+     },
+     "draw": [],
+     "checkpoints": [
+      {
+       "question": "Field lines enter a closed surface and none leave. What is the sign of the net flux?",
+       "type": "choice",
+       "choices": [
+        "Positive",
+        "Negative",
+        "Zero"
+       ],
+       "answer": "1",
+       "hint": "Inward lines count negative.",
+       "reexplain_hint": "Imagine water flowing into a closed net with no outlet: inflow is counted as negative flow."
+      }
+     ]
+    },
+    {
+     "id": "s5",
+     "kind": "explain",
+     "calcs": [],
+     "say": "Gauss's law says the net flux equals the enclosed charge divided by epsilon zero.",
+     "subtitles": {
+      "uz": "Gauss qonuni: umumiy oqim ichidagi zaryadning epsilon nolga nisbatiga teng.",
+      "ru": "Закон Гаусса: полный поток равен заключённому заряду, делённому на эпсилон ноль."
+     },
+     "draw": [
+      {
+       "id": "sym-qenc",
+       "type": "symbol",
+       "color": "ink",
+       "label": "",
+       "at": 0.1,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 195
+        }
+       ],
+       "txt": [
+        {
+         "k": "symbol",
+         "v": "Q_{\\text{enc}}"
+        },
+        {
+         "k": "meaning",
+         "v": "enclosed charge"
+        },
+        {
+         "k": "unit",
+         "v": "C"
+        }
+       ],
+       "pts": []
+      },
+      {
+       "id": "sym-eps0",
+       "type": "symbol",
+       "color": "ink",
+       "label": "",
+       "at": 0.2,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 240
+        }
+       ],
+       "txt": [
+        {
+         "k": "symbol",
+         "v": "\\varepsilon_0"
+        },
+        {
+         "k": "meaning",
+         "v": "permittivity of free space"
+        },
+        {
+         "k": "unit",
+         "v": "C²/(N·m²)"
+        }
+       ],
+       "pts": []
+      },
+      {
+       "id": "gauss-law",
+       "type": "math",
+       "color": "right",
+       "label": "",
+       "at": 0.6,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 430
+        }
+       ],
+       "txt": [
+        {
+         "k": "latex",
+         "v": "\\oint \\vec{E}\\cdot d\\vec{A} = \\frac{Q_{\\text{enc}}}{\\varepsilon_0}"
+        }
+       ],
+       "pts": []
+      },
+      {
+       "id": "hl1",
+       "type": "highlight",
+       "color": "highlight",
+       "label": "",
+       "at": 0.9,
+       "num": [],
+       "txt": [
+        {
+         "k": "target_id",
+         "v": "gauss-law"
+        }
+       ],
+       "pts": []
+      }
+     ],
+     "checkpoints": []
+    },
+    {
+     "id": "s6",
+     "kind": "explain",
+     "calcs": [
+      {
+       "id": "c1",
+       "expr": "Q/eps0",
+       "values": [
+        {
+         "name": "Q",
+         "value": 3e-09
+        },
+        {
+         "name": "eps0",
+         "value": 8.854e-12
+        }
+       ],
+       "expected": 338.8299,
+       "unit": "N*m**2/C",
+       "unit_spoken": "newton meters squared per coulomb"
+      }
+     ],
+     "say": "Example: a charge Q of 3 nanocoulombs inside any closed surface gives a flux of {c1}.",
+     "subtitles": {
+      "uz": "Misol: yopiq sirt ichidagi 3 nanokulon zaryad {c1} oqim beradi.",
+      "ru": "Пример: заряд 3 нанокулона внутри любой замкнутой поверхности даёт поток {c1}."
+     },
+     "draw": [
+      {
+       "id": "ex1",
+       "type": "math",
+       "color": "accent",
+       "label": "",
+       "at": 0.5,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 540
+        }
+       ],
+       "txt": [
+        {
+         "k": "latex",
+         "v": "\\Phi = \\frac{3\\times10^{-9}\\,\\text{C}}{\\varepsilon_0} = {c1}"
+        }
+       ],
+       "pts": []
+      }
+     ],
+     "checkpoints": []
+    },
+    {
+     "id": "s7",
+     "kind": "explain",
+     "calcs": [],
+     "say": "Only enclosed charge matters. A charge outside the surface contributes field lines that enter and leave, so its net flux is zero.",
+     "subtitles": {
+      "uz": "Faqat ichidagi zaryad muhim. Tashqaridagi zaryadning chiziqlari kirib chiqadi, shuning uchun uning sof oqimi nolga teng.",
+      "ru": "Важен только заряд внутри. Линии внешнего заряда входят и выходят, поэтому его суммарный поток равен нулю."
+     },
+     "draw": [
+      {
+       "id": "gs2",
+       "type": "gaussian_sphere",
+       "color": "surface",
+       "label": "",
+       "at": 0.1,
+       "num": [
+        {
+         "k": "cx",
+         "v": 250
+        },
+        {
+         "k": "cy",
+         "v": 750
+        },
+        {
+         "k": "r",
+         "v": 130
+        }
+       ],
+       "txt": [
+        {
+         "k": "name",
+         "v": ""
+        }
+       ],
+       "pts": []
+      },
+      {
+       "id": "q2",
+       "type": "point_charge",
+       "color": "charge_pos",
+       "label": "",
+       "at": 0.3,
+       "num": [
+        {
+         "k": "x",
+         "v": 560
+        },
+        {
+         "k": "y",
+         "v": 750
+        },
+        {
+         "k": "r",
+         "v": 16
+        }
+       ],
+       "txt": [
+        {
+         "k": "sign",
+         "v": "+"
+        },
+        {
+         "k": "name",
+         "v": "outside"
+        }
+       ],
+       "pts": []
+      },
+      {
+       "id": "a1",
+       "type": "arrow",
+       "color": "field",
+       "label": "in",
+       "at": 0.6,
+       "num": [
+        {
+         "k": "x1",
+         "v": 480
+        },
+        {
+         "k": "y1",
+         "v": 720
+        },
+        {
+         "k": "x2",
+         "v": 390
+        },
+        {
+         "k": "y2",
+         "v": 720
+        },
+        {
+         "k": "dashed",
+         "v": 0
+        }
+       ],
+       "txt": [],
+       "pts": []
+      },
+      {
+       "id": "a2",
+       "type": "arrow",
+       "color": "field",
+       "label": "out",
+       "at": 0.8,
+       "num": [
+        {
+         "k": "x1",
+         "v": 130
+        },
+        {
+         "k": "y1",
+         "v": 720
+        },
+        {
+         "k": "x2",
+         "v": 60
+        },
+        {
+         "k": "y2",
+         "v": 720
+        },
+        {
+         "k": "dashed",
+         "v": 0
+        }
+       ],
+       "txt": [],
+       "pts": []
+      }
+     ],
+     "checkpoints": []
+    },
+    {
+     "id": "s8",
+     "kind": "checkpoint",
+     "calcs": [
+      {
+       "id": "c2",
+       "expr": "Q/eps0",
+       "values": [
+        {
+         "name": "Q",
+         "value": 6e-09
+        },
+        {
+         "name": "eps0",
+         "value": 8.854e-12
+        }
+       ],
+       "expected": 677.6598,
+       "unit": "N*m**2/C",
+       "unit_spoken": "newton meters squared per coulomb"
+      }
+     ],
+     "say": "Now try a calculation yourself.",
+     "subtitles": {
+      "uz": "Endi o'zingiz hisoblab ko'ring.",
+      "ru": "Теперь попробуйте посчитать сами."
+     },
+     "draw": [],
+     "checkpoints": [
+      {
+       "question": "A closed surface encloses 6 nC of charge. What is the net flux through it, in newton meters squared per coulomb?",
+       "type": "number",
+       "choices": [],
+       "answer": "{c2:3sf}",
+       "hint": "Use flux equals Q over epsilon zero, with Q in coulombs.",
+       "reexplain_hint": "For hypothetical simpler numbers: doubling the enclosed charge doubles the flux. The 3 nC example gave {c1}, so 6 nC gives twice that."
+      }
+     ]
+    },
+    {
+     "id": "s9",
+     "kind": "explain",
+     "calcs": [],
+     "say": "Gauss's law is always true, but it is useful for finding E only when symmetry lets E come out of the integral.",
+     "subtitles": {
+      "uz": "Gauss qonuni doim to'g'ri, lekin E ni topishda faqat simmetriya E ni integraldan chiqarishga imkon bersa foydali.",
+      "ru": "Закон Гаусса верен всегда, но для нахождения E он полезен, лишь когда симметрия позволяет вынести E из интеграла."
+     },
+     "draw": [
+      {
+       "id": "sym-list",
+       "type": "text",
+       "color": "ink",
+       "label": "",
+       "at": 0.3,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 650
+        },
+        {
+         "k": "size",
+         "v": 28
+        }
+       ],
+       "txt": [
+        {
+         "k": "text",
+         "v": "Symmetries: spherical, cylindrical, planar"
+        }
+       ],
+       "pts": []
+      }
+     ],
+     "checkpoints": []
+    },
+    {
+     "id": "s10",
+     "kind": "explain",
+     "calcs": [],
+     "say": "Example: a point charge. By spherical symmetry, E is the same everywhere on a sphere of radius r and points outward.",
+     "subtitles": {
+      "uz": "Misol: nuqtaviy zaryad. Sferik simmetriya tufayli E radiusi r bo'lgan sferada hamma joyda bir xil va tashqariga yo'nalgan.",
+      "ru": "Пример: точечный заряд. Из-за сферической симметрии E одинаково на сфере радиуса r и направлено наружу."
+     },
+     "draw": [
+      {
+       "id": "sym-r",
+       "type": "symbol",
+       "color": "ink",
+       "label": "",
+       "at": 0.1,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 285
+        }
+       ],
+       "txt": [
+        {
+         "k": "symbol",
+         "v": "r"
+        },
+        {
+         "k": "meaning",
+         "v": "sphere radius"
+        },
+        {
+         "k": "unit",
+         "v": "m"
+        }
+       ],
+       "pts": []
+      },
+      {
+       "id": "e-pt-1",
+       "type": "math",
+       "color": "accent",
+       "label": "",
+       "at": 0.5,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 740
+        },
+        {
+         "k": "size",
+         "v": 30
+        }
+       ],
+       "txt": [
+        {
+         "k": "latex",
+         "v": "E\\,(4\\pi r^2) = \\frac{Q}{\\varepsilon_0}"
+        }
+       ],
+       "pts": []
+      }
+     ],
+     "checkpoints": []
+    },
+    {
+     "id": "s11",
+     "kind": "explain",
+     "calcs": [],
+     "say": "Solving gives E equals Q over four pi epsilon zero r squared. That is Coulomb's law, recovered from Gauss's law.",
+     "subtitles": {
+      "uz": "Yechsak E = Q/(4 pi epsilon nol r kvadrat) chiqadi. Bu Gauss qonunidan olingan Kulon qonunidir.",
+      "ru": "Решая, получаем E = Q/(4 пи эпсилон ноль r в квадрате). Это закон Кулона, выведенный из закона Гаусса."
+     },
+     "draw": [
+      {
+       "id": "e-pt-2",
+       "type": "math",
+       "color": "right",
+       "label": "",
+       "at": 0.5,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 830
+        },
+        {
+         "k": "size",
+         "v": 30
+        }
+       ],
+       "txt": [
+        {
+         "k": "latex",
+         "v": "E = \\frac{Q}{4\\pi\\varepsilon_0 r^2}"
+        }
+       ],
+       "pts": []
+      }
+     ],
+     "checkpoints": []
+    },
+    {
+     "id": "s12",
+     "kind": "checkpoint",
+     "calcs": [],
+     "say": "One last question before the summary.",
+     "subtitles": {
+      "uz": "Xulosadan oldin oxirgi savol.",
+      "ru": "Последний вопрос перед итогом."
+     },
+     "draw": [],
+     "checkpoints": [
+      {
+       "question": "A charge sits inside a closed surface, and a second charge is moved from far away to just outside the surface. What happens to the net flux?",
+       "type": "choice",
+       "choices": [
+        "It increases",
+        "It decreases",
+        "It stays the same"
+       ],
+       "answer": "2",
+       "hint": "Which charges count in Q enclosed?",
+       "reexplain_hint": "Think of the outside charge's lines: every line that enters the surface also leaves it, so they cancel in the net flux."
+      }
+     ]
+    },
+    {
+     "id": "s13",
+     "kind": "summary",
+     "calcs": [],
+     "say": "Summary: net flux through a closed surface equals enclosed charge over epsilon zero. Only enclosed charge counts, and symmetry makes it a powerful tool.",
+     "subtitles": {
+      "uz": "Xulosa: yopiq sirt orqali sof oqim ichidagi zaryad bo'lingan epsilon nolga teng. Faqat ichidagi zaryad hisobga olinadi, simmetriya esa uni kuchli vositaga aylantiradi.",
+      "ru": "Итог: полный поток через замкнутую поверхность равен заключённому заряду, делённому на эпсилон ноль. Считается только заряд внутри, а симметрия делает закон мощным инструментом."
+     },
+     "draw": [
+      {
+       "id": "sum-eq",
+       "type": "math",
+       "color": "right",
+       "label": "",
+       "at": 0.5,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 900
+        },
+        {
+         "k": "size",
+         "v": 30
+        }
+       ],
+       "txt": [
+        {
+         "k": "latex",
+         "v": "\\oint \\vec{E}\\cdot d\\vec{A} = \\frac{Q_{\\text{enc}}}{\\varepsilon_0}"
+        }
+       ],
+       "pts": []
+      }
+     ],
+     "checkpoints": []
+    }
+   ]
+  },
+  {
+   "steps": [
+    {
+     "id": "s10",
+     "kind": "explain",
+     "calcs": [],
+     "say": "Example: a point charge. By spherical symmetry, E is the same everywhere on a sphere of radius r and points outward.",
+     "subtitles": {
+      "uz": "Misol: nuqtaviy zaryad. Sferik simmetriya tufayli E radiusi r bo'lgan sferada hamma joyda bir xil va tashqariga yo'nalgan.",
+      "ru": "Пример: точечный заряд. Из-за сферической симметрии E одинаково на сфере радиуса r и направлено наружу."
+     },
+     "draw": [
+      {
+       "id": "sym-r",
+       "type": "symbol",
+       "color": "ink",
+       "label": "",
+       "at": 0.1,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 285
+        }
+       ],
+       "txt": [
+        {
+         "k": "symbol",
+         "v": "r"
+        },
+        {
+         "k": "meaning",
+         "v": "sphere radius"
+        },
+        {
+         "k": "unit",
+         "v": "m"
+        }
+       ],
+       "pts": []
+      },
+      {
+       "id": "sym-q-pt",
+       "type": "symbol",
+       "color": "ink",
+       "label": "",
+       "at": 0.3,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 330
+        }
+       ],
+       "txt": [
+        {
+         "k": "symbol",
+         "v": "Q"
+        },
+        {
+         "k": "meaning",
+         "v": "point charge"
+        },
+        {
+         "k": "unit",
+         "v": "C"
+        }
+       ],
+       "pts": []
+      },
+      {
+       "id": "e-pt-1",
+       "type": "math",
+       "color": "accent",
+       "label": "",
+       "at": 0.5,
+       "num": [
+        {
+         "k": "x",
+         "v": 740
+        },
+        {
+         "k": "y",
+         "v": 740
+        },
+        {
+         "k": "size",
+         "v": 30
+        }
+       ],
+       "txt": [
+        {
+         "k": "latex",
+         "v": "E\\,(4\\pi r^2) = \\frac{Q}{\\varepsilon_0}"
+        }
+       ],
+       "pts": []
+      }
+     ],
+     "checkpoints": []
+    }
+   ]
+  }
+ ]
+}

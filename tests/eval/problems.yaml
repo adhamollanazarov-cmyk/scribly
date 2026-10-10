@@ -1,0 +1,454 @@
+# Eval bank v0 (docs/COVERAGE.md §4). Run: cd server; uv run python -m scripts.eval
+#
+# expected: reference results, matched against the lesson's SymPy-verified calcs.
+#   A value matches within rel_tol (default 0.01), also when the lesson shows it with an
+#   SI prefix (x 10^3k) or as a percent (x 100). Signs are not compared: magnitudes only.
+# must_draw: draw types or template names; "a|b" means either one.
+# source: audit = the 2026-10-09 physics audit (codex/physics-audit, reference-results.json);
+#         own = written for this bank, references computed independently in plain Python.
+
+- id: es-gauss-sphere
+  topic: electrostatics/gauss
+  level: university
+  source: audit
+  input: >-
+    A uniformly charged, solid, nonconducting sphere in vacuum has radius R = 0.10 m and
+    total charge Q = +3.0 nC. Use epsilon_0 = 8.854e-12 F/m. Use Gauss's law to find the
+    electric field (magnitude and direction) at r = 0.050 m and r = 0.20 m from its
+    centre, and the electric flux through the concentric sphere of radius 0.20 m. Explain
+    the difference between inside and outside.
+  expected:
+    - { name: E_inside, value: 1348.1613656982327, unit: N/C }
+    - { name: E_outside, value: 674.0806828491163, unit: N/C }
+    - { name: flux, value: 338.829907386492, unit: N*m**2/C }
+  must_draw: [gaussian_sphere|circle]
+
+- id: es-gauss-line
+  topic: electrostatics/gauss
+  level: university
+  source: audit
+  input: >-
+    An infinitely long straight line in vacuum has uniform charge per length lambda =
+    +2.0 nC/m. Use epsilon_0 = 8.854e-12 F/m. Find the electric field magnitude and
+    direction at perpendicular distance r = 0.10 m. For a coaxial closed Gaussian cylinder
+    of radius 0.10 m and length L = 0.50 m, find the total electric flux and explain the
+    contributions of its curved side and flat caps.
+  expected:
+    - { name: E, value: 359.50969751952874, unit: N/C }
+    - { name: flux, value: 112.943302462164, unit: N*m**2/C }
+  must_draw: []
+
+- id: es-gauss-plane
+  topic: electrostatics/gauss
+  level: university
+  source: audit
+  input: >-
+    An infinite, infinitesimally thin, nonconducting sheet in vacuum has uniform surface
+    charge density sigma = +4.0 nC/m^2. Use epsilon_0 = 8.854e-12 F/m. Find the electric
+    field magnitude and direction on both sides. A closed pillbox crosses the sheet with
+    each flat face parallel to the sheet and having area A = 0.020 m^2. Find total flux
+    and explain every face's contribution. This is one isolated nonconducting sheet, not a
+    conductor.
+  expected:
+    - { name: E, value: 225.886604924328, unit: N/C }
+    - { name: total_flux, value: 9.03546419697312, unit: N*m**2/C }
+  must_draw: [charged_plane|line]
+
+- id: es-coulomb
+  topic: electrostatics/coulomb
+  level: simple
+  source: audit
+  input: >-
+    In vacuum, point charge q1 = +2.0 microC is at x = 0 m and point charge q2 = -3.0
+    microC is at x = +0.30 m. Use epsilon_0 = 8.854e-12 F/m and k = 1/(4*pi*epsilon_0).
+    Find the magnitude and signed x direction of the force on each charge. Explain
+    attraction and Newton's third law.
+  expected:
+    - { name: F, value: 0.5991828291992145, unit: N }
+  must_draw: [point_charge]
+
+- id: es-dipole-axis
+  topic: electrostatics/dipole
+  level: university
+  source: audit
+  input: >-
+    In vacuum, a dipole has charge -q at x = -a and +q at x = +a, where q = 2.0 nC and
+    a = 0.010 m. Find the exact signed axial electric field at x = +0.10 m. Use epsilon_0 =
+    8.854e-12 F/m and k = 1/(4*pi*epsilon_0). Find dipole moment p, also evaluate the
+    far-field approximation 2*k*p/x^3, and calculate its relative error as
+    abs(E_approx - E_exact)/abs(E_exact), expressed as a percent. Distinguish
+    approximation from exact result.
+  expected:
+    - { name: p, value: 4.0e-11, unit: C*m }
+    - { name: E_exact, value: 733.6184012234033, unit: N/C }
+    - { name: E_approx, value: 719.0193950390574, unit: N/C }
+    - { name: error_percent, value: 1.99, unit: "%" }
+  must_draw: [point_charge]
+
+- id: es-capacitor-dielectric
+  topic: electrostatics/capacitor
+  level: university
+  source: audit
+  input: >-
+    An ideal parallel-plate capacitor in vacuum has plate area A = 0.020 m^2 and
+    separation d = 1.0 mm. It is charged to V0 = 12 V, then disconnected from the battery.
+    A linear dielectric of relative permittivity kappa = 4.0 completely fills the gap.
+    Ignore fringing and use epsilon_0 = 8.854e-12 F/m. Calculate capacitance before and
+    after insertion, the conserved free charge magnitude, final voltage, and stored field
+    energy before and after. State what is held constant and explain the energy change.
+  expected:
+    - { name: C_before, value: 1.7708e-10, unit: F }
+    - { name: C_after, value: 7.0832e-10, unit: F }
+    - { name: Q, value: 2.12496e-09, unit: C }
+    - { name: V_after, value: 3.0, unit: V }
+    - { name: U_before, value: 1.274976e-08, unit: J }
+    - { name: U_after, value: 3.18744e-09, unit: J }
+  must_draw: []
+
+- id: mech-incline-friction
+  topic: mechanics/incline
+  level: university
+  source: audit
+  input: >-
+    A block of mass m = 2.0 kg is already sliding down an incline at theta = 30 degrees to
+    the horizontal. The coefficient of kinetic friction is mu_k = 0.20 (dimensionless),
+    and g = 9.81 m/s^2. No other forces act. Find the normal force, kinetic friction
+    magnitude and direction, and acceleration along the slope (positive down the slope).
+    Draw a correct free-body diagram. Do not introduce a static friction coefficient.
+  expected:
+    - { name: N, value: 16.99141842225069, unit: N }
+    - { name: friction, value: 3.398283684450138, unit: N }
+    - { name: a, value: 3.205858157774931, unit: m/s**2 }
+  must_draw: [incline_block, free_body|vector]
+
+- id: kin-projectile
+  topic: kinematics/projectile
+  level: university
+  source: audit
+  input: >-
+    A projectile launches from ground level with initial speed u = 20 m/s at theta = 35
+    degrees above the horizontal and lands at the same height. Ignore air resistance and
+    take g = 9.81 m/s^2. Find the initial horizontal and vertical velocity components,
+    flight time, maximum height above launch, and horizontal range. Explain the
+    conditions for the range formula.
+  expected:
+    - { name: ux, value: 16.383040885779835, unit: m/s }
+    - { name: uy, value: 11.471528727020921, unit: m/s }
+    - { name: T, value: 2.3387418403712377, unit: s }
+    - { name: H, value: 6.707236051726107, unit: m }
+    - { name: R, value: 38.31570319208596, unit: m }
+  must_draw: [curve|axes_plot|polyline]
+
+- id: mech-pendulum
+  topic: mechanics/oscillations
+  level: simple
+  source: audit
+  input: >-
+    An ideal simple pendulum has length L = 0.80 m, bob mass m = 0.15 kg, and angular
+    amplitude theta_0 = 5 degrees. Use g = 9.81 m/s^2, ignore air resistance and pivot
+    friction, and use the small-angle approximation. Find its period and explain whether
+    doubling the bob mass changes it. Clearly label the period formula as a small-angle
+    approximation.
+  expected:
+    - { name: T, value: 1.7942805861865494, unit: s }
+  must_draw: [line]
+
+- id: circ-series-parallel
+  topic: circuits/combination
+  level: simple
+  source: audit
+  input: >-
+    An ideal 12 V DC battery powers R1 = 4 ohm in series with a parallel pair R2 = 6 ohm
+    and R3 = 3 ohm. Wires have negligible resistance. Find the equivalent resistance of
+    the parallel pair and of the full circuit, total battery current, voltage across R1
+    and across the parallel pair, current through R2 and through R3, and total power
+    delivered by the battery. Draw an unambiguous circuit and check Kirchhoff's current
+    and voltage laws.
+  expected:
+    - { name: R_parallel, value: 2.0, unit: ohm }
+    - { name: R_total, value: 6.0, unit: ohm }
+    - { name: I_total, value: 2.0, unit: A }
+    - { name: V_R1, value: 8.0, unit: V }
+    - { name: V_parallel, value: 4.0, unit: V }
+    - { name: I_R2, value: 0.6666666666666666, unit: A }
+    - { name: I_R3, value: 1.3333333333333333, unit: A }
+    - { name: P_total, value: 24.0, unit: W }
+  must_draw: [line|polyline|rect]
+
+# --- mechanics ------------------------------------------------------------------------
+
+- id: mech-atwood
+  topic: mechanics/dynamics
+  level: simple
+  source: own
+  input: >-
+    An ideal Atwood machine has masses m1 = 3.0 kg and m2 = 5.0 kg connected by a light
+    string over a frictionless, massless pulley. Take g = 9.81 m/s^2. Find the magnitude
+    of the acceleration of the masses and the tension in the string.
+  expected:
+    - { name: a, value: 2.4525, unit: m/s**2 }
+    - { name: T, value: 36.7875, unit: N }
+  must_draw: [free_body|vector|circle]
+
+- id: mech-circular
+  topic: mechanics/circular
+  level: simple
+  source: own
+  input: >-
+    A 1200 kg car drives at a constant speed of 15 m/s around a flat circular curve of
+    radius 50 m. Take g = 9.81 m/s^2. Find its centripetal acceleration, the net inward
+    force on it, and the minimum coefficient of static friction between tyres and road
+    needed to keep it on the curve.
+  expected:
+    - { name: a_c, value: 4.5, unit: m/s**2 }
+    - { name: F_c, value: 5400.0, unit: N }
+    - { name: mu_s_min, value: 0.4587155963302752, unit: "1" }
+  must_draw: [circle|ellipse]
+
+- id: mech-spring
+  topic: mechanics/energy
+  level: simple
+  source: own
+  input: >-
+    A spring with spring constant k = 200 N/m is compressed by 0.10 m and released,
+    launching a 0.50 kg block along a frictionless horizontal surface. Find the elastic
+    potential energy stored in the compressed spring and the speed of the block when it
+    leaves the spring.
+  expected:
+    - { name: U, value: 1.0, unit: J }
+    - { name: v, value: 2.0, unit: m/s }
+  must_draw: []
+
+- id: mech-collision
+  topic: mechanics/momentum
+  level: simple
+  source: own
+  input: >-
+    A 2.0 kg cart moving at 3.0 m/s on a frictionless track collides with a 1.0 kg cart
+    at rest, and they stick together. Find their common velocity after the collision and
+    the kinetic energy lost in the collision.
+  expected:
+    - { name: v_f, value: 2.0, unit: m/s }
+    - { name: KE_lost, value: 3.0, unit: J }
+  must_draw: []
+
+- id: mech-work-energy
+  topic: mechanics/energy
+  level: university
+  source: own
+  input: >-
+    A 5.0 kg box starts from rest on a level floor and is pushed 4.0 m by a constant
+    horizontal force of 30 N. The coefficient of kinetic friction between box and floor
+    is mu_k = 0.25, and g = 9.81 m/s^2. Find the friction force, the net work done on the
+    box, and its final speed.
+  expected:
+    - { name: friction, value: 12.2625, unit: N }
+    - { name: W_net, value: 70.95, unit: J }
+    - { name: v, value: 5.327288240176927, unit: m/s }
+  must_draw: [free_body|vector]
+
+- id: mech-torque
+  topic: mechanics/statics
+  level: simple
+  source: own
+  input: >-
+    A uniform 2.0 m beam is balanced on a pivot at its centre. A 30 N downward force acts
+    0.80 m to the left of the pivot. Find the torque of that force about the pivot and the
+    downward force that must act 0.60 m to the right of the pivot to keep the beam
+    balanced.
+  expected:
+    - { name: torque, value: 24.0, unit: N*m }
+    - { name: F, value: 40.0, unit: N }
+  must_draw: [vector|arrow]
+
+- id: mech-tension
+  topic: mechanics/statics
+  level: simple
+  source: own
+  input: >-
+    A 4.0 kg lamp hangs at rest from two identical ropes. Each rope makes an angle of 30
+    degrees above the horizontal, symmetrically on either side. Take g = 9.81 m/s^2. Find
+    the tension in each rope.
+  expected:
+    - { name: T, value: 39.24, unit: N }
+  must_draw: [free_body|vector]
+
+- id: mech-incline-smooth
+  topic: mechanics/incline
+  level: simple
+  source: own
+  input: >-
+    A 3.0 kg block is released from rest on a frictionless incline at 25 degrees to the
+    horizontal and slides 2.0 m along the slope. Take g = 9.81 m/s^2. Find its
+    acceleration along the slope and its speed after sliding 2.0 m.
+  expected:
+    - { name: a, value: 4.145885393658585, unit: m/s**2 }
+    - { name: v, value: 4.072289135209806, unit: m/s }
+  must_draw: [incline_block]
+
+# --- kinematics graphs ----------------------------------------------------------------
+
+- id: kin-vt-area
+  topic: kinematics/graphs
+  level: simple
+  source: own
+  input: >-
+    A velocity-time graph shows a cart speeding up uniformly from 0 to 12 m/s during the
+    first 4.0 s, then moving at a constant 12 m/s for the next 6.0 s. Find its
+    acceleration during the first 4.0 s and its total displacement over the 10 s, using
+    the area under the graph.
+  expected:
+    - { name: a, value: 3.0, unit: m/s**2 }
+    - { name: x, value: 96.0, unit: m }
+  must_draw: [axes_plot|axes]
+
+- id: kin-xt-slope
+  topic: kinematics/graphs
+  level: simple
+  source: own
+  input: >-
+    A position-time graph of a walker is a straight line from x = 2.0 m at t = 0 s to
+    x = 14 m at t = 4.0 s. Find the walker's velocity from the slope of the graph and
+    explain what a steeper line would mean.
+  expected:
+    - { name: v, value: 3.0, unit: m/s }
+  must_draw: [axes_plot|axes]
+
+- id: kin-braking
+  topic: kinematics/graphs
+  level: simple
+  source: own
+  input: >-
+    A car moving at 25 m/s brakes with a constant deceleration of 5.0 m/s^2 until it
+    stops. Sketch its velocity-time graph and use it to find the stopping time and the
+    stopping distance.
+  expected:
+    - { name: t, value: 5.0, unit: s }
+    - { name: d, value: 62.5, unit: m }
+  must_draw: [axes_plot|axes]
+
+- id: kin-free-fall
+  topic: kinematics/free-fall
+  level: simple
+  source: own
+  input: >-
+    A ball is dropped from rest from a height of 45 m. Ignore air resistance and take
+    g = 9.81 m/s^2. Find the time it takes to reach the ground and its speed just before
+    impact, and sketch its velocity-time graph.
+  expected:
+    - { name: t, value: 3.0289126640769, unit: s }
+    - { name: v, value: 29.713633234594, unit: m/s }
+  must_draw: [axes_plot|axes]
+
+- id: kin-a-from-vt
+  topic: kinematics/graphs
+  level: simple
+  source: own
+  input: >-
+    On a velocity-time graph a runner's velocity rises along a straight line from 4.0 m/s
+    at t = 1.0 s to 16 m/s at t = 5.0 s. Find the acceleration from the slope and the
+    displacement between t = 1.0 s and t = 5.0 s from the area under the line.
+  expected:
+    - { name: a, value: 3.0, unit: m/s**2 }
+    - { name: dx, value: 40.0, unit: m }
+  must_draw: [axes_plot|axes]
+
+- id: kin-piecewise
+  topic: kinematics/graphs
+  level: university
+  source: own
+  input: >-
+    A train starts from rest and speeds up uniformly to 10 m/s in 5.0 s, then travels at
+    10 m/s for 10 s, then slows uniformly to rest in 4.0 s. Draw its velocity-time graph.
+    Find the total distance travelled and the average speed for the whole trip.
+  expected:
+    - { name: d, value: 145.0, unit: m }
+    - { name: v_avg, value: 7.631578947368421, unit: m/s }
+  must_draw: [axes|axes_plot]
+
+# --- circuits -------------------------------------------------------------------------
+
+- id: circ-series
+  topic: circuits/series
+  level: simple
+  source: own
+  input: >-
+    An ideal 9.0 V battery is connected to three resistors in series: R1 = 100 ohm,
+    R2 = 200 ohm and R3 = 300 ohm. Find the current in the circuit and the voltage across
+    R2.
+  expected:
+    - { name: I, value: 0.015, unit: A }
+    - { name: V2, value: 3.0, unit: V }
+  must_draw: [line|polyline|rect]
+
+- id: circ-parallel
+  topic: circuits/parallel
+  level: simple
+  source: own
+  input: >-
+    Two resistors, R1 = 4.0 ohm and R2 = 12 ohm, are connected in parallel across an ideal
+    12 V battery. Find the equivalent resistance, the total current from the battery, and
+    the current through each resistor.
+  expected:
+    - { name: R_eq, value: 3.0, unit: ohm }
+    - { name: I, value: 4.0, unit: A }
+    - { name: I1, value: 3.0, unit: A }
+    - { name: I2, value: 1.0, unit: A }
+  must_draw: [line|polyline|rect]
+
+- id: circ-power
+  topic: circuits/power
+  level: simple
+  source: own
+  input: >-
+    A light bulb is rated 60 W at 120 V. When it runs at its rated voltage, find the
+    current through it, its resistance, and the electrical energy it uses in 2.0 hours,
+    in joules.
+  expected:
+    - { name: I, value: 0.5, unit: A }
+    - { name: R, value: 240.0, unit: ohm }
+    - { name: E, value: 432000.0, unit: J }
+  must_draw: []
+
+- id: circ-internal
+  topic: circuits/emf
+  level: university
+  source: own
+  input: >-
+    A battery has emf 6.0 V and internal resistance 0.50 ohm. It is connected to an
+    external resistor of 5.5 ohm. Find the current, the terminal voltage, and the power
+    dissipated inside the battery.
+  expected:
+    - { name: I, value: 1.0, unit: A }
+    - { name: V_t, value: 5.5, unit: V }
+    - { name: P_r, value: 0.5, unit: W }
+  must_draw: [line|polyline|rect]
+
+- id: circ-rc
+  topic: circuits/rc
+  level: university
+  source: own
+  input: >-
+    An uncharged 100 microF capacitor is charged through a 10 kilo-ohm resistor from an
+    ideal 5.0 V source, starting at t = 0. Find the time constant and the capacitor
+    voltage at t = 2.0 s, and sketch the capacitor voltage against time.
+  expected:
+    - { name: tau, value: 1.0, unit: s }
+    - { name: V_C, value: 4.323323583816936, unit: V }
+  must_draw: [axes_plot|curve]
+
+- id: circ-kirchhoff
+  topic: circuits/kirchhoff
+  level: university
+  source: own
+  input: >-
+    Two nodes, A (top) and B (bottom), are joined by three branches. Left branch: an
+    ideal 10 V battery with its positive terminal toward A, in series with R1 = 2.0 ohm.
+    Middle branch: R3 = 6.0 ohm alone. Right branch: an ideal 5.0 V battery with its
+    positive terminal toward A, in series with R2 = 4.0 ohm. Use Kirchhoff's laws to find
+    the current in each branch, including its direction.
+  expected:
+    - { name: I3, value: 1.1363636363636365, unit: A }
+    - { name: I1, value: 1.5909090909090908, unit: A }
+    - { name: I2, value: 0.45454545454545453, unit: A }
+  must_draw: [line|polyline|rect]
