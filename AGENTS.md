@@ -93,6 +93,8 @@ uv run ruff check .
 uv run ruff format --check .
 uv run mypy app
 uv run python -m scripts.gen_schema  # after changing app/lesson/models.py
+# server — eval bank (REAL API calls, costs ~$0.10 per problem; not part of the checks)
+uv run python -m scripts.eval --topic circuits --limit 3 --max-cost 2
 # web — run (http://localhost:5173)
 cd web
 npm install

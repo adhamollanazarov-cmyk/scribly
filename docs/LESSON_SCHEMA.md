@@ -143,14 +143,56 @@ a primitive drawn earlier (template children by their expanded ids).
 { "id": "c1", "expr": "q/epsilon_0", "values": { "q": 3e-9, "epsilon_0": 8.854e-12 },
   "expected": 338.8, "unit": "N*m**2/C", "rel_tol": 0.01, "used_in_steps": ["s6"] }
 ```
+For generated lessons, `used_in_steps` is derived by the server from the result-ledger
+placeholders (see "Generation draft" below); the AI never writes it.
+
 Mismatch → regenerate once → still wrong → step gets `"warning": "unverified"`
 and the narration says the number is not verified ("I could not verify this number."
 is appended to `say`, once, even if an internal/reloaded step already has a warning).
 Passes when |value − expected| ≤ rel_tol·|expected|. Non-finite expected values or
 relative tolerances fail verification before comparison.
 `expr` may use only the names in `values`, `+ - * / ^ ( )`, numbers, and
-sqrt, sin, cos, tan, asin, acos, atan, exp, log, pi, E (max 200 characters).
+sqrt, sin, cos, tan, asin, acos, atan, exp, log, pi, E (max 200 characters). Not abs,
+Min, Max, Piecewise or any other function; value names are identifiers that are not
+Python keywords or function names (`lam`, not `lambda`). Errors say what to write instead.
 `unit` is not checked dimensionally yet.
+
+## Generation draft (what the AI writes)
+
+The AI does not write the lesson above directly. It writes a **draft**
+(`server/app/lesson/draft.py`), enforced with structured outputs, which the server checks
+and converts step by step. The API compiles the output schema into a grammar with a small
+budget (about 70 properties), so the draft is lean:
+
+- Every field is required; `""` and `[]` replace null. Order is generation order.
+- Lesson: `title, level, steps`. Step: `id, kind, calcs, say, subtitles{uz,ru}, draw,
+  checkpoints` (0 or 1 item). Calcs are **step-local** and come before `say`.
+- Calc: `id` (`c1`, `c2`, …), `expr`, `values: [{name, value}]`, `expected`, `unit`
+  (SymPy style), `unit_spoken`. `expr` may use an earlier calc id as a name; the server
+  substitutes its full-precision value.
+- Draw item: `id, type, color, label, at, num: [{k, v}], txt: [{k, v}], pts`. `type` is a
+  primitive type or a template name; arguments are the contract fields by name (vector:
+  `x1,y1,x2,y2`; booleans as 1/0; `free_body` repeats `name`/`angle_deg`/`length` once
+  per force; template text args set to `""` keep the default).
+- Checkpoint: `question, type, choices, answer, hint, reexplain_hint`; `answer` is the
+  choice index as digits, or one placeholder (`"{c4:3sf}"`) for a number checkpoint, whose
+  `unit` and `tolerance` (0.02) the server sets.
+
+**Result ledger.** Computed numbers are written as placeholders `{c1}`, `{c1:4sf}`,
+`{c1:2dp}` (default 3 significant figures). The server fills in the SymPy value plus its
+unit: spoken unit in `say`, `N·m²/C` on the board, `\,\mathrm{N\cdot m^{2}/C}` in LaTeX;
+scientific notation below 0.01 or from 10⁴. A number in narration, labels, text, math or
+checkpoints that is neither a placeholder, a given number (also SI-rescaled), a declared
+calc input, a standard constant, nor a small count is a lint error.
+
+**Checks per step** (`stepcheck.py`, `lint.py`): draft shape → ids → calcs (SymPy, grammar)
+→ ledger fill → say ≤ 30 words after filling → ≤ 4 steps without a checkpoint → symbols
+in `math` introduced by an earlier `symbol` entry → no hand-written computed numbers →
+units on given numbers → contract validation, template expansion, references. A step with
+problems is regenerated **once, alone**, with the exact list (the fix may insert a
+checkpoint step before it). Still broken: a contract problem (words, checkpoint spacing,
+placeholders, validation) ends the lesson with an `error` event; a hand-written number
+left in a step marks it `unverified`; other leftovers are logged.
 
 ## Streaming
 `POST /lessons` body `{ "type": "topic" | "problem", "text": "..." }` returns

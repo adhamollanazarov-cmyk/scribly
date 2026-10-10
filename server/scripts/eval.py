@@ -76,6 +76,7 @@ class Result:
     unverified_steps: int = 0
     fixes: int = 0
     fixes_failed: int = 0
+    fix_reasons: dict[str, int] = field(default_factory=dict)
     retries: int = 0
     first_step_s: float | None = None
     total_s: float | None = None
@@ -142,6 +143,7 @@ def grade(problem: Problem, metrics: Metrics, error: str | None) -> Result:
         unverified_steps=sum(s.warning == "unverified" for s in lesson.steps) if lesson else 0,
         fixes=metrics.fixes,
         fixes_failed=metrics.fixes_failed,
+        fix_reasons=dict(metrics.fix_reasons),
         retries=metrics.retries,
         first_step_s=metrics.first_step_s,
         total_s=metrics.total_s,
@@ -157,8 +159,8 @@ def badness(result: Result) -> tuple[Any, ...]:
         result.valid,
         -wrong,
         -len(result.missing_draws),
+        -result.unverified_steps,  # the student hears "I could not verify this number"
         -sum(result.leftovers.values()),
-        -result.unverified_steps,
         -result.fixes,
     )
 
@@ -313,9 +315,13 @@ def render_report(results: list[Result], meta: dict[str, Any], top: int = 3) -> 
         lines.append(f"- **{r.id}**: {'; '.join(reasons)}")
     if not failures:
         lines.append("None.")
-    rules = Counter()  # type: Counter[str]
+    reasons: Counter[str] = Counter()
+    rules: Counter[str] = Counter()
     for r in ran:
+        reasons.update(r.fix_reasons)
         rules.update(r.leftovers)
+    lines += ["", "## Why steps were sent back for a fix (steps per rule)", ""]
+    lines += [f"- {rule}: {count}" for rule, count in reasons.most_common()] or ["None."]
     lines += ["", "## Lint problems left after the one fix", ""]
     lines += [f"- {rule}: {count}" for rule, count in rules.most_common()] or ["None."]
     worst = sorted(ran, key=badness)[:top]
@@ -373,8 +379,33 @@ def select(problems: list[Problem], args: argparse.Namespace) -> list[Problem]:
     return problems[: args.limit] if args.limit else problems
 
 
+def write_outputs(results: list[Result], meta: dict[str, Any], stem: str, save_dir: Path) -> None:
+    REPORT_DIR.mkdir(parents=True, exist_ok=True)
+    (REPORT_DIR / f"{stem}.md").write_text(render_report(results, meta), encoding="utf-8")
+    (REPORT_DIR / f"{stem}.json").write_text(
+        json.dumps({"meta": meta | {"compare": None}, "results": result_dicts(results)}, indent=1),
+        encoding="utf-8",
+    )
+    worst_dir = REPORT_DIR / stem
+    if worst_dir.exists():
+        shutil.rmtree(worst_dir)
+    worst_dir.mkdir()
+    for r in sorted([r for r in results if not r.skipped], key=badness)[:3]:
+        if (save_dir / f"{r.id}.json").exists():
+            shutil.copy(save_dir / f"{r.id}.json", worst_dir / f"{r.id}.json")
+
+
+def rerender(path: Path) -> None:
+    """Rewrite a report from its saved .json (e.g. after changing the report format)."""
+    data = json.loads(path.read_text(encoding="utf-8"))
+    names = set(Result.__dataclass_fields__)
+    results = [Result(**{k: v for k, v in r.items() if k in names}) for r in data["results"]]
+    write_outputs(results, data["meta"], path.stem, CACHE_DIR / path.stem)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument("--rerender", type=Path, help="rewrite the report of this .json, no API")
     parser.add_argument("--topic")
     parser.add_argument("--source", choices=["audit", "own"])
     parser.add_argument("--ids", help="comma-separated problem ids")
@@ -386,6 +417,9 @@ def main() -> None:
     parser.add_argument("--label", default="")
     parser.add_argument("--compare", type=Path, help="results .json of an earlier run")
     args = parser.parse_args()
+    if args.rerender:
+        rerender(args.rerender)
+        return
 
     overrides = {
         k: v for k, v in (("lesson_thinking", args.thinking), ("lesson_effort", args.effort)) if v
@@ -417,17 +451,7 @@ def main() -> None:
     if args.compare:
         other = json.loads(args.compare.read_text(encoding="utf-8"))["results"]
         meta["compare"] = compare_section(results, other, ("before", args.label or "this run"))
-    REPORT_DIR.mkdir(parents=True, exist_ok=True)
-    (REPORT_DIR / f"{stem}.md").write_text(render_report(results, meta), encoding="utf-8")
-    (REPORT_DIR / f"{stem}.json").write_text(
-        json.dumps({"meta": meta | {"compare": None}, "results": result_dicts(results)}, indent=1),
-        encoding="utf-8",
-    )
-    worst_dir = REPORT_DIR / stem
-    worst_dir.mkdir(exist_ok=True)
-    for r in sorted([r for r in results if not r.skipped], key=badness)[:3]:
-        if (save_dir / f"{r.id}.json").exists():
-            shutil.copy(save_dir / f"{r.id}.json", worst_dir / f"{r.id}.json")
+    write_outputs(results, meta, stem, save_dir)
     total = sum(r.cost_usd for r in results)
     print(
         f"report: {REPORT_DIR / f'{stem}.md'}  pass {sum(r.passed for r in results)}/"

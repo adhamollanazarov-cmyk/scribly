@@ -1,0 +1,1887 @@
+{
+ "problem": {
+  "id": "es-gauss-sphere",
+  "topic": "electrostatics/gauss",
+  "level": "university",
+  "source": "audit",
+  "input": "A uniformly charged, solid, nonconducting sphere in vacuum has radius R = 0.10 m and total charge Q = +3.0 nC. Use epsilon_0 = 8.854e-12 F/m. Use Gauss's law to find the electric field (magnitude and direction) at r = 0.050 m and r = 0.20 m from its centre, and the electric flux through the concentric sphere of radius 0.20 m. Explain the difference between inside and outside.",
+  "expected": [
+   {
+    "name": "E_inside",
+    "value": 1348.1613656982327,
+    "unit": "N/C",
+    "rel_tol": 0.01
+   },
+   {
+    "name": "E_outside",
+    "value": 674.0806828491163,
+    "unit": "N/C",
+    "rel_tol": 0.01
+   },
+   {
+    "name": "flux",
+    "value": 338.829907386492,
+    "unit": "N*m**2/C",
+    "rel_tol": 0.01
+   }
+  ],
+  "must_draw": [
+   "gaussian_sphere|circle"
+  ]
+ },
+ "result": {
+  "id": "es-gauss-sphere",
+  "topic": "electrostatics/gauss",
+  "source": "audit",
+  "valid": true,
+  "error": null,
+  "numbers": {
+   "E_inside": true,
+   "E_outside": true,
+   "flux": true
+  },
+  "missing_draws": [],
+  "leftovers": {
+   "calc": 1,
+   "number": 1
+  },
+  "steps": 13,
+  "unverified_steps": 1,
+  "fixes": 4,
+  "fixes_failed": 1,
+  "retries": 0,
+  "first_step_s": 7.9959634999977425,
+  "total_s": 38.43168690003222,
+  "cost_usd": 0.12473669999999999,
+  "skipped": false
+ },
+ "lesson": {
+  "version": "1",
+  "id": "5e5ff66c-445b-4629-9566-8c2b57781969",
+  "title": "Gauss's law for a uniformly charged solid sphere",
+  "level": "university",
+  "source": {
+   "type": "problem",
+   "text": "A uniformly charged, solid, nonconducting sphere in vacuum has radius R = 0.10 m and total charge Q = +3.0 nC. Use epsilon_0 = 8.854e-12 F/m. Use Gauss's law to find the electric field (magnitude and direction) at r = 0.050 m and r = 0.20 m from its centre, and the electric flux through the concentric sphere of radius 0.20 m. Explain the difference between inside and outside."
+  },
+  "steps": [
+   {
+    "id": "s1",
+    "kind": "explain",
+    "say": "A solid nonconducting sphere carries charge spread evenly through its volume. We want the field inside and outside, using Gauss's law.",
+    "subtitles": {
+     "uz": "Qattiq dielektrik sharda zaryad butun hajm bo'ylab tekis taqsimlangan. Gauss qonuni bilan ichkarida va tashqarida maydonni topamiz.",
+     "ru": "Сплошной непроводящий шар заряжен равномерно по объёму. С помощью закона Гаусса найдём поле внутри и снаружи."
+    },
+    "draw": [
+     {
+      "id": "sph",
+      "color": "surface",
+      "at": 0.0,
+      "label": null,
+      "group": null,
+      "type": "circle",
+      "cx": 330.0,
+      "cy": 400.0,
+      "r": 160.0,
+      "dashed": false
+     },
+     {
+      "id": "qc-charge",
+      "color": "charge_pos",
+      "at": 0.3,
+      "label": null,
+      "group": "qc",
+      "type": "circle",
+      "cx": 330.0,
+      "cy": 400.0,
+      "r": 14.0,
+      "dashed": false
+     },
+     {
+      "id": "qc-sign-h",
+      "color": "charge_pos",
+      "at": 0.3,
+      "label": null,
+      "group": "qc",
+      "type": "line",
+      "x1": 322.3,
+      "y1": 400.0,
+      "x2": 337.7,
+      "y2": 400.0,
+      "dashed": false
+     },
+     {
+      "id": "qc-sign-v",
+      "color": "charge_pos",
+      "at": 0.3,
+      "label": null,
+      "group": "qc",
+      "type": "line",
+      "x1": 330.0,
+      "y1": 392.3,
+      "x2": 330.0,
+      "y2": 407.7,
+      "dashed": false
+     },
+     {
+      "id": "rr",
+      "color": "ink",
+      "at": 0.5,
+      "label": "R",
+      "group": null,
+      "type": "line",
+      "x1": 330.0,
+      "y1": 400.0,
+      "x2": 490.0,
+      "y2": 400.0,
+      "dashed": false
+     },
+     {
+      "id": "sym-R",
+      "color": "ink",
+      "at": 0.6,
+      "label": null,
+      "group": null,
+      "type": "symbol",
+      "x": 740.0,
+      "y": 60.0,
+      "symbol": "R",
+      "meaning": "sphere radius",
+      "unit": "m"
+     },
+     {
+      "id": "sym-Q",
+      "color": "ink",
+      "at": 0.8,
+      "label": null,
+      "group": null,
+      "type": "symbol",
+      "x": 740.0,
+      "y": 105.0,
+      "symbol": "Q",
+      "meaning": "total charge",
+      "unit": "C"
+     }
+    ],
+    "focus": null,
+    "checkpoint": null,
+    "sliders": [],
+    "warning": null
+   },
+   {
+    "id": "s2",
+    "kind": "explain",
+    "say": "Gauss's law: the flux through any closed surface equals the enclosed charge divided by epsilon zero.",
+    "subtitles": {
+     "uz": "Gauss qonuni: yopiq sirt orqali oqim ichidagi zaryadning epsilon nolga nisbatiga teng.",
+     "ru": "Закон Гаусса: поток через замкнутую поверхность равен заключённому заряду, делённому на эпсилон нуль."
+    },
+    "draw": [
+     {
+      "id": "sym-phi",
+      "color": "ink",
+      "at": 0.0,
+      "label": null,
+      "group": null,
+      "type": "symbol",
+      "x": 740.0,
+      "y": 150.0,
+      "symbol": "\\Phi",
+      "meaning": "electric flux",
+      "unit": "N·m²/C"
+     },
+     {
+      "id": "sym-qenc",
+      "color": "ink",
+      "at": 0.2,
+      "label": null,
+      "group": null,
+      "type": "symbol",
+      "x": 740.0,
+      "y": 195.0,
+      "symbol": "Q_{\\text{enc}}",
+      "meaning": "enclosed charge",
+      "unit": "C"
+     },
+     {
+      "id": "sym-eps",
+      "color": "ink",
+      "at": 0.4,
+      "label": null,
+      "group": null,
+      "type": "symbol",
+      "x": 740.0,
+      "y": 240.0,
+      "symbol": "\\varepsilon_0",
+      "meaning": "permittivity of free space",
+      "unit": "F/m"
+     },
+     {
+      "id": "gauss",
+      "color": "accent",
+      "at": 0.7,
+      "label": null,
+      "group": null,
+      "type": "math",
+      "x": 740.0,
+      "y": 340.0,
+      "latex": "\\Phi = \\frac{Q_{\\text{enc}}}{\\varepsilon_0}",
+      "size": null
+     }
+    ],
+    "focus": null,
+    "checkpoint": null,
+    "sliders": [],
+    "warning": null
+   },
+   {
+    "id": "s3",
+    "kind": "explain",
+    "say": "By spherical symmetry, the field is radial and has the same magnitude everywhere on a concentric sphere. So we pick concentric spheres as Gaussian surfaces.",
+    "subtitles": {
+     "uz": "Sferik simmetriya tufayli maydon radial va konsentrik sferada har yerda bir xil kattalikka ega. Shuning uchun konsentrik sferalarni tanlaymiz.",
+     "ru": "По сферической симметрии поле радиально и одинаково по модулю на концентрической сфере. Поэтому берём концентрические сферы."
+    },
+    "draw": [
+     {
+      "id": "gs-sphere",
+      "color": "surface",
+      "at": 0.2,
+      "label": "Gaussian surface",
+      "group": "gs",
+      "type": "circle",
+      "cx": 330.0,
+      "cy": 400.0,
+      "r": 260.0,
+      "dashed": true
+     },
+     {
+      "id": "fl-1",
+      "color": "field",
+      "at": 0.5,
+      "label": null,
+      "group": "fl",
+      "type": "arrow",
+      "x1": 500.0,
+      "y1": 400.0,
+      "x2": 580.0,
+      "y2": 400.0,
+      "dashed": false
+     },
+     {
+      "id": "fl-2",
+      "color": "field",
+      "at": 0.5,
+      "label": null,
+      "group": "fl",
+      "type": "arrow",
+      "x1": 450.2,
+      "y1": 279.8,
+      "x2": 506.8,
+      "y2": 223.2,
+      "dashed": false
+     },
+     {
+      "id": "fl-3",
+      "color": "field",
+      "at": 0.5,
+      "label": null,
+      "group": "fl",
+      "type": "arrow",
+      "x1": 330.0,
+      "y1": 230.0,
+      "x2": 330.0,
+      "y2": 150.0,
+      "dashed": false
+     },
+     {
+      "id": "fl-4",
+      "color": "field",
+      "at": 0.5,
+      "label": null,
+      "group": "fl",
+      "type": "arrow",
+      "x1": 209.8,
+      "y1": 279.8,
+      "x2": 153.2,
+      "y2": 223.2,
+      "dashed": false
+     },
+     {
+      "id": "fl-5",
+      "color": "field",
+      "at": 0.5,
+      "label": null,
+      "group": "fl",
+      "type": "arrow",
+      "x1": 160.0,
+      "y1": 400.0,
+      "x2": 80.0,
+      "y2": 400.0,
+      "dashed": false
+     },
+     {
+      "id": "fl-6",
+      "color": "field",
+      "at": 0.5,
+      "label": null,
+      "group": "fl",
+      "type": "arrow",
+      "x1": 209.8,
+      "y1": 520.2,
+      "x2": 153.2,
+      "y2": 576.8,
+      "dashed": false
+     },
+     {
+      "id": "fl-7",
+      "color": "field",
+      "at": 0.5,
+      "label": null,
+      "group": "fl",
+      "type": "arrow",
+      "x1": 330.0,
+      "y1": 570.0,
+      "x2": 330.0,
+      "y2": 650.0,
+      "dashed": false
+     },
+     {
+      "id": "fl-8",
+      "color": "field",
+      "at": 0.5,
+      "label": null,
+      "group": "fl",
+      "type": "arrow",
+      "x1": 450.2,
+      "y1": 520.2,
+      "x2": 506.8,
+      "y2": 576.8,
+      "dashed": false
+     },
+     {
+      "id": "sym-E",
+      "color": "ink",
+      "at": 0.8,
+      "label": null,
+      "group": null,
+      "type": "symbol",
+      "x": 740.0,
+      "y": 285.0,
+      "symbol": "E",
+      "meaning": "field magnitude",
+      "unit": "N/C"
+     }
+    ],
+    "focus": null,
+    "checkpoint": null,
+    "sliders": [],
+    "warning": null
+   },
+   {
+    "id": "s4",
+    "kind": "checkpoint",
+    "say": "Quick check before we calculate.",
+    "subtitles": {
+     "uz": "Hisoblashdan oldin qisqa tekshiruv.",
+     "ru": "Короткая проверка перед расчётом."
+    },
+    "draw": [],
+    "focus": null,
+    "checkpoint": {
+     "question": "Why can we pull E out of the flux integral on a concentric Gaussian sphere?",
+     "type": "choice",
+     "choices": [
+      "E has constant magnitude and is perpendicular to the surface everywhere",
+      "E is zero on the surface",
+      "The surface has no area",
+      "E is parallel to the surface"
+     ],
+     "answer": 0,
+     "tolerance": null,
+     "unit": null,
+     "hint": "Think about what spherical symmetry says about the field.",
+     "reexplain_hint": "Imagine rotating the sphere about its centre: the picture looks identical, so the field cannot depend on direction, only on distance."
+    },
+    "sliders": [],
+    "warning": null
+   },
+   {
+    "id": "s5",
+    "kind": "explain",
+    "say": "On the Gaussian sphere of radius r, flux equals E times the area four pi r squared. So E times four pi r squared equals Q enclosed over epsilon zero.",
+    "subtitles": {
+     "uz": "r radiusli Gauss sferasida oqim E ga to'rt pi r kvadrat yuzani ko'paytirganga teng. Demak E·4πr² = Q_enc/ε₀.",
+     "ru": "На сфере Гаусса радиуса r поток равен E на площадь четыре пи r в квадрате. Значит E·4πr² = Q_enc/ε₀."
+    },
+    "draw": [
+     {
+      "id": "sym-r",
+      "color": "ink",
+      "at": 0.0,
+      "label": null,
+      "group": null,
+      "type": "symbol",
+      "x": 740.0,
+      "y": 385.0,
+      "symbol": "r",
+      "meaning": "Gaussian sphere radius",
+      "unit": "m"
+     },
+     {
+      "id": "gs-eq",
+      "color": "accent",
+      "at": 0.5,
+      "label": null,
+      "group": null,
+      "type": "math",
+      "x": 740.0,
+      "y": 440.0,
+      "latex": "E\\,(4\\pi r^2) = \\frac{Q_{\\text{enc}}}{\\varepsilon_0}",
+      "size": null
+     }
+    ],
+    "focus": null,
+    "checkpoint": null,
+    "sliders": [],
+    "warning": null
+   },
+   {
+    "id": "s6",
+    "kind": "explain",
+    "say": "Inside, at r equals 0.050 m, the fraction r over R is 0.500 dimensionless. Only the volume fraction of charge is enclosed: 3.75 times ten to the minus 10 coulombs.",
+    "subtitles": {
+     "uz": "Ichkarida r = 0.050 m da r/R = 0.500. Faqat hajm ulushiga mos zaryad o'raladi: 3.75 × 10⁻¹⁰ C.",
+     "ru": "Внутри, при r = 0,050 м, отношение r/R равно 0.500. Охвачена только доля заряда по объёму: 3.75 × 10⁻¹⁰ C."
+    },
+    "draw": [
+     {
+      "id": "gs-in",
+      "color": "highlight",
+      "at": 0.2,
+      "label": "r = 0.050 m",
+      "group": null,
+      "type": "circle",
+      "cx": 330.0,
+      "cy": 400.0,
+      "r": 80.0,
+      "dashed": true
+     },
+     {
+      "id": "qenc-eq",
+      "color": "accent",
+      "at": 0.6,
+      "label": null,
+      "group": null,
+      "type": "math",
+      "x": 740.0,
+      "y": 540.0,
+      "latex": "Q_{\\text{enc}} = Q\\left(\\frac{r}{R}\\right)^3 = 3.75 \\times 10^{-10}\\,\\mathrm{C}",
+      "size": null
+     }
+    ],
+    "focus": null,
+    "checkpoint": null,
+    "sliders": [],
+    "warning": null
+   },
+   {
+    "id": "s7",
+    "kind": "explain",
+    "say": "Solving for E gives Q r over four pi epsilon zero R cubed. At r equals 0.050 m this is 1350 newtons per coulomb, pointing radially outward.",
+    "subtitles": {
+     "uz": "E ni topsak E = Qr/(4πε₀R³). r = 0.050 m da bu 1350 N/C, radial tashqariga yo'nalgan.",
+     "ru": "Решая, получаем E = Qr/(4πε₀R³). При r = 0,050 м это 1350 N/C, направлено радиально наружу."
+    },
+    "draw": [
+     {
+      "id": "sym-ein",
+      "color": "ink",
+      "at": 0.0,
+      "label": null,
+      "group": null,
+      "type": "symbol",
+      "x": 740.0,
+      "y": 585.0,
+      "symbol": "E_{\\text{in}}",
+      "meaning": "field inside the sphere",
+      "unit": "N/C"
+     },
+     {
+      "id": "e-in",
+      "color": "right",
+      "at": 0.4,
+      "label": null,
+      "group": null,
+      "type": "math",
+      "x": 740.0,
+      "y": 690.0,
+      "latex": "E_{\\text{in}} = \\frac{Q\\,r}{4\\pi\\varepsilon_0 R^3} = 1350\\,\\mathrm{N/C}",
+      "size": null
+     },
+     {
+      "id": "e-in-arrow",
+      "color": "field",
+      "at": 0.7,
+      "label": "E",
+      "group": null,
+      "type": "arrow",
+      "x1": 330.0,
+      "y1": 320.0,
+      "x2": 330.0,
+      "y2": 240.0,
+      "dashed": false
+     }
+    ],
+    "focus": null,
+    "checkpoint": null,
+    "sliders": [],
+    "warning": null
+   },
+   {
+    "id": "s8",
+    "kind": "checkpoint",
+    "say": "Let's test the inside result. I could not verify this number.",
+    "subtitles": {
+     "uz": "Ichki natijani sinab ko'raylik.",
+     "ru": "Проверим результат для внутренней области."
+    },
+    "draw": [],
+    "focus": null,
+    "checkpoint": {
+     "question": "Inside the sphere, E grows linearly with r. What is E at r = 0.025 m, half of the previous radius? Answer in N/C.",
+     "type": "number",
+     "choices": null,
+     "answer": 674.0,
+     "tolerance": 0.02,
+     "unit": "N/C",
+     "hint": "E is proportional to r inside.",
+     "reexplain_hint": "Instead of recomputing, halve the radius means halve the field: take the value at 0.050 m and divide by two."
+    },
+    "sliders": [],
+    "warning": "unverified"
+   },
+   {
+    "id": "s9",
+    "kind": "explain",
+    "say": "Outside, at r greater than R, the Gaussian sphere encloses all the charge Q. So the sphere acts like a point charge.",
+    "subtitles": {
+     "uz": "Tashqarida, r > R da, Gauss sferasi butun Q zaryadni o'rab oladi. Shar nuqtaviy zaryaddek ta'sir qiladi.",
+     "ru": "Снаружи, при r больше R, сфера Гаусса охватывает весь заряд Q. Шар действует как точечный заряд."
+    },
+    "draw": [
+     {
+      "id": "gs-out",
+      "color": "highlight",
+      "at": 0.2,
+      "label": "r = 0.20 m",
+      "group": null,
+      "type": "circle",
+      "cx": 330.0,
+      "cy": 400.0,
+      "r": 320.0,
+      "dashed": true
+     },
+     {
+      "id": "sym-eout",
+      "color": "ink",
+      "at": 0.4,
+      "label": null,
+      "group": null,
+      "type": "symbol",
+      "x": 740.0,
+      "y": 635.0,
+      "symbol": "E_{\\text{out}}",
+      "meaning": "field outside the sphere",
+      "unit": "N/C"
+     },
+     {
+      "id": "e-out-eq",
+      "color": "accent",
+      "at": 0.6,
+      "label": null,
+      "group": null,
+      "type": "math",
+      "x": 740.0,
+      "y": 740.0,
+      "latex": "E_{\\text{out}} = \\frac{Q}{4\\pi\\varepsilon_0 r^2}",
+      "size": null
+     }
+    ],
+    "focus": null,
+    "checkpoint": null,
+    "sliders": [],
+    "warning": null
+   },
+   {
+    "id": "s10",
+    "kind": "explain",
+    "say": "At r equals 0.20 m the field is 674 newtons per coulomb, radially outward since the charge is positive.",
+    "subtitles": {
+     "uz": "r = 0.20 m da maydon 674 N/C, zaryad musbat bo'lgani uchun radial tashqariga.",
+     "ru": "При r = 0,20 м поле равно 674 N/C, направлено радиально наружу, так как заряд положителен."
+    },
+    "draw": [
+     {
+      "id": "e-out-val",
+      "color": "right",
+      "at": 0.3,
+      "label": null,
+      "group": null,
+      "type": "math",
+      "x": 740.0,
+      "y": 830.0,
+      "latex": "E(0.20\\,\\text{m}) = 674\\,\\mathrm{N/C}",
+      "size": null
+     }
+    ],
+    "focus": null,
+    "checkpoint": null,
+    "sliders": [],
+    "warning": null
+   },
+   {
+    "id": "s11",
+    "kind": "explain",
+    "say": "The flux through the sphere of radius 0.20 m encloses all of Q, so Phi equals Q over epsilon zero, 339 newton meters squared per coulomb.",
+    "subtitles": {
+     "uz": "Radiusi 0.20 m bo'lgan sfera orqali oqim butun Q ni o'raydi, shuning uchun Φ = Q/ε₀ = 339 N·m²/C.",
+     "ru": "Поток через сферу радиуса 0,20 м охватывает весь заряд Q, поэтому Φ = Q/ε₀ = 339 N·m²/C."
+    },
+    "draw": [
+     {
+      "id": "flux-eq",
+      "color": "accent",
+      "at": 0.4,
+      "label": null,
+      "group": null,
+      "type": "math",
+      "x": 740.0,
+      "y": 900.0,
+      "latex": "\\Phi = \\frac{Q}{\\varepsilon_0} = 339\\,\\mathrm{N\\cdot m^{2}/C}",
+      "size": null
+     }
+    ],
+    "focus": null,
+    "checkpoint": null,
+    "sliders": [],
+    "warning": null
+   },
+   {
+    "id": "s12",
+    "kind": "checkpoint",
+    "say": "One more check on the flux.",
+    "subtitles": {
+     "uz": "Oqim haqida yana bir tekshiruv.",
+     "ru": "Ещё одна проверка по потоку."
+    },
+    "draw": [],
+    "focus": null,
+    "checkpoint": {
+     "question": "If the Gaussian sphere had radius 0.50 m instead of 0.20 m, what happens to the flux?",
+     "type": "choice",
+     "choices": [
+      "It increases",
+      "It decreases",
+      "It stays the same",
+      "It becomes zero"
+     ],
+     "answer": 2,
+     "tolerance": null,
+     "unit": null,
+     "hint": "What does the flux depend on in Gauss's law?",
+     "reexplain_hint": "Picture field lines leaving the charge: a bigger sphere is crossed by the same number of lines, just spread out more thinly."
+    },
+    "sliders": [],
+    "warning": null
+   },
+   {
+    "id": "s13",
+    "kind": "summary",
+    "say": "Inside, E grows linearly with r because less charge is enclosed. Outside, E falls as one over r squared, like a point charge.",
+    "subtitles": {
+     "uz": "Ichkarida E r bilan chiziqli o'sadi, chunki kamroq zaryad o'raladi. Tashqarida E 1/r² kabi kamayadi, nuqtaviy zaryaddek.",
+     "ru": "Внутри E растёт линейно с r, так как охвачено меньше заряда. Снаружи E падает как 1/r², как у точечного заряда."
+    },
+    "draw": [
+     {
+      "id": "sum-in",
+      "color": "ink",
+      "at": 0.0,
+      "label": null,
+      "group": null,
+      "type": "text",
+      "x": 60.0,
+      "y": 800.0,
+      "text": "Inside: E = 1350 N/C (outward)",
+      "size": 26.0
+     },
+     {
+      "id": "sum-out",
+      "color": "ink",
+      "at": 0.5,
+      "label": null,
+      "group": null,
+      "type": "text",
+      "x": 60.0,
+      "y": 860.0,
+      "text": "Outside: E = 674 N/C (outward)",
+      "size": 26.0
+     }
+    ],
+    "focus": null,
+    "checkpoint": null,
+    "sliders": [],
+    "warning": null
+   }
+  ],
+  "calcs": [
+   {
+    "id": "c1",
+    "expr": "0.05/0.10",
+    "values": {},
+    "expected": 0.5,
+    "unit": "1",
+    "rel_tol": 0.01,
+    "used_in_steps": [
+     "s6"
+    ]
+   },
+   {
+    "id": "c2",
+    "expr": "Q*c1^3",
+    "values": {
+     "Q": 3e-09,
+     "c1": 0.5
+    },
+    "expected": 3.75e-10,
+    "unit": "C",
+    "rel_tol": 0.01,
+    "used_in_steps": [
+     "s6"
+    ]
+   },
+   {
+    "id": "c3",
+    "expr": "Q*0.05/(4*pi*eps0*0.10^3)",
+    "values": {
+     "Q": 3e-09,
+     "eps0": 8.854e-12
+    },
+    "expected": 1348.1585,
+    "unit": "N/C",
+    "rel_tol": 0.01,
+    "used_in_steps": [
+     "s7",
+     "s13"
+    ]
+   },
+   {
+    "id": "c4",
+    "expr": "Q*0.025/(4*pi*eps0*0.10^3)",
+    "values": {
+     "Q": 3e-09,
+     "eps0": 8.854e-12
+    },
+    "expected": 1349.4,
+    "unit": "N/C",
+    "rel_tol": 0.01,
+    "used_in_steps": [
+     "s8"
+    ]
+   },
+   {
+    "id": "c5",
+    "expr": "Q/(4*pi*eps0*0.20^2)",
+    "values": {
+     "Q": 3e-09,
+     "eps0": 8.854e-12
+    },
+    "expected": 674.68,
+    "unit": "N/C",
+    "rel_tol": 0.01,
+    "used_in_steps": [
+     "s10",
+     "s13"
+    ]
+   },
+   {
+    "id": "c6",
+    "expr": "Q/eps0",
+    "values": {
+     "Q": 3e-09,
+     "eps0": 8.854e-12
+    },
+    "expected": 338.83,
+    "unit": "N*m**2/C",
+    "rel_tol": 0.01,
+    "used_in_steps": [
+     "s11"
+    ]
+   }
+  ]
+ },
+ "drafts": [
+  {
+   "id": "s1",
+   "kind": "explain",
+   "calcs": [],
+   "say": "A solid nonconducting sphere carries charge spread evenly through its volume. We want the field inside and outside, using Gauss's law.",
+   "subtitles": {
+    "uz": "Qattiq dielektrik sharda zaryad butun hajm bo'ylab tekis taqsimlangan. Gauss qonuni bilan ichkarida va tashqarida maydonni topamiz.",
+    "ru": "Сплошной непроводящий шар заряжен равномерно по объёму. С помощью закона Гаусса найдём поле внутри и снаружи."
+   },
+   "draw": [
+    {
+     "id": "sph",
+     "type": "circle",
+     "color": "surface",
+     "label": "",
+     "at": 0.0,
+     "num": [
+      {
+       "k": "cx",
+       "v": 330.0
+      },
+      {
+       "k": "cy",
+       "v": 400.0
+      },
+      {
+       "k": "r",
+       "v": 160.0
+      }
+     ],
+     "txt": [],
+     "pts": []
+    },
+    {
+     "id": "qc",
+     "type": "point_charge",
+     "color": "charge_pos",
+     "label": "",
+     "at": 0.3,
+     "num": [
+      {
+       "k": "x",
+       "v": 330.0
+      },
+      {
+       "k": "y",
+       "v": 400.0
+      },
+      {
+       "k": "r",
+       "v": 14.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "sign",
+       "v": "+"
+      },
+      {
+       "k": "name",
+       "v": ""
+      }
+     ],
+     "pts": []
+    },
+    {
+     "id": "rr",
+     "type": "line",
+     "color": "ink",
+     "label": "R",
+     "at": 0.5,
+     "num": [
+      {
+       "k": "x1",
+       "v": 330.0
+      },
+      {
+       "k": "y1",
+       "v": 400.0
+      },
+      {
+       "k": "x2",
+       "v": 490.0
+      },
+      {
+       "k": "y2",
+       "v": 400.0
+      },
+      {
+       "k": "dashed",
+       "v": 0.0
+      }
+     ],
+     "txt": [],
+     "pts": []
+    },
+    {
+     "id": "sym-R",
+     "type": "symbol",
+     "color": "ink",
+     "label": "",
+     "at": 0.6,
+     "num": [
+      {
+       "k": "x",
+       "v": 740.0
+      },
+      {
+       "k": "y",
+       "v": 60.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "symbol",
+       "v": "R"
+      },
+      {
+       "k": "meaning",
+       "v": "sphere radius"
+      },
+      {
+       "k": "unit",
+       "v": "m"
+      }
+     ],
+     "pts": []
+    },
+    {
+     "id": "sym-Q",
+     "type": "symbol",
+     "color": "ink",
+     "label": "",
+     "at": 0.8,
+     "num": [
+      {
+       "k": "x",
+       "v": 740.0
+      },
+      {
+       "k": "y",
+       "v": 105.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "symbol",
+       "v": "Q"
+      },
+      {
+       "k": "meaning",
+       "v": "total charge"
+      },
+      {
+       "k": "unit",
+       "v": "C"
+      }
+     ],
+     "pts": []
+    }
+   ],
+   "checkpoints": []
+  },
+  {
+   "id": "s2",
+   "kind": "explain",
+   "calcs": [],
+   "say": "Gauss's law: the flux through any closed surface equals the enclosed charge divided by epsilon zero.",
+   "subtitles": {
+    "uz": "Gauss qonuni: yopiq sirt orqali oqim ichidagi zaryadning epsilon nolga nisbatiga teng.",
+    "ru": "Закон Гаусса: поток через замкнутую поверхность равен заключённому заряду, делённому на эпсилон нуль."
+   },
+   "draw": [
+    {
+     "id": "sym-phi",
+     "type": "symbol",
+     "color": "ink",
+     "label": "",
+     "at": 0.0,
+     "num": [
+      {
+       "k": "x",
+       "v": 740.0
+      },
+      {
+       "k": "y",
+       "v": 150.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "symbol",
+       "v": "\\Phi"
+      },
+      {
+       "k": "meaning",
+       "v": "electric flux"
+      },
+      {
+       "k": "unit",
+       "v": "N·m²/C"
+      }
+     ],
+     "pts": []
+    },
+    {
+     "id": "sym-qenc",
+     "type": "symbol",
+     "color": "ink",
+     "label": "",
+     "at": 0.2,
+     "num": [
+      {
+       "k": "x",
+       "v": 740.0
+      },
+      {
+       "k": "y",
+       "v": 195.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "symbol",
+       "v": "Q_{\\text{enc}}"
+      },
+      {
+       "k": "meaning",
+       "v": "enclosed charge"
+      },
+      {
+       "k": "unit",
+       "v": "C"
+      }
+     ],
+     "pts": []
+    },
+    {
+     "id": "sym-eps",
+     "type": "symbol",
+     "color": "ink",
+     "label": "",
+     "at": 0.4,
+     "num": [
+      {
+       "k": "x",
+       "v": 740.0
+      },
+      {
+       "k": "y",
+       "v": 240.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "symbol",
+       "v": "\\varepsilon_0"
+      },
+      {
+       "k": "meaning",
+       "v": "permittivity of free space"
+      },
+      {
+       "k": "unit",
+       "v": "F/m"
+      }
+     ],
+     "pts": []
+    },
+    {
+     "id": "gauss",
+     "type": "math",
+     "color": "accent",
+     "label": "",
+     "at": 0.7,
+     "num": [
+      {
+       "k": "x",
+       "v": 740.0
+      },
+      {
+       "k": "y",
+       "v": 340.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "latex",
+       "v": "\\Phi = \\frac{Q_{\\text{enc}}}{\\varepsilon_0}"
+      }
+     ],
+     "pts": []
+    }
+   ],
+   "checkpoints": []
+  },
+  {
+   "id": "s3",
+   "kind": "explain",
+   "calcs": [],
+   "say": "By spherical symmetry, the field is radial and has the same magnitude everywhere on a concentric sphere. So we pick concentric spheres as Gaussian surfaces.",
+   "subtitles": {
+    "uz": "Sferik simmetriya tufayli maydon radial va konsentrik sferada har yerda bir xil kattalikka ega. Shuning uchun konsentrik sferalarni tanlaymiz.",
+    "ru": "По сферической симметрии поле радиально и одинаково по модулю на концентрической сфере. Поэтому берём концентрические сферы."
+   },
+   "draw": [
+    {
+     "id": "gs",
+     "type": "gaussian_sphere",
+     "color": "surface",
+     "label": "",
+     "at": 0.2,
+     "num": [
+      {
+       "k": "cx",
+       "v": 330.0
+      },
+      {
+       "k": "cy",
+       "v": 400.0
+      },
+      {
+       "k": "r",
+       "v": 260.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "name",
+       "v": "Gaussian surface"
+      }
+     ],
+     "pts": []
+    },
+    {
+     "id": "fl",
+     "type": "radial_field_lines",
+     "color": "field",
+     "label": "",
+     "at": 0.5,
+     "num": [
+      {
+       "k": "x",
+       "v": 330.0
+      },
+      {
+       "k": "y",
+       "v": 400.0
+      },
+      {
+       "k": "n",
+       "v": 8.0
+      },
+      {
+       "k": "r_start",
+       "v": 170.0
+      },
+      {
+       "k": "r_end",
+       "v": 250.0
+      },
+      {
+       "k": "angle_offset",
+       "v": 0.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "direction",
+       "v": "out"
+      }
+     ],
+     "pts": []
+    },
+    {
+     "id": "sym-E",
+     "type": "symbol",
+     "color": "ink",
+     "label": "",
+     "at": 0.8,
+     "num": [
+      {
+       "k": "x",
+       "v": 740.0
+      },
+      {
+       "k": "y",
+       "v": 285.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "symbol",
+       "v": "E"
+      },
+      {
+       "k": "meaning",
+       "v": "field magnitude"
+      },
+      {
+       "k": "unit",
+       "v": "N/C"
+      }
+     ],
+     "pts": []
+    }
+   ],
+   "checkpoints": []
+  },
+  {
+   "id": "s4",
+   "kind": "checkpoint",
+   "calcs": [],
+   "say": "Quick check before we calculate.",
+   "subtitles": {
+    "uz": "Hisoblashdan oldin qisqa tekshiruv.",
+    "ru": "Короткая проверка перед расчётом."
+   },
+   "draw": [],
+   "checkpoints": [
+    {
+     "question": "Why can we pull E out of the flux integral on a concentric Gaussian sphere?",
+     "type": "choice",
+     "choices": [
+      "E has constant magnitude and is perpendicular to the surface everywhere",
+      "E is zero on the surface",
+      "The surface has no area",
+      "E is parallel to the surface"
+     ],
+     "answer": "0",
+     "hint": "Think about what spherical symmetry says about the field.",
+     "reexplain_hint": "Imagine rotating the sphere about its centre: the picture looks identical, so the field cannot depend on direction, only on distance."
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "kind": "explain",
+   "calcs": [],
+   "say": "On the Gaussian sphere of radius r, flux equals E times the area four pi r squared. So E times four pi r squared equals Q enclosed over epsilon zero.",
+   "subtitles": {
+    "uz": "r radiusli Gauss sferasida oqim E ga to'rt pi r kvadrat yuzani ko'paytirganga teng. Demak E·4πr² = Q_enc/ε₀.",
+    "ru": "На сфере Гаусса радиуса r поток равен E на площадь четыре пи r в квадрате. Значит E·4πr² = Q_enc/ε₀."
+   },
+   "draw": [
+    {
+     "id": "sym-r",
+     "type": "symbol",
+     "color": "ink",
+     "label": "",
+     "at": 0.0,
+     "num": [
+      {
+       "k": "x",
+       "v": 740.0
+      },
+      {
+       "k": "y",
+       "v": 385.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "symbol",
+       "v": "r"
+      },
+      {
+       "k": "meaning",
+       "v": "Gaussian sphere radius"
+      },
+      {
+       "k": "unit",
+       "v": "m"
+      }
+     ],
+     "pts": []
+    },
+    {
+     "id": "gs-eq",
+     "type": "math",
+     "color": "accent",
+     "label": "",
+     "at": 0.5,
+     "num": [
+      {
+       "k": "x",
+       "v": 740.0
+      },
+      {
+       "k": "y",
+       "v": 440.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "latex",
+       "v": "E\\,(4\\pi r^2) = \\frac{Q_{\\text{enc}}}{\\varepsilon_0}"
+      }
+     ],
+     "pts": []
+    }
+   ],
+   "checkpoints": []
+  },
+  {
+   "id": "s6",
+   "kind": "explain",
+   "calcs": [
+    {
+     "id": "c1",
+     "expr": "0.05/0.10",
+     "values": [],
+     "expected": 0.5,
+     "unit": "1",
+     "unit_spoken": "dimensionless"
+    },
+    {
+     "id": "c2",
+     "expr": "Q*c1^3",
+     "values": [
+      {
+       "name": "Q",
+       "value": 3e-09
+      }
+     ],
+     "expected": 3.75e-10,
+     "unit": "C",
+     "unit_spoken": "coulombs"
+    }
+   ],
+   "say": "Inside, at r equals 0.050 m, the fraction r over R is {c1}. Only the volume fraction of charge is enclosed: {c2}.",
+   "subtitles": {
+    "uz": "Ichkarida r = 0.050 m da r/R = {c1}. Faqat hajm ulushiga mos zaryad o'raladi: {c2}.",
+    "ru": "Внутри, при r = 0,050 м, отношение r/R равно {c1}. Охвачена только доля заряда по объёму: {c2}."
+   },
+   "draw": [
+    {
+     "id": "gs-in",
+     "type": "circle",
+     "color": "highlight",
+     "label": "r = 0.050 m",
+     "at": 0.2,
+     "num": [
+      {
+       "k": "cx",
+       "v": 330.0
+      },
+      {
+       "k": "cy",
+       "v": 400.0
+      },
+      {
+       "k": "r",
+       "v": 80.0
+      },
+      {
+       "k": "dashed",
+       "v": 1.0
+      }
+     ],
+     "txt": [],
+     "pts": []
+    },
+    {
+     "id": "qenc-eq",
+     "type": "math",
+     "color": "accent",
+     "label": "",
+     "at": 0.6,
+     "num": [
+      {
+       "k": "x",
+       "v": 740.0
+      },
+      {
+       "k": "y",
+       "v": 540.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "latex",
+       "v": "Q_{\\text{enc}} = Q\\left(\\frac{r}{R}\\right)^3 = {c2}"
+      }
+     ],
+     "pts": []
+    }
+   ],
+   "checkpoints": []
+  },
+  {
+   "id": "s7",
+   "kind": "explain",
+   "calcs": [
+    {
+     "id": "c3",
+     "expr": "Q*0.05/(4*pi*eps0*0.10^3)",
+     "values": [
+      {
+       "name": "Q",
+       "value": 3e-09
+      },
+      {
+       "name": "eps0",
+       "value": 8.854e-12
+      }
+     ],
+     "expected": 1348.1585,
+     "unit": "N/C",
+     "unit_spoken": "newtons per coulomb"
+    }
+   ],
+   "say": "Solving for E gives Q r over four pi epsilon zero R cubed. At r equals 0.050 m this is {c3}, pointing radially outward.",
+   "subtitles": {
+    "uz": "E ni topsak E = Qr/(4πε₀R³). r = 0.050 m da bu {c3}, radial tashqariga yo'nalgan.",
+    "ru": "Решая, получаем E = Qr/(4πε₀R³). При r = 0,050 м это {c3}, направлено радиально наружу."
+   },
+   "draw": [
+    {
+     "id": "sym-ein",
+     "type": "symbol",
+     "color": "ink",
+     "label": "",
+     "at": 0.0,
+     "num": [
+      {
+       "k": "x",
+       "v": 740.0
+      },
+      {
+       "k": "y",
+       "v": 585.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "symbol",
+       "v": "E_{\\text{in}}"
+      },
+      {
+       "k": "meaning",
+       "v": "field inside the sphere"
+      },
+      {
+       "k": "unit",
+       "v": "N/C"
+      }
+     ],
+     "pts": []
+    },
+    {
+     "id": "e-in",
+     "type": "math",
+     "color": "right",
+     "label": "",
+     "at": 0.4,
+     "num": [
+      {
+       "k": "x",
+       "v": 740.0
+      },
+      {
+       "k": "y",
+       "v": 690.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "latex",
+       "v": "E_{\\text{in}} = \\frac{Q\\,r}{4\\pi\\varepsilon_0 R^3} = {c3}"
+      }
+     ],
+     "pts": []
+    },
+    {
+     "id": "e-in-arrow",
+     "type": "arrow",
+     "color": "field",
+     "label": "E",
+     "at": 0.7,
+     "num": [
+      {
+       "k": "x1",
+       "v": 330.0
+      },
+      {
+       "k": "y1",
+       "v": 320.0
+      },
+      {
+       "k": "x2",
+       "v": 330.0
+      },
+      {
+       "k": "y2",
+       "v": 240.0
+      },
+      {
+       "k": "dashed",
+       "v": 0.0
+      }
+     ],
+     "txt": [],
+     "pts": []
+    }
+   ],
+   "checkpoints": []
+  },
+  {
+   "id": "s8",
+   "kind": "checkpoint",
+   "calcs": [
+    {
+     "id": "c4",
+     "expr": "Q*0.025/(4*pi*eps0*0.10^3)",
+     "values": [
+      {
+       "name": "Q",
+       "value": 3e-09
+      },
+      {
+       "name": "eps0",
+       "value": 8.854e-12
+      }
+     ],
+     "expected": 1349.4,
+     "unit": "N/C",
+     "unit_spoken": "newtons per coulomb"
+    }
+   ],
+   "say": "Let's test the inside result.",
+   "subtitles": {
+    "uz": "Ichki natijani sinab ko'raylik.",
+    "ru": "Проверим результат для внутренней области."
+   },
+   "draw": [],
+   "checkpoints": [
+    {
+     "question": "Inside the sphere, E grows linearly with r. What is E at r = 0.025 m, half of the previous radius? Answer in N/C.",
+     "type": "number",
+     "choices": [],
+     "answer": "{c4:3sf}",
+     "hint": "E is proportional to r inside.",
+     "reexplain_hint": "Instead of recomputing, halve the radius means halve the field: take the value at 0.050 m and divide by two."
+    }
+   ]
+  },
+  {
+   "id": "s9",
+   "kind": "explain",
+   "calcs": [],
+   "say": "Outside, at r greater than R, the Gaussian sphere encloses all the charge Q. So the sphere acts like a point charge.",
+   "subtitles": {
+    "uz": "Tashqarida, r > R da, Gauss sferasi butun Q zaryadni o'rab oladi. Shar nuqtaviy zaryaddek ta'sir qiladi.",
+    "ru": "Снаружи, при r больше R, сфера Гаусса охватывает весь заряд Q. Шар действует как точечный заряд."
+   },
+   "draw": [
+    {
+     "id": "gs-out",
+     "type": "circle",
+     "color": "highlight",
+     "label": "r = 0.20 m",
+     "at": 0.2,
+     "num": [
+      {
+       "k": "cx",
+       "v": 330.0
+      },
+      {
+       "k": "cy",
+       "v": 400.0
+      },
+      {
+       "k": "r",
+       "v": 320.0
+      },
+      {
+       "k": "dashed",
+       "v": 1.0
+      }
+     ],
+     "txt": [],
+     "pts": []
+    },
+    {
+     "id": "sym-eout",
+     "type": "symbol",
+     "color": "ink",
+     "label": "",
+     "at": 0.4,
+     "num": [
+      {
+       "k": "x",
+       "v": 740.0
+      },
+      {
+       "k": "y",
+       "v": 635.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "symbol",
+       "v": "E_{\\text{out}}"
+      },
+      {
+       "k": "meaning",
+       "v": "field outside the sphere"
+      },
+      {
+       "k": "unit",
+       "v": "N/C"
+      }
+     ],
+     "pts": []
+    },
+    {
+     "id": "e-out-eq",
+     "type": "math",
+     "color": "accent",
+     "label": "",
+     "at": 0.6,
+     "num": [
+      {
+       "k": "x",
+       "v": 740.0
+      },
+      {
+       "k": "y",
+       "v": 740.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "latex",
+       "v": "E_{\\text{out}} = \\frac{Q}{4\\pi\\varepsilon_0 r^2}"
+      }
+     ],
+     "pts": []
+    }
+   ],
+   "checkpoints": []
+  },
+  {
+   "id": "s10",
+   "kind": "explain",
+   "calcs": [
+    {
+     "id": "c5",
+     "expr": "Q/(4*pi*eps0*0.20^2)",
+     "values": [
+      {
+       "name": "Q",
+       "value": 3e-09
+      },
+      {
+       "name": "eps0",
+       "value": 8.854e-12
+      }
+     ],
+     "expected": 674.68,
+     "unit": "N/C",
+     "unit_spoken": "newtons per coulomb"
+    }
+   ],
+   "say": "At r equals 0.20 m the field is {c5}, radially outward since the charge is positive.",
+   "subtitles": {
+    "uz": "r = 0.20 m da maydon {c5}, zaryad musbat bo'lgani uchun radial tashqariga.",
+    "ru": "При r = 0,20 м поле равно {c5}, направлено радиально наружу, так как заряд положителен."
+   },
+   "draw": [
+    {
+     "id": "e-out-val",
+     "type": "math",
+     "color": "right",
+     "label": "",
+     "at": 0.3,
+     "num": [
+      {
+       "k": "x",
+       "v": 740.0
+      },
+      {
+       "k": "y",
+       "v": 830.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "latex",
+       "v": "E(0.20\\,\\text{m}) = {c5}"
+      }
+     ],
+     "pts": []
+    }
+   ],
+   "checkpoints": []
+  },
+  {
+   "id": "s11",
+   "kind": "explain",
+   "calcs": [
+    {
+     "id": "c6",
+     "expr": "Q/eps0",
+     "values": [
+      {
+       "name": "Q",
+       "value": 3e-09
+      },
+      {
+       "name": "eps0",
+       "value": 8.854e-12
+      }
+     ],
+     "expected": 338.83,
+     "unit": "N*m**2/C",
+     "unit_spoken": "newton meters squared per coulomb"
+    }
+   ],
+   "say": "The flux through the sphere of radius 0.20 m encloses all of Q, so Phi equals Q over epsilon zero, {c6}.",
+   "subtitles": {
+    "uz": "Radiusi 0.20 m bo'lgan sfera orqali oqim butun Q ni o'raydi, shuning uchun Φ = Q/ε₀ = {c6}.",
+    "ru": "Поток через сферу радиуса 0,20 м охватывает весь заряд Q, поэтому Φ = Q/ε₀ = {c6}."
+   },
+   "draw": [
+    {
+     "id": "flux-eq",
+     "type": "math",
+     "color": "accent",
+     "label": "",
+     "at": 0.4,
+     "num": [
+      {
+       "k": "x",
+       "v": 740.0
+      },
+      {
+       "k": "y",
+       "v": 900.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "latex",
+       "v": "\\Phi = \\frac{Q}{\\varepsilon_0} = {c6}"
+      }
+     ],
+     "pts": []
+    }
+   ],
+   "checkpoints": []
+  },
+  {
+   "id": "s12",
+   "kind": "checkpoint",
+   "calcs": [],
+   "say": "One more check on the flux.",
+   "subtitles": {
+    "uz": "Oqim haqida yana bir tekshiruv.",
+    "ru": "Ещё одна проверка по потоку."
+   },
+   "draw": [],
+   "checkpoints": [
+    {
+     "question": "If the Gaussian sphere had radius 0.50 m instead of 0.20 m, what happens to the flux?",
+     "type": "choice",
+     "choices": [
+      "It increases",
+      "It decreases",
+      "It stays the same",
+      "It becomes zero"
+     ],
+     "answer": "2",
+     "hint": "What does the flux depend on in Gauss's law?",
+     "reexplain_hint": "Picture field lines leaving the charge: a bigger sphere is crossed by the same number of lines, just spread out more thinly."
+    }
+   ]
+  },
+  {
+   "id": "s13",
+   "kind": "summary",
+   "calcs": [],
+   "say": "Inside, E grows linearly with r because less charge is enclosed. Outside, E falls as one over r squared, like a point charge.",
+   "subtitles": {
+    "uz": "Ichkarida E r bilan chiziqli o'sadi, chunki kamroq zaryad o'raladi. Tashqarida E 1/r² kabi kamayadi, nuqtaviy zaryaddek.",
+    "ru": "Внутри E растёт линейно с r, так как охвачено меньше заряда. Снаружи E падает как 1/r², как у точечного заряда."
+   },
+   "draw": [
+    {
+     "id": "sum-in",
+     "type": "text",
+     "color": "ink",
+     "label": "",
+     "at": 0.0,
+     "num": [
+      {
+       "k": "x",
+       "v": 60.0
+      },
+      {
+       "k": "y",
+       "v": 800.0
+      },
+      {
+       "k": "size",
+       "v": 26.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "text",
+       "v": "Inside: E = {c3} (outward)"
+      }
+     ],
+     "pts": []
+    },
+    {
+     "id": "sum-out",
+     "type": "text",
+     "color": "ink",
+     "label": "",
+     "at": 0.5,
+     "num": [
+      {
+       "k": "x",
+       "v": 60.0
+      },
+      {
+       "k": "y",
+       "v": 860.0
+      },
+      {
+       "k": "size",
+       "v": 26.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "text",
+       "v": "Outside: E = {c5} (outward)"
+      }
+     ],
+     "pts": []
+    }
+   ],
+   "checkpoints": []
+  }
+ ],
+ "leftovers": [
+  {
+   "step": "s8",
+   "rule": "calc",
+   "message": "calc c4: computed 674.081, expected 1349.4 N/C"
+  },
+  {
+   "step": "s8",
+   "rule": "number",
+   "message": "step s8 checkpoint question: 0.025 is not a given number. Every computed number must come from a calc placeholder such as {c3} or {c3:2sf}, so it is verified."
+  }
+ ]
+}

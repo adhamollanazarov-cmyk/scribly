@@ -87,6 +87,7 @@ def test_step_with_a_violation_is_fixed_alone() -> None:
     events = run(llm, metrics)
 
     assert metrics.fixes == 1 and metrics.fixes_failed == 0
+    assert metrics.fix_reasons == {"number": 1}
     assert llm.requests[1][1] == FIX_SCHEMA
     fix_request = llm.requests[1][0]
     assert "338.8 is not a given number" in fix_request

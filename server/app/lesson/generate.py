@@ -11,6 +11,7 @@ import json
 import logging
 import time
 import uuid
+from collections import Counter
 from collections.abc import AsyncIterator
 from dataclasses import dataclass, field
 from typing import Any
@@ -50,6 +51,7 @@ class Metrics:
     retries: int = 0
     fixes: int = 0
     fixes_failed: int = 0
+    fix_reasons: Counter[str] = field(default_factory=Counter)  # rules that triggered a fix
     leftovers: list[tuple[str, Violation]] = field(default_factory=list)
     lesson: Lesson | None = None
     final_error: str | None = None
@@ -190,6 +192,7 @@ async def _accept(
         yield commit(state, checked)
         return
     metrics.fixes += 1
+    metrics.fix_reasons.update({v.rule for v in checked.violations})
     fixed = await _fix(raw, checked.violations, source, llm, state, metrics)
     if fixed is not None:
         first = check_step(fixed[0], state)

@@ -1,0 +1,2447 @@
+{
+ "problem": {
+  "id": "circ-kirchhoff",
+  "topic": "circuits/kirchhoff",
+  "level": "university",
+  "source": "own",
+  "input": "Two nodes, A (top) and B (bottom), are joined by three branches. Left branch: an ideal 10 V battery with its positive terminal toward A, in series with R1 = 2.0 ohm. Middle branch: R3 = 6.0 ohm alone. Right branch: an ideal 5.0 V battery with its positive terminal toward A, in series with R2 = 4.0 ohm. Use Kirchhoff's laws to find the current in each branch, including its direction.",
+  "expected": [
+   {
+    "name": "I3",
+    "value": 1.1363636363636365,
+    "unit": "A",
+    "rel_tol": 0.01
+   },
+   {
+    "name": "I1",
+    "value": 1.5909090909090908,
+    "unit": "A",
+    "rel_tol": 0.01
+   },
+   {
+    "name": "I2",
+    "value": 0.45454545454545453,
+    "unit": "A",
+    "rel_tol": 0.01
+   }
+  ],
+  "must_draw": [
+   "line|polyline|rect"
+  ]
+ },
+ "result": {
+  "id": "circ-kirchhoff",
+  "topic": "circuits/kirchhoff",
+  "source": "own",
+  "valid": true,
+  "error": null,
+  "numbers": {
+   "I3": true,
+   "I1": true,
+   "I2": true
+  },
+  "missing_draws": [],
+  "leftovers": {
+   "calc": 1
+  },
+  "steps": 14,
+  "unverified_steps": 1,
+  "fixes": 6,
+  "fixes_failed": 0,
+  "retries": 0,
+  "first_step_s": 10.731294600002002,
+  "total_s": 55.87747349997517,
+  "cost_usd": 0.2145289,
+  "skipped": false
+ },
+ "lesson": {
+  "version": "1",
+  "id": "e77c7a5e-f2ad-4a81-ba9f-b6c43b7a0ff9",
+  "title": "Kirchhoff's laws: three branches between two nodes",
+  "level": "university",
+  "source": {
+   "type": "problem",
+   "text": "Two nodes, A (top) and B (bottom), are joined by three branches. Left branch: an ideal 10 V battery with its positive terminal toward A, in series with R1 = 2.0 ohm. Middle branch: R3 = 6.0 ohm alone. Right branch: an ideal 5.0 V battery with its positive terminal toward A, in series with R2 = 4.0 ohm. Use Kirchhoff's laws to find the current in each branch, including its direction."
+  },
+  "steps": [
+   {
+    "id": "s1",
+    "kind": "explain",
+    "say": "Nodes A and B are joined by three branches. We will find each branch current with Kirchhoff's laws.",
+    "subtitles": {
+     "uz": "A va B tugunlar uchta shox bilan ulangan. Har bir shox tokini Kirxgof qonunlari bilan topamiz.",
+     "ru": "Узлы A и B соединены тремя ветвями. Найдём ток каждой ветви по законам Кирхгофа."
+    },
+    "draw": [
+     {
+      "id": "nodeA",
+      "color": "ink",
+      "at": 0.0,
+      "label": "A",
+      "group": null,
+      "type": "point",
+      "x": 300.0,
+      "y": 200.0,
+      "r": 8.0
+     },
+     {
+      "id": "nodeB",
+      "color": "ink",
+      "at": 0.0,
+      "label": "B",
+      "group": null,
+      "type": "point",
+      "x": 300.0,
+      "y": 800.0,
+      "r": 8.0
+     },
+     {
+      "id": "wireA",
+      "color": "ink",
+      "at": 0.1,
+      "label": null,
+      "group": null,
+      "type": "line",
+      "x1": 100.0,
+      "y1": 200.0,
+      "x2": 560.0,
+      "y2": 200.0,
+      "dashed": false
+     },
+     {
+      "id": "wireB",
+      "color": "ink",
+      "at": 0.1,
+      "label": null,
+      "group": null,
+      "type": "line",
+      "x1": 100.0,
+      "y1": 800.0,
+      "x2": 560.0,
+      "y2": 800.0,
+      "dashed": false
+     },
+     {
+      "id": "left-top",
+      "color": "ink",
+      "at": 0.2,
+      "label": null,
+      "group": null,
+      "type": "line",
+      "x1": 100.0,
+      "y1": 200.0,
+      "x2": 100.0,
+      "y2": 340.0,
+      "dashed": false
+     },
+     {
+      "id": "left-bat",
+      "color": "charge_pos",
+      "at": 0.3,
+      "label": "10 V",
+      "group": null,
+      "type": "rect",
+      "x": 70.0,
+      "y": 340.0,
+      "w": 60.0,
+      "h": 60.0,
+      "dashed": false
+     },
+     {
+      "id": "left-r1",
+      "color": "surface",
+      "at": 0.4,
+      "label": "R1 = 2.0 ohm",
+      "group": null,
+      "type": "rect",
+      "x": 70.0,
+      "y": 520.0,
+      "w": 60.0,
+      "h": 100.0,
+      "dashed": false
+     },
+     {
+      "id": "left-bot",
+      "color": "ink",
+      "at": 0.5,
+      "label": null,
+      "group": null,
+      "type": "line",
+      "x1": 100.0,
+      "y1": 620.0,
+      "x2": 100.0,
+      "y2": 800.0,
+      "dashed": false
+     },
+     {
+      "id": "mid-top",
+      "color": "ink",
+      "at": 0.5,
+      "label": null,
+      "group": null,
+      "type": "line",
+      "x1": 300.0,
+      "y1": 200.0,
+      "x2": 300.0,
+      "y2": 420.0,
+      "dashed": false
+     },
+     {
+      "id": "mid-r3",
+      "color": "surface",
+      "at": 0.6,
+      "label": "R3 = 6.0 ohm",
+      "group": null,
+      "type": "rect",
+      "x": 270.0,
+      "y": 420.0,
+      "w": 60.0,
+      "h": 100.0,
+      "dashed": false
+     },
+     {
+      "id": "mid-bot",
+      "color": "ink",
+      "at": 0.6,
+      "label": null,
+      "group": null,
+      "type": "line",
+      "x1": 300.0,
+      "y1": 520.0,
+      "x2": 300.0,
+      "y2": 800.0,
+      "dashed": false
+     },
+     {
+      "id": "right-top",
+      "color": "ink",
+      "at": 0.7,
+      "label": null,
+      "group": null,
+      "type": "line",
+      "x1": 560.0,
+      "y1": 200.0,
+      "x2": 560.0,
+      "y2": 340.0,
+      "dashed": false
+     },
+     {
+      "id": "right-bat",
+      "color": "charge_pos",
+      "at": 0.8,
+      "label": "5.0 V",
+      "group": null,
+      "type": "rect",
+      "x": 530.0,
+      "y": 340.0,
+      "w": 60.0,
+      "h": 60.0,
+      "dashed": false
+     },
+     {
+      "id": "right-r2",
+      "color": "surface",
+      "at": 0.9,
+      "label": "R2 = 4.0 ohm",
+      "group": null,
+      "type": "rect",
+      "x": 530.0,
+      "y": 520.0,
+      "w": 60.0,
+      "h": 100.0,
+      "dashed": false
+     },
+     {
+      "id": "right-bot",
+      "color": "ink",
+      "at": 0.9,
+      "label": null,
+      "group": null,
+      "type": "line",
+      "x1": 560.0,
+      "y1": 620.0,
+      "x2": 560.0,
+      "y2": 800.0,
+      "dashed": false
+     }
+    ],
+    "focus": null,
+    "checkpoint": null,
+    "sliders": [],
+    "warning": null
+   },
+   {
+    "id": "s2",
+    "kind": "explain",
+    "say": "Assume every branch current flows downward, from A to B. A negative answer will just mean the real current flows upward.",
+    "subtitles": {
+     "uz": "Har bir shox toki A dan B ga, pastga oqadi deb faraz qilamiz. Manfiy javob tok yuqoriga oqishini bildiradi.",
+     "ru": "Предположим, что ток каждой ветви течёт вниз, от A к B. Отрицательный ответ значит, что ток течёт вверх."
+    },
+    "draw": [
+     {
+      "id": "sym-i1",
+      "color": "ink",
+      "at": 0.0,
+      "label": null,
+      "group": null,
+      "type": "symbol",
+      "x": 740.0,
+      "y": 60.0,
+      "symbol": "I_1",
+      "meaning": "current in left branch, A to B",
+      "unit": "A"
+     },
+     {
+      "id": "sym-i2",
+      "color": "ink",
+      "at": 0.1,
+      "label": null,
+      "group": null,
+      "type": "symbol",
+      "x": 740.0,
+      "y": 105.0,
+      "symbol": "I_2",
+      "meaning": "current in right branch, A to B",
+      "unit": "A"
+     },
+     {
+      "id": "sym-i3",
+      "color": "ink",
+      "at": 0.2,
+      "label": null,
+      "group": null,
+      "type": "symbol",
+      "x": 740.0,
+      "y": 150.0,
+      "symbol": "I_3",
+      "meaning": "current in middle branch, A to B",
+      "unit": "A"
+     },
+     {
+      "id": "arr-i1",
+      "color": "force",
+      "at": 0.4,
+      "label": "I1",
+      "group": null,
+      "type": "arrow",
+      "x1": 160.0,
+      "y1": 420.0,
+      "x2": 160.0,
+      "y2": 500.0,
+      "dashed": false
+     },
+     {
+      "id": "arr-i3",
+      "color": "force",
+      "at": 0.6,
+      "label": "I3",
+      "group": null,
+      "type": "arrow",
+      "x1": 360.0,
+      "y1": 300.0,
+      "x2": 360.0,
+      "y2": 380.0,
+      "dashed": false
+     },
+     {
+      "id": "arr-i2",
+      "color": "force",
+      "at": 0.8,
+      "label": "I2",
+      "group": null,
+      "type": "arrow",
+      "x1": 620.0,
+      "y1": 420.0,
+      "x2": 620.0,
+      "y2": 500.0,
+      "dashed": false
+     }
+    ],
+    "focus": null,
+    "checkpoint": null,
+    "sliders": [],
+    "warning": null
+   },
+   {
+    "id": "s3",
+    "kind": "explain",
+    "say": "Junction rule at node A: current entering equals current leaving. All three assumed currents leave A, so they must sum to zero.",
+    "subtitles": {
+     "uz": "A tugunda tutashuv qoidasi: kirayotgan tok chiqayotgan tokka teng. Uchala tok A dan chiqadi, shuning uchun yig'indisi nolga teng.",
+     "ru": "Правило узлов в A: входящий ток равен выходящему. Все три тока выходят из A, значит их сумма равна нулю."
+    },
+    "draw": [
+     {
+      "id": "eq-node",
+      "color": "accent",
+      "at": 0.5,
+      "label": null,
+      "group": null,
+      "type": "math",
+      "x": 740.0,
+      "y": 260.0,
+      "latex": "I_1 + I_2 + I_3 = 0",
+      "size": null
+     }
+    ],
+    "focus": null,
+    "checkpoint": null,
+    "sliders": [],
+    "warning": null
+   },
+   {
+    "id": "s4",
+    "kind": "checkpoint",
+    "say": "Quick check on the junction rule before we write the loop equations.",
+    "subtitles": {
+     "uz": "Ilmoq tenglamalarini yozishdan oldin tutashuv qoidasini tekshiramiz.",
+     "ru": "Быстрая проверка правила узлов перед уравнениями контуров."
+    },
+    "draw": [],
+    "focus": null,
+    "checkpoint": {
+     "question": "All three assumed currents flow from A to B. What does the junction rule at A say?",
+     "type": "choice",
+     "choices": [
+      "I1 + I2 + I3 = 0",
+      "I1 = I2 + I3",
+      "I1 + I2 = I3 squared",
+      "I1 = I2 = I3"
+     ],
+     "answer": 0,
+     "tolerance": null,
+     "unit": null,
+     "hint": "Charge cannot pile up at a node: what enters must equal what leaves.",
+     "reexplain_hint": "Picture water pipes meeting at a tank that never fills. If all three pipes carry water away, their flows must add to zero, so some flow is negative, meaning water actually enters."
+    },
+    "sliders": [],
+    "warning": null
+   },
+   {
+    "id": "s5",
+    "kind": "explain",
+    "say": "Loop rule: going around a loop, potential rises across a battery from minus to plus, and drops by I times R along the current.",
+    "subtitles": {
+     "uz": "Ilmoq qoidasi: batareyada minusdan plyusga o'tganda potensial ko'tariladi, tok bo'ylab qarshilikda I marta R ga tushadi.",
+     "ru": "Правило контуров: на батарее от минуса к плюсу потенциал растёт, а по току на резисторе падает на I умножить на R."
+    },
+    "draw": [
+     {
+      "id": "sym-r1",
+      "color": "ink",
+      "at": 0.0,
+      "label": null,
+      "group": null,
+      "type": "symbol",
+      "x": 740.0,
+      "y": 330.0,
+      "symbol": "R_1",
+      "meaning": "resistance of left branch",
+      "unit": "ohm"
+     },
+     {
+      "id": "sym-r2",
+      "color": "ink",
+      "at": 0.1,
+      "label": null,
+      "group": null,
+      "type": "symbol",
+      "x": 740.0,
+      "y": 375.0,
+      "symbol": "R_2",
+      "meaning": "resistance of right branch",
+      "unit": "ohm"
+     },
+     {
+      "id": "sym-r3",
+      "color": "ink",
+      "at": 0.2,
+      "label": null,
+      "group": null,
+      "type": "symbol",
+      "x": 740.0,
+      "y": 420.0,
+      "symbol": "R_3",
+      "meaning": "resistance of middle branch",
+      "unit": "ohm"
+     },
+     {
+      "id": "sym-e1",
+      "color": "ink",
+      "at": 0.3,
+      "label": null,
+      "group": null,
+      "type": "symbol",
+      "x": 740.0,
+      "y": 465.0,
+      "symbol": "\\mathcal{E}_1",
+      "meaning": "left battery emf",
+      "unit": "V"
+     },
+     {
+      "id": "sym-e2",
+      "color": "ink",
+      "at": 0.4,
+      "label": null,
+      "group": null,
+      "type": "symbol",
+      "x": 740.0,
+      "y": 510.0,
+      "symbol": "\\mathcal{E}_2",
+      "meaning": "right battery emf",
+      "unit": "V"
+     }
+    ],
+    "focus": null,
+    "checkpoint": null,
+    "sliders": [],
+    "warning": null
+   },
+   {
+    "id": "s6",
+    "kind": "explain",
+    "say": "Left branch: potential from A down to B is the battery 10 volts minus I1 R1. The same drop across the middle branch is I3 R3.",
+    "subtitles": {
+     "uz": "Chap shox: A dan B gacha potensial batareya 10 volt minus I1 R1 ga teng. O'rta shoxda xuddi shu tushish I3 R3.",
+     "ru": "Левая ветвь: потенциал от A к B равен 10 вольт минус I1 R1. В средней ветви то же падение равно I3 R3."
+    },
+    "draw": [
+     {
+      "id": "sym-va",
+      "color": "ink",
+      "at": 0.0,
+      "label": null,
+      "group": null,
+      "type": "symbol",
+      "x": 740.0,
+      "y": 555.0,
+      "symbol": "V_A",
+      "meaning": "potential at node A",
+      "unit": "V"
+     },
+     {
+      "id": "sym-vb",
+      "color": "ink",
+      "at": 0.1,
+      "label": null,
+      "group": null,
+      "type": "symbol",
+      "x": 900.0,
+      "y": 555.0,
+      "symbol": "V_B",
+      "meaning": "potential at node B",
+      "unit": "V"
+     },
+     {
+      "id": "eq-v-left",
+      "color": "accent",
+      "at": 0.4,
+      "label": null,
+      "group": null,
+      "type": "math",
+      "x": 740.0,
+      "y": 620.0,
+      "latex": "V_A - V_B = \\mathcal{E}_1 - I_1 R_1 = 10\\,\\text{V} - I_1 R_1",
+      "size": null
+     },
+     {
+      "id": "eq-v-mid",
+      "color": "accent",
+      "at": 0.8,
+      "label": null,
+      "group": null,
+      "type": "math",
+      "x": 740.0,
+      "y": 700.0,
+      "latex": "V_A - V_B = I_3 R_3",
+      "size": null
+     }
+    ],
+    "focus": null,
+    "checkpoint": null,
+    "sliders": [],
+    "warning": null
+   },
+   {
+    "id": "s7",
+    "kind": "explain",
+    "say": "Right branch gives the same potential difference: 5 volts minus I2 R2. Now we have the junction equation plus three expressions for one voltage.",
+    "subtitles": {
+     "uz": "O'ng shox ham xuddi shu potensiallar farqini beradi: 5 volt minus I2 R2. Endi tutashuv tenglamasi va bitta kuchlanish uchun uchta ifoda bor.",
+     "ru": "Правая ветвь даёт ту же разность потенциалов: 5 вольт минус I2 R2. Теперь есть уравнение узла и три выражения для одного напряжения."
+    },
+    "draw": [
+     {
+      "id": "eq-v-right",
+      "color": "accent",
+      "at": 0.3,
+      "label": null,
+      "group": null,
+      "type": "math",
+      "x": 740.0,
+      "y": 760.0,
+      "latex": "V_A - V_B = \\mathcal{E}_2 - I_2 R_2 = 5.0\\,\\text{V} - I_2 R_2",
+      "size": null
+     }
+    ],
+    "focus": null,
+    "checkpoint": null,
+    "sliders": [],
+    "warning": null
+   },
+   {
+    "id": "s8",
+    "kind": "checkpoint",
+    "say": "Check the sign logic with a simpler case.",
+    "subtitles": {
+     "uz": "Ishora mantig'ini soddaroq holda tekshiramiz.",
+     "ru": "Проверим логику знаков на простом случае."
+    },
+    "draw": [],
+    "focus": null,
+    "checkpoint": {
+     "question": "Suppose only the two batteries and R2 = 4.0 ohm formed a loop. Current flows from the 10 V side toward the 5 V side. What is its size in amperes?",
+     "type": "number",
+     "choices": null,
+     "answer": 1.25,
+     "tolerance": 0.02,
+     "unit": "A",
+     "hint": "The net emf driving the current is the difference of the two batteries.",
+     "reexplain_hint": "Think of two people pushing on opposite sides of a cart: the net push is 10 minus 5 volts, and the current is that net push divided by the total resistance."
+    },
+    "sliders": [],
+    "warning": null
+   },
+   {
+    "id": "s9",
+    "kind": "explain",
+    "say": "Let U be the potential difference A minus B. Then I1 equals 10 minus U over 2, and I2 equals 5 minus U over 4.",
+    "subtitles": {
+     "uz": "U ni A minus B potensiallar farqi deymiz. U holda I1 = (10 − U)/2, I2 = (5 − U)/4.",
+     "ru": "Пусть U разность потенциалов A минус B. Тогда I1 равно 10 минус U на 2, а I2 равно 5 минус U на 4."
+    },
+    "draw": [
+     {
+      "id": "sym-u",
+      "color": "ink",
+      "at": 0.0,
+      "label": null,
+      "group": null,
+      "type": "symbol",
+      "x": 740.0,
+      "y": 560.0,
+      "symbol": "U",
+      "meaning": "V_A minus V_B",
+      "unit": "V"
+     },
+     {
+      "id": "erase-a",
+      "color": "ink",
+      "at": 0.1,
+      "label": null,
+      "group": null,
+      "type": "erase",
+      "target_id": "eq-v-left"
+     },
+     {
+      "id": "erase-b",
+      "color": "ink",
+      "at": 0.1,
+      "label": null,
+      "group": null,
+      "type": "erase",
+      "target_id": "eq-v-mid"
+     },
+     {
+      "id": "erase-c",
+      "color": "ink",
+      "at": 0.1,
+      "label": null,
+      "group": null,
+      "type": "erase",
+      "target_id": "eq-v-right"
+     },
+     {
+      "id": "eq-i-u",
+      "color": "accent",
+      "at": 0.5,
+      "label": null,
+      "group": null,
+      "type": "math",
+      "x": 740.0,
+      "y": 640.0,
+      "latex": "I_1 = \\frac{10 - U}{2.0},\\quad I_2 = \\frac{5.0 - U}{4.0},\\quad I_3 = \\frac{U}{6.0}",
+      "size": null
+     }
+    ],
+    "focus": null,
+    "checkpoint": null,
+    "sliders": [],
+    "warning": null
+   },
+   {
+    "id": "s10",
+    "kind": "explain",
+    "say": "Junction rule: the currents leaving A are I1 plus I2 plus minus I3, so I1 plus I2 equals I3. This gives U equal to 6.82 volts.",
+    "subtitles": {
+     "uz": "Tutashuv qoidasi: I1 + I2 = I3. Bundan U = 6.82 V.",
+     "ru": "Правило узлов: I1 плюс I2 равно I3. Отсюда U равно 6.82 V."
+    },
+    "draw": [
+     {
+      "id": "erase-eq-node",
+      "color": "ink",
+      "at": 0.0,
+      "label": null,
+      "group": null,
+      "type": "erase",
+      "target_id": "eq-node"
+     },
+     {
+      "id": "eq-node2",
+      "color": "accent",
+      "at": 0.2,
+      "label": null,
+      "group": null,
+      "type": "math",
+      "x": 740.0,
+      "y": 260.0,
+      "latex": "I_3 = -(I_1 + I_2)",
+      "size": null
+     },
+     {
+      "id": "eq-solve",
+      "color": "accent",
+      "at": 0.4,
+      "label": null,
+      "group": null,
+      "type": "math",
+      "x": 740.0,
+      "y": 740.0,
+      "latex": "\\frac{U}{6.0} = \\frac{10-U}{2.0} + \\frac{5.0-U}{4.0}",
+      "size": null
+     },
+     {
+      "id": "eq-u",
+      "color": "right",
+      "at": 0.8,
+      "label": null,
+      "group": null,
+      "type": "math",
+      "x": 740.0,
+      "y": 830.0,
+      "latex": "U = 6.82\\,\\mathrm{V}",
+      "size": null
+     }
+    ],
+    "focus": null,
+    "checkpoint": null,
+    "sliders": [],
+    "warning": null
+   },
+   {
+    "id": "s11",
+    "kind": "checkpoint",
+    "say": "Now find the left branch current from U.",
+    "subtitles": {
+     "uz": "Endi U dan chap shox tokini topamiz.",
+     "ru": "Теперь найдём ток левой ветви по U."
+    },
+    "draw": [],
+    "focus": null,
+    "checkpoint": {
+     "question": "With U = 6.82 V, what is the current I1 in the left branch, in amperes? Use I1 = (10 - U)/2.0.",
+     "type": "number",
+     "choices": null,
+     "answer": 1.59,
+     "tolerance": 0.02,
+     "unit": "A",
+     "hint": "Subtract U from 10 volts, then divide by 2.0 ohm.",
+     "reexplain_hint": "The battery lifts the potential by 10 volts, but the node A sits at only U volts above B. The leftover volts drop across R1, so current equals that leftover over 2.0 ohm."
+    },
+    "sliders": [],
+    "warning": null
+   },
+   {
+    "id": "s12",
+    "kind": "explain",
+    "say": "Right branch: I2 is minus 0.455 amperes, negative, so it really flows upward from B to A. Middle branch: I3 is 1.14 amperes downward.",
+    "subtitles": {
+     "uz": "O'ng shox: I2 = -0.455 A, manfiy, ya'ni haqiqatda B dan A ga yuqoriga oqadi. O'rta shox: I3 = 1.14 A, pastga.",
+     "ru": "Правая ветвь: I2 равно -0.455 A, отрицательно, значит ток течёт вверх от B к A. Средняя ветвь: I3 равно 1.14 A вниз."
+    },
+    "draw": [
+     {
+      "id": "eq-i2",
+      "color": "right",
+      "at": 0.2,
+      "label": null,
+      "group": null,
+      "type": "math",
+      "x": 740.0,
+      "y": 900.0,
+      "latex": "I_2 = \\frac{5.0 - U}{4.0} = -0.455\\,\\mathrm{A}",
+      "size": null
+     },
+     {
+      "id": "wrong-i2",
+      "color": "highlight",
+      "at": 0.5,
+      "label": null,
+      "group": null,
+      "type": "highlight",
+      "target_id": "arr-i2"
+     },
+     {
+      "id": "eq-i3",
+      "color": "right",
+      "at": 0.7,
+      "label": null,
+      "group": null,
+      "type": "math",
+      "x": 740.0,
+      "y": 950.0,
+      "latex": "I_3 = \\frac{U}{6.0} = 1.14\\,\\mathrm{A}",
+      "size": null
+     }
+    ],
+    "focus": null,
+    "checkpoint": null,
+    "sliders": [],
+    "warning": null
+   },
+   {
+    "id": "s13",
+    "kind": "explain",
+    "say": "Check the junction: I1 plus I2 minus I3 equals minus 0.00 amperes, so the currents balance at node A. I could not verify this number.",
+    "subtitles": {
+     "uz": "Tekshiramiz: I1 + I2 − I3 = -0.00 A, ya'ni A tugunida toklar muvozanatda.",
+     "ru": "Проверка: I1 плюс I2 минус I3 равно -0.00 A, значит токи в узле A уравновешены."
+    },
+    "draw": [
+     {
+      "id": "eq-check",
+      "color": "ink",
+      "at": 0.5,
+      "label": null,
+      "group": null,
+      "type": "math",
+      "x": 740.0,
+      "y": 260.0,
+      "latex": "I_1 + I_2 - I_3 = -0.00\\,\\mathrm{A}",
+      "size": null
+     }
+    ],
+    "focus": null,
+    "checkpoint": null,
+    "sliders": [],
+    "warning": "unverified"
+   },
+   {
+    "id": "s14",
+    "kind": "summary",
+    "say": "Summary: I1 is 1.59 amperes down, I3 is 1.14 amperes down, and I2 is minus 0.455 amperes, meaning 0.25 amperes flows up through the right battery.",
+    "subtitles": {
+     "uz": "Xulosa: I1 = 1.59 A pastga, I3 = 1.14 A pastga, I2 = -0.455 A, ya'ni o'ng batareya orqali tok yuqoriga oqadi.",
+     "ru": "Итог: I1 равно 1.59 A вниз, I3 равно 1.14 A вниз, I2 равно -0.455 A, то есть ток течёт вверх через правую батарею."
+    },
+    "draw": [
+     {
+      "id": "sum-text",
+      "color": "accent",
+      "at": 0.3,
+      "label": null,
+      "group": null,
+      "type": "text",
+      "x": 60.0,
+      "y": 900.0,
+      "text": "I1 = 1.59 A down, I3 = 1.14 A down, I2 = -0.455 A (up)",
+      "size": 28.0
+     }
+    ],
+    "focus": null,
+    "checkpoint": null,
+    "sliders": [],
+    "warning": null
+   }
+  ],
+  "calcs": [
+   {
+    "id": "c1",
+    "expr": "(10-5)/4",
+    "values": {},
+    "expected": 1.25,
+    "unit": "A",
+    "rel_tol": 0.01,
+    "used_in_steps": [
+     "s8"
+    ]
+   },
+   {
+    "id": "c2",
+    "expr": "(10-2*I1)/6",
+    "values": {
+     "I1": 1.0
+    },
+    "expected": 1.3333333333333333,
+    "unit": "A",
+    "rel_tol": 0.01,
+    "used_in_steps": []
+   },
+   {
+    "id": "c3",
+    "expr": "(10/2+5/4)/(1/2+1/4+1/6)",
+    "values": {},
+    "expected": 6.818181818181818,
+    "unit": "V",
+    "rel_tol": 0.01,
+    "used_in_steps": [
+     "s10",
+     "s11"
+    ]
+   },
+   {
+    "id": "c4",
+    "expr": "(10-c3)/2",
+    "values": {
+     "c3": 6.818181818181819
+    },
+    "expected": 1.5909090909090908,
+    "unit": "A",
+    "rel_tol": 0.01,
+    "used_in_steps": [
+     "s11",
+     "s14"
+    ]
+   },
+   {
+    "id": "c5",
+    "expr": "(5-c3)/4",
+    "values": {
+     "c3": 6.818181818181819
+    },
+    "expected": -0.4545454545454546,
+    "unit": "A",
+    "rel_tol": 0.01,
+    "used_in_steps": [
+     "s12",
+     "s14"
+    ]
+   },
+   {
+    "id": "c6",
+    "expr": "c3/6",
+    "values": {
+     "c3": 6.818181818181819
+    },
+    "expected": 1.1363636363636365,
+    "unit": "A",
+    "rel_tol": 0.01,
+    "used_in_steps": [
+     "s12",
+     "s14"
+    ]
+   },
+   {
+    "id": "c7",
+    "expr": "c4+c5-c6",
+    "values": {
+     "c4": 1.5909090909090904,
+     "c6": 1.1363636363636365,
+     "c5": -0.4545454545454548
+    },
+    "expected": 0.0,
+    "unit": "A",
+    "rel_tol": 0.01,
+    "used_in_steps": [
+     "s13"
+    ]
+   }
+  ]
+ },
+ "drafts": [
+  {
+   "id": "s1",
+   "kind": "explain",
+   "calcs": [],
+   "say": "Nodes A and B are joined by three branches. We will find each branch current with Kirchhoff's laws.",
+   "subtitles": {
+    "uz": "A va B tugunlar uchta shox bilan ulangan. Har bir shox tokini Kirxgof qonunlari bilan topamiz.",
+    "ru": "Узлы A и B соединены тремя ветвями. Найдём ток каждой ветви по законам Кирхгофа."
+   },
+   "draw": [
+    {
+     "id": "nodeA",
+     "type": "point",
+     "color": "ink",
+     "label": "A",
+     "at": 0.0,
+     "num": [
+      {
+       "k": "x",
+       "v": 300.0
+      },
+      {
+       "k": "y",
+       "v": 200.0
+      },
+      {
+       "k": "r",
+       "v": 8.0
+      }
+     ],
+     "txt": [],
+     "pts": []
+    },
+    {
+     "id": "nodeB",
+     "type": "point",
+     "color": "ink",
+     "label": "B",
+     "at": 0.0,
+     "num": [
+      {
+       "k": "x",
+       "v": 300.0
+      },
+      {
+       "k": "y",
+       "v": 800.0
+      },
+      {
+       "k": "r",
+       "v": 8.0
+      }
+     ],
+     "txt": [],
+     "pts": []
+    },
+    {
+     "id": "wireA",
+     "type": "line",
+     "color": "ink",
+     "label": "",
+     "at": 0.1,
+     "num": [
+      {
+       "k": "x1",
+       "v": 100.0
+      },
+      {
+       "k": "y1",
+       "v": 200.0
+      },
+      {
+       "k": "x2",
+       "v": 560.0
+      },
+      {
+       "k": "y2",
+       "v": 200.0
+      }
+     ],
+     "txt": [],
+     "pts": []
+    },
+    {
+     "id": "wireB",
+     "type": "line",
+     "color": "ink",
+     "label": "",
+     "at": 0.1,
+     "num": [
+      {
+       "k": "x1",
+       "v": 100.0
+      },
+      {
+       "k": "y1",
+       "v": 800.0
+      },
+      {
+       "k": "x2",
+       "v": 560.0
+      },
+      {
+       "k": "y2",
+       "v": 800.0
+      }
+     ],
+     "txt": [],
+     "pts": []
+    },
+    {
+     "id": "left-top",
+     "type": "line",
+     "color": "ink",
+     "label": "",
+     "at": 0.2,
+     "num": [
+      {
+       "k": "x1",
+       "v": 100.0
+      },
+      {
+       "k": "y1",
+       "v": 200.0
+      },
+      {
+       "k": "x2",
+       "v": 100.0
+      },
+      {
+       "k": "y2",
+       "v": 340.0
+      }
+     ],
+     "txt": [],
+     "pts": []
+    },
+    {
+     "id": "left-bat",
+     "type": "rect",
+     "color": "charge_pos",
+     "label": "10 V",
+     "at": 0.3,
+     "num": [
+      {
+       "k": "x",
+       "v": 70.0
+      },
+      {
+       "k": "y",
+       "v": 340.0
+      },
+      {
+       "k": "w",
+       "v": 60.0
+      },
+      {
+       "k": "h",
+       "v": 60.0
+      }
+     ],
+     "txt": [],
+     "pts": []
+    },
+    {
+     "id": "left-r1",
+     "type": "rect",
+     "color": "surface",
+     "label": "R1 = 2.0 ohm",
+     "at": 0.4,
+     "num": [
+      {
+       "k": "x",
+       "v": 70.0
+      },
+      {
+       "k": "y",
+       "v": 520.0
+      },
+      {
+       "k": "w",
+       "v": 60.0
+      },
+      {
+       "k": "h",
+       "v": 100.0
+      }
+     ],
+     "txt": [],
+     "pts": []
+    },
+    {
+     "id": "left-bot",
+     "type": "line",
+     "color": "ink",
+     "label": "",
+     "at": 0.5,
+     "num": [
+      {
+       "k": "x1",
+       "v": 100.0
+      },
+      {
+       "k": "y1",
+       "v": 620.0
+      },
+      {
+       "k": "x2",
+       "v": 100.0
+      },
+      {
+       "k": "y2",
+       "v": 800.0
+      }
+     ],
+     "txt": [],
+     "pts": []
+    },
+    {
+     "id": "mid-top",
+     "type": "line",
+     "color": "ink",
+     "label": "",
+     "at": 0.5,
+     "num": [
+      {
+       "k": "x1",
+       "v": 300.0
+      },
+      {
+       "k": "y1",
+       "v": 200.0
+      },
+      {
+       "k": "x2",
+       "v": 300.0
+      },
+      {
+       "k": "y2",
+       "v": 420.0
+      }
+     ],
+     "txt": [],
+     "pts": []
+    },
+    {
+     "id": "mid-r3",
+     "type": "rect",
+     "color": "surface",
+     "label": "R3 = 6.0 ohm",
+     "at": 0.6,
+     "num": [
+      {
+       "k": "x",
+       "v": 270.0
+      },
+      {
+       "k": "y",
+       "v": 420.0
+      },
+      {
+       "k": "w",
+       "v": 60.0
+      },
+      {
+       "k": "h",
+       "v": 100.0
+      }
+     ],
+     "txt": [],
+     "pts": []
+    },
+    {
+     "id": "mid-bot",
+     "type": "line",
+     "color": "ink",
+     "label": "",
+     "at": 0.6,
+     "num": [
+      {
+       "k": "x1",
+       "v": 300.0
+      },
+      {
+       "k": "y1",
+       "v": 520.0
+      },
+      {
+       "k": "x2",
+       "v": 300.0
+      },
+      {
+       "k": "y2",
+       "v": 800.0
+      }
+     ],
+     "txt": [],
+     "pts": []
+    },
+    {
+     "id": "right-top",
+     "type": "line",
+     "color": "ink",
+     "label": "",
+     "at": 0.7,
+     "num": [
+      {
+       "k": "x1",
+       "v": 560.0
+      },
+      {
+       "k": "y1",
+       "v": 200.0
+      },
+      {
+       "k": "x2",
+       "v": 560.0
+      },
+      {
+       "k": "y2",
+       "v": 340.0
+      }
+     ],
+     "txt": [],
+     "pts": []
+    },
+    {
+     "id": "right-bat",
+     "type": "rect",
+     "color": "charge_pos",
+     "label": "5.0 V",
+     "at": 0.8,
+     "num": [
+      {
+       "k": "x",
+       "v": 530.0
+      },
+      {
+       "k": "y",
+       "v": 340.0
+      },
+      {
+       "k": "w",
+       "v": 60.0
+      },
+      {
+       "k": "h",
+       "v": 60.0
+      }
+     ],
+     "txt": [],
+     "pts": []
+    },
+    {
+     "id": "right-r2",
+     "type": "rect",
+     "color": "surface",
+     "label": "R2 = 4.0 ohm",
+     "at": 0.9,
+     "num": [
+      {
+       "k": "x",
+       "v": 530.0
+      },
+      {
+       "k": "y",
+       "v": 520.0
+      },
+      {
+       "k": "w",
+       "v": 60.0
+      },
+      {
+       "k": "h",
+       "v": 100.0
+      }
+     ],
+     "txt": [],
+     "pts": []
+    },
+    {
+     "id": "right-bot",
+     "type": "line",
+     "color": "ink",
+     "label": "",
+     "at": 0.9,
+     "num": [
+      {
+       "k": "x1",
+       "v": 560.0
+      },
+      {
+       "k": "y1",
+       "v": 620.0
+      },
+      {
+       "k": "x2",
+       "v": 560.0
+      },
+      {
+       "k": "y2",
+       "v": 800.0
+      }
+     ],
+     "txt": [],
+     "pts": []
+    }
+   ],
+   "checkpoints": []
+  },
+  {
+   "id": "s2",
+   "kind": "explain",
+   "calcs": [],
+   "say": "Assume every branch current flows downward, from A to B. A negative answer will just mean the real current flows upward.",
+   "subtitles": {
+    "uz": "Har bir shox toki A dan B ga, pastga oqadi deb faraz qilamiz. Manfiy javob tok yuqoriga oqishini bildiradi.",
+    "ru": "Предположим, что ток каждой ветви течёт вниз, от A к B. Отрицательный ответ значит, что ток течёт вверх."
+   },
+   "draw": [
+    {
+     "id": "sym-i1",
+     "type": "symbol",
+     "color": "ink",
+     "label": "",
+     "at": 0.0,
+     "num": [
+      {
+       "k": "x",
+       "v": 740.0
+      },
+      {
+       "k": "y",
+       "v": 60.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "symbol",
+       "v": "I_1"
+      },
+      {
+       "k": "meaning",
+       "v": "current in left branch, A to B"
+      },
+      {
+       "k": "unit",
+       "v": "A"
+      }
+     ],
+     "pts": []
+    },
+    {
+     "id": "sym-i2",
+     "type": "symbol",
+     "color": "ink",
+     "label": "",
+     "at": 0.1,
+     "num": [
+      {
+       "k": "x",
+       "v": 740.0
+      },
+      {
+       "k": "y",
+       "v": 105.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "symbol",
+       "v": "I_2"
+      },
+      {
+       "k": "meaning",
+       "v": "current in right branch, A to B"
+      },
+      {
+       "k": "unit",
+       "v": "A"
+      }
+     ],
+     "pts": []
+    },
+    {
+     "id": "sym-i3",
+     "type": "symbol",
+     "color": "ink",
+     "label": "",
+     "at": 0.2,
+     "num": [
+      {
+       "k": "x",
+       "v": 740.0
+      },
+      {
+       "k": "y",
+       "v": 150.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "symbol",
+       "v": "I_3"
+      },
+      {
+       "k": "meaning",
+       "v": "current in middle branch, A to B"
+      },
+      {
+       "k": "unit",
+       "v": "A"
+      }
+     ],
+     "pts": []
+    },
+    {
+     "id": "arr-i1",
+     "type": "arrow",
+     "color": "force",
+     "label": "I1",
+     "at": 0.4,
+     "num": [
+      {
+       "k": "x1",
+       "v": 160.0
+      },
+      {
+       "k": "y1",
+       "v": 420.0
+      },
+      {
+       "k": "x2",
+       "v": 160.0
+      },
+      {
+       "k": "y2",
+       "v": 500.0
+      }
+     ],
+     "txt": [],
+     "pts": []
+    },
+    {
+     "id": "arr-i3",
+     "type": "arrow",
+     "color": "force",
+     "label": "I3",
+     "at": 0.6,
+     "num": [
+      {
+       "k": "x1",
+       "v": 360.0
+      },
+      {
+       "k": "y1",
+       "v": 300.0
+      },
+      {
+       "k": "x2",
+       "v": 360.0
+      },
+      {
+       "k": "y2",
+       "v": 380.0
+      }
+     ],
+     "txt": [],
+     "pts": []
+    },
+    {
+     "id": "arr-i2",
+     "type": "arrow",
+     "color": "force",
+     "label": "I2",
+     "at": 0.8,
+     "num": [
+      {
+       "k": "x1",
+       "v": 620.0
+      },
+      {
+       "k": "y1",
+       "v": 420.0
+      },
+      {
+       "k": "x2",
+       "v": 620.0
+      },
+      {
+       "k": "y2",
+       "v": 500.0
+      }
+     ],
+     "txt": [],
+     "pts": []
+    }
+   ],
+   "checkpoints": []
+  },
+  {
+   "id": "s3",
+   "kind": "explain",
+   "calcs": [],
+   "say": "Junction rule at node A: current entering equals current leaving. All three assumed currents leave A, so they must sum to zero.",
+   "subtitles": {
+    "uz": "A tugunda tutashuv qoidasi: kirayotgan tok chiqayotgan tokka teng. Uchala tok A dan chiqadi, shuning uchun yig'indisi nolga teng.",
+    "ru": "Правило узлов в A: входящий ток равен выходящему. Все три тока выходят из A, значит их сумма равна нулю."
+   },
+   "draw": [
+    {
+     "id": "eq-node",
+     "type": "math",
+     "color": "accent",
+     "label": "",
+     "at": 0.5,
+     "num": [
+      {
+       "k": "x",
+       "v": 740.0
+      },
+      {
+       "k": "y",
+       "v": 260.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "latex",
+       "v": "I_1 + I_2 + I_3 = 0"
+      }
+     ],
+     "pts": []
+    }
+   ],
+   "checkpoints": []
+  },
+  {
+   "id": "s4",
+   "kind": "checkpoint",
+   "calcs": [],
+   "say": "Quick check on the junction rule before we write the loop equations.",
+   "subtitles": {
+    "uz": "Ilmoq tenglamalarini yozishdan oldin tutashuv qoidasini tekshiramiz.",
+    "ru": "Быстрая проверка правила узлов перед уравнениями контуров."
+   },
+   "draw": [],
+   "checkpoints": [
+    {
+     "question": "All three assumed currents flow from A to B. What does the junction rule at A say?",
+     "type": "choice",
+     "choices": [
+      "I1 + I2 + I3 = 0",
+      "I1 = I2 + I3",
+      "I1 + I2 = I3 squared",
+      "I1 = I2 = I3"
+     ],
+     "answer": "0",
+     "hint": "Charge cannot pile up at a node: what enters must equal what leaves.",
+     "reexplain_hint": "Picture water pipes meeting at a tank that never fills. If all three pipes carry water away, their flows must add to zero, so some flow is negative, meaning water actually enters."
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "kind": "explain",
+   "calcs": [],
+   "say": "Loop rule: going around a loop, potential rises across a battery from minus to plus, and drops by I times R along the current.",
+   "subtitles": {
+    "uz": "Ilmoq qoidasi: batareyada minusdan plyusga o'tganda potensial ko'tariladi, tok bo'ylab qarshilikda I marta R ga tushadi.",
+    "ru": "Правило контуров: на батарее от минуса к плюсу потенциал растёт, а по току на резисторе падает на I умножить на R."
+   },
+   "draw": [
+    {
+     "id": "sym-r1",
+     "type": "symbol",
+     "color": "ink",
+     "label": "",
+     "at": 0.0,
+     "num": [
+      {
+       "k": "x",
+       "v": 740.0
+      },
+      {
+       "k": "y",
+       "v": 330.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "symbol",
+       "v": "R_1"
+      },
+      {
+       "k": "meaning",
+       "v": "resistance of left branch"
+      },
+      {
+       "k": "unit",
+       "v": "ohm"
+      }
+     ],
+     "pts": []
+    },
+    {
+     "id": "sym-r2",
+     "type": "symbol",
+     "color": "ink",
+     "label": "",
+     "at": 0.1,
+     "num": [
+      {
+       "k": "x",
+       "v": 740.0
+      },
+      {
+       "k": "y",
+       "v": 375.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "symbol",
+       "v": "R_2"
+      },
+      {
+       "k": "meaning",
+       "v": "resistance of right branch"
+      },
+      {
+       "k": "unit",
+       "v": "ohm"
+      }
+     ],
+     "pts": []
+    },
+    {
+     "id": "sym-r3",
+     "type": "symbol",
+     "color": "ink",
+     "label": "",
+     "at": 0.2,
+     "num": [
+      {
+       "k": "x",
+       "v": 740.0
+      },
+      {
+       "k": "y",
+       "v": 420.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "symbol",
+       "v": "R_3"
+      },
+      {
+       "k": "meaning",
+       "v": "resistance of middle branch"
+      },
+      {
+       "k": "unit",
+       "v": "ohm"
+      }
+     ],
+     "pts": []
+    },
+    {
+     "id": "sym-e1",
+     "type": "symbol",
+     "color": "ink",
+     "label": "",
+     "at": 0.3,
+     "num": [
+      {
+       "k": "x",
+       "v": 740.0
+      },
+      {
+       "k": "y",
+       "v": 465.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "symbol",
+       "v": "\\mathcal{E}_1"
+      },
+      {
+       "k": "meaning",
+       "v": "left battery emf"
+      },
+      {
+       "k": "unit",
+       "v": "V"
+      }
+     ],
+     "pts": []
+    },
+    {
+     "id": "sym-e2",
+     "type": "symbol",
+     "color": "ink",
+     "label": "",
+     "at": 0.4,
+     "num": [
+      {
+       "k": "x",
+       "v": 740.0
+      },
+      {
+       "k": "y",
+       "v": 510.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "symbol",
+       "v": "\\mathcal{E}_2"
+      },
+      {
+       "k": "meaning",
+       "v": "right battery emf"
+      },
+      {
+       "k": "unit",
+       "v": "V"
+      }
+     ],
+     "pts": []
+    }
+   ],
+   "checkpoints": []
+  },
+  {
+   "id": "s6",
+   "kind": "explain",
+   "calcs": [],
+   "say": "Left branch: potential from A down to B is the battery 10 volts minus I1 R1. The same drop across the middle branch is I3 R3.",
+   "subtitles": {
+    "uz": "Chap shox: A dan B gacha potensial batareya 10 volt minus I1 R1 ga teng. O'rta shoxda xuddi shu tushish I3 R3.",
+    "ru": "Левая ветвь: потенциал от A к B равен 10 вольт минус I1 R1. В средней ветви то же падение равно I3 R3."
+   },
+   "draw": [
+    {
+     "id": "sym-va",
+     "type": "symbol",
+     "color": "ink",
+     "label": "",
+     "at": 0.0,
+     "num": [
+      {
+       "k": "x",
+       "v": 740.0
+      },
+      {
+       "k": "y",
+       "v": 555.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "symbol",
+       "v": "V_A"
+      },
+      {
+       "k": "meaning",
+       "v": "potential at node A"
+      },
+      {
+       "k": "unit",
+       "v": "V"
+      }
+     ],
+     "pts": []
+    },
+    {
+     "id": "sym-vb",
+     "type": "symbol",
+     "color": "ink",
+     "label": "",
+     "at": 0.1,
+     "num": [
+      {
+       "k": "x",
+       "v": 900.0
+      },
+      {
+       "k": "y",
+       "v": 555.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "symbol",
+       "v": "V_B"
+      },
+      {
+       "k": "meaning",
+       "v": "potential at node B"
+      },
+      {
+       "k": "unit",
+       "v": "V"
+      }
+     ],
+     "pts": []
+    },
+    {
+     "id": "eq-v-left",
+     "type": "math",
+     "color": "accent",
+     "label": "",
+     "at": 0.4,
+     "num": [
+      {
+       "k": "x",
+       "v": 740.0
+      },
+      {
+       "k": "y",
+       "v": 620.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "latex",
+       "v": "V_A - V_B = \\mathcal{E}_1 - I_1 R_1 = 10\\,\\text{V} - I_1 R_1"
+      }
+     ],
+     "pts": []
+    },
+    {
+     "id": "eq-v-mid",
+     "type": "math",
+     "color": "accent",
+     "label": "",
+     "at": 0.8,
+     "num": [
+      {
+       "k": "x",
+       "v": 740.0
+      },
+      {
+       "k": "y",
+       "v": 700.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "latex",
+       "v": "V_A - V_B = I_3 R_3"
+      }
+     ],
+     "pts": []
+    }
+   ],
+   "checkpoints": []
+  },
+  {
+   "id": "s7",
+   "kind": "explain",
+   "calcs": [],
+   "say": "Right branch gives the same potential difference: 5 volts minus I2 R2. Now we have the junction equation plus three expressions for one voltage.",
+   "subtitles": {
+    "uz": "O'ng shox ham xuddi shu potensiallar farqini beradi: 5 volt minus I2 R2. Endi tutashuv tenglamasi va bitta kuchlanish uchun uchta ifoda bor.",
+    "ru": "Правая ветвь даёт ту же разность потенциалов: 5 вольт минус I2 R2. Теперь есть уравнение узла и три выражения для одного напряжения."
+   },
+   "draw": [
+    {
+     "id": "eq-v-right",
+     "type": "math",
+     "color": "accent",
+     "label": "",
+     "at": 0.3,
+     "num": [
+      {
+       "k": "x",
+       "v": 740.0
+      },
+      {
+       "k": "y",
+       "v": 760.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "latex",
+       "v": "V_A - V_B = \\mathcal{E}_2 - I_2 R_2 = 5.0\\,\\text{V} - I_2 R_2"
+      }
+     ],
+     "pts": []
+    }
+   ],
+   "checkpoints": []
+  },
+  {
+   "id": "s8",
+   "kind": "checkpoint",
+   "calcs": [
+    {
+     "id": "c1",
+     "expr": "(10-5)/4",
+     "values": [],
+     "expected": 1.25,
+     "unit": "A",
+     "unit_spoken": "amperes"
+    }
+   ],
+   "say": "Check the sign logic with a simpler case.",
+   "subtitles": {
+    "uz": "Ishora mantig'ini soddaroq holda tekshiramiz.",
+    "ru": "Проверим логику знаков на простом случае."
+   },
+   "draw": [],
+   "checkpoints": [
+    {
+     "question": "Suppose only the two batteries and R2 = 4.0 ohm formed a loop. Current flows from the 10 V side toward the 5 V side. What is its size in amperes?",
+     "type": "number",
+     "choices": [],
+     "answer": "{c1:3sf}",
+     "hint": "The net emf driving the current is the difference of the two batteries.",
+     "reexplain_hint": "Think of two people pushing on opposite sides of a cart: the net push is 10 minus 5 volts, and the current is that net push divided by the total resistance."
+    }
+   ]
+  },
+  {
+   "id": "s9",
+   "kind": "explain",
+   "calcs": [
+    {
+     "id": "c2",
+     "expr": "(10-2*I1)/6",
+     "values": [
+      {
+       "name": "I1",
+       "value": 1.0
+      }
+     ],
+     "expected": 1.3333333333333333,
+     "unit": "A",
+     "unit_spoken": "amperes"
+    }
+   ],
+   "say": "Let U be the potential difference A minus B. Then I1 equals 10 minus U over 2, and I2 equals 5 minus U over 4.",
+   "subtitles": {
+    "uz": "U ni A minus B potensiallar farqi deymiz. U holda I1 = (10 − U)/2, I2 = (5 − U)/4.",
+    "ru": "Пусть U разность потенциалов A минус B. Тогда I1 равно 10 минус U на 2, а I2 равно 5 минус U на 4."
+   },
+   "draw": [
+    {
+     "id": "sym-u",
+     "type": "symbol",
+     "color": "ink",
+     "label": "",
+     "at": 0.0,
+     "num": [
+      {
+       "k": "x",
+       "v": 740.0
+      },
+      {
+       "k": "y",
+       "v": 560.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "symbol",
+       "v": "U"
+      },
+      {
+       "k": "meaning",
+       "v": "V_A minus V_B"
+      },
+      {
+       "k": "unit",
+       "v": "V"
+      }
+     ],
+     "pts": []
+    },
+    {
+     "id": "erase-a",
+     "type": "erase",
+     "color": "ink",
+     "label": "",
+     "at": 0.1,
+     "num": [],
+     "txt": [
+      {
+       "k": "target_id",
+       "v": "eq-v-left"
+      }
+     ],
+     "pts": []
+    },
+    {
+     "id": "erase-b",
+     "type": "erase",
+     "color": "ink",
+     "label": "",
+     "at": 0.1,
+     "num": [],
+     "txt": [
+      {
+       "k": "target_id",
+       "v": "eq-v-mid"
+      }
+     ],
+     "pts": []
+    },
+    {
+     "id": "erase-c",
+     "type": "erase",
+     "color": "ink",
+     "label": "",
+     "at": 0.1,
+     "num": [],
+     "txt": [
+      {
+       "k": "target_id",
+       "v": "eq-v-right"
+      }
+     ],
+     "pts": []
+    },
+    {
+     "id": "eq-i-u",
+     "type": "math",
+     "color": "accent",
+     "label": "",
+     "at": 0.5,
+     "num": [
+      {
+       "k": "x",
+       "v": 740.0
+      },
+      {
+       "k": "y",
+       "v": 640.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "latex",
+       "v": "I_1 = \\frac{10 - U}{2.0},\\quad I_2 = \\frac{5.0 - U}{4.0},\\quad I_3 = \\frac{U}{6.0}"
+      }
+     ],
+     "pts": []
+    }
+   ],
+   "checkpoints": []
+  },
+  {
+   "id": "s10",
+   "kind": "explain",
+   "calcs": [
+    {
+     "id": "c3",
+     "expr": "(10/2+5/4)/(1/2+1/4+1/6)",
+     "values": [],
+     "expected": 6.818181818181818,
+     "unit": "V",
+     "unit_spoken": "volts"
+    }
+   ],
+   "say": "Junction rule: the currents leaving A are I1 plus I2 plus minus I3, so I1 plus I2 equals I3. This gives U equal to {c3}.",
+   "subtitles": {
+    "uz": "Tutashuv qoidasi: I1 + I2 = I3. Bundan U = {c3}.",
+    "ru": "Правило узлов: I1 плюс I2 равно I3. Отсюда U равно {c3}."
+   },
+   "draw": [
+    {
+     "id": "erase-eq-node",
+     "type": "erase",
+     "color": "ink",
+     "label": "",
+     "at": 0.0,
+     "num": [],
+     "txt": [
+      {
+       "k": "target_id",
+       "v": "eq-node"
+      }
+     ],
+     "pts": []
+    },
+    {
+     "id": "eq-node2",
+     "type": "math",
+     "color": "accent",
+     "label": "",
+     "at": 0.2,
+     "num": [
+      {
+       "k": "x",
+       "v": 740.0
+      },
+      {
+       "k": "y",
+       "v": 260.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "latex",
+       "v": "I_3 = -(I_1 + I_2)"
+      }
+     ],
+     "pts": []
+    },
+    {
+     "id": "eq-solve",
+     "type": "math",
+     "color": "accent",
+     "label": "",
+     "at": 0.4,
+     "num": [
+      {
+       "k": "x",
+       "v": 740.0
+      },
+      {
+       "k": "y",
+       "v": 740.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "latex",
+       "v": "\\frac{U}{6.0} = \\frac{10-U}{2.0} + \\frac{5.0-U}{4.0}"
+      }
+     ],
+     "pts": []
+    },
+    {
+     "id": "eq-u",
+     "type": "math",
+     "color": "right",
+     "label": "",
+     "at": 0.8,
+     "num": [
+      {
+       "k": "x",
+       "v": 740.0
+      },
+      {
+       "k": "y",
+       "v": 830.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "latex",
+       "v": "U = {c3}"
+      }
+     ],
+     "pts": []
+    }
+   ],
+   "checkpoints": []
+  },
+  {
+   "id": "s11",
+   "kind": "checkpoint",
+   "calcs": [
+    {
+     "id": "c4",
+     "expr": "(10-c3)/2",
+     "values": [],
+     "expected": 1.5909090909090908,
+     "unit": "A",
+     "unit_spoken": "amperes"
+    }
+   ],
+   "say": "Now find the left branch current from U.",
+   "subtitles": {
+    "uz": "Endi U dan chap shox tokini topamiz.",
+    "ru": "Теперь найдём ток левой ветви по U."
+   },
+   "draw": [],
+   "checkpoints": [
+    {
+     "question": "With U = {c3}, what is the current I1 in the left branch, in amperes? Use I1 = (10 - U)/2.0.",
+     "type": "number",
+     "choices": [],
+     "answer": "{c4:3sf}",
+     "hint": "Subtract U from 10 volts, then divide by 2.0 ohm.",
+     "reexplain_hint": "The battery lifts the potential by 10 volts, but the node A sits at only U volts above B. The leftover volts drop across R1, so current equals that leftover over 2.0 ohm."
+    }
+   ]
+  },
+  {
+   "id": "s12",
+   "kind": "explain",
+   "calcs": [
+    {
+     "id": "c5",
+     "expr": "(5-c3)/4",
+     "values": [],
+     "expected": -0.4545454545454546,
+     "unit": "A",
+     "unit_spoken": "amperes"
+    },
+    {
+     "id": "c6",
+     "expr": "c3/6",
+     "values": [],
+     "expected": 1.1363636363636365,
+     "unit": "A",
+     "unit_spoken": "amperes"
+    }
+   ],
+   "say": "Right branch: I2 is {c5}, negative, so it really flows upward from B to A. Middle branch: I3 is {c6} downward.",
+   "subtitles": {
+    "uz": "O'ng shox: I2 = {c5}, manfiy, ya'ni haqiqatda B dan A ga yuqoriga oqadi. O'rta shox: I3 = {c6}, pastga.",
+    "ru": "Правая ветвь: I2 равно {c5}, отрицательно, значит ток течёт вверх от B к A. Средняя ветвь: I3 равно {c6} вниз."
+   },
+   "draw": [
+    {
+     "id": "eq-i2",
+     "type": "math",
+     "color": "right",
+     "label": "",
+     "at": 0.2,
+     "num": [
+      {
+       "k": "x",
+       "v": 740.0
+      },
+      {
+       "k": "y",
+       "v": 900.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "latex",
+       "v": "I_2 = \\frac{5.0 - U}{4.0} = {c5}"
+      }
+     ],
+     "pts": []
+    },
+    {
+     "id": "wrong-i2",
+     "type": "highlight",
+     "color": "highlight",
+     "label": "",
+     "at": 0.5,
+     "num": [],
+     "txt": [
+      {
+       "k": "target_id",
+       "v": "arr-i2"
+      }
+     ],
+     "pts": []
+    },
+    {
+     "id": "eq-i3",
+     "type": "math",
+     "color": "right",
+     "label": "",
+     "at": 0.7,
+     "num": [
+      {
+       "k": "x",
+       "v": 740.0
+      },
+      {
+       "k": "y",
+       "v": 950.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "latex",
+       "v": "I_3 = \\frac{U}{6.0} = {c6}"
+      }
+     ],
+     "pts": []
+    }
+   ],
+   "checkpoints": []
+  },
+  {
+   "id": "s13",
+   "kind": "explain",
+   "calcs": [
+    {
+     "id": "c7",
+     "expr": "c4+c5-c6",
+     "values": [],
+     "expected": 0.0,
+     "unit": "A",
+     "unit_spoken": "amperes"
+    }
+   ],
+   "say": "Check the junction: I1 plus I2 minus I3 equals {c7:2dp}, so the currents balance at node A.",
+   "subtitles": {
+    "uz": "Tekshiramiz: I1 + I2 − I3 = {c7:2dp}, ya'ni A tugunida toklar muvozanatda.",
+    "ru": "Проверка: I1 плюс I2 минус I3 равно {c7:2dp}, значит токи в узле A уравновешены."
+   },
+   "draw": [
+    {
+     "id": "eq-check",
+     "type": "math",
+     "color": "ink",
+     "label": "",
+     "at": 0.5,
+     "num": [
+      {
+       "k": "x",
+       "v": 740.0
+      },
+      {
+       "k": "y",
+       "v": 260.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "latex",
+       "v": "I_1 + I_2 - I_3 = {c7:2dp}"
+      }
+     ],
+     "pts": []
+    }
+   ],
+   "checkpoints": []
+  },
+  {
+   "id": "s14",
+   "kind": "summary",
+   "calcs": [],
+   "say": "Summary: I1 is {c4} down, I3 is {c6} down, and I2 is {c5}, meaning 0.25 amperes flows up through the right battery.",
+   "subtitles": {
+    "uz": "Xulosa: I1 = {c4} pastga, I3 = {c6} pastga, I2 = {c5}, ya'ni o'ng batareya orqali tok yuqoriga oqadi.",
+    "ru": "Итог: I1 равно {c4} вниз, I3 равно {c6} вниз, I2 равно {c5}, то есть ток течёт вверх через правую батарею."
+   },
+   "draw": [
+    {
+     "id": "sum-text",
+     "type": "text",
+     "color": "accent",
+     "label": "",
+     "at": 0.3,
+     "num": [
+      {
+       "k": "x",
+       "v": 60.0
+      },
+      {
+       "k": "y",
+       "v": 900.0
+      },
+      {
+       "k": "size",
+       "v": 28.0
+      }
+     ],
+     "txt": [
+      {
+       "k": "text",
+       "v": "I1 = {c4} down, I3 = {c6} down, I2 = {c5} (up)"
+      }
+     ],
+     "pts": []
+    }
+   ],
+   "checkpoints": []
+  }
+ ],
+ "leftovers": [
+  {
+   "step": "s13",
+   "rule": "calc",
+   "message": "calc c7: computed -8.88178e-16, expected 0 A"
+  }
+ ]
+}
