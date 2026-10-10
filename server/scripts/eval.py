@@ -176,7 +176,12 @@ async def run_one(problem: Problem, llm: LessonLLM, save_dir: Path | None) -> Re
         async for _ in generate_lesson(source, llm, metrics):
             pass
     except Exception as e:  # recorded in the report, the run goes on
-        error = f"{type(e).__name__}: {e}"
+        causes = []
+        cause = e.__cause__
+        while cause is not None:
+            causes.append(str(cause))
+            cause = cause.__cause__
+        error = f"{type(e).__name__}: {e}" + "".join(f" <- {c}" for c in causes)
     if metrics.total_s is None:
         metrics.total_s = time.perf_counter() - metrics.started
     result = grade(problem, metrics, error)
@@ -195,7 +200,7 @@ async def run_one(problem: Problem, llm: LessonLLM, save_dir: Path | None) -> Re
             "leftovers": leftovers,
         }
         (save_dir / f"{problem.id}.json").write_text(
-            json.dumps(payload, ensure_ascii=False, indent=1), encoding="utf-8"
+            json.dumps(payload, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n"
         )
     return result
 
@@ -381,10 +386,13 @@ def select(problems: list[Problem], args: argparse.Namespace) -> list[Problem]:
 
 def write_outputs(results: list[Result], meta: dict[str, Any], stem: str, save_dir: Path) -> None:
     REPORT_DIR.mkdir(parents=True, exist_ok=True)
-    (REPORT_DIR / f"{stem}.md").write_text(render_report(results, meta), encoding="utf-8")
+    (REPORT_DIR / f"{stem}.md").write_text(
+        render_report(results, meta), encoding="utf-8", newline="\n"
+    )
     (REPORT_DIR / f"{stem}.json").write_text(
         json.dumps({"meta": meta | {"compare": None}, "results": result_dicts(results)}, indent=1),
         encoding="utf-8",
+        newline="\n",
     )
     worst_dir = REPORT_DIR / stem
     if worst_dir.exists():

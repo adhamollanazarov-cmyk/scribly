@@ -1,0 +1,282 @@
+{
+ "meta": {
+  "date": "2026-10-10",
+  "label": "adaptive",
+  "model": "claude-sonnet-5-5",
+  "thinking": "adaptive",
+  "effort": "high",
+  "prompt_sha": "3800cbbc25c3",
+  "wall_s": 228.24776440003188,
+  "compare": null
+ },
+ "results": [
+  {
+   "id": "es-gauss-sphere",
+   "topic": "electrostatics/gauss",
+   "source": "audit",
+   "valid": false,
+   "error": "LessonError: The lesson could not be generated. Please try again.",
+   "numbers": {
+    "E_inside": false,
+    "E_outside": false,
+    "flux": false
+   },
+   "missing_draws": [
+    "gaussian_sphere|circle"
+   ],
+   "leftovers": {},
+   "steps": 0,
+   "unverified_steps": 0,
+   "fixes": 0,
+   "fixes_failed": 0,
+   "fix_reasons": {},
+   "retries": 1,
+   "first_step_s": null,
+   "total_s": 227.67260629998054,
+   "cost_usd": 0.0,
+   "skipped": false,
+   "passed": false
+  },
+  {
+   "id": "es-gauss-line",
+   "topic": "electrostatics/gauss",
+   "source": "audit",
+   "valid": true,
+   "error": null,
+   "numbers": {
+    "E": true,
+    "flux": true
+   },
+   "missing_draws": [],
+   "leftovers": {},
+   "steps": 12,
+   "unverified_steps": 0,
+   "fixes": 0,
+   "fixes_failed": 0,
+   "fix_reasons": {},
+   "retries": 0,
+   "first_step_s": 130.7163864999893,
+   "total_s": 165.80708860000595,
+   "cost_usd": 0.253712,
+   "skipped": false,
+   "passed": true
+  },
+  {
+   "id": "es-gauss-plane",
+   "topic": "electrostatics/gauss",
+   "source": "audit",
+   "valid": true,
+   "error": null,
+   "numbers": {
+    "E": true,
+    "total_flux": true
+   },
+   "missing_draws": [],
+   "leftovers": {},
+   "steps": 13,
+   "unverified_steps": 0,
+   "fixes": 0,
+   "fixes_failed": 0,
+   "fix_reasons": {},
+   "retries": 0,
+   "first_step_s": 120.8823975000414,
+   "total_s": 146.901422200026,
+   "cost_usd": 0.23315,
+   "skipped": false,
+   "passed": true
+  },
+  {
+   "id": "es-coulomb",
+   "topic": "electrostatics/coulomb",
+   "source": "audit",
+   "valid": true,
+   "error": null,
+   "numbers": {
+    "F": true
+   },
+   "missing_draws": [],
+   "leftovers": {},
+   "steps": 8,
+   "unverified_steps": 0,
+   "fixes": 0,
+   "fixes_failed": 0,
+   "fix_reasons": {},
+   "retries": 0,
+   "first_step_s": 134.330272399995,
+   "total_s": 156.29456509999,
+   "cost_usd": 0.23798,
+   "skipped": false,
+   "passed": true
+  },
+  {
+   "id": "es-dipole-axis",
+   "topic": "electrostatics/dipole",
+   "source": "audit",
+   "valid": false,
+   "error": "LessonError: The lesson could not be generated. Please try again.",
+   "numbers": {
+    "p": false,
+    "E_exact": false,
+    "E_approx": false,
+    "error_percent": false
+   },
+   "missing_draws": [
+    "point_charge"
+   ],
+   "leftovers": {},
+   "steps": 0,
+   "unverified_steps": 0,
+   "fixes": 0,
+   "fixes_failed": 0,
+   "fix_reasons": {},
+   "retries": 1,
+   "first_step_s": null,
+   "total_s": 72.1608882000437,
+   "cost_usd": 0.0,
+   "skipped": false,
+   "passed": false
+  },
+  {
+   "id": "es-capacitor-dielectric",
+   "topic": "electrostatics/capacitor",
+   "source": "audit",
+   "valid": false,
+   "error": "LessonError: The lesson could not be generated. Please try again.",
+   "numbers": {
+    "C_before": false,
+    "C_after": false,
+    "Q": false,
+    "V_after": false,
+    "U_before": false,
+    "U_after": false
+   },
+   "missing_draws": [],
+   "leftovers": {},
+   "steps": 0,
+   "unverified_steps": 0,
+   "fixes": 0,
+   "fixes_failed": 0,
+   "fix_reasons": {},
+   "retries": 1,
+   "first_step_s": null,
+   "total_s": 71.93024979997426,
+   "cost_usd": 0.0,
+   "skipped": false,
+   "passed": false
+  },
+  {
+   "id": "mech-incline-friction",
+   "topic": "mechanics/incline",
+   "source": "audit",
+   "valid": false,
+   "error": "LessonError: The lesson could not be generated. Please try again.",
+   "numbers": {
+    "N": false,
+    "friction": false,
+    "a": false
+   },
+   "missing_draws": [
+    "incline_block",
+    "free_body|vector"
+   ],
+   "leftovers": {},
+   "steps": 0,
+   "unverified_steps": 0,
+   "fixes": 0,
+   "fixes_failed": 0,
+   "fix_reasons": {},
+   "retries": 1,
+   "first_step_s": null,
+   "total_s": 56.62380939995637,
+   "cost_usd": 0.0,
+   "skipped": false,
+   "passed": false
+  },
+  {
+   "id": "kin-projectile",
+   "topic": "kinematics/projectile",
+   "source": "audit",
+   "valid": false,
+   "error": "LessonError: The lesson could not be generated. Please try again.",
+   "numbers": {
+    "ux": false,
+    "uy": false,
+    "T": false,
+    "H": false,
+    "R": false
+   },
+   "missing_draws": [
+    "curve|axes_plot|polyline"
+   ],
+   "leftovers": {},
+   "steps": 0,
+   "unverified_steps": 0,
+   "fixes": 0,
+   "fixes_failed": 0,
+   "fix_reasons": {},
+   "retries": 1,
+   "first_step_s": null,
+   "total_s": 0.9813243999960832,
+   "cost_usd": 0.0,
+   "skipped": false,
+   "passed": false
+  },
+  {
+   "id": "mech-pendulum",
+   "topic": "mechanics/oscillations",
+   "source": "audit",
+   "valid": false,
+   "error": "LessonError: The lesson could not be generated. Please try again.",
+   "numbers": {
+    "T": false
+   },
+   "missing_draws": [
+    "line"
+   ],
+   "leftovers": {},
+   "steps": 0,
+   "unverified_steps": 0,
+   "fixes": 0,
+   "fixes_failed": 0,
+   "fix_reasons": {},
+   "retries": 1,
+   "first_step_s": null,
+   "total_s": 0.9687605000217445,
+   "cost_usd": 0.0,
+   "skipped": false,
+   "passed": false
+  },
+  {
+   "id": "circ-series-parallel",
+   "topic": "circuits/combination",
+   "source": "audit",
+   "valid": false,
+   "error": "LessonError: The lesson could not be generated. Please try again.",
+   "numbers": {
+    "R_parallel": false,
+    "R_total": false,
+    "I_total": false,
+    "V_R1": false,
+    "V_parallel": false,
+    "I_R2": false,
+    "I_R3": false,
+    "P_total": false
+   },
+   "missing_draws": [
+    "line|polyline|rect"
+   ],
+   "leftovers": {},
+   "steps": 0,
+   "unverified_steps": 0,
+   "fixes": 0,
+   "fixes_failed": 0,
+   "fix_reasons": {},
+   "retries": 1,
+   "first_step_s": null,
+   "total_s": 1.0317974000354297,
+   "cost_usd": 0.0,
+   "skipped": false,
+   "passed": false
+  }
+ ]
+}

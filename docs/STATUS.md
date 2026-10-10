@@ -2,6 +2,12 @@
 
 Update this file at the end of every task (newest entry on top, 3–8 lines).
 
+## 2026-10-10 — claude — Phase 1b real lesson generation (`claude/phase1b`)
+**Done:** Real generation in `POST /lessons` (MOCK_AI=0), streamed step by step. The model writes a structured-output draft: a lean schema, because the full typed lesson exceeds the API grammar budget. The server then runs per step: SymPy calcs → result-ledger fill (`{c1:3sf}`) → teaching lint → contract checks. A step with problems is regenerated once, alone. Also: `symbol` legend primitive, `prompt.md`, eval bank v0 (30 problems), `scripts.eval`, 3 replayed prompt-test fixtures.
+**Checks:** PowerShell 5.1: 359 pytest, ruff, format, mypy; web 5 Vitest, eslint+tsc, Prettier, 1 Playwright. **Eval** (`docs/eval/2026-10-10.md`): 30/30 pass, numbers 100 %, $2.89 total ($0.096/lesson), median first step 5.5 s, average lesson 34 s. A/B adaptive thinking (`2026-10-10-adaptive.md`) was cut short when the account ran out of API credit (7/10 failed with a billing 400). On the 3 that ran, both modes passed; adaptive needed 0 fixes but step 1 took ~2 min and each lesson cost ~2×. Total API spend this phase ≈ $4.2. Live route + edge-tts: meta 5.1 s, step 1 with audio 9.2 s.
+**Next:** Fix the found issues below. Add sign/direction checks to the eval (it compares magnitudes only). Phase 1c: layout, plus audio prefetch for the < 3 s budget.
+**Found issues:** high — the circ-kirchhoff summary states the wrong current directions while all magnitudes pass, so the eval needs direction checks and the prompt needs one sign convention. med — lint false positives: `100\,\Omega` is not seen as a unit and `\Omega` is read as a symbol. med — `0.25` slips past the raw-number rule (fraction exemption too broad outside formulas). med — a calc with `expected` 0 can never verify (relative tolerance only), and tiny values render as "-0.00". low — numbers written inside calc `expr` don't count as declared inputs; "dimensionless" is spoken as a unit.
+
 ## 2026-10-10 — founder — plan update after Phase 1a + physics audit
 **Done:** Phase 1a merged. Added docs/COVERAGE.md (path to any physics problem) and
 Phase 7; split Phase 1 remainder into 1b (generation quality from the audit) and 1c
