@@ -8,13 +8,22 @@ from typing import Any
 import pytest
 from fastapi.testclient import TestClient
 
+from app.lesson.claude import LLMError
 from app.lesson.fixtures import load_fixture
 from app.lesson.models import StreamedStep
 from app.lesson.pipeline import prepare_lesson
 from app.main import create_app
-from app.routes.lessons import GENERIC_ERROR, NOT_AVAILABLE, get_tts_provider, lesson_events
+from app.routes.lessons import (
+    GENERIC_ERROR,
+    NO_KEY,
+    get_lesson_llm,
+    get_tts_provider,
+    lesson_events,
+)
 from app.settings import Settings, get_settings
 from app.tts import AudioCache, TTSError
+from tests.drafts import draft_json
+from tests.fake_llm import FakeLLM
 
 REQUEST = {"type": "topic", "text": "Explain Gauss's law"}
 
@@ -109,9 +118,43 @@ def test_tts_failure_streams_step_without_audio(tmp_path: Path) -> None:
     assert all(steps[s]["audio_url"] for s in steps if s != "s3")
 
 
-def test_without_mock_mode_streams_a_clear_error(tmp_path: Path) -> None:
-    with closing(make_client(tmp_path, FakeTTS(), mock_ai=False)) as client:
-        assert stream(client) == [("error", {"message": NOT_AVAILABLE})]
+def live_client(tmp_path: Path, llm: FakeLLM, key: str | None = "test-key") -> TestClient:
+    app = create_app()
+    settings = Settings(
+        _env_file=None, mock_ai=False, audio_cache_dir=tmp_path / "audio", anthropic_api_key=key
+    )
+    app.dependency_overrides[get_settings] = lambda: settings
+    app.dependency_overrides[get_tts_provider] = lambda: FakeTTS()
+    app.dependency_overrides[get_lesson_llm] = lambda: llm
+    return TestClient(app)
+
+
+def test_live_mode_streams_generated_steps_with_audio(tmp_path: Path) -> None:
+    with closing(live_client(tmp_path, FakeLLM([draft_json()]))) as client:
+        events = stream(client)
+
+    assert [name for name, _ in events] == ["meta"] + ["step"] * 5 + ["done"]
+    meta = events[0][1]
+    assert meta["title"] == "Flux" and meta["step_count"] is None
+    assert events[-1][1] == {"id": meta["id"]}
+    for _, data in events[1:-1]:
+        assert StreamedStep.model_validate(data).audio_url is not None
+
+
+def test_live_mode_without_a_key_streams_a_clear_error(tmp_path: Path) -> None:
+    with closing(live_client(tmp_path, FakeLLM([]), key=None)) as client:
+        assert stream(client) == [("error", {"message": NO_KEY})]
+
+
+def test_live_mode_failure_is_a_safe_error_event(tmp_path: Path) -> None:
+    llm = FakeLLM([LLMError("SYNTHETIC_PRIVATE_INPUT"), LLMError("SYNTHETIC_PRIVATE_INPUT")])
+    with closing(live_client(tmp_path, llm)) as client:
+        events = stream(client)
+
+    assert events == [
+        ("error", {"message": "The lesson could not be generated. Please try again."})
+    ]
+    assert "SYNTHETIC_PRIVATE_INPUT" not in json.dumps(events)
 
 
 def test_broken_fixture_streams_error_not_a_crash(
