@@ -125,6 +125,17 @@ class MathPrim(PrimitiveBase):
     size: Positive | None = None
 
 
+class SymbolPrim(PrimitiveBase):
+    """A legend entry: introduces a symbol before any formula uses it (AGENTS.md §4)."""
+
+    type: Literal["symbol"]
+    x: float
+    y: float
+    symbol: str = Field(min_length=1, description=r"LaTeX, e.g. \Phi or Q_{\text{enc}}")
+    meaning: str = Field(min_length=1)
+    unit: str | None = Field(default=None, description="SI unit text; null if dimensionless")
+
+
 class AxesPrim(PrimitiveBase):
     type: Literal["axes"]
     x: float
@@ -167,8 +178,8 @@ class TemplatePrim(PrimitiveBase):
 
 Primitive = Annotated[
     PointPrim | LinePrim | ArrowPrim | VectorPrim | CirclePrim | EllipsePrim | RectPrim
-    | PolylinePrim | CurvePrim | TextPrim | MathPrim | AxesPrim | PlotPrim | HighlightPrim
-    | MarkWrongPrim | ErasePrim | TemplatePrim,
+    | PolylinePrim | CurvePrim | TextPrim | MathPrim | SymbolPrim | AxesPrim | PlotPrim
+    | HighlightPrim | MarkWrongPrim | ErasePrim | TemplatePrim,
     Field(discriminator="type"),
 ]  # fmt: skip
 

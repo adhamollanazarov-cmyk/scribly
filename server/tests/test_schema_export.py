@@ -19,7 +19,7 @@ def test_schema_describes_every_primitive_type() -> None:
 
     assert sorted(mapping) == sorted(
         ["point", "line", "arrow", "vector", "circle", "ellipse", "rect", "polyline", "curve",
-         "text", "math", "axes", "plot", "highlight", "mark_wrong", "erase", "template"]
+         "text", "math", "symbol", "axes", "plot", "highlight", "mark_wrong", "erase", "template"]
     )  # fmt: skip
 
 

@@ -75,6 +75,7 @@ field | surface | force | highlight | wrong | right`.
 | `curve` | points:[[x,y],...] (smooth through points) |
 | `text` | x, y, text, size? (handwriting font) |
 | `math` | x, y, latex, size? (KaTeX) |
+| `symbol` | x, y, symbol (LaTeX), meaning, unit? (SI unit text; null = dimensionless) |
 | `axes` | x, y, w, h, xlabel, ylabel |
 | `plot` | axes_id, expr (SymPy, variable x), x_min, x_max |
 | `highlight` | target_id (draws a loose circle around another primitive or group) |
@@ -87,6 +88,11 @@ JSON fields use their documented aliases: a vector requires `from`; the Python
 attribute spelling `from_` is rejected as an unknown JSON field.
 `target_id` must name a primitive or group drawn **earlier** (earlier step, or earlier
 in the same step's `draw`). Checked after template expansion.
+
+`symbol` is a legend entry, drawn as "Φ — electric flux (N·m²/C)". Every symbol used in
+a `math` formula must first be introduced by a `symbol` entry drawn earlier (an earlier
+step, or earlier in the same step's `draw`). Generated lessons are checked for this
+(`server/app/lesson/lint.py`); the golden fixtures follow it too.
 
 `plot` is not drawable yet: it has no y-range and the browser cannot evaluate SymPy.
 Use the `axes_plot` template, which the server samples into a `curve`.
@@ -152,7 +158,7 @@ sqrt, sin, cos, tan, asin, acos, atan, exp, log, pi, E (max 200 characters).
 
 | event | data |
 |---|---|
-| `meta` | `{ id, title, level, step_count }` |
+| `meta` | `{ id, title, level, step_count }`; `step_count` is `null` for live AI lessons (the count is known only at `done`) |
 | `step` | a Step (templates already expanded, calcs verified) plus `audio_url` |
 | `done` | `{ id }` |
 | `error` | `{ message }`: human-readable, safe to show; the stream ends |

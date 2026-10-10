@@ -19,6 +19,16 @@
           "name": "point_charge",
           "params": { "x": 450, "y": 500, "sign": "+", "r": 18, "name": "Q" },
           "at": 0.1
+        },
+        {
+          "id": "sym-q",
+          "type": "symbol",
+          "x": 60,
+          "y": 80,
+          "symbol": "Q",
+          "meaning": "charge inside",
+          "unit": "C",
+          "at": 0.7
         }
       ]
     },
@@ -71,6 +81,16 @@
         "uz": "Elektr oqimi sirtdan qancha maydon o'tishini ko'rsatadi. Uni fi (Φ) bilan belgilaymiz. Bu yerda pufakdan o'n ikkita chiziq o'tadi, demak oqim o'n ikki chiziqqa teng."
       },
       "draw": [
+        {
+          "id": "sym-phi",
+          "type": "symbol",
+          "x": 60,
+          "y": 130,
+          "symbol": "\\Phi",
+          "meaning": "electric flux",
+          "unit": "N·m²/C",
+          "at": 0.2
+        },
         { "id": "phi-label", "type": "text", "x": 790, "y": 250, "text": "flux = Φ", "at": 0.3 },
         {
           "id": "count",
@@ -123,6 +143,16 @@
           "y": 430,
           "text": "ε₀ = 8.85 × 10⁻¹² C²/(N·m²)",
           "at": 0.0
+        },
+        {
+          "id": "sym-eps",
+          "type": "symbol",
+          "x": 60,
+          "y": 180,
+          "symbol": "\\varepsilon_0",
+          "meaning": "permittivity of free space",
+          "unit": "C²/(N·m²)",
+          "at": 0.15
         },
         {
           "id": "formula",

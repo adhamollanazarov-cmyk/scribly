@@ -1772,6 +1772,7 @@
                 "point": "#/$defs/PointPrim",
                 "polyline": "#/$defs/PolylinePrim",
                 "rect": "#/$defs/RectPrim",
+                "symbol": "#/$defs/SymbolPrim",
                 "template": "#/$defs/TemplatePrim",
                 "text": "#/$defs/TextPrim",
                 "vector": "#/$defs/VectorPrim"
@@ -1811,6 +1812,9 @@
               },
               {
                 "$ref": "#/$defs/MathPrim"
+              },
+              {
+                "$ref": "#/$defs/SymbolPrim"
               },
               {
                 "$ref": "#/$defs/AxesPrim"
@@ -1916,6 +1920,128 @@
         }
       },
       "title": "Subtitles",
+      "type": "object"
+    },
+    "SymbolPrim": {
+      "additionalProperties": false,
+      "description": "A legend entry: introduces a symbol before any formula uses it (AGENTS.md §4).",
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9_-]+$",
+          "title": "Id",
+          "type": "string"
+        },
+        "color": {
+          "anyOf": [
+            {
+              "enum": [
+                "ink",
+                "accent",
+                "charge_pos",
+                "charge_neg",
+                "field",
+                "surface",
+                "force",
+                "highlight",
+                "wrong",
+                "right"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Color"
+        },
+        "at": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "At"
+        },
+        "label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Label"
+        },
+        "group": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Set by the server on template children. AI must not set it.",
+          "title": "Group"
+        },
+        "type": {
+          "const": "symbol",
+          "title": "Type",
+          "type": "string"
+        },
+        "x": {
+          "title": "X",
+          "type": "number"
+        },
+        "y": {
+          "title": "Y",
+          "type": "number"
+        },
+        "symbol": {
+          "description": "LaTeX, e.g. \\Phi or Q_{\\text{enc}}",
+          "minLength": 1,
+          "title": "Symbol",
+          "type": "string"
+        },
+        "meaning": {
+          "minLength": 1,
+          "title": "Meaning",
+          "type": "string"
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "SI unit text; null if dimensionless",
+          "title": "Unit"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "x",
+        "y",
+        "symbol",
+        "meaning"
+      ],
+      "title": "SymbolPrim",
       "type": "object"
     },
     "TemplatePrim": {
