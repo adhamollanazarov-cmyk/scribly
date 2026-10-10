@@ -36,7 +36,7 @@ class TemplateError(ValueError):
 
 
 class Params(BaseModel):
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(extra="forbid", allow_inf_nan=False)
 
 
 def r1(value: float) -> float:
@@ -293,9 +293,9 @@ def expand_template(prim: TemplatePrim) -> list[Child]:
     params_model, build = TEMPLATES[prim.name]
     try:
         params = params_model.model_validate(prim.params)
+        children = build(prim.id, params)
     except ValidationError as e:
         raise TemplateError(f"template {prim.id} ({prim.name}): bad params: {e}") from e
-    children = build(prim.id, params)
     shared: dict[str, Any] = {"group": prim.id, "at": prim.at}
     if prim.color is not None:
         shared["color"] = prim.color

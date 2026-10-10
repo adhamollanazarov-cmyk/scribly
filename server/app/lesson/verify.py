@@ -3,10 +3,8 @@
 import math
 from dataclasses import dataclass
 
-from app.lesson.models import Calc, Lesson
+from app.lesson.models import UNVERIFIED_NOTE, Calc, Lesson
 from app.lesson.safe_expr import ExpressionError, evaluate_text
-
-UNVERIFIED_NOTE = "I could not verify this number."
 
 
 @dataclass(frozen=True)
@@ -41,8 +39,15 @@ def apply_verification(lesson: Lesson, results: list[CalcResult]) -> Lesson:
     failed = {r.calc_id for r in results if not r.ok}
     unverified = {s for c in lesson.calcs if c.id in failed for s in c.used_in_steps}
     steps = [
-        step.model_copy(update={"warning": "unverified", "say": f"{step.say} {UNVERIFIED_NOTE}"})
-        if step.id in unverified and step.warning is None
+        step.model_copy(
+            update={
+                "warning": "unverified",
+                "say": step.say
+                if step.say.endswith(UNVERIFIED_NOTE)
+                else f"{step.say} {UNVERIFIED_NOTE}",
+            }
+        )
+        if step.id in unverified
         else step
         for step in lesson.steps
     ]

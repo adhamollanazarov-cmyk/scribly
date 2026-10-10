@@ -1875,6 +1875,7 @@
             }
           ],
           "default": null,
+          "description": "Set by the server after verification. AI must not set it.",
           "title": "Warning"
         }
       },

@@ -15,7 +15,7 @@ class LessonError(ValueError):
 
 def prepare_lesson(raw: dict[str, Any]) -> tuple[Lesson, list[CalcResult]]:
     try:
-        lesson = Lesson.model_validate(raw)
+        lesson = Lesson.model_validate(raw, context={"raw_input": True})
     except ValidationError as e:
         raise LessonError(f"lesson JSON is invalid: {e.error_count()} problem(s)") from e
     try:

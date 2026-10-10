@@ -52,11 +52,11 @@ async def create_lesson(
     try:
         lesson, _ = prepare_lesson(load_fixture("gauss_law"))
     except LessonError as e:
-        logger.error("Mock lesson failed: %s (%s)", e, e.__cause__)
+        logger.error("Mock lesson failed: error_type=LessonError")
         yield error_event(str(e))
         return
-    except Exception:
-        logger.exception("Mock lesson failed")
+    except Exception as e:
+        logger.error("Mock lesson failed: error_type=%s", type(e).__name__)
         yield error_event(GENERIC_ERROR)
         return
     async for event in lesson_events(lesson, settings, tts, cache):

@@ -207,16 +207,18 @@ def test_cache_write_error_is_safe_and_does_not_end_the_lesson(
 
 
 def test_unexpected_fixture_failure_has_generic_public_error(
-    client: TestClient, monkeypatch: pytest.MonkeyPatch
+    client: TestClient, monkeypatch: pytest.MonkeyPatch, caplog: pytest.LogCaptureFixture
 ) -> None:
     def broken_fixture(name: str) -> dict[str, Any]:
         raise OSError("SYNTHETIC_PRIVATE_INPUT")
 
     monkeypatch.setattr("app.routes.lessons.load_fixture", broken_fixture)
     assert stream(client) == [("error", {"message": GENERIC_ERROR})]
+    assert "OSError" in caplog.text
+    assert "SYNTHETIC_PRIVATE_INPUT" not in caplog.text
+    assert all(record.exc_info is None for record in caplog.records)
 
 
-@pytest.mark.xfail(strict=True, reason="R3: template validation cause leaks raw input to logs")
 def test_template_error_does_not_log_raw_input(
     client: TestClient, monkeypatch: pytest.MonkeyPatch, caplog: pytest.LogCaptureFixture
 ) -> None:

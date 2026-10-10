@@ -10,6 +10,9 @@ Virtual 1600 × 1000, origin top-left, units = px. The renderer scales to fit.
 Side area for interrupt branches: x 1100–1600.
 Angles (templates) are degrees, counter-clockwise from +x as seen on screen (y points down).
 `text` and `math` are anchored at (x, y) = left end of the text baseline.
+All primitive, focus and template-parameter numbers must be finite, representable
+floats. NaN, infinities and numeric strings that convert to them are rejected;
+template expansion must also produce finite geometry.
 
 ## Lesson
 ```json
@@ -39,9 +42,12 @@ Angles (templates) are degrees, counter-clockwise from +x as seen on screen (y p
 }
 ```
 - `say`: at most 30 words, written to be spoken (words, not symbols: "phi", not "Φ").
+  Only the server's exact appended verification sentence (see Calc) is excluded
+  from this count; setting `warning` alone never relaxes the limit.
 - `kind: "checkpoint"` if and only if `checkpoint` is set. No more than 4 steps in a row
   without a checkpoint (a final `summary` is exempt).
 - `warning`: set by the server only (see Calc). Never set by the AI.
+  `prepare_lesson` rejects raw input containing this key, including explicit null.
 - `focus` (optional): area the renderer zooms/pans to for this step.
 - Audio duration of `say` drives drawing speed; each primitive may set `at`
   (0–1, fraction of the narration when it starts). Default: evenly spaced.
@@ -50,6 +56,9 @@ Angles (templates) are degrees, counter-clockwise from +x as seen on screen (y p
 Ids are unique across the whole lesson and use only letters, digits, `_` and `-`.
 `group` is set by the server on primitives that came from a template (see Templates);
 the AI never sets it.
+`prepare_lesson` rejects raw input containing `group`, including explicit null.
+The shared schema describes both the lesson and server-generated fields; these
+raw-input ownership checks are enforced separately by Pydantic validation context.
 `color` is a semantic token, never a hex: `ink | accent | charge_pos | charge_neg |
 field | surface | force | highlight | wrong | right`.
 
@@ -74,6 +83,8 @@ field | surface | force | highlight | wrong | right`.
 | `template` | name, params (expanded server-side into the types above) |
 
 Unknown fields are rejected everywhere (`additionalProperties: false`).
+JSON fields use their documented aliases: a vector requires `from`; the Python
+attribute spelling `from_` is rejected as an unknown JSON field.
 `target_id` must name a primitive or group drawn **earlier** (earlier step, or earlier
 in the same step's `draw`). Checked after template expansion.
 
@@ -128,7 +139,9 @@ a primitive drawn earlier (template children by their expanded ids).
 ```
 Mismatch → regenerate once → still wrong → step gets `"warning": "unverified"`
 and the narration says the number is not verified ("I could not verify this number."
-is appended to `say`). Passes when |value − expected| ≤ rel_tol·|expected|.
+is appended to `say`, once, even if an internal/reloaded step already has a warning).
+Passes when |value − expected| ≤ rel_tol·|expected|. Non-finite expected values or
+relative tolerances fail verification before comparison.
 `expr` may use only the names in `values`, `+ - * / ^ ( )`, numbers, and
 sqrt, sin, cos, tan, asin, acos, atan, exp, log, pi, E (max 200 characters).
 `unit` is not checked dimensionally yet.

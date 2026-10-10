@@ -2,10 +2,11 @@
 
 from typing import Annotated, Any, Literal, Self
 
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, ValidationInfo, model_validator
 
 MAX_SAY_WORDS = 30
 MAX_STEPS_WITHOUT_CHECKPOINT = 4
+UNVERIFIED_NOTE = "I could not verify this number."
 
 Color = Literal[
     "ink", "accent", "charge_pos", "charge_neg", "field", "surface", "force", "highlight", "wrong",
@@ -18,10 +19,12 @@ Positive = Annotated[float, Field(gt=0)]
 class Strict(BaseModel):
     """Unknown fields are errors, so AI typos fail validation instead of being dropped."""
 
-    model_config = ConfigDict(extra="forbid", populate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(extra="forbid", validate_by_name=False, serialize_by_alias=True)
 
 
 class PrimitiveBase(Strict):
+    model_config = ConfigDict(allow_inf_nan=False)
+
     id: str = Field(min_length=1, pattern=r"^[A-Za-z0-9_-]+$")
     color: Color | None = None
     at: float | None = Field(default=None, ge=0, le=1)
@@ -29,6 +32,12 @@ class PrimitiveBase(Strict):
     group: str | None = Field(
         default=None, description="Set by the server on template children. AI must not set it."
     )
+
+    @model_validator(mode="after")
+    def check_server_fields(self, info: ValidationInfo) -> Self:
+        if info.context and info.context.get("raw_input") and "group" in self.model_fields_set:
+            raise ValueError("group is set by the server only")
+        return self
 
 
 class PointPrim(PrimitiveBase):
@@ -167,6 +176,8 @@ TargetPrim = HighlightPrim | MarkWrongPrim | ErasePrim
 
 
 class Rect(Strict):
+    model_config = ConfigDict(allow_inf_nan=False)
+
     x: float
     y: float
     w: Positive
@@ -227,12 +238,19 @@ class Step(Strict):
     focus: Rect | None = None
     checkpoint: Checkpoint | None = None
     sliders: list[Slider] = Field(default_factory=list)
-    warning: Literal["unverified"] | None = None
+    warning: Literal["unverified"] | None = Field(
+        default=None, description="Set by the server after verification. AI must not set it."
+    )
 
     @model_validator(mode="after")
-    def check_step(self) -> Self:
-        words = len(self.say.split())
-        if words > MAX_SAY_WORDS and self.warning is None:
+    def check_step(self, info: ValidationInfo) -> Self:
+        if info.context and info.context.get("raw_input") and "warning" in self.model_fields_set:
+            raise ValueError("warning is set by the server only")
+        narration = self.say
+        if self.warning == "unverified":
+            narration = narration.removesuffix(f" {UNVERIFIED_NOTE}")
+        words = len(narration.split())
+        if words > MAX_SAY_WORDS:
             raise ValueError(f"say has {words} words; the limit is {MAX_SAY_WORDS}")
         if (self.kind == "checkpoint") != (self.checkpoint is not None):
             raise ValueError("a checkpoint step needs a checkpoint, and only checkpoint steps")
@@ -292,9 +310,10 @@ def _require_unique(ids: list[str], what: str) -> None:
 
 def _check_checkpoint_spacing(steps: list[Step]) -> None:
     run = 0
-    for step in steps:
+    for index, step in enumerate(steps):
         run = 0 if step.kind == "checkpoint" else run + 1
-        if run > MAX_STEPS_WITHOUT_CHECKPOINT and step.kind != "summary":
+        final_summary = index == len(steps) - 1 and step.kind == "summary"
+        if run > MAX_STEPS_WITHOUT_CHECKPOINT and not final_summary:
             raise ValueError(
                 f"step {step.id}: more than {MAX_STEPS_WITHOUT_CHECKPOINT} steps without a "
                 "checkpoint"

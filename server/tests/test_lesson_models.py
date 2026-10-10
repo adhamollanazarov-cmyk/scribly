@@ -5,7 +5,7 @@ import pytest
 from pydantic import ValidationError
 
 from app.lesson.fixtures import load_fixture
-from app.lesson.models import Lesson, StreamedStep, VectorPrim, check_references
+from app.lesson.models import UNVERIFIED_NOTE, Lesson, StreamedStep, VectorPrim, check_references
 
 
 def step(step_id: str, kind: str = "explain", **extra: Any) -> dict[str, Any]:
@@ -163,9 +163,6 @@ def test_fixture_is_not_mutated_by_validation() -> None:
     assert raw == before
 
 
-@pytest.mark.xfail(
-    strict=True, reason="R5: Pydantic accepts from_ but the shared schema requires from"
-)
 def test_vector_rejects_python_attribute_name_in_json() -> None:
     with pytest.raises(ValidationError):
         VectorPrim.model_validate(
@@ -173,15 +170,51 @@ def test_vector_rejects_python_attribute_name_in_json() -> None:
         )
 
 
-@pytest.mark.xfail(strict=True, reason="R6: intermediate summaries bypass checkpoint spacing")
 def test_only_final_summary_is_exempt_from_checkpoint_spacing() -> None:
     steps = [step(f"s{i}", "summary") for i in range(1, 7)]
     with pytest.raises(ValidationError, match="without a checkpoint"):
         Lesson.model_validate(lesson(*steps))
 
 
-@pytest.mark.xfail(strict=True, reason="R8: non-finite drawing coordinates serialize as null")
 def test_non_finite_drawing_coordinate_is_rejected() -> None:
     bad = step("s1", draw=[{"id": "p", "type": "point", "x": float("inf"), "y": 1}])
     with pytest.raises(ValidationError):
         Lesson.model_validate(lesson(bad))
+
+
+@pytest.mark.parametrize("value", [float("nan"), float("inf"), float("-inf")])
+@pytest.mark.parametrize("geometry", ["vector", "curve", "focus"])
+def test_nested_drawing_and_focus_numbers_must_be_finite(value: float, geometry: str) -> None:
+    if geometry == "focus":
+        bad = step("s1", focus={"x": value, "y": 0, "w": 100, "h": 100})
+    elif geometry == "vector":
+        bad = step(
+            "s1",
+            draw=[{"id": "v", "type": "vector", "from": [value, 0], "to": [10, 0], "name": "F"}],
+        )
+    else:
+        bad = step("s1", draw=[{"id": "c", "type": "curve", "points": [[0, 0], [10, value]]}])
+    with pytest.raises(ValidationError, match="finite"):
+        Lesson.model_validate(lesson(bad))
+
+
+@pytest.mark.parametrize("include_note", [True, False])
+def test_warning_cannot_bypass_original_narration_word_limit(include_note: bool) -> None:
+    say = " ".join(["word"] * 31)
+    if include_note:
+        say += f" {UNVERIFIED_NOTE}"
+    with pytest.raises(ValidationError, match="31 words"):
+        Lesson.model_validate(lesson(step("s1", say=say, warning="unverified")))
+
+
+def test_server_note_is_the_only_allowed_extension_to_thirty_words() -> None:
+    say = " ".join(["word"] * 30) + f" {UNVERIFIED_NOTE}"
+    parsed = Lesson.model_validate(lesson(step("s1", say=say, warning="unverified")))
+    StreamedStep.model_validate(parsed.steps[0].model_dump() | {"audio_url": None})
+
+
+def test_intermediate_summary_before_checkpoint_counts_toward_spacing() -> None:
+    steps = [step(f"s{i}") for i in range(1, 5)]
+    steps += [step("s5", "summary"), step("s6", "checkpoint", checkpoint=CHOICE)]
+    with pytest.raises(ValidationError, match="without a checkpoint"):
+        Lesson.model_validate(lesson(*steps))

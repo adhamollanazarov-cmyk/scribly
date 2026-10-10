@@ -1,0 +1,38 @@
+{
+  "version": "1",
+  "id": "31e41ebe-4e25-4f36-9c53-3e0580baee31",
+  "title": "A rightward force",
+  "level": "simple",
+  "source": {
+    "type": "problem",
+    "text": "Show a force of two newtons pointing right on a block."
+  },
+  "steps": [
+    {
+      "id": "s1",
+      "kind": "explain",
+      "say": "The arrow shows a force of two newtons pointing right.",
+      "draw": [
+        { "id": "body", "type": "rect", "x": 400, "y": 400, "w": 40, "h": 40 },
+        {
+          "id": "force",
+          "type": "vector",
+          "from": [420, 420],
+          "to": [620, 420],
+          "name": "F = 2 N",
+          "color": "force"
+        }
+      ]
+    }
+  ],
+  "calcs": [
+    {
+      "id": "c1",
+      "expr": "F",
+      "values": { "F": 2 },
+      "expected": 2,
+      "unit": "N",
+      "used_in_steps": ["s1"]
+    }
+  ]
+}

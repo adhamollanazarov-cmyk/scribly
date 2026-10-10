@@ -4,6 +4,7 @@ One entry per non-obvious decision or new dependency. Newest on top.
 
 | Date | Decision | Why | Agent |
 |---|---|---|---|
+| 2026-10-10 | Raw lesson validation uses `raw_input` context to reject server-owned `warning`/`group` keys; internal/output validation accepts them. Only the appended verification sentence may extend narration beyond 30 words. Geometry models reject non-finite floats and JSON aliases are mandatory. | Close the five medium review findings while preserving validation of expanded/verified output and idempotent spoken disclaimers; shared schema and a canonical vector fixture are checked together. | codex |
 | 2026-10-10 | Validate the full arithmetic AST before the SymPy parser; only supported operators and unary functions, finite literals and depth ≤32 may reach `parse_expr`. Reject non-finite expected values/tolerances in verification. | `//` bypasses SymPy's `evaluate=False` rewriting and triggers eager powers; IEEE non-finite comparisons can otherwise falsely verify a number. No JSON field or dependency changes. | codex |
 | 2026-10-09 | Template children are `<template id>-<part>` with `group` = template id; `highlight`/`mark_wrong`/`erase` may target a group | Lets the AI erase or circle a whole template ("the field lines") while slider binds still name a concrete primitive | claude (approved by founder) |
 | 2026-10-09 | `step` SSE event carries `audio_url: null` when TTS fails | One TTS hiccup should not end the lesson; the renderer times drawing without audio | claude (approved by founder) |

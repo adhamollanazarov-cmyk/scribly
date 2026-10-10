@@ -190,3 +190,30 @@ def test_expanded_gauss_lesson_has_no_templates_and_valid_references() -> None:
     assert not any(isinstance(p, TemplatePrim) for p in prims)
     assert check_references(expanded) == []
     assert len([p for p in prims if p.group == "lines1"]) == 12
+
+
+@pytest.mark.parametrize("value", [float("nan"), float("inf"), float("-inf")])
+@pytest.mark.parametrize("kind", ["point_charge", "free_body", "axes_plot"])
+def test_template_geometry_rejects_non_finite_parameters(value: float, kind: str) -> None:
+    if kind == "point_charge":
+        params = {"x": value, "y": 0}
+    elif kind == "free_body":
+        params = {"x": 0, "y": 0, "forces": [{"name": "F", "angle_deg": value, "length": 10}]}
+    else:
+        params = {
+            "x": 0,
+            "y": 0,
+            "w": 100,
+            "h": 100,
+            "expr": "x",
+            "x_min": 0,
+            "x_max": 1,
+            "y_max": value,
+        }
+    with pytest.raises(TemplateError, match="bad params"):
+        expand_template(template(kind, **params))
+
+
+def test_finite_parameters_that_overflow_geometry_raise_template_error() -> None:
+    with pytest.raises(TemplateError, match="bad params"):
+        expand_template(template("point_charge", x=1.7e308, y=0, r=1.7e308))
