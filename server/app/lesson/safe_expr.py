@@ -158,7 +158,7 @@ def _check_syntax(text: str) -> None:
             ):
                 check(arg, depth + 1)
             case _:
-                raise ExpressionError("unsupported expression syntax")
+                raise ExpressionError(f"unsupported expression syntax ({ALLOWED_TEXT})")
 
     check(tree.body)
 
@@ -171,7 +171,29 @@ def _check_text(text: str, names: set[str]) -> None:
     for match in IDENTIFIER.finditer(text):
         name = match.group()
         if name not in names and name not in FUNCTIONS and not _is_exponent(text, match):
-            raise ExpressionError(f"unknown name {name!r}")
+            raise ExpressionError(unknown_name_message(name))
+
+
+NAME_HINTS = {
+    "abs": "abs is not supported: write the expression so its value is already positive, "
+    "e.g. 100*(E2 - E1)/E1 with the larger value first",
+    "Min": "Min is not supported: split the cases into separate calcs",
+    "Max": "Max is not supported: split the cases into separate calcs",
+    "Piecewise": "Piecewise is not supported: split the cases into separate calcs",
+    "lambda": "lambda is a reserved word: name the value lam",
+    "ln": "use log(x) for the natural logarithm",
+    "e": "use E for Euler's number, or exp(x)",
+}
+ALLOWED_TEXT = (
+    "allowed: + - * / ^ ( ), numbers, the names in values, and "
+    + ", ".join(name for name in FUNCTIONS if name not in ("pi", "E"))
+    + ", pi, E"
+)
+
+
+def unknown_name_message(name: str) -> str:
+    hint = NAME_HINTS.get(name, f"{name!r} is neither a value name nor an allowed function")
+    return f"unknown name {name!r}: {hint} ({ALLOWED_TEXT})"
 
 
 def _is_exponent(text: str, match: re.Match[str]) -> bool:

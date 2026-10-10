@@ -337,18 +337,27 @@ def check_references(lesson: Lesson) -> list[str]:
     drawn: dict[str, PrimitiveBase] = {}
     groups: set[str] = set()
     for step in lesson.steps:
-        for prim in step.draw:
-            if isinstance(prim, TargetPrim) and not prim_id_known(prim, drawn, groups):
-                errors.append(f"step {step.id}: {prim.id} targets unknown {prim.target_id!r}")
-            drawn[prim.id] = prim
-            if prim.group:
-                groups.add(prim.group)
-        for slider in step.sliders:
-            for bind in slider.binds:
-                prim_id, field = bind.split(".")
-                target = drawn.get(prim_id)
-                if target is None or field not in type(target).model_fields:
-                    errors.append(f"step {step.id}: slider {slider.id} binds unknown {bind!r}")
+        errors += check_step_references(step, drawn, groups)
+    return errors
+
+
+def check_step_references(
+    step: Step, drawn: dict[str, PrimitiveBase], groups: set[str]
+) -> list[str]:
+    """Reference problems in one step; records its primitives in `drawn` and `groups`."""
+    errors: list[str] = []
+    for prim in step.draw:
+        if isinstance(prim, TargetPrim) and not prim_id_known(prim, drawn, groups):
+            errors.append(f"step {step.id}: {prim.id} targets unknown {prim.target_id!r}")
+        drawn[prim.id] = prim
+        if prim.group:
+            groups.add(prim.group)
+    for slider in step.sliders:
+        for bind in slider.binds:
+            prim_id, field = bind.split(".")
+            target = drawn.get(prim_id)
+            if target is None or field not in type(target).model_fields:
+                errors.append(f"step {step.id}: slider {slider.id} binds unknown {bind!r}")
     return errors
 
 
