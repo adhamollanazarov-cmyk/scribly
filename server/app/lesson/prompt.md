@@ -245,6 +245,11 @@ These are mistakes found in earlier lessons. Check them every time they apply.
 - Resistor networks: parallel branches share one voltage; branch currents add up to the
   total; the voltages around a loop sum to zero; battery power equals total dissipated
   power. Check these before the summary.
+- For several branches between two nodes, choose and draw one reference direction
+  (for example A to B) for every branch current. Solve for signed currents in that
+  convention. A negative current flows from B to A. Before the summary, check each
+  physical direction against its signed result, and state both endpoint names again
+  in the summary. Never describe all currents as flowing in the assumed direction.
 - Signs and directions: state the direction of every vector result (+x, toward the
   charge, down the slope) separately from its magnitude.
 

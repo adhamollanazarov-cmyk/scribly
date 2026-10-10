@@ -2,6 +2,12 @@
 
 Update this file at the end of every task (newest entry on top, 3–8 lines).
 
+## 2026-10-10 — codex — Phase 1b review (`codex/phase1b-review`)
+**Done:** Reviewed `claude/phase1b` (`f3d8c79`) against `main` (`a70a7ff`); fixed four high findings: ledger input overrides, primitive/group ID validation, silent final validation failures, and false eval passes. Added signed/unit-aware displayed-value grading, warning/manual-review gates, grading-version warnings and a circuit sign-convention safeguard. Full severity list: `docs/reviews/2026-10-10-phase1b.md`.
+**Checks:** PowerShell 5.1, MOCK_AI=1: 403 pytest (44 additional cases), ruff lint/format, mypy, unchanged regenerated schema; 5 Vitest, ESLint+tsc, Prettier, 1 Chromium smoke test passed. No real API/TTS calls or new dependencies.
+**Found issues:** Nine medium findings remain unchanged: malformed placeholders, unit-lint false positives, numeric provenance exemptions, summary pacing, fix identity/success accounting, soft cost guard, unbounded fix cost/cleanup, raw eval exception causes, owned API-client lifecycle. Existing Phase 2 Gauss playback gap remains open.
+**Next:** Human merges the review branch; address medium findings. Kirchhoff direction claims require manual review; historical 30/30 eval scores were not rerun or certified under the corrected grader.
+
 ## 2026-10-10 — claude — Phase 1b real lesson generation (`claude/phase1b`)
 **Done:** Real generation in `POST /lessons` (MOCK_AI=0), streamed step by step. The model writes a structured-output draft: a lean schema, because the full typed lesson exceeds the API grammar budget. The server then runs per step: SymPy calcs → result-ledger fill (`{c1:3sf}`) → teaching lint → contract checks. A step with problems is regenerated once, alone. Also: `symbol` legend primitive, `prompt.md`, eval bank v0 (30 problems), `scripts.eval`, 3 replayed prompt-test fixtures.
 **Checks:** PowerShell 5.1: 359 pytest, ruff, format, mypy; web 5 Vitest, eslint+tsc, Prettier, 1 Playwright. **Eval** (`docs/eval/2026-10-10.md`): 30/30 pass, numbers 100 %, $2.89 total ($0.096/lesson), median first step 5.5 s, average lesson 34 s. A/B adaptive thinking (`2026-10-10-adaptive.md`) was cut short when the account ran out of API credit (7/10 failed with a billing 400). On the 3 that ran, both modes passed; adaptive needed 0 fixes but step 1 took ~2 min and each lesson cost ~2×. Total API spend this phase ≈ $4.2. Live route + edge-tts: meta 5.1 s, step 1 with audio 9.2 s.

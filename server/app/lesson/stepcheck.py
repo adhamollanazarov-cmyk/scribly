@@ -146,7 +146,7 @@ def _check_ids(draft: StepDraft, state: LessonState) -> list[Violation]:
     out = []
     if draft.id in {s.id for s in state.steps}:
         out.append(violation("contract", f"step id {draft.id} is already used"))
-    seen = {p.id for s in state.steps for p in s.draw}
+    seen = {p.id for s in state.steps for p in s.draw} | state.groups
     for item in draft.draw:
         if item.id in seen:
             out.append(
@@ -180,6 +180,16 @@ def _check_calcs(draft: StepDraft, state: LessonState, out: Checked) -> None:
             )
             continue
         known = {**state.ledger, **out.entries}
+        reserved = [v.name for v in calc.values if CALC_ID.fullmatch(v.name)]
+        if reserved:
+            out.violations.append(
+                violation(
+                    "calc",
+                    f"calc {calc.id}: {reserved} are reserved ledger names; "
+                    "use earlier calc ids only in expr, never in values",
+                )
+            )
+            continue
         values = {v.name: v.value for v in calc.values}
         # Earlier results used by name (c1) come in at full precision, never retyped.
         for name in set(CALC_NAME.findall(calc.expr)) - values.keys():
@@ -350,12 +360,12 @@ def _contract_step(
     except TemplateError as e:
         return None, [*problems, str(e)], answer_ids
     problems += check_step_references(step, dict(state.drawn), set(state.groups))
-    taken = {p.id for s in state.steps for p in s.draw}
-    problems += [
-        f"draw id {p.id} (from a template) is already used"
-        for p in step.draw
-        if p.group and p.id in taken
-    ]
+    taken = {p.id for s in state.steps for p in s.draw} | state.groups
+    taken |= {p.group for p in step.draw if p.group is not None}
+    for primitive in step.draw:
+        if primitive.id in taken:
+            problems.append(f"draw id {primitive.id} is already used after template expansion")
+        taken.add(primitive.id)
     return (None if problems else step), problems, answer_ids
 
 

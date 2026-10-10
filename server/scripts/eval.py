@@ -20,7 +20,7 @@ import statistics
 import time
 from collections import Counter
 from collections.abc import Callable
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass, field, replace
 from datetime import date
 from pathlib import Path
 from typing import Any
@@ -29,14 +29,17 @@ import yaml
 
 from app.lesson.claude import ClaudeLessonLLM, LessonLLM
 from app.lesson.generate import Metrics, generate_lesson
+from app.lesson.ledger import PLACEHOLDER, Entry, parse_spec, rounded
 from app.lesson.models import Source
 from app.lesson.prompt import system_prompt
+from app.lesson.stepcheck import RAW_KEYS, LessonState
 from app.settings import REPO_ROOT, Settings, get_settings
+from scripts.eval_units import convert
 
 PROBLEMS = REPO_ROOT / "tests" / "eval" / "problems.yaml"
 REPORT_DIR = REPO_ROOT / "docs" / "eval"
 CACHE_DIR = REPO_ROOT / "server" / ".cache" / "eval"
-SCALES = [10.0**k for k in range(-12, 13, 3)] + [100.0, 0.01]
+GRADING_VERSION = 2
 
 
 @dataclass(frozen=True)
@@ -56,6 +59,7 @@ class Problem:
     input: str
     expected: list[Expected]
     must_draw: list[str]
+    manual_checks: list[str] = field(default_factory=list)
 
     @property
     def group(self) -> str:
@@ -82,6 +86,7 @@ class Result:
     total_s: float | None = None
     cost_usd: float = 0.0
     skipped: bool = False
+    manual_checks: list[str] = field(default_factory=list)
 
     @property
     def numbers_ok(self) -> bool:
@@ -89,7 +94,14 @@ class Result:
 
     @property
     def passed(self) -> bool:
-        return self.valid and self.numbers_ok and not self.missing_draws and not self.skipped
+        return (
+            self.valid
+            and self.numbers_ok
+            and not self.missing_draws
+            and self.unverified_steps == 0
+            and not self.manual_checks
+            and not self.skipped
+        )
 
 
 def load_problems(path: Path = PROBLEMS) -> list[Problem]:
@@ -103,6 +115,7 @@ def load_problems(path: Path = PROBLEMS) -> list[Problem]:
             input=" ".join(p["input"].split()),
             expected=[Expected(**e) for e in p.get("expected", [])],
             must_draw=list(p.get("must_draw", [])),
+            manual_checks=list(p.get("manual_checks", [])),
         )
         for p in raw
     ]
@@ -111,12 +124,16 @@ def load_problems(path: Path = PROBLEMS) -> list[Problem]:
 # --- grading --------------------------------------------------------------------------
 
 
-def value_matches(expected: Expected, values: list[float]) -> bool:
-    target = abs(expected.value)
-    for value in values:
-        for scale in SCALES:
-            if math.isclose(abs(value) / scale, target, rel_tol=expected.rel_tol, abs_tol=1e-12):
-                return True
+def value_matches(expected: Expected, values: list[Entry]) -> bool:
+    for entry in values:
+        if not entry.verified:
+            continue
+        try:
+            value = convert(entry.value, entry.unit, expected.unit)
+        except (ValueError, OverflowError, ZeroDivisionError):
+            continue
+        if math.isclose(value, expected.value, rel_tol=expected.rel_tol, abs_tol=0):
+            return True
     return False
 
 
@@ -124,9 +141,33 @@ def missing_draws(must_draw: list[str], drawn: set[str]) -> list[str]:
     return [need for need in must_draw if not set(need.split("|")) & drawn]
 
 
+def displayed_values(state: LessonState | None) -> list[Entry]:
+    """Grade the rounded values actually filled into student-facing fields."""
+    if state is None:
+        return []
+    used = {c.id for c in state.calcs if c.used_in_steps}
+    values = []
+    for draft in state.drafts:
+        texts = [draft.say, draft.subtitles.uz, draft.subtitles.ru]
+        for item in draft.draw:
+            texts += [item.label, *(a.v for a in item.txt if a.k not in RAW_KEYS)]
+        for cp in draft.checkpoints:
+            texts += [cp.question, *cp.choices, cp.hint, cp.reexplain_hint]
+            if cp.type == "number":
+                texts.append(cp.answer)
+        for text in texts:
+            for match in PLACEHOLDER.finditer(text):
+                entry = state.ledger.get(match.group(1))
+                if entry is not None and entry.verified and match.group(1) in used:
+                    values.append(
+                        replace(entry, value=rounded(entry.value, parse_spec(match.group(2))))
+                    )
+    return values
+
+
 def grade(problem: Problem, metrics: Metrics, error: str | None) -> Result:
     state = metrics.state
-    verified = [e.value for e in state.ledger.values() if e.verified] if state else []
+    verified = displayed_values(state)
     drawn = {item.type for d in state.drafts for item in d.draw} if state else set()
     lesson = metrics.lesson
     leftovers = Counter(v.rule for _, v in metrics.leftovers)
@@ -148,6 +189,7 @@ def grade(problem: Problem, metrics: Metrics, error: str | None) -> Result:
         first_step_s=metrics.first_step_s,
         total_s=metrics.total_s,
         cost_usd=metrics.usage.cost_usd,
+        manual_checks=list(problem.manual_checks),
     )
 
 
@@ -276,13 +318,27 @@ def render_report(results: list[Result], meta: dict[str, Any], top: int = 3) -> 
     lines = [
         f"# Eval report — {meta['date']}{' — ' + meta['label'] if meta.get('label') else ''}",
         "",
+        *(
+            [
+                "Stored scores use an older or unspecified grader. Re-rendering changes "
+                "formatting only; it does not recheck signs, units, displayed rounding or "
+                "manual-review requirements. Do not treat these scores as a new evaluation.",
+                "",
+            ]
+            if meta.get("grading_version") != GRADING_VERSION
+            else []
+        ),
         f"Model `{meta['model']}`, thinking `{meta['thinking']}`, effort `{meta['effort']}`, "
         f"prompt sha256 `{meta['prompt_sha']}`, problems: {len(results)} "
         f"({len(results) - len(ran)} skipped). Total cost **${sum(r.cost_usd for r in ran):.2f}**,"
         f" wall time {meta.get('wall_s', 0):.0f} s.",
         "",
-        "Pass = valid lesson AND every expected number matched by a verified calc AND every "
-        "required drawing present. First step = time until step 1 is checked and ready "
+        "Pass = valid lesson AND every expected number matched, with its sign and compatible "
+        "units, by a displayed verified calc AND every required drawing present AND no "
+        "unverified steps or pending manual checks. Signed numeric matching does not "
+        "check semantic directions or associate quantities with their names; bank cases "
+        "flagged with manual checks cannot automatically pass. First step = time until "
+        "step 1 is checked and ready "
         "(no TTS).",
         "",
         "| topic | n | pass | valid | numbers | drawings | avg cost | median first step (s) "
@@ -317,6 +373,10 @@ def render_report(results: list[Result], meta: dict[str, Any], top: int = 3) -> 
             reasons.append(f"numbers not found among verified calcs: {', '.join(wrong)}")
         if r.missing_draws:
             reasons.append(f"missing drawings: {', '.join(r.missing_draws)}")
+        if r.unverified_steps:
+            reasons.append(f"unverified steps: {r.unverified_steps}")
+        if r.manual_checks:
+            reasons.append(f"manual review required: {'; '.join(r.manual_checks)}")
         lines.append(f"- **{r.id}**: {'; '.join(reasons)}")
     if not failures:
         lines.append("None.")
@@ -343,10 +403,18 @@ def render_report(results: list[Result], meta: dict[str, Any], top: int = 3) -> 
 
 
 def compare_section(
-    results: list[Result], other: list[dict[str, Any]], names: tuple[str, str]
+    results: list[Result],
+    other: list[dict[str, Any]],
+    names: tuple[str, str],
+    before_version: int | None = None,
 ) -> list[str]:
     before = {r["id"]: r for r in other}
     lines = [
+        *(
+            ["Scoring versions differ: pass/number changes are not a model comparison.", ""]
+            if before_version != GRADING_VERSION
+            else []
+        ),
         f"| id | pass ({names[0]}) | pass ({names[1]}) | numbers | first step (s) | total (s) "
         "| cost |",
         "|---|---|---|---|---|---|---|",
@@ -448,6 +516,7 @@ def main() -> None:
         )
     )
     meta: dict[str, Any] = {
+        "grading_version": GRADING_VERSION,
         "date": date.today().isoformat(),
         "label": args.label,
         "model": settings.lesson_model,
@@ -457,8 +526,13 @@ def main() -> None:
         "wall_s": time.perf_counter() - started,
     }
     if args.compare:
-        other = json.loads(args.compare.read_text(encoding="utf-8"))["results"]
-        meta["compare"] = compare_section(results, other, ("before", args.label or "this run"))
+        previous = json.loads(args.compare.read_text(encoding="utf-8"))
+        meta["compare"] = compare_section(
+            results,
+            previous["results"],
+            ("before", args.label or "this run"),
+            previous.get("meta", {}).get("grading_version"),
+        )
     write_outputs(results, meta, stem, save_dir)
     total = sum(r.cost_usd for r in results)
     print(

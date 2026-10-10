@@ -105,6 +105,7 @@ def _finish(header: Header, source: Source, state: LessonState, metrics: Metrics
     except ValidationError as e:
         metrics.final_error = "; ".join(error_lines(e))
         logger.error("Generated lesson failed final validation: %d problem(s)", e.error_count())
+        raise LessonError("The lesson failed final validation. Please try again.") from e
 
 
 async def _attempt(

@@ -452,3 +452,5 @@
     - { name: I1, value: 1.5909090909090908, unit: A }
     - { name: I2, value: 0.45454545454545453, unit: A }
   must_draw: [line|polyline|rect]
+  manual_checks:
+    - Branch current directions must agree with the stated sign convention, including the summary.

@@ -22,7 +22,7 @@ from app.routes.lessons import (
 )
 from app.settings import Settings, get_settings
 from app.tts import AudioCache, TTSError
-from tests.drafts import draft_json
+from tests.drafts import draft_json, good_steps, step
 from tests.fake_llm import FakeLLM
 
 REQUEST = {"type": "topic", "text": "Explain Gauss's law"}
@@ -155,6 +155,26 @@ def test_live_mode_failure_is_a_safe_error_event(tmp_path: Path) -> None:
         ("error", {"message": "The lesson could not be generated. Please try again."})
     ]
     assert "SYNTHETIC_PRIVATE_INPUT" not in json.dumps(events)
+
+
+def test_final_lesson_validation_failure_sends_error_without_done(tmp_path: Path) -> None:
+    # The incremental pacing lint exempts every summary; the Lesson contract exempts
+    # only the final one. Exercise a real final validation failure through SSE.
+    checkpoint = good_steps()[2]
+    checkpoint["id"] = "s6"
+    steps = [step(f"s{i}", "Here is the next idea.") for i in range(1, 5)]
+    steps += [
+        step("s5", "Consider the main idea.", kind="summary"),
+        checkpoint,
+        step("s7", "That completes the lesson.", kind="summary"),
+    ]
+    llm = FakeLLM([draft_json(steps)])
+    with closing(live_client(tmp_path, llm)) as client:
+        events = stream(client)
+
+    assert [name for name, _ in events] == ["meta"] + ["step"] * 7 + ["error"]
+    assert events[-1][1] == {"message": "The lesson failed final validation. Please try again."}
+    assert len(llm.requests) == 1
 
 
 def test_broken_fixture_streams_error_not_a_crash(

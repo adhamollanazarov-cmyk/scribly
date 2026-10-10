@@ -32,5 +32,7 @@ def test_prompt_carries_the_audit_safeguards() -> None:
         "not to scale",
         "use `lam` for lambda",
         "not allowed: abs, Min, Max",
+        "Solve for signed currents",
+        "state both endpoint names again",
     ):
         assert phrase in prompt, phrase

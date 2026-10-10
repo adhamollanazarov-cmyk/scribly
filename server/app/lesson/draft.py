@@ -159,6 +159,11 @@ def contract_primitive(item: DrawDraft) -> dict[str, Any]:
     if item.type in TEMPLATES:
         return {**head, "type": "template", "name": item.type, "params": _template_params(item)}
     args: dict[str, Any] = {**nums, **txts}
+    reserved = args.keys() & {"id", "type", "color", "at", "label", "group"}
+    if reserved:
+        raise ValueError(
+            f"{item.id}: arguments cannot override metadata: {', '.join(sorted(reserved))}"
+        )
     for key in BOOL_ARGS & args.keys():
         args[key] = bool(args[key])
     if item.type == "vector" and all(k in nums for k in VECTOR_ENDS):
