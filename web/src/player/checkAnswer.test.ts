@@ -36,9 +36,10 @@ describe('checkAnswer', () => {
     expect(checkAnswer(choice, 0).correct).toBe(false)
   })
 
-  it('uses an absolute tolerance around zero', () => {
+  it('requires exact zero without an explicit absolute tolerance in the contract', () => {
     const zero = { ...number, answer: 0 }
-    expect(checkAnswer(zero, '0.01').correct).toBe(true)
+    expect(checkAnswer(zero, '0').correct).toBe(true)
+    expect(checkAnswer(zero, '0.01').correct).toBe(false)
     expect(checkAnswer(zero, '0.5').correct).toBe(false)
   })
 })

@@ -35,19 +35,32 @@ export async function streamLesson(
     throw new StreamError(response.status === 422 ? 'bad_request' : 'server')
   }
 
+  let terminal = false
   const parser = createSseParser(({ event, data }) => {
-    if (EVENTS.has(event)) onEvent({ event, data: JSON.parse(data) } as LessonEvent)
+    if (terminal || signal?.aborted || !EVENTS.has(event)) return
+    const parsed = JSON.parse(data)
+    terminal = event === 'done' || event === 'error'
+    onEvent({ event, data: parsed } as LessonEvent)
   })
   const reader = response.body.pipeThrough(new TextDecoderStream()).getReader()
+  const cancel = () => {
+    void reader.cancel().catch(() => {})
+  }
+  signal?.addEventListener('abort', cancel, { once: true })
   try {
-    for (;;) {
+    while (!terminal && !signal?.aborted) {
       const { value, done } = await reader.read()
       if (done) break
       parser.push(value)
     }
     parser.end()
+    if (!terminal && !signal?.aborted) throw new StreamError('network')
   } catch (error) {
     if (signal?.aborted) return
     throw new StreamError('network', { cause: error })
+  } finally {
+    signal?.removeEventListener('abort', cancel)
+    await reader.cancel().catch(() => {})
+    reader.releaseLock()
   }
 }

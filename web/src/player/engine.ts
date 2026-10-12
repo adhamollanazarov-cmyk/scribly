@@ -17,6 +17,8 @@ export interface Narration {
   setRate(rate: number): void
   currentTime(): number
   ended(): boolean
+  /** A permanent media/network error, including after metadata loaded. */
+  failed(): boolean
   /** Loudness 0–1 right now, for the mouth. */
   level(): number
 }
@@ -64,6 +66,7 @@ export const MIN_SPEED = 0.5
 export const MAX_SPEED = 1.5
 const TAIL = 0.45 // pause after a step, in narration seconds
 const MAX_FRAME = 0.1 // a hidden tab must not make the clock jump
+const AUDIO_STALL_MS = 8000
 
 export function initialState(): PlayerState {
   return {
@@ -93,6 +96,7 @@ export class LessonPlayer {
   private stopTicker: (() => void) | null = null
   private last: number | null = null
   private token = 0
+  private stalledSince: number | null = null
   private narration: Narration
   private ticker: Ticker
 
@@ -158,6 +162,7 @@ export class LessonPlayer {
     if (this.s.status !== 'running' || !this.s.paused) return
     this.s.paused = false
     this.last = null
+    this.stalledSince = null
     if (this.s.stage === 'playing' && this.s.audioActive && !this.narration.ended()) {
       void this.playAudio(this.token)
     }
@@ -224,6 +229,7 @@ export class LessonPlayer {
 
   private startStep(index: number) {
     const token = ++this.token
+    this.stalledSince = null
     const step = this.s.steps[index]
     this.narration.stop()
     Object.assign(this.s, {
@@ -305,6 +311,19 @@ export class LessonPlayer {
       changed = true
     }
     if (this.s.stage === 'playing' && this.s.schedule) {
+      if (this.s.audioActive && !this.narration.ended()) {
+        if (this.narration.currentTime() > this.s.t) this.stalledSince = null
+        else this.stalledSince ??= now
+        if (
+          this.narration.failed() ||
+          (this.stalledSince !== null && now - this.stalledSince >= AUDIO_STALL_MS)
+        ) {
+          // Continue this same schedule/clock; never restart the drawing or let
+          // late recovered audio play over the fallback or the following step.
+          this.narration.stop()
+          this.s.audioActive = false
+        }
+      }
       const audio = this.s.audioActive && !this.narration.ended()
       this.s.t = audio
         ? Math.max(this.s.t, this.narration.currentTime())

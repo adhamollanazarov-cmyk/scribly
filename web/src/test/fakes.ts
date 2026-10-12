@@ -61,6 +61,9 @@ export class FakeNarration implements Narration {
   ended() {
     return this.done
   }
+  failed() {
+    return false
+  }
   level() {
     return this.playing ? 0.6 : 0
   }

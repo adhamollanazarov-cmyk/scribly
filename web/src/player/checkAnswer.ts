@@ -31,6 +31,8 @@ export function checkAnswer(checkpoint: Checkpoint, input: number | string): Ans
   const value = typeof input === 'number' ? input : parseNumber(input)
   if (value === null) return { correct: false, expected }
   const tolerance = checkpoint.tolerance ?? DEFAULT_TOLERANCE
-  const allowed = tolerance * Math.abs(checkpoint.answer) || tolerance
+  // The contract specifies relative tolerance. Zero has no implicit absolute
+  // allowance: 0.02 C and 0.02 nC would represent very different errors.
+  const allowed = tolerance * Math.abs(checkpoint.answer)
   return { correct: Math.abs(value - checkpoint.answer) <= allowed, expected }
 }

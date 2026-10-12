@@ -38,7 +38,9 @@ export function createSseParser(onMessage: (message: SseMessage) => void) {
       }
     },
     end() {
-      if (buffer.trim()) dispatch(buffer)
+      // A trailing CR still ends a line. Only blank-line-terminated frames are
+      // complete; never turn a truncated final frame into a successful `done`.
+      if (pendingCR) this.push('\n')
       buffer = ''
       pendingCR = false
     },

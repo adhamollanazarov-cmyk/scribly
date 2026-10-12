@@ -87,6 +87,10 @@ export class BrowserNarration implements Narration {
     return this.audio.ended
   }
 
+  failed() {
+    return this.audio.error !== null
+  }
+
   level() {
     if (this.audio.paused) return 0
     if (!this.analyser) return 0.5 + 0.5 * Math.sin(performance.now() / 70)
