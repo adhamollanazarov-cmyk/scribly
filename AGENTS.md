@@ -26,7 +26,8 @@ First real user: the founder, a university student learning physics in English.
 ```
 server/      FastAPI (Python 3.12, Pydantic v2) — lesson generation, TTS, verification
 web/         Vite + React + TypeScript (strict) — board renderer, mascot, controls
-desktop/     Electron (Phase 5) — hotkey, region capture, transparent overlay
+desktop/     Electron main + preload (Phase 5) — tray, hotkey, region capture; the
+             overlay page is web/overlay.html (reuses the web player and board)
 shared/      lesson JSON Schema + mock SSE streams, generated from the server
 docs/        SPEC.md, LESSON_SCHEMA.md, STATUS.md, DECISIONS.md,
              prototype/gauss_lesson_prototype.html (look-and-feel reference)
@@ -107,6 +108,16 @@ npm test
 npm run lint                        # eslint + tsc
 npm run format:check
 npx playwright test
+# desktop — run the tray app (server above must be running; Ctrl+Shift+Space)
+cd desktop
+npm install
+npm start
+# desktop — checks
+npm test
+npm run lint                        # eslint + tsc
+npm run format:check
+npm run e2e                         # builds web + desktop, Playwright-Electron smoke test
+npm run dist                        # Windows installer in desktop/release (not a check)
 # mock mode (no API key needed)
 $env:MOCK_AI="1"                    # PowerShell;  bash: export MOCK_AI=1
 ```
