@@ -167,9 +167,13 @@ budget (about 70 properties), so the draft is lean:
 - Every field is required; `""` and `[]` replace null. Order is generation order.
 - Lesson: `title, level, steps`. Step: `id, kind, calcs, say, subtitles{uz,ru}, draw,
   checkpoints` (0 or 1 item). Calcs are **step-local** and come before `say`.
-- Calc: `id` (`c1`, `c2`, …), `expr`, `values: [{name, value}]`, `expected`, `unit`
-  (SymPy style), `unit_spoken`. `expr` may use an earlier calc id as a name; the server
-  substitutes its full-precision value.
+- Calc: `id` (`c1`, `c2`, …), `expr`, `values: [{name, value}]`, `positive`, `expected`,
+  `unit` (SymPy style), `unit_spoken`. `expr` may use an earlier calc id as a name; the
+  server substitutes its full-precision value. `positive` says what a positive result
+  means (`+x`, `-y`, `A->B`, `cw`, `down the slope`, `toward P`, …; `""` for no
+  direction; vocabulary in `server/app/lesson/direction.py`); the signed value plus
+  `positive` gives the physical direction. It stays in the draft and the ledger: the
+  lesson's `Calc` contract is unchanged.
 - Draw item: `id, type, color, label, at, num: [{k, v}], txt: [{k, v}], pts`. `type` is a
   primitive type or a template name; arguments are the contract fields by name (vector:
   `x1,y1,x2,y2`; booleans as 1/0; `free_body` repeats `name`/`angle_deg`/`length` once
@@ -183,12 +187,18 @@ budget (about 70 properties), so the draft is lean:
 unit: spoken unit in `say`, `N·m²/C` on the board, `\,\mathrm{N\cdot m^{2}/C}` in LaTeX;
 scientific notation below 0.01 or from 10⁴. A number in narration, labels, text, math or
 checkpoints that is neither a placeholder, a given number (also SI-rescaled), a declared
-calc input, a standard constant, nor a small count is a lint error.
+calc input (in `values` or written in `expr`), a standard constant, nor a small whole
+count is a lint error; halves and quarters (0.5, 0.25) pass only inside LaTeX formulas.
+A calc whose result is zero within its floating-point rounding bound (cos 90°, q − q)
+verifies against `expected` 0 and is stored as exactly 0; no value renders as "-0.00".
 
 **Checks per step** (`stepcheck.py`, `lint.py`): draft shape → ids → calcs (SymPy, grammar)
 → ledger fill → say ≤ 30 words after filling → ≤ 4 steps without a checkpoint → symbols
-in `math` introduced by an earlier `symbol` entry → no hand-written computed numbers →
-units on given numbers → contract validation, template expansion, references. A step with
+in `math` introduced by an earlier `symbol` entry (a unit macro such as `\Omega` after a
+number is a unit, not a symbol) → no hand-written computed numbers → units on given
+numbers → one sign convention per lesson (a readable `positive`, never the opposite of an
+earlier one, and drawn on the board as axes or a "+"-labelled arrow before the first
+signed calc) → contract validation, template expansion, references. A step with
 problems is regenerated **once, alone**, with the exact list (the fix may insert a
 checkpoint step before it). Still broken: a contract problem (words, checkpoint spacing,
 placeholders, validation) ends the lesson with an `error` event; a hand-written number
