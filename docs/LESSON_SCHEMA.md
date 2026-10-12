@@ -189,8 +189,13 @@ scientific notation below 0.01 or from 10⁴. A number in narration, labels, tex
 checkpoints that is neither a placeholder, a given number (also SI-rescaled), a declared
 calc input (in `values` or written in `expr`), a standard constant, nor a small whole
 count is a lint error; halves and quarters (0.5, 0.25) pass only inside LaTeX formulas.
-A calc whose result is zero within its floating-point rounding bound (cos 90°, q − q)
-verifies against `expected` 0 and is stored as exactly 0; no value renders as "-0.00".
+An ambiguous result near its floating-point rounding bound is rechecked at 800 decimal
+digits, then checked for stability at 1000 digits, with a bounded arithmetic interpreter.
+The bound selects a recheck; it does not authorize zero snapping or a tolerance match.
+Unsafe intermediate underflow or unstable rechecks fail verification. The existing
+expected-relative comparison still applies. True zeros such as cos 90° and q − q
+store as 0; uncertain differences in rounded inputs remain nonzero and may need
+repair. No value renders as "-0.00".
 
 **Checks per step** (`stepcheck.py`, `lint.py`): draft shape → ids → calcs (SymPy, grammar)
 → ledger fill → say ≤ 30 words after filling → ≤ 4 steps without a checkpoint → symbols

@@ -1,0 +1,815 @@
+{
+  "method": "Independent SymPy formulas, exact decimal inputs, 50-digit evaluation, 1e-12 relative agreement; no API",
+  "problems": [
+    {
+      "problem": "hard-kirchhoff-opposed",
+      "answers": [
+        {
+          "name": "I1",
+          "formula": "-12510/3311",
+          "signed_result": -3.7783147085472666,
+          "unit": "A",
+          "physical_direction": "B->A",
+          "bank_value": 3.778314708547267,
+          "bank_direction": "B->A",
+          "matches": true
+        },
+        {
+          "name": "I2",
+          "formula": "12840/3311",
+          "signed_result": 3.8779824826336453,
+          "unit": "A",
+          "physical_direction": "A->B",
+          "bank_value": 3.877982482633645,
+          "bank_direction": "A->B",
+          "matches": true
+        },
+        {
+          "name": "I3",
+          "formula": "-30/301",
+          "signed_result": -0.09966777408637874,
+          "unit": "A",
+          "physical_direction": "B->A",
+          "bank_value": 0.09966777408637865,
+          "bank_direction": "B->A",
+          "matches": true
+        }
+      ],
+      "matches": true
+    },
+    {
+      "problem": "hard-kirchhoff-charging",
+      "answers": [
+        {
+          "name": "I1",
+          "formula": "-1330/447",
+          "signed_result": -2.975391498881432,
+          "unit": "A",
+          "physical_direction": "B->A",
+          "bank_value": 2.9753914988814296,
+          "bank_direction": "B->A",
+          "matches": true
+        },
+        {
+          "name": "I2",
+          "formula": "355/447",
+          "signed_result": 0.7941834451901566,
+          "unit": "A",
+          "physical_direction": "A->B",
+          "bank_value": 0.7941834451901582,
+          "bank_direction": "A->B",
+          "matches": true
+        },
+        {
+          "name": "I_load",
+          "formula": "325/149",
+          "signed_result": 2.1812080536912752,
+          "unit": "A",
+          "physical_direction": "A->B",
+          "bank_value": 2.1812080536912757,
+          "bank_direction": "A->B",
+          "matches": true
+        },
+        {
+          "name": "V_AB",
+          "formula": "1820/149",
+          "signed_result": 12.21476510067114,
+          "unit": "V",
+          "physical_direction": "",
+          "bank_value": 12.214765100671142,
+          "bank_direction": "",
+          "matches": true
+        },
+        {
+          "name": "P2",
+          "formula": "-8165/894",
+          "signed_result": -9.1331096196868,
+          "unit": "W",
+          "physical_direction": "",
+          "bank_value": -9.133109619686818,
+          "bank_direction": "",
+          "matches": true
+        }
+      ],
+      "matches": true
+    },
+    {
+      "problem": "hard-kirchhoff-potential",
+      "answers": [
+        {
+          "name": "V_AB",
+          "formula": "-117/83",
+          "signed_result": -1.4096385542168675,
+          "unit": "V",
+          "physical_direction": "",
+          "bank_value": -1.4096385542168672,
+          "bank_direction": "",
+          "matches": true
+        },
+        {
+          "name": "I3",
+          "formula": "-30/83",
+          "signed_result": -0.3614457831325301,
+          "unit": "A",
+          "physical_direction": "B->A",
+          "bank_value": 0.36144578313253006,
+          "bank_direction": "B->A",
+          "matches": true
+        },
+        {
+          "name": "I2",
+          "formula": "-545/249",
+          "signed_result": -2.1887550200803214,
+          "unit": "A",
+          "physical_direction": "B->A",
+          "bank_value": 2.188755020080321,
+          "bank_direction": "B->A",
+          "matches": true
+        },
+        {
+          "name": "P3",
+          "formula": "3510/6889",
+          "signed_result": 0.5095079111627232,
+          "unit": "W",
+          "physical_direction": "",
+          "bank_value": 0.5095079111627231,
+          "bank_direction": "",
+          "matches": true
+        }
+      ],
+      "matches": true
+    },
+    {
+      "problem": "hard-kirchhoff-power-balance",
+      "answers": [
+        {
+          "name": "I1",
+          "formula": "-42/19",
+          "signed_result": -2.210526315789474,
+          "unit": "A",
+          "physical_direction": "B->A",
+          "bank_value": 2.210526315789474,
+          "bank_direction": "B->A",
+          "matches": true
+        },
+        {
+          "name": "I2",
+          "formula": "-12/19",
+          "signed_result": -0.631578947368421,
+          "unit": "A",
+          "physical_direction": "B->A",
+          "bank_value": 0.6315789473684212,
+          "bank_direction": "B->A",
+          "matches": true
+        },
+        {
+          "name": "I3",
+          "formula": "54/19",
+          "signed_result": 2.8421052631578947,
+          "unit": "A",
+          "physical_direction": "A->B",
+          "bank_value": 2.8421052631578947,
+          "bank_direction": "A->B",
+          "matches": true
+        },
+        {
+          "name": "P1",
+          "formula": "378/19",
+          "signed_result": 19.894736842105264,
+          "unit": "W",
+          "physical_direction": "",
+          "bank_value": 19.894736842105264,
+          "bank_direction": "",
+          "matches": true
+        },
+        {
+          "name": "P2",
+          "formula": "72/19",
+          "signed_result": 3.789473684210526,
+          "unit": "W",
+          "physical_direction": "",
+          "bank_value": 3.7894736842105274,
+          "bank_direction": "",
+          "matches": true
+        },
+        {
+          "name": "P_total",
+          "formula": "450/19",
+          "signed_result": 23.68421052631579,
+          "unit": "W",
+          "physical_direction": "",
+          "bank_value": 23.68421052631579,
+          "bank_direction": "",
+          "matches": true
+        }
+      ],
+      "matches": true
+    },
+    {
+      "problem": "hard-vec-coulomb-2d",
+      "answers": [
+        {
+          "name": "Fx",
+          "formula": "9375/(8854*pi)",
+          "signed_result": 0.33704034142455813,
+          "unit": "N",
+          "physical_direction": "+x",
+          "bank_value": 0.3370403414245581,
+          "bank_direction": "+x",
+          "matches": true
+        },
+        {
+          "name": "Fy",
+          "formula": "-12500/(13281*pi)",
+          "signed_result": -0.2995914145996072,
+          "unit": "N",
+          "physical_direction": "-y",
+          "bank_value": 0.29959141459960725,
+          "bank_direction": "-y",
+          "matches": true
+        },
+        {
+          "name": "F",
+          "formula": "3125*sqrt(145)/(26562*pi)",
+          "signed_result": 0.45094479423691813,
+          "unit": "N",
+          "physical_direction": "",
+          "bank_value": 0.45094479423691813,
+          "bank_direction": "",
+          "matches": true
+        }
+      ],
+      "matches": true
+    },
+    {
+      "problem": "hard-vec-field-2d",
+      "answers": [
+        {
+          "name": "Ex",
+          "formula": "50000000*sqrt(13)/(57551*pi)",
+          "signed_result": 997.1004987947765,
+          "unit": "N/C",
+          "physical_direction": "+x",
+          "bank_value": 997.1004987947772,
+          "bank_direction": "+x",
+          "matches": true
+        },
+        {
+          "name": "Ey",
+          "formula": "225000000*sqrt(13)/(748163*pi)",
+          "signed_result": 345.15017265973034,
+          "unit": "N/C",
+          "physical_direction": "+y",
+          "bank_value": 345.1501726597305,
+          "bank_direction": "+y",
+          "matches": true
+        },
+        {
+          "name": "E",
+          "formula": "25000000*sqrt(9841)/(748163*pi)",
+          "signed_result": 1055.1483527844953,
+          "unit": "N/C",
+          "physical_direction": "",
+          "bank_value": 1055.148352784496,
+          "bank_direction": "",
+          "matches": true
+        }
+      ],
+      "matches": true
+    },
+    {
+      "problem": "hard-vec-displacement",
+      "answers": [
+        {
+          "name": "Rx",
+          "formula": "-19*sin(2*pi/9)/4 + 16*cos(5*pi/36)/5",
+          "signed_result": -0.15305622749378192,
+          "unit": "km",
+          "physical_direction": "-x",
+          "bank_value": 0.15305622749378145,
+          "bank_direction": "-x",
+          "matches": true
+        },
+        {
+          "name": "Ry",
+          "formula": "-8/5 + 16*sin(5*pi/36)/5 + 19*cos(2*pi/9)/4",
+          "signed_result": 3.3910895423853837,
+          "unit": "km",
+          "physical_direction": "+y",
+          "bank_value": 3.391089542385384,
+          "bank_direction": "+y",
+          "matches": true
+        },
+        {
+          "name": "R",
+          "formula": "sqrt((-19*sin(2*pi/9)/4 + 16*cos(5*pi/36)/5)**2 + (-8/5 + 16*sin(5*pi/36)/5 + 19*cos(2*pi/9)/4)**2)",
+          "signed_result": 3.394541867947741,
+          "unit": "km",
+          "physical_direction": "",
+          "bank_value": 3.3945418679477415,
+          "bank_direction": "",
+          "matches": true
+        }
+      ],
+      "matches": true
+    },
+    {
+      "problem": "hard-vec-river",
+      "answers": [
+        {
+          "name": "vx",
+          "formula": "9/5 - 7*cos(13*pi/36)/2",
+          "signed_result": 0.32083608390755197,
+          "unit": "m/s",
+          "physical_direction": "+x",
+          "bank_value": 0.32083608390755236,
+          "bank_direction": "+x",
+          "matches": true
+        },
+        {
+          "name": "vy",
+          "formula": "7*sin(13*pi/36)/2",
+          "signed_result": 3.1720772546282747,
+          "unit": "m/s",
+          "physical_direction": "+y",
+          "bank_value": 3.172077254628275,
+          "bank_direction": "+y",
+          "matches": true
+        },
+        {
+          "name": "speed",
+          "formula": "sqrt((9/5 - 7*cos(13*pi/36)/2)**2 + 49*sin(13*pi/36)**2/4)",
+          "signed_result": 3.1882612662809158,
+          "unit": "m/s",
+          "physical_direction": "",
+          "bank_value": 3.1882612662809158,
+          "bank_direction": "",
+          "matches": true
+        },
+        {
+          "name": "t",
+          "formula": "170/(7*sin(13*pi/36))",
+          "signed_result": 26.796320889089085,
+          "unit": "s",
+          "physical_direction": "",
+          "bank_value": 26.796320889089085,
+          "bank_direction": "",
+          "matches": true
+        },
+        {
+          "name": "drift",
+          "formula": "170*(9/5 - 7*cos(13*pi/36)/2)/(7*sin(13*pi/36))",
+          "signed_result": 8.597226657185473,
+          "unit": "m",
+          "physical_direction": "+x",
+          "bank_value": 8.597226657185484,
+          "bank_direction": "+x",
+          "matches": true
+        }
+      ],
+      "matches": true
+    },
+    {
+      "problem": "hard-kin-cliff",
+      "answers": [
+        {
+          "name": "t",
+          "formula": "1450*sin(8*pi/45)/981 + 100*sqrt(841*sin(8*pi/45)**2/4 + 22563/50)/981",
+          "signed_result": 3.086001767902933,
+          "unit": "s",
+          "physical_direction": "",
+          "bank_value": 3.086001767902933,
+          "bank_direction": "",
+          "matches": true
+        },
+        {
+          "name": "vx",
+          "formula": "29*cos(8*pi/45)/2",
+          "signed_result": 12.296697394268177,
+          "unit": "m/s",
+          "physical_direction": "+x",
+          "bank_value": 12.296697394268177,
+          "bank_direction": "+x",
+          "matches": true
+        },
+        {
+          "name": "vy",
+          "formula": "-sqrt(841*sin(8*pi/45)**2/4 + 22563/50)",
+          "signed_result": -22.589848011746298,
+          "unit": "m/s",
+          "physical_direction": "-y",
+          "bank_value": 22.5898480117463,
+          "bank_direction": "-y",
+          "matches": true
+        },
+        {
+          "name": "speed",
+          "formula": "sqrt(841*sin(8*pi/45)**2/4 + 841*cos(8*pi/45)**2/4 + 22563/50)",
+          "signed_result": 25.719836702436506,
+          "unit": "m/s",
+          "physical_direction": "",
+          "bank_value": 25.71983670243651,
+          "bank_direction": "",
+          "matches": true
+        },
+        {
+          "name": "range",
+          "formula": "29*(1450*sin(8*pi/45)/981 + 100*sqrt(841*sin(8*pi/45)**2/4 + 22563/50)/981)*cos(8*pi/45)/2",
+          "signed_result": 37.94762989807898,
+          "unit": "m",
+          "physical_direction": "",
+          "bank_value": 37.94762989807898,
+          "bank_direction": "",
+          "matches": true
+        }
+      ],
+      "matches": true
+    },
+    {
+      "problem": "hard-energy-incline-up",
+      "answers": [
+        {
+          "name": "a",
+          "formula": "-981*sin(7*pi/45)/100 - 30411*cos(7*pi/45)/10000",
+          "signed_result": -7.290647955572871,
+          "unit": "m/s**2",
+          "physical_direction": "down the slope",
+          "bank_value": 7.290647955572872,
+          "bank_direction": "down the slope",
+          "matches": true
+        },
+        {
+          "name": "d",
+          "formula": "-1024/(25*(-981*sin(7*pi/45)/50 - 30411*cos(7*pi/45)/5000))",
+          "signed_result": 2.8090781676470016,
+          "unit": "m",
+          "physical_direction": "",
+          "bank_value": 2.809078167647002,
+          "bank_direction": "",
+          "matches": true
+        },
+        {
+          "name": "W_friction",
+          "formula": "16543584*cos(7*pi/45)/(78125*(-981*sin(7*pi/45)/50 - 30411*cos(7*pi/45)/5000))",
+          "signed_result": -12.822667293504614,
+          "unit": "J",
+          "physical_direction": "",
+          "bank_value": -12.822667293504617,
+          "bank_direction": "",
+          "matches": true
+        }
+      ],
+      "matches": true
+    },
+    {
+      "problem": "hard-energy-spring-friction",
+      "answers": [
+        {
+          "name": "U_spring",
+          "formula": "378/125",
+          "signed_result": 3.024,
+          "unit": "J",
+          "physical_direction": "",
+          "bank_value": 3.024,
+          "bank_direction": "",
+          "matches": true
+        },
+        {
+          "name": "v",
+          "formula": "9*sqrt(1471163)/4250",
+          "signed_result": 2.5685260593669397,
+          "unit": "m/s",
+          "physical_direction": "",
+          "bank_value": 2.5685260593669397,
+          "bank_direction": "",
+          "matches": true
+        },
+        {
+          "name": "s",
+          "formula": "778851/509575",
+          "signed_result": 1.5284325172938233,
+          "unit": "m",
+          "physical_direction": "",
+          "bank_value": 1.5284325172938236,
+          "bank_direction": "",
+          "matches": true
+        },
+        {
+          "name": "W_friction",
+          "formula": "-378/125",
+          "signed_result": -3.024,
+          "unit": "J",
+          "physical_direction": "",
+          "bank_value": -3.024,
+          "bank_direction": "",
+          "matches": true
+        }
+      ],
+      "matches": true
+    },
+    {
+      "problem": "hard-energy-coaster",
+      "answers": [
+        {
+          "name": "W_friction",
+          "formula": "-53704/5",
+          "signed_result": -10740.8,
+          "unit": "J",
+          "physical_direction": "",
+          "bank_value": -10740.8,
+          "bank_direction": "",
+          "matches": true
+        },
+        {
+          "name": "f",
+          "formula": "26852/115",
+          "signed_result": 233.49565217391304,
+          "unit": "N",
+          "physical_direction": "",
+          "bank_value": 233.49565217391327,
+          "bank_direction": "",
+          "matches": true
+        }
+      ],
+      "matches": true
+    },
+    {
+      "problem": "hard-energy-table-pulley",
+      "answers": [
+        {
+          "name": "v",
+          "formula": "3*sqrt(1993065)/2300",
+          "signed_result": 1.8414254875196434,
+          "unit": "m/s",
+          "physical_direction": "",
+          "bank_value": 1.8414254875196436,
+          "bank_direction": "",
+          "matches": true
+        },
+        {
+          "name": "a",
+          "formula": "51993/23000",
+          "signed_result": 2.2605652173913042,
+          "unit": "m/s**2",
+          "physical_direction": "",
+          "bank_value": 2.260565217391305,
+          "bank_direction": "",
+          "matches": true
+        },
+        {
+          "name": "T",
+          "formula": "173637/14375",
+          "signed_result": 12.079095652173914,
+          "unit": "N",
+          "physical_direction": "",
+          "bank_value": 12.079095652173914,
+          "bank_direction": "",
+          "matches": true
+        }
+      ],
+      "matches": true
+    },
+    {
+      "problem": "hard-energy-skier",
+      "answers": [
+        {
+          "name": "L",
+          "formula": "12/sin(7*pi/36)",
+          "signed_result": 20.921361547453177,
+          "unit": "m",
+          "physical_direction": "",
+          "bank_value": 20.921361547453177,
+          "bank_direction": "",
+          "matches": true
+        },
+        {
+          "name": "v",
+          "formula": "sqrt(-11772*cos(7*pi/36)/(625*sin(7*pi/36)) + 5886/25)",
+          "signed_result": 14.44093302606902,
+          "unit": "m/s",
+          "physical_direction": "",
+          "bank_value": 14.440933026069018,
+          "bank_direction": "",
+          "matches": true
+        },
+        {
+          "name": "s",
+          "formula": "-12*cos(7*pi/36)/sin(7*pi/36) + 150",
+          "signed_result": 132.86222391909462,
+          "unit": "m",
+          "physical_direction": "",
+          "bank_value": 132.86222391909462,
+          "bank_direction": "",
+          "matches": true
+        }
+      ],
+      "matches": true
+    },
+    {
+      "problem": "hard-charges-zero-field",
+      "answers": [
+        {
+          "name": "E_mid",
+          "formula": "8400000000/(4427*pi)",
+          "signed_result": 603976.2918328082,
+          "unit": "N/C",
+          "physical_direction": "+x",
+          "bank_value": 603976.2918328083,
+          "bank_direction": "+x",
+          "matches": true
+        },
+        {
+          "name": "x0",
+          "formula": "1/(2*(1 - sqrt(10)/5))",
+          "signed_result": 1.3603796100280632,
+          "unit": "m",
+          "physical_direction": "",
+          "bank_value": 1.3603796100280632,
+          "bank_direction": "",
+          "matches": true
+        }
+      ],
+      "matches": true
+    },
+    {
+      "problem": "hard-charges-potential",
+      "answers": [
+        {
+          "name": "V0",
+          "formula": "-625000/(13281*pi) + 781250*sqrt(2)/(4427*pi)",
+          "signed_result": 64.4615995882644,
+          "unit": "V",
+          "physical_direction": "",
+          "bank_value": 64.46159958826443,
+          "bank_direction": "",
+          "matches": true
+        },
+        {
+          "name": "U",
+          "formula": "-3/(2213500*pi) - 3*sqrt(10)/(14166400*pi) + sqrt(29)/(10270640*pi)",
+          "signed_result": -4.776764783288688e-07,
+          "unit": "J",
+          "physical_direction": "",
+          "bank_value": -4.776764783288689e-07,
+          "bank_direction": "",
+          "matches": true
+        },
+        {
+          "name": "W",
+          "formula": "-3*sqrt(2)/(11333120*pi) + 1/(14166400*pi)",
+          "signed_result": -9.66923993823966e-08,
+          "unit": "J",
+          "physical_direction": "",
+          "bank_value": -9.669239938239665e-08,
+          "bank_direction": "",
+          "matches": true
+        }
+      ],
+      "matches": true
+    },
+    {
+      "problem": "hard-charges-line-force",
+      "answers": [
+        {
+          "name": "F21",
+          "formula": "-1/(141664*pi)",
+          "signed_result": -2.246935609497054e-06,
+          "unit": "N",
+          "physical_direction": "-x",
+          "bank_value": 2.2469356094970545e-06,
+          "bank_direction": "-x",
+          "matches": true
+        },
+        {
+          "name": "F23",
+          "formula": "1/(531240*pi)",
+          "signed_result": 5.991828291992144e-07,
+          "unit": "N",
+          "physical_direction": "+x",
+          "bank_value": 5.991828291992146e-07,
+          "bank_direction": "+x",
+          "matches": true
+        },
+        {
+          "name": "F_net",
+          "formula": "-11/(2124960*pi)",
+          "signed_result": -1.6477527802978396e-06,
+          "unit": "N",
+          "physical_direction": "-x",
+          "bank_value": 1.6477527802978396e-06,
+          "bank_direction": "-x",
+          "matches": true
+        }
+      ],
+      "matches": true
+    },
+    {
+      "problem": "hard-charges-electron-plates",
+      "answers": [
+        {
+          "name": "E",
+          "formula": "125000/9",
+          "signed_result": 13888.888888888889,
+          "unit": "N/C",
+          "physical_direction": "",
+          "bank_value": 13888.88888888889,
+          "bank_direction": "",
+          "matches": true
+        },
+        {
+          "name": "F",
+          "formula": "-89/40000000000000000",
+          "signed_result": -2.225e-15,
+          "unit": "N",
+          "physical_direction": "-y",
+          "bank_value": 2.225e-15,
+          "bank_direction": "-y",
+          "matches": true
+        },
+        {
+          "name": "v",
+          "formula": "30000000*sqrt(8107010)/9109",
+          "signed_result": 9377366.865566818,
+          "unit": "m/s",
+          "physical_direction": "",
+          "bank_value": 9377366.865566818,
+          "bank_direction": "",
+          "matches": true
+        }
+      ],
+      "matches": true
+    },
+    {
+      "problem": "hard-charges-equilibrium",
+      "answers": [
+        {
+          "name": "x_eq",
+          "formula": "3*sqrt(2)/(10*(sqrt(2) + sqrt(5)))",
+          "signed_result": 0.11622776601683793,
+          "unit": "m",
+          "physical_direction": "",
+          "bank_value": 0.11622776601683792,
+          "bank_direction": "",
+          "matches": true
+        },
+        {
+          "name": "F",
+          "formula": "-9/(442700*pi)",
+          "signed_result": -6.471174555351515e-06,
+          "unit": "N",
+          "physical_direction": "-x",
+          "bank_value": 6.471174555351516e-06,
+          "bank_direction": "-x",
+          "matches": true
+        }
+      ],
+      "matches": true
+    },
+    {
+      "problem": "hard-mech-elastic-collision",
+      "answers": [
+        {
+          "name": "v1",
+          "formula": "-67/25",
+          "signed_result": -2.68,
+          "unit": "m/s",
+          "physical_direction": "-x",
+          "bank_value": 2.68,
+          "bank_direction": "-x",
+          "matches": true
+        },
+        {
+          "name": "v2",
+          "formula": "111/50",
+          "signed_result": 2.22,
+          "unit": "m/s",
+          "physical_direction": "+x",
+          "bank_value": 2.22,
+          "bank_direction": "+x",
+          "matches": true
+        },
+        {
+          "name": "J2",
+          "formula": "1029/125",
+          "signed_result": 8.232,
+          "unit": "N*s",
+          "physical_direction": "+x",
+          "bank_value": 8.232,
+          "bank_direction": "+x",
+          "matches": true
+        },
+        {
+          "name": "KE",
+          "formula": "4081/400",
+          "signed_result": 10.2025,
+          "unit": "J",
+          "physical_direction": "",
+          "bank_value": 10.2025,
+          "bank_direction": "",
+          "matches": true
+        }
+      ],
+      "matches": true
+    }
+  ]
+}

@@ -2,6 +2,12 @@
 
 Update this file at the end of every task (newest entry on top, 3–8 lines).
 
+## 2026-10-12 — codex — Phase 1b.2 review (`codex/phase1b2-review`)
+**Done:** Reviewed `claude/phase1b2` (`323f3b7`) against `main` (`33b1886`). Fixed high: zero-tolerance bound falsely accepted wrong answers and erased real residuals; ambiguous calculations now use bounded higher-precision/stability rechecks. Independently recomputed all 20 hard problems / 69 answers; targets agree (battery-power wording needs clarification). Evidence and severity list: `docs/reviews/2026-10-12-phase1b2.md` and companion JSON.
+**Checks:** PowerShell 5.1, mock/fake providers: 492 pytest (30 added), Ruff lint/format, mypy app, unchanged regenerated schema; 5 Vitest, ESLint+tsc, Prettier and 1 Chromium smoke test passed. No real API/TTS calls; declared already-locked mpmath directly, with no version changes.
+**Found issues:** Mediums remain: empty direction metadata, unrelated/late convention drawings, expression-literal provenance exemptions, unit/symbol ambiguity, invalid expected directions failing open, battery-power wording and unchecked presentation directions. Low: four script mypy errors (one PyYAML stub + three `reasons` typing errors), nonfinite direction helper inputs. Existing Phase 2 playback gap remains.
+**Next:** Human merges; follow up on medium/low findings. Require `positive` for explicitly typed direction-bearing components/oriented quantities (including zero), while scalars/magnitudes retain empty direction; proposal only, not applied here.
+
 ## 2026-10-12 — claude — Phase 1b.2 signs, lint, zero tolerance, eval bank v1 (`claude/phase1b2`)
 **Done:** One sign convention per lesson. Calc drafts carry `positive` (`+x`, `A->B`, `down the slope`…) in the draft and ledger only; the lesson contract is unchanged. A new `sign` lint rejects unreadable, opposite or undrawn conventions, and the prompt has a sign-convention section. Lint: `\Omega`/`\mu` after a number are units; 0.5/0.25 exempt only inside LaTeX; numbers in calc `expr` count as inputs. Verify: absolute tolerance from a rounding-error bound, so true zeros store as 0; no "-0.00". Eval grading v3: `direction` on expected numbers, so circ-kirchhoff is checked automatically. Bank v1 adds +20 `hard` problems (50 total).
 **Checks:** PowerShell 5.1, MOCK_AI=1: 462 pytest (59 new), ruff, format, mypy app; shared schema unchanged. Web (bash): 5 Vitest, ESLint+tsc, Prettier, 1 Chromium Playwright test passed (web untouched).
