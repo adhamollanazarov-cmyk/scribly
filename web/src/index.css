@@ -172,6 +172,14 @@ body {
   opacity: 0;
   pointer-events: none;
 }
+/* The radio itself is invisible: show keyboard focus on its label (inset, the group clips). */
+.segmented label:has(input:focus-visible) {
+  outline: 2px solid var(--primary);
+  outline-offset: -4px;
+}
+.segmented label.on:has(input:focus-visible) {
+  outline-color: var(--primary-text);
+}
 .form-row {
   display: flex;
   gap: 8px;
@@ -429,4 +437,17 @@ body {
 }
 .step-list .placeholder {
   cursor: default;
+}
+
+/* Read by screen readers, not shown (the board transcript). */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }

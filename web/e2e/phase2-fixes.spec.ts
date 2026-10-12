@@ -177,3 +177,21 @@ test('a server-sampled bare plot and its referenced highlight play end to end', 
   expect(box[2]).toBeGreaterThan(790)
   expect(box[3]).toBeGreaterThan(490)
 })
+
+test('keyboard focus on the topic/problem choice is visible on its label', async ({ page }) => {
+  await page.goto('/')
+  const label = (name: string) =>
+    page.locator('.segmented label', { has: page.getByRole('radio', { name }) })
+  const outline = (name: string) => label(name).evaluate((el) => getComputedStyle(el).outlineStyle)
+
+  await expect(page.getByRole('radio', { name: 'Topic' })).toBeChecked()
+  await page.locator('#lesson-text').focus()
+  await page.keyboard.press('Shift+Tab')
+  await expect(page.getByRole('radio', { name: 'Topic' })).toBeFocused()
+  expect(await outline('Topic')).toBe('solid')
+
+  await page.keyboard.press('ArrowRight')
+  await expect(page.getByRole('radio', { name: 'Problem' })).toBeChecked()
+  expect(await outline('Problem')).toBe('solid')
+  expect(await outline('Topic')).toBe('none')
+})

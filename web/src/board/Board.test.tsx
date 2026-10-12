@@ -85,12 +85,42 @@ describe('Board', () => {
         .filter((id) => !skipped.includes(id))
         .sort(),
     )
-    expect(container.querySelectorAll('.katex').length).toBe(2) // math + symbol
+    const svg = container.querySelector('svg.board')!
+    expect(svg.querySelectorAll('.katex').length).toBe(2) // math + symbol
     expect(container.querySelector('[data-prim="vc"] text')?.textContent).toBe('F = 2 N')
     expect(container.querySelector('[data-prim="mw"] text')?.textContent).toContain('100 ohm')
     expect(container.querySelector('[data-prim="vc"] path')?.getAttribute('stroke')).toBe(
       'var(--c-force)',
     )
+  })
+
+  it('describes the board in a transcript linked to it: words, formulas and labels', () => {
+    const { container } = render(<Board state={finished([step(EVERY_TYPE)])} title="t" />)
+    const transcript = container.querySelector('section.sr-only')!
+    expect(container.querySelector('svg.board')!.getAttribute('aria-details')).toBe(transcript.id)
+    expect(transcript.getAttribute('aria-label')).toBe('Board transcript')
+    expect(transcript.querySelectorAll('math')).toHaveLength(2) // formula + symbol, as MathML
+    const text = transcript.textContent!
+    for (const words of [
+      'Step 1. x',
+      'flux = Φ',
+      'electric flux [N·m²/C]',
+      'F = 2 N',
+      'surface',
+      'R1',
+      'Axes (horizontal, vertical): t (s), v (m/s)',
+      'Marked wrong: R1 is 100 ohm, not 10',
+    ])
+      expect(text).toContain(words)
+  })
+
+  it('lists only the steps already on the board', () => {
+    const steps = stepsOf('gauss_law')
+    const state: PlayerState = { ...playing(steps, 0), index: 1 }
+    const { container } = render(<Board state={state} title="t" />)
+    const listed = [...container.querySelectorAll('section.sr-only li[data-step]')]
+    expect(listed.map((li) => li.getAttribute('data-step'))).toEqual([steps[0].id, steps[1].id])
+    expect(listed[1].textContent).toContain(steps[1].say)
   })
 
   it('draws a primitive partly, then fully', () => {

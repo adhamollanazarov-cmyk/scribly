@@ -1,5 +1,8 @@
 {
   "board.loading": "Doska yuklanmoqda…",
+  "transcript.title": "Doska matni",
+  "transcript.axes": "O'qlar (gorizontal, vertikal):",
+  "transcript.wrong": "Xato deb belgilandi:",
   "warning.audio": "Bu bosqich uchun ovoz mavjud emas. Chizma davom etayotganda matnni kuzating.",
   "app.title": "Scribbly",
   "app.tagline": "Tushuntirib, chizib beradigan kichkina fizika ustozingiz.",
