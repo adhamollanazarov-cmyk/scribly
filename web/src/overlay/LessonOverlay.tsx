@@ -34,7 +34,7 @@ import { useClickThrough } from './useClickThrough'
 const DEMO_HEADER = 'X-Scribbly-Demo'
 const DOCK_HEIGHT = 210 // demo notice + two EN lines + two second-language lines + pill
 const MASCOT_SCALE = 1.4
-const MASCOT_HEADROOM = 110 // window px above the pencil tip the body needs
+const MASCOT_HEADROOM = 130 // window px above the marker tip the body needs
 
 const TIMED: Partial<Record<Motion, [number, 'arrived' | 'gone']>> = {
   appear: [APPEAR_MS, 'arrived'],

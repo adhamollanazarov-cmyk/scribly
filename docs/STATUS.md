@@ -2,6 +2,13 @@
 
 Update this file at the end of every task (newest entry on top, 3–8 lines).
 
+## 2026-10-12 — claude — New Scribbly art (`claude/mascot`)
+
+**Done:** Recreated `docs/brand/scribbly-sheet.png` as a layered SVG in `web/src/mascot/Scribbly.tsx` (legs, body, pencil-tip wood/graphite, eyes, eyelids, cheeks, mouth shapes, free arm, marker arm, marker, effects) and replaced the purple character (no flag). New `mascot/pose.ts` maps every state to a pose; the existing state machines are untouched. Blinks in idle, lip-syncs while narrating, marker tip sits on the pen while drawing/pointing, marker always in the same hand, soft `feDropShadow` for white pages. Overlay headroom 110 → 130 px for the taller art. `docs/brand/README.md` updated (pose table, rules, contract).
+**Checks:** MOCK_AI=1, no API calls: 714 pytest; ruff lint/format; mypy app (29) + scripts (5); schema/streams not regenerated (no server change). Web: 210 Vitest (+31: 11 state→pose cases, mouth, marker hand/tip, drop shadow, blink); ESLint+tsc; Prettier; Playwright 8/8 with `--workers=1` (incl. `gauss-lesson.spec.ts`). Desktop: 13 Vitest, ESLint+tsc, Prettier, Electron smoke 1/1. All 11 poses rendered in Chromium and compared with the sheet.
+**Found issues:** low — `docs/DECISIONS.md` still contains unresolved merge markers (`<<<<<<< HEAD` … `>>>>>>> claude/phase5`) and `docs/STATUS.md` has stray `HEAD` / `claude/phase5` lines from the library + Phase 5 merges. low — tray/app icons (`desktop/scripts/make_icons.py`) still draw the purple character. low — AGENTS.md §5 and `docs/SPEC.md` still describe Scribbly as "round purple, round glasses".
+**Next:** Antigravity QA of the new poses in the overlay and on the board (light and dark); redraw the icons from the sheet.
+
 HEAD
 
 ## 2026-10-12 — codex — Offline physics library (`codex/library`)

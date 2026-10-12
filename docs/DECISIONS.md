@@ -4,6 +4,7 @@ One entry per non-obvious decision or new dependency. Newest on top.
 
 | Date | Decision | Why | Agent |
 |---|---|---|---|
+| 2026-10-12 | New Scribbly art (cream pencil-drop body, teal limbs, glowing marker; `docs/brand/scribbly-sheet.png`) replaces the purple character with no flag. Layered SVG in `Scribbly.tsx`; state → pose is pure data in `mascot/pose.ts`. The marker is always in the left-of-screen hand: its tip sits exactly on the anchor (pen) only in `drawing`/`pointing`, other poses hold it up. `x`/`y` still mean the pen position, so board and overlay code is unchanged apart from the overlay headroom (110 → 130 px) | Founder asked for a full replace. Keeping the anchor contract means no movement/layout logic changes; a raised marker in non-drawing poses matches the sheet. Pose data is testable without a DOM. No new dependency | claude |
 <<<<<<< HEAD
 | 2026-10-12 | Offline library stores Source + existing LessonDraft fields and compiles through `check_step`, rejecting every violation; lookup returns a fresh Lesson with the example's own givens. | Preserves placeholders and direction/frame metadata for repeatable teaching/sign lint and verification. Topic matching does not solve arbitrary input numbers. No dependency, contract, route or mock-pipeline change. | codex |
 =======

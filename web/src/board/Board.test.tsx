@@ -1,5 +1,5 @@
-import { render } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import { act, render } from '@testing-library/react'
+import { describe, expect, it, vi } from 'vitest'
 import type { Primitive, Step } from '../lesson/types'
 import { MASCOT_STATES } from '../mascot/states'
 import { Scribbly } from '../mascot/Scribbly'
@@ -149,7 +149,7 @@ describe('Board', () => {
     const mascot = drawing.getByTestId('mascot')
     expect(mascot.getAttribute('data-state')).toBe('drawing')
     expect(mascot.style.transform).toContain('translate(350px, 500px)')
-    expect(mascot.querySelector('g[transform^="translate(0"]')).toBeNull() // body above the pen
+    expect(mascot.querySelector('[data-below="true"]')).toBeNull() // body above the pen
     drawing.unmount()
 
     const done = render(<Board state={finished(steps)} title="t" />)
@@ -159,7 +159,7 @@ describe('Board', () => {
   it('puts the mascot body below the pen near the top edge, so it stays visible', () => {
     const steps = [step([{ id: 'ln', type: 'line', x1: 0, y1: 60, x2: 700, y2: 60 }])]
     const { getByTestId } = render(<Board state={playing(steps, 0.5)} title="t" />)
-    expect(getByTestId('mascot').querySelector('g[transform^="translate(0"]')).not.toBeNull()
+    expect(getByTestId('mascot').querySelector('[data-below="true"]')).not.toBeNull()
   })
 })
 
@@ -180,11 +180,81 @@ describe('Scribbly', () => {
           <Scribbly state="talking" x={0} y={0} mouth={level} still />
         </svg>,
       )
-      const filled = container.querySelector('path[fill="currentColor"]')
+      const shape = container.querySelector('[data-layer="mouth"]')?.getAttribute('data-mouth')
       unmount()
-      return filled
+      return shape
     }
-    expect(mouth(0)).toBeNull()
-    expect(mouth(0.8)).not.toBeNull()
+    expect(mouth(0)).toBe('smile')
+    expect(mouth(0.8)).toBe('open')
+  })
+
+  it.each(MASCOT_STATES)('holds one marker in the same hand when %s', (state) => {
+    const { container } = render(
+      <svg>
+        <Scribbly state={state} x={0} y={0} still />
+      </svg>,
+    )
+    const markers = container.querySelectorAll('[data-layer="marker"]')
+    expect(markers).toHaveLength(1)
+    expect(markers[0].closest('[data-layer="arm-marker"]')?.getAttribute('data-hand')).toBe('left')
+  })
+
+  it('keeps the marker tip on the pen while drawing', () => {
+    const { container } = render(
+      <svg>
+        <Scribbly state="drawing" x={10} y={20} still />
+      </svg>,
+    )
+    const marker = container.querySelector('[data-layer="marker"]')!
+    expect(marker.getAttribute('transform')).toMatch(/^translate\(0 0\)/)
+    // Not moved with the body, so the tip stays at the anchor (the pen).
+    expect(marker.closest('[data-layer="figure"]')).toBeNull()
+  })
+
+  it('has a soft drop shadow so it shows on white pages', () => {
+    const { container } = render(
+      <svg>
+        <Scribbly state="idle" x={0} y={0} still />
+      </svg>,
+    )
+    const id = container.querySelector('filter')!.id
+    expect(container.querySelector('feDropShadow')).not.toBeNull()
+    expect(container.querySelector('.mascot')!.getAttribute('filter')).toBe(`url(#${id})`)
+  })
+
+  it('blinks in idle', () => {
+    vi.useFakeTimers()
+    vi.spyOn(Math, 'random').mockReturnValue(0.5) // eyes close after 3.9 s, for 140 ms
+    try {
+      const { container } = render(
+        <svg>
+          <Scribbly state="idle" x={0} y={0} />
+        </svg>,
+      )
+      const lids = () => container.querySelector('[data-layer="eyelids"]')
+      expect(lids()).toBeNull()
+      act(() => vi.advanceTimersByTime(3950))
+      expect(lids()).not.toBeNull()
+      act(() => vi.advanceTimersByTime(200))
+      expect(lids()).toBeNull()
+    } finally {
+      vi.restoreAllMocks()
+      vi.useRealTimers()
+    }
+  })
+
+  it('does not blink when still', () => {
+    vi.useFakeTimers()
+    try {
+      const { container } = render(
+        <svg>
+          <Scribbly state="idle" x={0} y={0} still />
+        </svg>,
+      )
+      act(() => vi.advanceTimersByTime(10_000))
+      expect(container.querySelector('[data-layer="eyelids"]')).toBeNull()
+    } finally {
+      vi.useRealTimers()
+    }
   })
 })
