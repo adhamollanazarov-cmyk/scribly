@@ -1294,6 +1294,21 @@
         "x_max": {
           "title": "X Max",
           "type": "number"
+        },
+        "y_min": {
+          "title": "Y Min",
+          "type": "number"
+        },
+        "y_max": {
+          "title": "Y Max",
+          "type": "number"
+        },
+        "samples": {
+          "default": 41,
+          "maximum": 200,
+          "minimum": 2,
+          "title": "Samples",
+          "type": "integer"
         }
       },
       "required": [
@@ -1302,7 +1317,9 @@
         "axes_id",
         "expr",
         "x_min",
-        "x_max"
+        "x_max",
+        "y_min",
+        "y_max"
       ],
       "title": "PlotPrim",
       "type": "object"

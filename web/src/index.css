@@ -68,6 +68,12 @@ body {
 
 .hand {
   font-family: var(--font-hand);
+  font-weight: 500;
+}
+
+.hand sup,
+.hand sub {
+  font-size: 70%;
 }
 
 .app {

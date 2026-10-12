@@ -1,4 +1,6 @@
 {
+  "board.loading": "Doska yuklanmoqda…",
+  "warning.audio": "Bu bosqich uchun ovoz mavjud emas. Chizma davom etayotganda matnni kuzating.",
   "app.title": "Scribbly",
   "app.tagline": "Tushuntirib, chizib beradigan kichkina fizika ustozingiz.",
   "form.label": "Scribbly nimani tushuntirsin?",

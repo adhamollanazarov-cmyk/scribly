@@ -421,7 +421,7 @@ def _contract_step(
         return None, problems, answer_ids
     try:
         step = Step.model_validate(raw, context={"raw_input": True})
-        step = expand_step(step)
+        step = expand_step(step, state.drawn)
         step = Step.model_validate(step.model_dump())
     except ValidationError as e:
         problems += [line for line in error_lines(e) if "the limit is" not in line]

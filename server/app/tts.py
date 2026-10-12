@@ -1,5 +1,6 @@
 """Text-to-speech behind a small interface, with a file cache keyed by text+voice+rate."""
 
+import asyncio
 import hashlib
 import json
 import os
@@ -24,7 +25,24 @@ class TTSProvider(Protocol):
 
 
 class EdgeTTSProvider:
+    def __init__(self, *, attempt_timeout: float = 4.0, retry_delay: float = 0.2) -> None:
+        self.attempt_timeout = attempt_timeout
+        self.retry_delay = retry_delay
+
     async def synthesize(self, text: str, voice: str, rate: str) -> bytes:
+        # One retry, a fresh stream/buffer each time, and bounded network waits.
+        # Cancellation propagates immediately, including during the backoff.
+        for attempt in range(2):
+            try:
+                async with asyncio.timeout(self.attempt_timeout):
+                    return await self._once(text, voice, rate)
+            except (TTSError, TimeoutError) as e:
+                if attempt == 1:
+                    raise TTSError(f"edge-tts failed after two attempts: {type(e).__name__}") from e
+                await asyncio.sleep(self.retry_delay)
+        raise AssertionError("unreachable")
+
+    async def _once(self, text: str, voice: str, rate: str) -> bytes:
         audio = bytearray()
         try:
             async for chunk in edge_tts.Communicate(text, voice, rate=rate).stream():

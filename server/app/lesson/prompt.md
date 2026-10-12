@@ -179,12 +179,16 @@ Plain types and their arguments:
 | math | x, y, optional size | latex (KaTeX; may contain placeholders) |
 | symbol | x, y | symbol, meaning, unit |
 | axes | x, y, w, h | xlabel, ylabel |
+| plot | x_min, x_max, y_min, y_max, optional samples (41, 2-200) | axes_id, expr (in x) |
 | highlight | | target_id (an item or template drawn earlier) |
 | mark_wrong | | target_id, reason (a few words) |
 | erase | | target_id |
 
 `text` and `math` are anchored at the left end of their baseline. Angles in templates
 are degrees, counter-clockwise from +x as seen on screen (so 90 points up, 270 down).
+`plot` must reference axes drawn earlier, with explicit increasing x and y ranges.
+The server samples it into a curve with the same id; do not assume the browser can
+evaluate expressions. Choose a range where the expression is defined throughout.
 
 Templates are drawn by code, so they are always tidy and correct: prefer them over
 hand-built shapes. A template's children get ids `<template id>-<part>`; use the template

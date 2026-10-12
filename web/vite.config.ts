@@ -5,6 +5,14 @@ import { defineConfig } from 'vite'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  build: {
+    manifest: true,
+    rolldownOptions: {
+      output: {
+        codeSplitting: { groups: [{ name: 'katex', test: /node_modules[\\/]katex[\\/]/ }] },
+      },
+    },
+  },
   server: {
     port: 5173,
     strictPort: true,

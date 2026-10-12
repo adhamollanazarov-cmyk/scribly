@@ -25,6 +25,12 @@ export function HtmlOnBoard(props: {
     if (!box.current) return
     const baseline = marker.current?.offsetTop || size // jsdom has no layout
     box.current.style.top = `${room - baseline}px`
+    const align = () => {
+      if (box.current) box.current.style.top = `${room - (marker.current?.offsetTop || size)}px`
+    }
+    const observer = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(align)
+    observer?.observe(box.current)
+    return () => observer?.disconnect()
   }, [children, size, room])
 
   const style: CSSProperties = {
@@ -33,6 +39,7 @@ export function HtmlOnBoard(props: {
     fontSize: size,
     color,
     whiteSpace: 'nowrap',
+    width: 'max-content',
     clipPath: reveal >= 1 ? undefined : `inset(-50% ${(1 - reveal) * 100}% -50% 0)`,
   }
   return (

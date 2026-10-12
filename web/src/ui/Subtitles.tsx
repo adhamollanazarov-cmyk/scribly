@@ -15,11 +15,13 @@ export function Subtitles({ state, settings }: { state: PlayerState; settings: S
   const step = state.status === 'running' ? state.steps[state.index] : undefined
   const status = statusLine(state)
   const second = step && settings.second !== 'off' ? step.subtitles?.[settings.second] : null
+  const noAudio = state.stage === 'playing' && !state.audioActive
   return (
     <div className="subtitles" aria-live="polite">
       {step ? (
         <>
-          {settings.english && <p className="sub-en">{step.say}</p>}
+          {(settings.english || noAudio) && <p className="sub-en">{step.say}</p>}
+          {noAudio && <p className="badge warn">{t('warning.audio')}</p>}
           {second && (
             <p className="sub-second" lang={settings.second}>
               {second}

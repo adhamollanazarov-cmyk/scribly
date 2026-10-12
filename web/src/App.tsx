@@ -1,5 +1,12 @@
-import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from 'react'
-import { Board } from './board/Board'
+import {
+  lazy,
+  Suspense,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from 'react'
 import { t } from './i18n'
 import { StreamError, streamLesson } from './lesson/client'
 import { introPrimitives } from './lesson/intro'
@@ -17,6 +24,7 @@ const INTRO_LABELS = {
   topic: t('board.topic'),
   given: t('board.given'),
 }
+const Board = lazy(() => import('./board/Board').then((m) => ({ default: m.Board })))
 
 function errorMessage(error: unknown): string {
   return t(error instanceof StreamError ? `error.${error.code}` : 'error.server')
@@ -70,7 +78,9 @@ function App({ narration, ticker, fetchImpl }: AppProps) {
         <section className="stage">
           <LessonForm onSubmit={start} />
           <div className="board-frame">
-            <Board state={state} title={state.meta?.title ?? t('app.title')} />
+            <Suspense fallback={<p className="muted">{t('board.loading')}</p>}>
+              <Board state={state} title={state.meta?.title ?? t('app.title')} />
+            </Suspense>
             {checkpoint && step && (
               <CheckpointCard
                 key={step.id}
