@@ -13,18 +13,35 @@ export class StreamError extends Error {
 }
 
 /** POST /lessons and call `onEvent` for every SSE event as it arrives. */
-export async function streamLesson(
+export function streamLesson(
   request: LessonRequest,
   onEvent: (event: LessonEvent) => void,
   signal?: AbortSignal,
   fetchImpl: typeof fetch = fetch,
 ): Promise<void> {
+  return streamEvents('/lessons', request, onEvent, { signal, fetchImpl })
+}
+
+export interface StreamOptions {
+  signal?: AbortSignal
+  fetchImpl?: typeof fetch
+  /** Called once with the response headers, before the first event. */
+  onOpen?: (headers: Headers) => void
+}
+
+/** POST a JSON body to a lesson SSE endpoint and call `onEvent` for every event. */
+export async function streamEvents(
+  path: string,
+  body: unknown,
+  onEvent: (event: LessonEvent) => void,
+  { signal, fetchImpl = fetch, onOpen }: StreamOptions = {},
+): Promise<void> {
   let response: Response
   try {
-    response = await fetchImpl('/lessons', {
+    response = await fetchImpl(path, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Accept: 'text/event-stream' },
-      body: JSON.stringify(request),
+      body: JSON.stringify(body),
       signal,
     })
   } catch (error) {
@@ -34,6 +51,7 @@ export async function streamLesson(
   if (!response.ok || !response.body) {
     throw new StreamError(response.status === 422 ? 'bad_request' : 'server')
   }
+  onOpen?.(response.headers)
 
   let terminal = false
   const parser = createSseParser(({ event, data }) => {
