@@ -9,7 +9,7 @@ from fastapi import Depends, FastAPI
 from pydantic import BaseModel
 
 from app.model_check import check_models
-from app.routes import lessons
+from app.routes import explain, lessons
 from app.settings import Settings, get_settings
 
 # "LEVEL: message", like uvicorn, so app errors stand out in the dev console.
@@ -31,6 +31,7 @@ async def lifespan(_: FastAPI) -> AsyncIterator[None]:
 def create_app() -> FastAPI:
     app = FastAPI(title="Scribbly", lifespan=lifespan)
     app.include_router(lessons.router)
+    app.include_router(explain.router)
 
     @app.get("/health")
     def health(settings: Annotated[Settings, Depends(get_settings)]) -> Health:

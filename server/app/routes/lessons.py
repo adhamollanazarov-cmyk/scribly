@@ -75,11 +75,15 @@ async def create_lesson(
 
 
 async def lesson_events(
-    lesson: Lesson, settings: Settings, tts: TTSProvider, cache: AudioCache
+    lesson: Lesson,
+    settings: Settings,
+    tts: TTSProvider,
+    cache: AudioCache,
+    voice: str | None = None,
 ) -> AsyncIterator[ServerSentEvent]:
     yield ServerSentEvent(event="meta", data=lesson_meta(lesson, len(lesson.steps)))
     for step in lesson.steps:
-        audio_url = await narrate(step.say, settings, tts, cache)
+        audio_url = await narrate(step.say, settings, tts, cache, voice)
         streamed = StreamedStep.model_validate(step.model_dump() | {"audio_url": audio_url})
         yield ServerSentEvent(event="step", data=streamed.model_dump(mode="json"))
     yield ServerSentEvent(event="done", data={"id": lesson.id})
@@ -115,10 +119,12 @@ async def live_lesson_events(
     yield ServerSentEvent(event="done", data={"id": lesson_id})
 
 
-async def narrate(text: str, settings: Settings, tts: TTSProvider, cache: AudioCache) -> str | None:
+async def narrate(
+    text: str, settings: Settings, tts: TTSProvider, cache: AudioCache, voice: str | None = None
+) -> str | None:
     """Audio URL for the narration, or None so the lesson continues without sound."""
     try:
-        key = await cache.get_or_create(tts, text, settings.tts_voice, settings.tts_rate)
+        key = await cache.get_or_create(tts, text, voice or settings.tts_voice, settings.tts_rate)
     except (TTSError, OSError) as e:
         logger.error("TTS failed, step will stream without audio: %s", type(e).__name__)
         return None
