@@ -61,7 +61,7 @@ body.overlay-page {
   aspect-ratio: auto;
 }
 .overlay-board .board-bg {
-  fill-opacity: 0.94;
+  fill-opacity: 0.97;
 }
 .overlay-lesson[data-dismissed='true'] .overlay-board,
 .overlay-lesson[data-dismissed='true'] .overlay-dock {
@@ -79,7 +79,6 @@ body.overlay-page {
 }
 .overlay-subtitles {
   width: 100%;
-  overflow: hidden;
 }
 .overlay-subtitles .subtitles {
   min-height: 0;

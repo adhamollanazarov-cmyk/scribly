@@ -34,3 +34,6 @@ Thumbs.db
 # test / build output
 coverage/
 *.tsbuildinfo
+
+# desktop build output
+desktop/release/

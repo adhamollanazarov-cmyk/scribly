@@ -73,4 +73,3 @@ export function useBoardScene(state: PlayerState): BoardScene {
   const view = viewFor(state.steps, state.index, state.stage === 'playing' ? state.t : 1e9)
   return { frame, introFrame, pen, mood, mascotAt, view }
 }
-

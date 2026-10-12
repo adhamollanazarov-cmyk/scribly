@@ -32,7 +32,7 @@ import { Pill } from './Pill'
 import { useClickThrough } from './useClickThrough'
 
 const DEMO_HEADER = 'X-Scribbly-Demo'
-const DOCK_HEIGHT = 150
+const DOCK_HEIGHT = 210 // demo notice + two EN lines + two second-language lines + pill
 const MASCOT_SCALE = 1.4
 const MASCOT_HEADROOM = 110 // window px above the pencil tip the body needs
 
@@ -186,10 +186,7 @@ export function LessonOverlay(props: Props) {
           </div>
         )}
       </div>
-      <div
-        className="overlay-dock"
-        style={{ left: dock.x, top: dock.y, width: dock.w, maxHeight: dock.h }}
-      >
+      <div className="overlay-dock" style={{ left: dock.x, top: dock.y, width: dock.w }}>
         <div className="overlay-subtitles">
           {demo && (
             <p className="badge demo" data-testid="demo">

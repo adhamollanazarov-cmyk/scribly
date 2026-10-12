@@ -97,4 +97,3 @@ async def explain_region(
         return
     async for event in lesson_events(lesson, settings, tts, cache, voice):
         yield event
-

@@ -1,0 +1,27 @@
+appId: app.scribbly.desktop
+productName: Scribbly
+directories:
+  output: release
+  buildResources: resources
+files:
+  - dist/**/*
+  - package.json
+extraResources:
+  # The overlay page, built by `npm --prefix ../web run build`.
+  - from: ../web/dist
+    to: renderer
+  - from: resources
+    to: icons
+    filter:
+      - tray*.png
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+  icon: resources/icon.png
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  runAfterFinish: true

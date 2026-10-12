@@ -50,5 +50,15 @@
   "error.server": "Serverda muammo yuz berdi. Qaytadan urinib ko'ring.",
   "overlay.hint": "Tushuntirish kerak bo'lgan joyni belgilang · Esc — bekor qilish",
   "overlay.demo": "Namuna dars — ekraningizni tushuntirish tez orada",
-  "overlay.close": "Darsni yopish"
+  "overlay.close": "Darsni yopish",
+  "tray.tooltip": "Scribbly — ekran qismini tushuntirish uchun Ctrl+Shift+Space bosing",
+  "tray.explain": "Hududni tushuntirish",
+  "tray.settings": "Sozlamalar",
+  "tray.voice": "Ovoz",
+  "tray.speed": "Tezlik",
+  "tray.subtitles": "Ikkinchi subtitr qatori",
+  "tray.login": "Windows bilan birga ishga tushirish",
+  "tray.quit": "Scribblyni yopish",
+  "tray.hotkeyTaken": "Ctrl+Shift+Space boshqa dastur tomonidan band. Tray menyusidan foydalaning.",
+  "tray.captureFailed": "Ekranni olish imkoni bo'lmadi. Qaytadan urinib ko'ring."
 }
