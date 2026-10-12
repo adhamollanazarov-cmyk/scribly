@@ -1,0 +1,559 @@
+{
+  "source": {
+    "type": "problem",
+    "text": "A positive charge 2 microcoulombs moves right at 3e4 m/s through a uniform field 0.5 T into the page, perpendicular to velocity. Find magnetic force y component, positive upward."
+  },
+  "title": "Magnetic force on a moving charge",
+  "level": "university",
+  "steps": [
+    {
+      "id": "s1",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Let us solve this worked example using the givens on the board.",
+      "subtitles": {
+        "uz": "Doskadagi berilgan kattaliklar yordamida ushbu misolni yechamiz.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "heading",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 70
+            },
+            {
+              "k": "size",
+              "v": 26
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Magnetic force on a moving charge"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "charge",
+          "type": "point_charge",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.087,
+          "num": [
+            {
+              "k": "x",
+              "v": 320
+            },
+            {
+              "k": "y",
+              "v": 380
+            }
+          ],
+          "txt": [
+            {
+              "k": "sign",
+              "v": "+"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "velocity",
+          "type": "arrow",
+          "color": "force",
+          "label": "velocity right",
+          "frame": "",
+          "at": 0.175,
+          "num": [
+            {
+              "k": "x1",
+              "v": 350
+            },
+            {
+              "k": "y1",
+              "v": 380
+            },
+            {
+              "k": "x2",
+              "v": 590
+            },
+            {
+              "k": "y2",
+              "v": 380
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "yaxis",
+          "type": "arrow",
+          "color": "force",
+          "label": "+y",
+          "frame": "force",
+          "at": 0.262,
+          "num": [
+            {
+              "k": "x1",
+              "v": 160
+            },
+            {
+              "k": "y1",
+              "v": 550
+            },
+            {
+              "k": "x2",
+              "v": 160
+            },
+            {
+              "k": "y2",
+              "v": 200
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "into",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.35,
+          "num": [
+            {
+              "k": "x",
+              "v": 400
+            },
+            {
+              "k": "y",
+              "v": 220
+            },
+            {
+              "k": "size",
+              "v": 26
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "× B into page"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "force",
+          "type": "arrow",
+          "color": "force",
+          "label": "force up",
+          "frame": "",
+          "at": 0.438,
+          "num": [
+            {
+              "k": "x1",
+              "v": 320
+            },
+            {
+              "k": "y1",
+              "v": 350
+            },
+            {
+              "k": "x2",
+              "v": 320
+            },
+            {
+              "k": "y2",
+              "v": 200
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "given0",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.525,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 690
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Charge: +2 μC; speed: 3e4 m/s right"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "given1",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.612,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 733
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Magnetic field: 0.5 T into page"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s2",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Take upward as positive y. For a positive charge moving right into an inward magnetic field, the right-hand rule gives upward force.",
+      "subtitles": {
+        "uz": "Yuqorini musbat y deb olamiz. Musbat zaryad o‘ngga, maydon sahifa ichiga yo‘nalsa, o‘ng qo‘l qoidasi kuchni yuqoriga beradi.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "sym0",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 90
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "q"
+            },
+            {
+              "k": "meaning",
+              "v": "positive charge"
+            },
+            {
+              "k": "unit",
+              "v": "C"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym1",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.175,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 126
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "v"
+            },
+            {
+              "k": "meaning",
+              "v": "speed"
+            },
+            {
+              "k": "unit",
+              "v": "m/s"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym2",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.35,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 162
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "B"
+            },
+            {
+              "k": "meaning",
+              "v": "field magnitude"
+            },
+            {
+              "k": "unit",
+              "v": "T"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym3",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.525,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 198
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "F_y"
+            },
+            {
+              "k": "meaning",
+              "v": "upward force component"
+            },
+            {
+              "k": "unit",
+              "v": "N"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s3",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Perpendicular velocity and field give the largest magnetic force. This force turns motion without changing speed.",
+      "subtitles": {
+        "uz": "Tezlik va maydon perpendikulyar bo‘lsa, magnit kuch eng katta bo‘ladi. Kuch tezlik modulini o‘zgartirmay, yo‘nalishini buradi.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "law0",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 440
+            },
+            {
+              "k": "size",
+              "v": 30
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "F_y=qvB"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s4",
+      "kind": "checkpoint",
+      "calcs": [],
+      "say": "Does the magnetic force alone change the particle’s kinetic energy?",
+      "subtitles": {
+        "uz": "Davom etishdan oldin tushunganingizni tekshiring.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "Does the magnetic force alone change the particle’s kinetic energy?",
+          "type": "choice",
+          "choices": [
+            "No",
+            "Yes"
+          ],
+          "answer": "0",
+          "hint": "Force is perpendicular to velocity.",
+          "reexplain_hint": "A sideways push turns the path without adding work along the instantaneous displacement."
+        }
+      ]
+    },
+    {
+      "id": "s5",
+      "kind": "explain",
+      "calcs": [
+        {
+          "expr": "q*v*B",
+          "values": [
+            {
+              "name": "q",
+              "value": 2e-06
+            },
+            {
+              "name": "v",
+              "value": 30000.0
+            },
+            {
+              "name": "B",
+              "value": 0.5
+            }
+          ],
+          "expected": 0.03,
+          "unit": "N",
+          "unit_spoken": "newtons",
+          "quantity_kind": "component",
+          "positive": "+y",
+          "frame": "force",
+          "id": "c1"
+        }
+      ],
+      "say": "The force component is {c1}, upward.",
+      "subtitles": {
+        "uz": "Kuchning komponenti {c1}, yuqoriga yo‘nalgan.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "result1",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 575
+            },
+            {
+              "k": "size",
+              "v": 32
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "F_y = {c1:3sf}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s6",
+      "kind": "checkpoint",
+      "calcs": [],
+      "say": "Enter the first calculated result, using its displayed unit.",
+      "subtitles": {
+        "uz": "Birinchi hisoblangan natijani ko‘rsatilgan birlikda kiriting.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "What is the first calculated result?",
+          "type": "number",
+          "choices": [],
+          "answer": "{c1:3sf}",
+          "hint": "Read the first result and its unit.",
+          "reexplain_hint": "A sideways push turns the path without adding work along the instantaneous displacement."
+        }
+      ]
+    },
+    {
+      "id": "s7",
+      "kind": "summary",
+      "calcs": [],
+      "say": "Use charge sign and the right-hand rule for direction; use the perpendicular formula for magnitude.",
+      "subtitles": {
+        "uz": "Yo‘nalish uchun zaryad ishorasi va o‘ng qo‘l qoidasidan, modul uchun perpendikulyar holat formulasidan foydalaning.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": []
+    }
+  ]
+}

@@ -1,0 +1,1602 @@
+{
+  "source": {
+    "type": "problem",
+    "text": "Nodes A and B connect three parallel branches. Branch 1: ideal emf 12 V (positive terminal toward A), resistor 2 ohms. Branch 2: ideal emf 6 V (positive terminal toward A), resistor 3 ohms. Branch 3: resistor 6 ohms. Find V_A minus V_B and all branch currents, positive A to B."
+  },
+  "title": "Kirchhoff’s two-loop circuit",
+  "level": "university",
+  "steps": [
+    {
+      "id": "s1",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Let us solve this worked example using the givens on the board.",
+      "subtitles": {
+        "uz": "Doskadagi berilgan kattaliklar yordamida ushbu misolni yechamiz.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "heading",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 70
+            },
+            {
+              "k": "size",
+              "v": 26
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Kirchhoff’s two-loop circuit"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "topwire",
+          "type": "line",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.023,
+          "num": [
+            {
+              "k": "x1",
+              "v": 150
+            },
+            {
+              "k": "y1",
+              "v": 200
+            },
+            {
+              "k": "x2",
+              "v": 650
+            },
+            {
+              "k": "y2",
+              "v": 200
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "bottomwire",
+          "type": "line",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.045,
+          "num": [
+            {
+              "k": "x1",
+              "v": 150
+            },
+            {
+              "k": "y1",
+              "v": 570
+            },
+            {
+              "k": "x2",
+              "v": 650
+            },
+            {
+              "k": "y2",
+              "v": 570
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "b1upper",
+          "type": "line",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.068,
+          "num": [
+            {
+              "k": "x1",
+              "v": 200
+            },
+            {
+              "k": "y1",
+              "v": 200
+            },
+            {
+              "k": "x2",
+              "v": 200
+            },
+            {
+              "k": "y2",
+              "v": 270
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "b1positive",
+          "type": "line",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.09,
+          "num": [
+            {
+              "k": "x1",
+              "v": 170
+            },
+            {
+              "k": "y1",
+              "v": 270
+            },
+            {
+              "k": "x2",
+              "v": 230
+            },
+            {
+              "k": "y2",
+              "v": 270
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "b1negative",
+          "type": "line",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.113,
+          "num": [
+            {
+              "k": "x1",
+              "v": 185
+            },
+            {
+              "k": "y1",
+              "v": 300
+            },
+            {
+              "k": "x2",
+              "v": 215
+            },
+            {
+              "k": "y2",
+              "v": 300
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "b1polarity",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.135,
+          "num": [
+            {
+              "k": "x",
+              "v": 140
+            },
+            {
+              "k": "y",
+              "v": 270
+            },
+            {
+              "k": "size",
+              "v": 26
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "+"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "b1middle",
+          "type": "line",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.158,
+          "num": [
+            {
+              "k": "x1",
+              "v": 200
+            },
+            {
+              "k": "y1",
+              "v": 300
+            },
+            {
+              "k": "x2",
+              "v": 200
+            },
+            {
+              "k": "y2",
+              "v": 400
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "b1resistor",
+          "type": "rect",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.181,
+          "num": [
+            {
+              "k": "x",
+              "v": 180
+            },
+            {
+              "k": "y",
+              "v": 400
+            },
+            {
+              "k": "w",
+              "v": 40
+            },
+            {
+              "k": "h",
+              "v": 65
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "b1lower",
+          "type": "line",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.203,
+          "num": [
+            {
+              "k": "x1",
+              "v": 200
+            },
+            {
+              "k": "y1",
+              "v": 465
+            },
+            {
+              "k": "x2",
+              "v": 200
+            },
+            {
+              "k": "y2",
+              "v": 570
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "b2upper",
+          "type": "line",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.226,
+          "num": [
+            {
+              "k": "x1",
+              "v": 400
+            },
+            {
+              "k": "y1",
+              "v": 200
+            },
+            {
+              "k": "x2",
+              "v": 400
+            },
+            {
+              "k": "y2",
+              "v": 270
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "b2positive",
+          "type": "line",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.248,
+          "num": [
+            {
+              "k": "x1",
+              "v": 370
+            },
+            {
+              "k": "y1",
+              "v": 270
+            },
+            {
+              "k": "x2",
+              "v": 430
+            },
+            {
+              "k": "y2",
+              "v": 270
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "b2negative",
+          "type": "line",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.271,
+          "num": [
+            {
+              "k": "x1",
+              "v": 385
+            },
+            {
+              "k": "y1",
+              "v": 300
+            },
+            {
+              "k": "x2",
+              "v": 415
+            },
+            {
+              "k": "y2",
+              "v": 300
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "b2polarity",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.294,
+          "num": [
+            {
+              "k": "x",
+              "v": 340
+            },
+            {
+              "k": "y",
+              "v": 270
+            },
+            {
+              "k": "size",
+              "v": 26
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "+"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "b2middle",
+          "type": "line",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.316,
+          "num": [
+            {
+              "k": "x1",
+              "v": 400
+            },
+            {
+              "k": "y1",
+              "v": 300
+            },
+            {
+              "k": "x2",
+              "v": 400
+            },
+            {
+              "k": "y2",
+              "v": 400
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "b2resistor",
+          "type": "rect",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.339,
+          "num": [
+            {
+              "k": "x",
+              "v": 380
+            },
+            {
+              "k": "y",
+              "v": 400
+            },
+            {
+              "k": "w",
+              "v": 40
+            },
+            {
+              "k": "h",
+              "v": 65
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "b2lower",
+          "type": "line",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.361,
+          "num": [
+            {
+              "k": "x1",
+              "v": 400
+            },
+            {
+              "k": "y1",
+              "v": 465
+            },
+            {
+              "k": "x2",
+              "v": 400
+            },
+            {
+              "k": "y2",
+              "v": 570
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "b3upper",
+          "type": "line",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.384,
+          "num": [
+            {
+              "k": "x1",
+              "v": 600
+            },
+            {
+              "k": "y1",
+              "v": 200
+            },
+            {
+              "k": "x2",
+              "v": 600
+            },
+            {
+              "k": "y2",
+              "v": 400
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "b3resistor",
+          "type": "rect",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.406,
+          "num": [
+            {
+              "k": "x",
+              "v": 580
+            },
+            {
+              "k": "y",
+              "v": 400
+            },
+            {
+              "k": "w",
+              "v": 40
+            },
+            {
+              "k": "h",
+              "v": 65
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "b3lower",
+          "type": "line",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.429,
+          "num": [
+            {
+              "k": "x1",
+              "v": 600
+            },
+            {
+              "k": "y1",
+              "v": 465
+            },
+            {
+              "k": "x2",
+              "v": 600
+            },
+            {
+              "k": "y2",
+              "v": 570
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "nodea",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.452,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 200
+            },
+            {
+              "k": "size",
+              "v": 26
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "A"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "nodeb",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.474,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 570
+            },
+            {
+              "k": "size",
+              "v": 26
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "B"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "emf1",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.497,
+          "num": [
+            {
+              "k": "x",
+              "v": 240
+            },
+            {
+              "k": "y",
+              "v": 290
+            },
+            {
+              "k": "size",
+              "v": 26
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "12 V"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "emf2",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.519,
+          "num": [
+            {
+              "k": "x",
+              "v": 440
+            },
+            {
+              "k": "y",
+              "v": 290
+            },
+            {
+              "k": "size",
+              "v": 26
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "6 V"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "r1label",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.542,
+          "num": [
+            {
+              "k": "x",
+              "v": 240
+            },
+            {
+              "k": "y",
+              "v": 445
+            },
+            {
+              "k": "size",
+              "v": 26
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "2 Ω"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "r2label",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.565,
+          "num": [
+            {
+              "k": "x",
+              "v": 440
+            },
+            {
+              "k": "y",
+              "v": 445
+            },
+            {
+              "k": "size",
+              "v": 26
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "3 Ω"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "r3label",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.587,
+          "num": [
+            {
+              "k": "x",
+              "v": 640
+            },
+            {
+              "k": "y",
+              "v": 445
+            },
+            {
+              "k": "size",
+              "v": 26
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "6 Ω"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "current_convention",
+          "type": "arrow",
+          "color": "force",
+          "label": "+ (A->B)",
+          "frame": "branches",
+          "at": 0.61,
+          "num": [
+            {
+              "k": "x1",
+              "v": 70
+            },
+            {
+              "k": "y1",
+              "v": 240
+            },
+            {
+              "k": "x2",
+              "v": 70
+            },
+            {
+              "k": "y2",
+              "v": 520
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "given0",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.632,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 690
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Branch 1: 12 V source (+ toward A), 2 Ω"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "given1",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.655,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 733
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Branch 2: 6 V source (+ toward A), 3 Ω"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "given2",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.677,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 776
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Branch 3: 6 Ω; currents positive A to B"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s2",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Take every branch current from A to B as positive. A negative result means the actual current flows from B to A.",
+      "subtitles": {
+        "uz": "Barcha tarmoqlarda A dan B ga tokni musbat olamiz. Manfiy natija tok aslida B dan A ga oqishini bildiradi.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "sym0",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 90
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "V"
+            },
+            {
+              "k": "meaning",
+              "v": "node voltage A minus B"
+            },
+            {
+              "k": "unit",
+              "v": "V"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym1",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.078,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 126
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "I_1"
+            },
+            {
+              "k": "meaning",
+              "v": "branch 1 current"
+            },
+            {
+              "k": "unit",
+              "v": "A"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym2",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.156,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 162
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "I_2"
+            },
+            {
+              "k": "meaning",
+              "v": "branch 2 current"
+            },
+            {
+              "k": "unit",
+              "v": "A"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym3",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.233,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 198
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "I_3"
+            },
+            {
+              "k": "meaning",
+              "v": "branch 3 current"
+            },
+            {
+              "k": "unit",
+              "v": "A"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym4",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.311,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 234
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "e_1"
+            },
+            {
+              "k": "meaning",
+              "v": "branch 1 emf"
+            },
+            {
+              "k": "unit",
+              "v": "V"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym5",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.389,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 270
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "e_2"
+            },
+            {
+              "k": "meaning",
+              "v": "branch 2 emf"
+            },
+            {
+              "k": "unit",
+              "v": "V"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym6",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.467,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 306
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "R_1"
+            },
+            {
+              "k": "meaning",
+              "v": "branch 1 resistance"
+            },
+            {
+              "k": "unit",
+              "v": "Ω"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym7",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.544,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 342
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "R_2"
+            },
+            {
+              "k": "meaning",
+              "v": "branch 2 resistance"
+            },
+            {
+              "k": "unit",
+              "v": "Ω"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym8",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.622,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 378
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "R_3"
+            },
+            {
+              "k": "meaning",
+              "v": "branch 3 resistance"
+            },
+            {
+              "k": "unit",
+              "v": "Ω"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s3",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Each branch shares the same node voltage. Loop voltage balance determines branch currents; their signed sum at a node must vanish.",
+      "subtitles": {
+        "uz": "Barcha tarmoqlarda tugunlar kuchlanishi bir xil. Kontur kuchlanish balansi toklarni belgilaydi; tugunda ishorali toklar yig‘indisi nol.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "law0",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 440
+            },
+            {
+              "k": "size",
+              "v": 30
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "I_1=\\frac{V-e_1}{R_1},\\quad I_2=\\frac{V-e_2}{R_2},\\quad I_3=\\frac{V}{R_3}"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "law1",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.35,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 500
+            },
+            {
+              "k": "size",
+              "v": 30
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "I_1+I_2+I_3=0"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s4",
+      "kind": "checkpoint",
+      "calcs": [],
+      "say": "What does a negative branch current mean with our convention?",
+      "subtitles": {
+        "uz": "Davom etishdan oldin tushunganingizni tekshiring.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "What does a negative branch current mean with our convention?",
+          "type": "choice",
+          "choices": [
+            "Actual flow is B to A",
+            "Charge conservation fails"
+          ],
+          "answer": "0",
+          "hint": "A sign compares actual flow with the chosen arrow.",
+          "reexplain_hint": "Imagine walking against a marked route: your speed along the marked direction is negative."
+        }
+      ]
+    },
+    {
+      "id": "s5",
+      "kind": "explain",
+      "calcs": [
+        {
+          "expr": "(e1/r1+e2/r2)/(1/r1+1/r2+1/r3)",
+          "values": [
+            {
+              "name": "e1",
+              "value": 12
+            },
+            {
+              "name": "e2",
+              "value": 6
+            },
+            {
+              "name": "r1",
+              "value": 2
+            },
+            {
+              "name": "r2",
+              "value": 3
+            },
+            {
+              "name": "r3",
+              "value": 6
+            }
+          ],
+          "expected": 8,
+          "unit": "V",
+          "unit_spoken": "volts",
+          "quantity_kind": "scalar",
+          "positive": "",
+          "frame": "",
+          "id": "c1"
+        }
+      ],
+      "say": "The potential of A relative to B is {c1}.",
+      "subtitles": {
+        "uz": "A ning B ga nisbatan potensiali {c1}.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "result1",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 575
+            },
+            {
+              "k": "size",
+              "v": 32
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "V = {c1:3sf}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s6",
+      "kind": "explain",
+      "calcs": [
+        {
+          "expr": "(c1-e1)/r1",
+          "values": [
+            {
+              "name": "e1",
+              "value": 12
+            },
+            {
+              "name": "r1",
+              "value": 2
+            }
+          ],
+          "expected": -2,
+          "unit": "A",
+          "unit_spoken": "amperes",
+          "quantity_kind": "oriented",
+          "positive": "A->B",
+          "frame": "branches",
+          "id": "c2"
+        }
+      ],
+      "say": "Branch one current is {c2}; it flows from B to A.",
+      "subtitles": {
+        "uz": "Birinchi tarmoq toki {c2}; B dan A ga oqadi.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "result2",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 670
+            },
+            {
+              "k": "size",
+              "v": 32
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "I_1 = {c2:3sf}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s7",
+      "kind": "explain",
+      "calcs": [
+        {
+          "expr": "(c1-e2)/r2",
+          "values": [
+            {
+              "name": "e2",
+              "value": 6
+            },
+            {
+              "name": "r2",
+              "value": 3
+            }
+          ],
+          "expected": 0.6666666666666666,
+          "unit": "A",
+          "unit_spoken": "amperes",
+          "quantity_kind": "oriented",
+          "positive": "A->B",
+          "frame": "branches",
+          "id": "c3"
+        }
+      ],
+      "say": "Branch two current is {c3}, from A to B.",
+      "subtitles": {
+        "uz": "Ikkinchi tarmoq toki {c3}, A dan B ga.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "result3",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 765
+            },
+            {
+              "k": "size",
+              "v": 32
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "I_2 = {c3:3sf}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s8",
+      "kind": "explain",
+      "calcs": [
+        {
+          "expr": "c1/r3",
+          "values": [
+            {
+              "name": "r3",
+              "value": 6
+            }
+          ],
+          "expected": 1.3333333333333333,
+          "unit": "A",
+          "unit_spoken": "amperes",
+          "quantity_kind": "oriented",
+          "positive": "A->B",
+          "frame": "branches",
+          "id": "c4"
+        }
+      ],
+      "say": "Branch three current is {c4}, from A to B.",
+      "subtitles": {
+        "uz": "Uchinchi tarmoq toki {c4}, A dan B ga.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "result4",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 860
+            },
+            {
+              "k": "size",
+              "v": 32
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "I_3 = {c4:3sf}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s9",
+      "kind": "checkpoint",
+      "calcs": [],
+      "say": "Enter the first calculated result, using its displayed unit.",
+      "subtitles": {
+        "uz": "Birinchi hisoblangan natijani ko‘rsatilgan birlikda kiriting.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "What is the first calculated result?",
+          "type": "number",
+          "choices": [],
+          "answer": "{c1:3sf}",
+          "hint": "Read the first result and its unit.",
+          "reexplain_hint": "Imagine walking against a marked route: your speed along the marked direction is negative."
+        }
+      ]
+    },
+    {
+      "id": "s10",
+      "kind": "summary",
+      "calcs": [],
+      "say": "The incoming current equals the combined outgoing currents. Shared node voltage satisfies both independent loops.",
+      "subtitles": {
+        "uz": "Kiruvchi tok chiquvchi toklar yig‘indisiga teng. Umumiy tugun kuchlanishi ikkala mustaqil kontur shartini qanoatlantiradi.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": []
+    }
+  ]
+}

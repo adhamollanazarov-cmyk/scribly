@@ -1,0 +1,813 @@
+{
+  "source": {
+    "type": "problem",
+    "text": "Vacuum parallel plates have area 0.02 m^2, separation 0.001 m and potential difference 12 V. Neglect fringing. Use epsilon_0 = 8.854e-12 C^2/(N*m^2). Find field magnitude, capacitance and charge magnitude."
+  },
+  "title": "Electric potential and a parallel-plate capacitor",
+  "level": "university",
+  "steps": [
+    {
+      "id": "s1",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Let us solve this worked example using the givens on the board.",
+      "subtitles": {
+        "uz": "Doskadagi berilgan kattaliklar yordamida ushbu misolni yechamiz.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "heading",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 70
+            },
+            {
+              "k": "size",
+              "v": 26
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Electric potential and a parallel-plate capacitor"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "positive_plate",
+          "type": "line",
+          "color": "charge_pos",
+          "label": "",
+          "frame": "",
+          "at": 0.078,
+          "num": [
+            {
+              "k": "x1",
+              "v": 210
+            },
+            {
+              "k": "y1",
+              "v": 200
+            },
+            {
+              "k": "x2",
+              "v": 210
+            },
+            {
+              "k": "y2",
+              "v": 560
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "negative_plate",
+          "type": "line",
+          "color": "charge_neg",
+          "label": "",
+          "frame": "",
+          "at": 0.156,
+          "num": [
+            {
+              "k": "x1",
+              "v": 530
+            },
+            {
+              "k": "y1",
+              "v": 200
+            },
+            {
+              "k": "x2",
+              "v": 530
+            },
+            {
+              "k": "y2",
+              "v": 560
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "field",
+          "type": "arrow",
+          "color": "force",
+          "label": "field: high to low potential",
+          "frame": "",
+          "at": 0.233,
+          "num": [
+            {
+              "k": "x1",
+              "v": 240
+            },
+            {
+              "k": "y1",
+              "v": 350
+            },
+            {
+              "k": "x2",
+              "v": 500
+            },
+            {
+              "k": "y2",
+              "v": 350
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "pos",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.311,
+          "num": [
+            {
+              "k": "x",
+              "v": 170
+            },
+            {
+              "k": "y",
+              "v": 180
+            },
+            {
+              "k": "size",
+              "v": 26
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "+"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "neg",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.389,
+          "num": [
+            {
+              "k": "x",
+              "v": 520
+            },
+            {
+              "k": "y",
+              "v": 180
+            },
+            {
+              "k": "size",
+              "v": 26
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "−"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "given0",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.467,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 690
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Plate area: 0.02 m²; gap: 0.001 m"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "given1",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.544,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 733
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Potential difference: 12 V; vacuum gap"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "given2",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.622,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 776
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Vacuum permittivity: 8.854e-12 C²/(N·m²)"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s2",
+      "kind": "explain",
+      "calcs": [],
+      "say": "The field points from the positive plate toward the negative plate. Electric potential decreases along the field.",
+      "subtitles": {
+        "uz": "Maydon musbat plastinadan manfiy plastinaga yo‘naladi. Maydon bo‘ylab elektr potensial kamayadi.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "sym0",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 90
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "V"
+            },
+            {
+              "k": "meaning",
+              "v": "potential difference"
+            },
+            {
+              "k": "unit",
+              "v": "V"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym1",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.1,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 126
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "d"
+            },
+            {
+              "k": "meaning",
+              "v": "plate separation"
+            },
+            {
+              "k": "unit",
+              "v": "m"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym2",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.2,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 162
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "A"
+            },
+            {
+              "k": "meaning",
+              "v": "plate area"
+            },
+            {
+              "k": "unit",
+              "v": "m²"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym3",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.3,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 198
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "\\epsilon_0"
+            },
+            {
+              "k": "meaning",
+              "v": "permittivity"
+            },
+            {
+              "k": "unit",
+              "v": "C²/(N·m²)"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym4",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.4,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 234
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "E"
+            },
+            {
+              "k": "meaning",
+              "v": "field magnitude"
+            },
+            {
+              "k": "unit",
+              "v": "V/m"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym5",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.5,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 270
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "C"
+            },
+            {
+              "k": "meaning",
+              "v": "capacitance"
+            },
+            {
+              "k": "unit",
+              "v": "F"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym6",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.6,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 306
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "Q"
+            },
+            {
+              "k": "meaning",
+              "v": "charge magnitude"
+            },
+            {
+              "k": "unit",
+              "v": "C"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s3",
+      "kind": "explain",
+      "calcs": [],
+      "say": "The nearly uniform field links voltage to gap. Geometry sets capacitance, which links stored charge to voltage.",
+      "subtitles": {
+        "uz": "Deyarli bir jinsli maydon kuchlanishni oraliq bilan bog‘laydi. Sig‘im geometriyaga, zaryad esa sig‘im va kuchlanishga bog‘liq.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "law0",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 440
+            },
+            {
+              "k": "size",
+              "v": 30
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "E=\\frac{V}{d},\\quad C=\\frac{\\epsilon_0 A}{d},\\quad Q=CV"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s4",
+      "kind": "checkpoint",
+      "calcs": [],
+      "say": "Along the electric field, electric potential does what?",
+      "subtitles": {
+        "uz": "Davom etishdan oldin tushunganingizni tekshiring.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "Along the electric field, electric potential does what?",
+          "type": "choice",
+          "choices": [
+            "Decreases",
+            "Increases"
+          ],
+          "answer": "0",
+          "hint": "A positive charge loses potential energy along the field.",
+          "reexplain_hint": "Picture a downhill slope: the field points toward lower electric potential."
+        }
+      ]
+    },
+    {
+      "id": "s5",
+      "kind": "explain",
+      "calcs": [
+        {
+          "expr": "V/d",
+          "values": [
+            {
+              "name": "V",
+              "value": 12
+            },
+            {
+              "name": "d",
+              "value": 0.001
+            }
+          ],
+          "expected": 12000,
+          "unit": "V/m",
+          "unit_spoken": "volts per meter",
+          "quantity_kind": "magnitude",
+          "positive": "",
+          "frame": "",
+          "id": "c1"
+        }
+      ],
+      "say": "Field magnitude is {c1}.",
+      "subtitles": {
+        "uz": "Maydon moduli {c1}.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "result1",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 575
+            },
+            {
+              "k": "size",
+              "v": 32
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "E = {c1:3sf}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s6",
+      "kind": "explain",
+      "calcs": [
+        {
+          "expr": "eps*A/d",
+          "values": [
+            {
+              "name": "eps",
+              "value": 8.854e-12
+            },
+            {
+              "name": "A",
+              "value": 0.02
+            },
+            {
+              "name": "d",
+              "value": 0.001
+            }
+          ],
+          "expected": 1.7708e-10,
+          "unit": "F",
+          "unit_spoken": "farads",
+          "quantity_kind": "magnitude",
+          "positive": "",
+          "frame": "",
+          "id": "c2"
+        }
+      ],
+      "say": "Capacitance is {c2}.",
+      "subtitles": {
+        "uz": "Elektr sig‘im {c2}.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "result2",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 670
+            },
+            {
+              "k": "size",
+              "v": 32
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "C = {c2:3sf}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s7",
+      "kind": "explain",
+      "calcs": [
+        {
+          "expr": "c2*V",
+          "values": [
+            {
+              "name": "V",
+              "value": 12
+            }
+          ],
+          "expected": 2.12496e-09,
+          "unit": "C",
+          "unit_spoken": "coulombs",
+          "quantity_kind": "magnitude",
+          "positive": "",
+          "frame": "",
+          "id": "c3"
+        }
+      ],
+      "say": "Each plate holds charge magnitude {c3}, with opposite signs.",
+      "subtitles": {
+        "uz": "Har bir plastinadagi zaryad moduli {c3}, ishoralari qarama-qarshi.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "result3",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 765
+            },
+            {
+              "k": "size",
+              "v": 32
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "Q = {c3:3sf}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s8",
+      "kind": "checkpoint",
+      "calcs": [],
+      "say": "Enter the first calculated result, using its displayed unit.",
+      "subtitles": {
+        "uz": "Birinchi hisoblangan natijani ko‘rsatilgan birlikda kiriting.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "What is the first calculated result?",
+          "type": "number",
+          "choices": [],
+          "answer": "{c1:3sf}",
+          "hint": "Read the first result and its unit.",
+          "reexplain_hint": "Picture a downhill slope: the field points toward lower electric potential."
+        }
+      ]
+    },
+    {
+      "id": "s9",
+      "kind": "summary",
+      "calcs": [],
+      "say": "Voltage measures energy per charge. Capacitance describes how much charge the geometry stores per volt.",
+      "subtitles": {
+        "uz": "Kuchlanish birlik zaryadga to‘g‘ri keladigan energiyani bildiradi. Sig‘im geometriya har voltga qancha zaryad saqlashini ko‘rsatadi.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": []
+    }
+  ]
+}

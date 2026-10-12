@@ -1,0 +1,630 @@
+{
+  "source": {
+    "type": "problem",
+    "text": "A 2 kg cart starts at 3 m/s. A constant net force of 4 N acts along a 5 m displacement on a horizontal track. Find net work and final speed."
+  },
+  "title": "Work–energy theorem",
+  "level": "university",
+  "steps": [
+    {
+      "id": "s1",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Let us solve this worked example using the givens on the board.",
+      "subtitles": {
+        "uz": "Doskadagi berilgan kattaliklar yordamida ushbu misolni yechamiz.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "heading",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 70
+            },
+            {
+              "k": "size",
+              "v": 26
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Work–energy theorem"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "cart",
+          "type": "rect",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.117,
+          "num": [
+            {
+              "k": "x",
+              "v": 200
+            },
+            {
+              "k": "y",
+              "v": 350
+            },
+            {
+              "k": "w",
+              "v": 150
+            },
+            {
+              "k": "h",
+              "v": 90
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "push",
+          "type": "arrow",
+          "color": "force",
+          "label": "net force",
+          "frame": "",
+          "at": 0.233,
+          "num": [
+            {
+              "k": "x1",
+              "v": 350
+            },
+            {
+              "k": "y1",
+              "v": 395
+            },
+            {
+              "k": "x2",
+              "v": 570
+            },
+            {
+              "k": "y2",
+              "v": 395
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "distance",
+          "type": "arrow",
+          "color": "force",
+          "label": "displacement",
+          "frame": "",
+          "at": 0.35,
+          "num": [
+            {
+              "k": "x1",
+              "v": 200
+            },
+            {
+              "k": "y1",
+              "v": 540
+            },
+            {
+              "k": "x2",
+              "v": 600
+            },
+            {
+              "k": "y2",
+              "v": 540
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "given0",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.467,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 690
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Mass: 2 kg; initial speed: 3 m/s"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "given1",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.583,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 733
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Net force: 4 N forward; displacement: 5 m"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s2",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Force and displacement point together, so net work is positive and kinetic energy increases.",
+      "subtitles": {
+        "uz": "Kuch va siljish bir yo‘nalishda, shuning uchun ish musbat va kinetik energiya ortadi.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "sym0",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 90
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "W"
+            },
+            {
+              "k": "meaning",
+              "v": "net work"
+            },
+            {
+              "k": "unit",
+              "v": "J"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym1",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.117,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 126
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "F"
+            },
+            {
+              "k": "meaning",
+              "v": "net force"
+            },
+            {
+              "k": "unit",
+              "v": "N"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym2",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.233,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 162
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "d"
+            },
+            {
+              "k": "meaning",
+              "v": "displacement"
+            },
+            {
+              "k": "unit",
+              "v": "m"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym3",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.35,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 198
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "m"
+            },
+            {
+              "k": "meaning",
+              "v": "mass"
+            },
+            {
+              "k": "unit",
+              "v": "kg"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym4",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.467,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 234
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "u"
+            },
+            {
+              "k": "meaning",
+              "v": "initial speed"
+            },
+            {
+              "k": "unit",
+              "v": "m/s"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym5",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.583,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 270
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "v"
+            },
+            {
+              "k": "meaning",
+              "v": "final speed"
+            },
+            {
+              "k": "unit",
+              "v": "m/s"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s3",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Net work equals the change in kinetic energy. Include the cart’s initial kinetic energy when finding its final speed.",
+      "subtitles": {
+        "uz": "Natijaviy ish kinetik energiya o‘zgarishiga teng. Oxirgi tezlikni topishda boshlang‘ich kinetik energiyani ham hisobga oling.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "law0",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 440
+            },
+            {
+              "k": "size",
+              "v": 30
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "W=Fd=\\frac{mv^2}{2}-\\frac{mu^2}{2}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s4",
+      "kind": "checkpoint",
+      "calcs": [],
+      "say": "Positive net work causes kinetic energy to do what?",
+      "subtitles": {
+        "uz": "Davom etishdan oldin tushunganingizni tekshiring.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "Positive net work causes kinetic energy to do what?",
+          "type": "choice",
+          "choices": [
+            "Increase",
+            "Decrease"
+          ],
+          "answer": "0",
+          "hint": "Work transfers energy to the cart.",
+          "reexplain_hint": "Picture an energy account: positive work deposits energy into motion."
+        }
+      ]
+    },
+    {
+      "id": "s5",
+      "kind": "explain",
+      "calcs": [
+        {
+          "expr": "F*d",
+          "values": [
+            {
+              "name": "F",
+              "value": 4
+            },
+            {
+              "name": "d",
+              "value": 5
+            }
+          ],
+          "expected": 20,
+          "unit": "J",
+          "unit_spoken": "joules",
+          "quantity_kind": "scalar",
+          "positive": "",
+          "frame": "",
+          "id": "c1"
+        }
+      ],
+      "say": "Net work is {c1}.",
+      "subtitles": {
+        "uz": "Natijaviy ish {c1}.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "result1",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 575
+            },
+            {
+              "k": "size",
+              "v": 32
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "W = {c1:3sf}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s6",
+      "kind": "explain",
+      "calcs": [
+        {
+          "expr": "sqrt(u**2+2*c1/m)",
+          "values": [
+            {
+              "name": "u",
+              "value": 3
+            },
+            {
+              "name": "m",
+              "value": 2
+            }
+          ],
+          "expected": 5.385164807134504,
+          "unit": "m/s",
+          "unit_spoken": "meters per second",
+          "quantity_kind": "magnitude",
+          "positive": "",
+          "frame": "",
+          "id": "c2"
+        }
+      ],
+      "say": "Final speed is {c2}.",
+      "subtitles": {
+        "uz": "Oxirgi tezlik moduli {c2}.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "result2",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 670
+            },
+            {
+              "k": "size",
+              "v": 32
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "v = {c2:3sf}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s7",
+      "kind": "checkpoint",
+      "calcs": [],
+      "say": "Enter the first calculated result, using its displayed unit.",
+      "subtitles": {
+        "uz": "Birinchi hisoblangan natijani ko‘rsatilgan birlikda kiriting.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "What is the first calculated result?",
+          "type": "number",
+          "choices": [],
+          "answer": "{c1:3sf}",
+          "hint": "Read the first result and its unit.",
+          "reexplain_hint": "Picture an energy account: positive work deposits energy into motion."
+        }
+      ]
+    },
+    {
+      "id": "s8",
+      "kind": "summary",
+      "calcs": [],
+      "say": "Use net work to track kinetic energy; speed follows from the energy, not directly from the work.",
+      "subtitles": {
+        "uz": "Natijaviy ish orqali kinetik energiyani toping; tezlik energiyadan aniqlanadi.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": []
+    }
+  ]
+}

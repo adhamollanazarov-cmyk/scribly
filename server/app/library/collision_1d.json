@@ -1,0 +1,625 @@
+{
+  "source": {
+    "type": "problem",
+    "text": "A 2 kg cart moves right at 3 m/s and sticks to a stationary 1 kg cart. External impulse is negligible. Find total initial momentum and common final velocity."
+  },
+  "title": "Momentum and a 1D collision",
+  "level": "university",
+  "steps": [
+    {
+      "id": "s1",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Let us solve this worked example using the givens on the board.",
+      "subtitles": {
+        "uz": "Doskadagi berilgan kattaliklar yordamida ushbu misolni yechamiz.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "heading",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 70
+            },
+            {
+              "k": "size",
+              "v": 26
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Momentum and a 1D collision"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "cart1",
+          "type": "rect",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.1,
+          "num": [
+            {
+              "k": "x",
+              "v": 140
+            },
+            {
+              "k": "y",
+              "v": 330
+            },
+            {
+              "k": "w",
+              "v": 150
+            },
+            {
+              "k": "h",
+              "v": 90
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "cart2",
+          "type": "rect",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.2,
+          "num": [
+            {
+              "k": "x",
+              "v": 480
+            },
+            {
+              "k": "y",
+              "v": 330
+            },
+            {
+              "k": "w",
+              "v": 100
+            },
+            {
+              "k": "h",
+              "v": 90
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "motion",
+          "type": "arrow",
+          "color": "force",
+          "label": "initial motion",
+          "frame": "",
+          "at": 0.3,
+          "num": [
+            {
+              "k": "x1",
+              "v": 290
+            },
+            {
+              "k": "y1",
+              "v": 370
+            },
+            {
+              "k": "x2",
+              "v": 430
+            },
+            {
+              "k": "y2",
+              "v": 370
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "axis",
+          "type": "arrow",
+          "color": "force",
+          "label": "+x",
+          "frame": "motion",
+          "at": 0.4,
+          "num": [
+            {
+              "k": "x1",
+              "v": 140
+            },
+            {
+              "k": "y1",
+              "v": 540
+            },
+            {
+              "k": "x2",
+              "v": 620
+            },
+            {
+              "k": "y2",
+              "v": 540
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "given0",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.5,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 690
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Moving cart: 2 kg at 3 m/s right"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "given1",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.6,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 733
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Stationary cart: 1 kg; carts stick together"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s2",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Take right as positive x. With negligible external impulse, the total momentum of both carts is conserved.",
+      "subtitles": {
+        "uz": "O‘ngni musbat x deb olamiz. Tashqi impuls juda kichik bo‘lsa, ikkala aravachaning umumiy impulsi saqlanadi.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "sym0",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 90
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "m_1"
+            },
+            {
+              "k": "meaning",
+              "v": "moving cart mass"
+            },
+            {
+              "k": "unit",
+              "v": "kg"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym1",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.14,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 126
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "m_2"
+            },
+            {
+              "k": "meaning",
+              "v": "stationary cart mass"
+            },
+            {
+              "k": "unit",
+              "v": "kg"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym2",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.28,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 162
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "u"
+            },
+            {
+              "k": "meaning",
+              "v": "initial velocity"
+            },
+            {
+              "k": "unit",
+              "v": "m/s"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym3",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.42,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 198
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "p"
+            },
+            {
+              "k": "meaning",
+              "v": "total momentum"
+            },
+            {
+              "k": "unit",
+              "v": "kg·m/s"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym4",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.56,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 234
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "v"
+            },
+            {
+              "k": "meaning",
+              "v": "common velocity"
+            },
+            {
+              "k": "unit",
+              "v": "m/s"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s3",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Sticking makes the final velocity shared. Momentum is conserved, although kinetic energy generally decreases.",
+      "subtitles": {
+        "uz": "Yopishgan aravachalar bir xil tezlikda harakatlanadi. Impuls saqlanadi, ammo kinetik energiya odatda kamayadi.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "law0",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 440
+            },
+            {
+              "k": "size",
+              "v": 30
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "p=m_1u,\\qquad v=\\frac{p}{m_1+m_2}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s4",
+      "kind": "checkpoint",
+      "calcs": [],
+      "say": "What is conserved when the carts stick with negligible external impulse?",
+      "subtitles": {
+        "uz": "Davom etishdan oldin tushunganingizni tekshiring.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "What is conserved when the carts stick with negligible external impulse?",
+          "type": "choice",
+          "choices": [
+            "Total momentum",
+            "Total kinetic energy"
+          ],
+          "answer": "0",
+          "hint": "Consider the system of both carts.",
+          "reexplain_hint": "Their internal forces exchange momentum between carts but cannot change the system’s total momentum."
+        }
+      ]
+    },
+    {
+      "id": "s5",
+      "kind": "explain",
+      "calcs": [
+        {
+          "expr": "m*u",
+          "values": [
+            {
+              "name": "m",
+              "value": 2
+            },
+            {
+              "name": "u",
+              "value": 3
+            }
+          ],
+          "expected": 6,
+          "unit": "kg*m/s",
+          "unit_spoken": "kilogram meters per second",
+          "quantity_kind": "component",
+          "positive": "+x",
+          "frame": "motion",
+          "id": "c1"
+        }
+      ],
+      "say": "Total initial momentum is {c1}, rightward.",
+      "subtitles": {
+        "uz": "Boshlang‘ich umumiy impuls {c1}, o‘ngga.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "result1",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 575
+            },
+            {
+              "k": "size",
+              "v": 32
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "p = {c1:3sf}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s6",
+      "kind": "explain",
+      "calcs": [
+        {
+          "expr": "c1/(m1+m2)",
+          "values": [
+            {
+              "name": "m1",
+              "value": 2
+            },
+            {
+              "name": "m2",
+              "value": 1
+            }
+          ],
+          "expected": 2,
+          "unit": "m/s",
+          "unit_spoken": "meters per second",
+          "quantity_kind": "component",
+          "positive": "+x",
+          "frame": "motion",
+          "id": "c2"
+        }
+      ],
+      "say": "Common final velocity is {c2}, rightward.",
+      "subtitles": {
+        "uz": "Umumiy oxirgi tezlik {c2}, o‘ngga.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "result2",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 670
+            },
+            {
+              "k": "size",
+              "v": 32
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "v = {c2:3sf}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s7",
+      "kind": "checkpoint",
+      "calcs": [],
+      "say": "Enter the first calculated result, using its displayed unit.",
+      "subtitles": {
+        "uz": "Birinchi hisoblangan natijani ko‘rsatilgan birlikda kiriting.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "What is the first calculated result?",
+          "type": "number",
+          "choices": [],
+          "answer": "{c1:3sf}",
+          "hint": "Read the first result and its unit.",
+          "reexplain_hint": "Their internal forces exchange momentum between carts but cannot change the system’s total momentum."
+        }
+      ]
+    },
+    {
+      "id": "s8",
+      "kind": "summary",
+      "calcs": [],
+      "say": "Choose the whole colliding system. Conservation of momentum works even when the objects stick.",
+      "subtitles": {
+        "uz": "To‘qnashayotgan jismlarni bitta tizim deb oling. Ular yopishganda ham impuls saqlanadi.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": []
+    }
+  ]
+}

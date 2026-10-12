@@ -1,0 +1,637 @@
+{
+  "source": {
+    "type": "problem",
+    "text": "A 0.5 kg mass oscillates on an ideal horizontal spring with stiffness 200 N/m and amplitude 0.1 m. Ignore friction. Find angular frequency and maximum speed."
+  },
+  "title": "Spring simple harmonic motion",
+  "level": "university",
+  "steps": [
+    {
+      "id": "s1",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Let us solve this worked example using the givens on the board.",
+      "subtitles": {
+        "uz": "Doskadagi berilgan kattaliklar yordamida ushbu misolni yechamiz.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "heading",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 70
+            },
+            {
+              "k": "size",
+              "v": 26
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Spring simple harmonic motion"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "wall",
+          "type": "line",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.1,
+          "num": [
+            {
+              "k": "x1",
+              "v": 130
+            },
+            {
+              "k": "y1",
+              "v": 200
+            },
+            {
+              "k": "x2",
+              "v": 130
+            },
+            {
+              "k": "y2",
+              "v": 500
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "spring",
+          "type": "polyline",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.2,
+          "num": [],
+          "txt": [],
+          "pts": [
+            [
+              130,
+              350
+            ],
+            [
+              170,
+              350
+            ],
+            [
+              190,
+              310
+            ],
+            [
+              220,
+              390
+            ],
+            [
+              250,
+              310
+            ],
+            [
+              280,
+              390
+            ],
+            [
+              310,
+              350
+            ],
+            [
+              350,
+              350
+            ]
+          ]
+        },
+        {
+          "id": "mass",
+          "type": "rect",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.3,
+          "num": [
+            {
+              "k": "x",
+              "v": 350
+            },
+            {
+              "k": "y",
+              "v": 310
+            },
+            {
+              "k": "w",
+              "v": 110
+            },
+            {
+              "k": "h",
+              "v": 80
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "axis",
+          "type": "arrow",
+          "color": "force",
+          "label": "displacement",
+          "frame": "",
+          "at": 0.4,
+          "num": [
+            {
+              "k": "x1",
+              "v": 150
+            },
+            {
+              "k": "y1",
+              "v": 550
+            },
+            {
+              "k": "x2",
+              "v": 610
+            },
+            {
+              "k": "y2",
+              "v": 550
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "given0",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.5,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 690
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Mass: 0.5 kg; stiffness: 200 N/m"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "given1",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.6,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 733
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Amplitude: 0.1 m; friction neglected"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s2",
+      "kind": "explain",
+      "calcs": [],
+      "say": "The spring pulls toward equilibrium. Speed is greatest at equilibrium and zero at the turning points.",
+      "subtitles": {
+        "uz": "Prujina muvozanat holati tomon tortadi. Tezlik muvozanatda eng katta, chekka nuqtalarda esa nol bo‘ladi.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "sym0",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 90
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "m"
+            },
+            {
+              "k": "meaning",
+              "v": "mass"
+            },
+            {
+              "k": "unit",
+              "v": "kg"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym1",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.14,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 126
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "k"
+            },
+            {
+              "k": "meaning",
+              "v": "spring stiffness"
+            },
+            {
+              "k": "unit",
+              "v": "N/m"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym2",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.28,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 162
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "A"
+            },
+            {
+              "k": "meaning",
+              "v": "amplitude"
+            },
+            {
+              "k": "unit",
+              "v": "m"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym3",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.42,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 198
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "\\omega"
+            },
+            {
+              "k": "meaning",
+              "v": "angular frequency"
+            },
+            {
+              "k": "unit",
+              "v": "rad/s"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym4",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.56,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 234
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "v"
+            },
+            {
+              "k": "meaning",
+              "v": "maximum speed"
+            },
+            {
+              "k": "unit",
+              "v": "m/s"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s3",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Stiffness and mass set the angular frequency. Amplitude then sets the maximum speed.",
+      "subtitles": {
+        "uz": "Burchak chastota bikrlik va massaga bog‘liq. Amplituda eng katta tezlikni belgilaydi.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "law0",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 440
+            },
+            {
+              "k": "size",
+              "v": 30
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "\\omega=\\sqrt{\\frac{k}{m}},\\qquad v=\\omega A"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s4",
+      "kind": "checkpoint",
+      "calcs": [],
+      "say": "Where is the oscillating mass fastest?",
+      "subtitles": {
+        "uz": "Davom etishdan oldin tushunganingizni tekshiring.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "Where is the oscillating mass fastest?",
+          "type": "choice",
+          "choices": [
+            "At equilibrium",
+            "At a turning point"
+          ],
+          "answer": "0",
+          "hint": "At equilibrium, stored spring energy is smallest.",
+          "reexplain_hint": "Imagine the spring releasing stored energy as the mass approaches the middle."
+        }
+      ]
+    },
+    {
+      "id": "s5",
+      "kind": "explain",
+      "calcs": [
+        {
+          "expr": "sqrt(k/m)",
+          "values": [
+            {
+              "name": "k",
+              "value": 200
+            },
+            {
+              "name": "m",
+              "value": 0.5
+            }
+          ],
+          "expected": 20,
+          "unit": "rad/s",
+          "unit_spoken": "radians per second",
+          "quantity_kind": "magnitude",
+          "positive": "",
+          "frame": "",
+          "id": "c1"
+        }
+      ],
+      "say": "Angular frequency is {c1}.",
+      "subtitles": {
+        "uz": "Burchak chastota {c1}.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "result1",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 575
+            },
+            {
+              "k": "size",
+              "v": 32
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "\\omega = {c1:3sf}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s6",
+      "kind": "explain",
+      "calcs": [
+        {
+          "expr": "c1*A",
+          "values": [
+            {
+              "name": "A",
+              "value": 0.1
+            }
+          ],
+          "expected": 2,
+          "unit": "m/s",
+          "unit_spoken": "meters per second",
+          "quantity_kind": "magnitude",
+          "positive": "",
+          "frame": "",
+          "id": "c2"
+        }
+      ],
+      "say": "Maximum speed is {c2}, at equilibrium.",
+      "subtitles": {
+        "uz": "Eng katta tezlik {c2}, muvozanat holatida.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "result2",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 670
+            },
+            {
+              "k": "size",
+              "v": 32
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "v = {c2:3sf}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s7",
+      "kind": "checkpoint",
+      "calcs": [],
+      "say": "Enter the first calculated result, using its displayed unit.",
+      "subtitles": {
+        "uz": "Birinchi hisoblangan natijani ko‘rsatilgan birlikda kiriting.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "What is the first calculated result?",
+          "type": "number",
+          "choices": [],
+          "answer": "{c1:3sf}",
+          "hint": "Read the first result and its unit.",
+          "reexplain_hint": "Imagine the spring releasing stored energy as the mass approaches the middle."
+        }
+      ]
+    },
+    {
+      "id": "s8",
+      "kind": "summary",
+      "calcs": [],
+      "say": "For an ideal spring, frequency depends on mass and stiffness; maximum speed also depends on amplitude.",
+      "subtitles": {
+        "uz": "Ideal prujinada chastota massa va bikrlikka, eng katta tezlik esa amplitudaga ham bog‘liq.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": []
+    }
+  ]
+}

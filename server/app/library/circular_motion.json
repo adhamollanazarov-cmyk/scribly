@@ -1,0 +1,613 @@
+{
+  "source": {
+    "type": "problem",
+    "text": "A 0.5 kg object moves uniformly around a horizontal circle of radius 2 m at speed 4 m/s. Find inward acceleration and net force magnitudes."
+  },
+  "title": "Circular motion",
+  "level": "university",
+  "steps": [
+    {
+      "id": "s1",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Let us solve this worked example using the givens on the board.",
+      "subtitles": {
+        "uz": "Doskadagi berilgan kattaliklar yordamida ushbu misolni yechamiz.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "heading",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 70
+            },
+            {
+              "k": "size",
+              "v": 26
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Circular motion"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "orbit",
+          "type": "circle",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.1,
+          "num": [
+            {
+              "k": "cx",
+              "v": 360
+            },
+            {
+              "k": "cy",
+              "v": 360
+            },
+            {
+              "k": "r",
+              "v": 170
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "body",
+          "type": "point",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.2,
+          "num": [
+            {
+              "k": "x",
+              "v": 530
+            },
+            {
+              "k": "y",
+              "v": 360
+            },
+            {
+              "k": "r",
+              "v": 12
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "inward",
+          "type": "arrow",
+          "color": "force",
+          "label": "toward center",
+          "frame": "",
+          "at": 0.3,
+          "num": [
+            {
+              "k": "x1",
+              "v": 530
+            },
+            {
+              "k": "y1",
+              "v": 360
+            },
+            {
+              "k": "x2",
+              "v": 360
+            },
+            {
+              "k": "y2",
+              "v": 360
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "tangent",
+          "type": "arrow",
+          "color": "force",
+          "label": "velocity",
+          "frame": "",
+          "at": 0.4,
+          "num": [
+            {
+              "k": "x1",
+              "v": 530
+            },
+            {
+              "k": "y1",
+              "v": 360
+            },
+            {
+              "k": "x2",
+              "v": 530
+            },
+            {
+              "k": "y2",
+              "v": 220
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "given0",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.5,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 690
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Mass: 0.5 kg; radius: 2 m"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "given1",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.6,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 733
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Speed: 4 m/s; uniform circular motion"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s2",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Speed stays constant, but velocity turns. The acceleration and net force point toward the center.",
+      "subtitles": {
+        "uz": "Tezlik moduli o‘zgarmaydi, ammo yo‘nalishi buriladi. Tezlanish va natijaviy kuch markazga yo‘naladi.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "sym0",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 90
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "v"
+            },
+            {
+              "k": "meaning",
+              "v": "speed"
+            },
+            {
+              "k": "unit",
+              "v": "m/s"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym1",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.14,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 126
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "r"
+            },
+            {
+              "k": "meaning",
+              "v": "circle radius"
+            },
+            {
+              "k": "unit",
+              "v": "m"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym2",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.28,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 162
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "a"
+            },
+            {
+              "k": "meaning",
+              "v": "inward acceleration"
+            },
+            {
+              "k": "unit",
+              "v": "m/s²"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym3",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.42,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 198
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "m"
+            },
+            {
+              "k": "meaning",
+              "v": "mass"
+            },
+            {
+              "k": "unit",
+              "v": "kg"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym4",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.56,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 234
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "F"
+            },
+            {
+              "k": "meaning",
+              "v": "net inward force"
+            },
+            {
+              "k": "unit",
+              "v": "N"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s3",
+      "kind": "explain",
+      "calcs": [],
+      "say": "A tighter circle requires faster turning. Inward acceleration grows with speed squared and decreases with radius.",
+      "subtitles": {
+        "uz": "Tor doirada yo‘nalish tezroq o‘zgaradi. Markazga intilma tezlanish tezlik kvadratiga to‘g‘ri, radiusga teskari proporsional.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "law0",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 440
+            },
+            {
+              "k": "size",
+              "v": 30
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "a=\\frac{v^2}{r},\\qquad F=ma"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s4",
+      "kind": "checkpoint",
+      "calcs": [],
+      "say": "Where does the net force point during uniform circular motion?",
+      "subtitles": {
+        "uz": "Davom etishdan oldin tushunganingizni tekshiring.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "Where does the net force point during uniform circular motion?",
+          "type": "choice",
+          "choices": [
+            "Toward the center",
+            "Along the tangent"
+          ],
+          "answer": "0",
+          "hint": "The tangent shows velocity, not its change.",
+          "reexplain_hint": "Compare nearby velocity arrows: their difference points inward."
+        }
+      ]
+    },
+    {
+      "id": "s5",
+      "kind": "explain",
+      "calcs": [
+        {
+          "expr": "v**2/r",
+          "values": [
+            {
+              "name": "v",
+              "value": 4
+            },
+            {
+              "name": "r",
+              "value": 2
+            }
+          ],
+          "expected": 8,
+          "unit": "m/s**2",
+          "unit_spoken": "meters per second squared",
+          "quantity_kind": "magnitude",
+          "positive": "",
+          "frame": "",
+          "id": "c1"
+        }
+      ],
+      "say": "Inward acceleration has magnitude {c1}.",
+      "subtitles": {
+        "uz": "Markazga intilma tezlanish moduli {c1}.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "result1",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 575
+            },
+            {
+              "k": "size",
+              "v": 32
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "a = {c1:3sf}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s6",
+      "kind": "explain",
+      "calcs": [
+        {
+          "expr": "m*c1",
+          "values": [
+            {
+              "name": "m",
+              "value": 0.5
+            }
+          ],
+          "expected": 4,
+          "unit": "N",
+          "unit_spoken": "newtons",
+          "quantity_kind": "magnitude",
+          "positive": "",
+          "frame": "",
+          "id": "c2"
+        }
+      ],
+      "say": "Net inward force has magnitude {c2}.",
+      "subtitles": {
+        "uz": "Markazga yo‘nalgan natijaviy kuch moduli {c2}.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "result2",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 670
+            },
+            {
+              "k": "size",
+              "v": 32
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "F = {c2:3sf}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s7",
+      "kind": "checkpoint",
+      "calcs": [],
+      "say": "Enter the first calculated result, using its displayed unit.",
+      "subtitles": {
+        "uz": "Birinchi hisoblangan natijani ko‘rsatilgan birlikda kiriting.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "What is the first calculated result?",
+          "type": "number",
+          "choices": [],
+          "answer": "{c1:3sf}",
+          "hint": "Read the first result and its unit.",
+          "reexplain_hint": "Compare nearby velocity arrows: their difference points inward."
+        }
+      ]
+    },
+    {
+      "id": "s8",
+      "kind": "summary",
+      "calcs": [],
+      "say": "Centripetal describes the net inward force, rather than an additional type of force.",
+      "subtitles": {
+        "uz": "Markazga intilma kuch alohida kuch turi emas, balki ichkariga yo‘nalgan natijaviy kuchdir.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": []
+    }
+  ]
+}

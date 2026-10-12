@@ -1,0 +1,602 @@
+{
+  "source": {
+    "type": "problem",
+    "text": "Launch a ball at 20 m/s, 30 degrees above horizontal. It lands at launch height. Ignore air resistance; g = 9.8 m/s^2. Find flight time and horizontal range."
+  },
+  "title": "Projectile motion",
+  "level": "university",
+  "steps": [
+    {
+      "id": "s1",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Let us solve this worked example using the givens on the board.",
+      "subtitles": {
+        "uz": "Doskadagi berilgan kattaliklar yordamida ushbu misolni yechamiz.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "heading",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 70
+            },
+            {
+              "k": "size",
+              "v": 26
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Projectile motion"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "trajectory",
+          "type": "axes_plot",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.14,
+          "num": [
+            {
+              "k": "x",
+              "v": 120
+            },
+            {
+              "k": "y",
+              "v": 200
+            },
+            {
+              "k": "w",
+              "v": 530
+            },
+            {
+              "k": "h",
+              "v": 350
+            },
+            {
+              "k": "x_min",
+              "v": 0
+            },
+            {
+              "k": "x_max",
+              "v": 36
+            },
+            {
+              "k": "y_min",
+              "v": 0
+            },
+            {
+              "k": "y_max",
+              "v": 6
+            }
+          ],
+          "txt": [
+            {
+              "k": "xlabel",
+              "v": "horizontal position (m)"
+            },
+            {
+              "k": "ylabel",
+              "v": "height (m)"
+            },
+            {
+              "k": "expr",
+              "v": "x*tan(pi/6)-9.8*x**2/(2*(20*cos(pi/6))**2)"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "horizontal",
+          "type": "arrow",
+          "color": "force",
+          "label": "+x",
+          "frame": "horizontal",
+          "at": 0.28,
+          "num": [
+            {
+              "k": "x1",
+              "v": 150
+            },
+            {
+              "k": "y1",
+              "v": 600
+            },
+            {
+              "k": "x2",
+              "v": 620
+            },
+            {
+              "k": "y2",
+              "v": 600
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "given0",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.42,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 690
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Launch speed: 20 m/s; angle: 30 degrees"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "given1",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.56,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 733
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Gravity: 9.8 m/s²; equal launch/landing height"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s2",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Take right as positive x. Horizontal velocity stays constant; gravity changes only vertical velocity.",
+      "subtitles": {
+        "uz": "O‘ngni musbat x deb olamiz. Gorizontal tezlik o‘zgarmaydi; tortishish faqat vertikal tezlikni o‘zgartiradi.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "sym0",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 90
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "u"
+            },
+            {
+              "k": "meaning",
+              "v": "launch speed"
+            },
+            {
+              "k": "unit",
+              "v": "m/s"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym1",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.14,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 126
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "\\theta"
+            },
+            {
+              "k": "meaning",
+              "v": "launch angle"
+            },
+            {
+              "k": "unit",
+              "v": "degrees"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym2",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.28,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 162
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "g"
+            },
+            {
+              "k": "meaning",
+              "v": "gravity magnitude"
+            },
+            {
+              "k": "unit",
+              "v": "m/s²"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym3",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.42,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 198
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "t"
+            },
+            {
+              "k": "meaning",
+              "v": "flight time"
+            },
+            {
+              "k": "unit",
+              "v": "s"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym4",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.56,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 234
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "R"
+            },
+            {
+              "k": "meaning",
+              "v": "horizontal range"
+            },
+            {
+              "k": "unit",
+              "v": "m"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s3",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Equal launch and landing heights make upward and downward flight times equal.",
+      "subtitles": {
+        "uz": "Uchish va qo‘nish balandligi teng bo‘lsa, ko‘tarilish va tushish vaqtlari teng bo‘ladi.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "law0",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 440
+            },
+            {
+              "k": "size",
+              "v": 30
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "t=\\frac{2u\\sin\\theta}{g},\\qquad R=ut\\cos\\theta"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s4",
+      "kind": "checkpoint",
+      "calcs": [],
+      "say": "Ignoring air resistance, which velocity component stays constant?",
+      "subtitles": {
+        "uz": "Davom etishdan oldin tushunganingizni tekshiring.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "Ignoring air resistance, which velocity component stays constant?",
+          "type": "choice",
+          "choices": [
+            "Horizontal",
+            "Vertical"
+          ],
+          "answer": "0",
+          "hint": "Gravity points vertically.",
+          "reexplain_hint": "Imagine a cart carrying the ball horizontally while the ball rises and falls."
+        }
+      ]
+    },
+    {
+      "id": "s5",
+      "kind": "explain",
+      "calcs": [
+        {
+          "expr": "2*u*sin(theta*pi/180)/g",
+          "values": [
+            {
+              "name": "u",
+              "value": 20
+            },
+            {
+              "name": "theta",
+              "value": 30
+            },
+            {
+              "name": "g",
+              "value": 9.8
+            }
+          ],
+          "expected": 2.0408163265306123,
+          "unit": "s",
+          "unit_spoken": "seconds",
+          "quantity_kind": "magnitude",
+          "positive": "",
+          "frame": "",
+          "id": "c1"
+        }
+      ],
+      "say": "Flight time is {c1}.",
+      "subtitles": {
+        "uz": "Uchish vaqti {c1}.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "result1",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 575
+            },
+            {
+              "k": "size",
+              "v": 32
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "t = {c1:3sf}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s6",
+      "kind": "explain",
+      "calcs": [
+        {
+          "expr": "u*cos(theta*pi/180)*c1",
+          "values": [
+            {
+              "name": "u",
+              "value": 20
+            },
+            {
+              "name": "theta",
+              "value": 30
+            }
+          ],
+          "expected": 35.34797566467096,
+          "unit": "m",
+          "unit_spoken": "meters",
+          "quantity_kind": "component",
+          "positive": "+x",
+          "frame": "horizontal",
+          "id": "c2"
+        }
+      ],
+      "say": "Horizontal range is {c2}, to the right.",
+      "subtitles": {
+        "uz": "Gorizontal masofa {c2}, o‘ng tomonga.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "result2",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 670
+            },
+            {
+              "k": "size",
+              "v": 32
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "R = {c2:3sf}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s7",
+      "kind": "checkpoint",
+      "calcs": [],
+      "say": "Enter the first calculated result, using its displayed unit.",
+      "subtitles": {
+        "uz": "Birinchi hisoblangan natijani ko‘rsatilgan birlikda kiriting.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "What is the first calculated result?",
+          "type": "number",
+          "choices": [],
+          "answer": "{c1:3sf}",
+          "hint": "Read the first result and its unit.",
+          "reexplain_hint": "Imagine a cart carrying the ball horizontally while the ball rises and falls."
+        }
+      ]
+    },
+    {
+      "id": "s8",
+      "kind": "summary",
+      "calcs": [],
+      "say": "Treat horizontal and vertical motion separately, then connect them through the same flight time.",
+      "subtitles": {
+        "uz": "Gorizontal va vertikal harakatni alohida qarang, so‘ng ularni umumiy uchish vaqti bilan bog‘lang.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": []
+    }
+  ]
+}

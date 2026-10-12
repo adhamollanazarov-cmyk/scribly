@@ -1,0 +1,577 @@
+{
+  "source": {
+    "type": "problem",
+    "text": "A cart initially moves right at 3 m/s. Its constant acceleration is 2 m/s^2 right for 4 s. Find final velocity and displacement."
+  },
+  "title": "1D kinematics",
+  "level": "university",
+  "steps": [
+    {
+      "id": "s1",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Let us solve this worked example using the givens on the board.",
+      "subtitles": {
+        "uz": "Doskadagi berilgan kattaliklar yordamida ushbu misolni yechamiz.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "heading",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 70
+            },
+            {
+              "k": "size",
+              "v": 26
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "1D kinematics"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "cart",
+          "type": "rect",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.14,
+          "num": [
+            {
+              "k": "x",
+              "v": 220
+            },
+            {
+              "k": "y",
+              "v": 340
+            },
+            {
+              "k": "w",
+              "v": 140
+            },
+            {
+              "k": "h",
+              "v": 80
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "axis",
+          "type": "arrow",
+          "color": "force",
+          "label": "+x",
+          "frame": "motion",
+          "at": 0.28,
+          "num": [
+            {
+              "k": "x1",
+              "v": 150
+            },
+            {
+              "k": "y1",
+              "v": 520
+            },
+            {
+              "k": "x2",
+              "v": 630
+            },
+            {
+              "k": "y2",
+              "v": 520
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "given0",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.42,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 690
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Initial velocity: 3 m/s"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "given1",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.56,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 733
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Acceleration: 2 m/s²; time: 4 s"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s2",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Take right as positive x. Velocity changes steadily because acceleration is constant.",
+      "subtitles": {
+        "uz": "O‘ng tomonni musbat x deb olamiz. Tezlanish o‘zgarmagani uchun tezlik bir tekis o‘zgaradi.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "sym0",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 90
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "u"
+            },
+            {
+              "k": "meaning",
+              "v": "initial velocity"
+            },
+            {
+              "k": "unit",
+              "v": "m/s"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym1",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.14,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 126
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "v"
+            },
+            {
+              "k": "meaning",
+              "v": "final velocity"
+            },
+            {
+              "k": "unit",
+              "v": "m/s"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym2",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.28,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 162
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "a"
+            },
+            {
+              "k": "meaning",
+              "v": "acceleration"
+            },
+            {
+              "k": "unit",
+              "v": "m/s²"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym3",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.42,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 198
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "t"
+            },
+            {
+              "k": "meaning",
+              "v": "elapsed time"
+            },
+            {
+              "k": "unit",
+              "v": "s"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym4",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.56,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 234
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "s"
+            },
+            {
+              "k": "meaning",
+              "v": "displacement"
+            },
+            {
+              "k": "unit",
+              "v": "m"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s3",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Final velocity adds the accumulated change. Displacement uses the average velocity over the interval.",
+      "subtitles": {
+        "uz": "Oxirgi tezlik boshlang‘ich tezlik va uning o‘zgarishi yig‘indisidir. Siljish o‘rtacha tezlik orqali topiladi.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "law0",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 440
+            },
+            {
+              "k": "size",
+              "v": 30
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "v=u+at,\\qquad s=ut+\\frac{at^2}{2}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s4",
+      "kind": "checkpoint",
+      "calcs": [],
+      "say": "With constant positive acceleration, what happens to velocity?",
+      "subtitles": {
+        "uz": "Davom etishdan oldin tushunganingizni tekshiring.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "With constant positive acceleration, what happens to velocity?",
+          "type": "choice",
+          "choices": [
+            "It increases steadily",
+            "It stays constant"
+          ],
+          "answer": "0",
+          "hint": "Acceleration measures velocity change per second.",
+          "reexplain_hint": "Picture equal time intervals: each adds an equal amount of velocity."
+        }
+      ]
+    },
+    {
+      "id": "s5",
+      "kind": "explain",
+      "calcs": [
+        {
+          "expr": "u+a*t",
+          "values": [
+            {
+              "name": "u",
+              "value": 3
+            },
+            {
+              "name": "a",
+              "value": 2
+            },
+            {
+              "name": "t",
+              "value": 4
+            }
+          ],
+          "expected": 11,
+          "unit": "m/s",
+          "unit_spoken": "meters per second",
+          "quantity_kind": "component",
+          "positive": "+x",
+          "frame": "motion",
+          "id": "c1"
+        }
+      ],
+      "say": "Final velocity is {c1}, to the right.",
+      "subtitles": {
+        "uz": "Oxirgi tezlik {c1}, o‘ngga yo‘nalgan.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "result1",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 575
+            },
+            {
+              "k": "size",
+              "v": 32
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "v = {c1:3sf}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s6",
+      "kind": "explain",
+      "calcs": [
+        {
+          "expr": "u*t+a*t**2/2",
+          "values": [
+            {
+              "name": "u",
+              "value": 3
+            },
+            {
+              "name": "a",
+              "value": 2
+            },
+            {
+              "name": "t",
+              "value": 4
+            }
+          ],
+          "expected": 28,
+          "unit": "m",
+          "unit_spoken": "meters",
+          "quantity_kind": "component",
+          "positive": "+x",
+          "frame": "motion",
+          "id": "c2"
+        }
+      ],
+      "say": "Displacement is {c2}, to the right.",
+      "subtitles": {
+        "uz": "Siljish {c2}, o‘ngga yo‘nalgan.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "result2",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 670
+            },
+            {
+              "k": "size",
+              "v": 32
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "s = {c2:3sf}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s7",
+      "kind": "checkpoint",
+      "calcs": [],
+      "say": "Enter the first calculated result, using its displayed unit.",
+      "subtitles": {
+        "uz": "Birinchi hisoblangan natijani ko‘rsatilgan birlikda kiriting.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "What is the first calculated result?",
+          "type": "number",
+          "choices": [],
+          "answer": "{c1:3sf}",
+          "hint": "Read the first result and its unit.",
+          "reexplain_hint": "Picture equal time intervals: each adds an equal amount of velocity."
+        }
+      ]
+    },
+    {
+      "id": "s8",
+      "kind": "summary",
+      "calcs": [],
+      "say": "Velocity and displacement are different quantities. Constant acceleration links both to elapsed time.",
+      "subtitles": {
+        "uz": "Tezlik va siljish turli kattaliklardir. O‘zgarmas tezlanish ularni vaqt bilan bog‘laydi.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": []
+    }
+  ]
+}

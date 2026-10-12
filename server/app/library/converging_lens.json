@@ -1,0 +1,668 @@
+{
+  "source": {
+    "type": "problem",
+    "text": "A thin converging lens has focal length +0.1 m. A real object stands 0.3 m to its left. Use real-object and real-image positive distances. Find image distance and signed magnification."
+  },
+  "title": "Thin converging lens",
+  "level": "university",
+  "steps": [
+    {
+      "id": "s1",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Let us solve this worked example using the givens on the board.",
+      "subtitles": {
+        "uz": "Doskadagi berilgan kattaliklar yordamida ushbu misolni yechamiz.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "heading",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 70
+            },
+            {
+              "k": "size",
+              "v": 26
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Thin converging lens"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "axis",
+          "type": "line",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.07,
+          "num": [
+            {
+              "k": "x1",
+              "v": 100
+            },
+            {
+              "k": "y1",
+              "v": 400
+            },
+            {
+              "k": "x2",
+              "v": 700
+            },
+            {
+              "k": "y2",
+              "v": 400
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "lens",
+          "type": "ellipse",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.14,
+          "num": [
+            {
+              "k": "cx",
+              "v": 400
+            },
+            {
+              "k": "cy",
+              "v": 400
+            },
+            {
+              "k": "rx",
+              "v": 25
+            },
+            {
+              "k": "ry",
+              "v": 180
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "object",
+          "type": "arrow",
+          "color": "force",
+          "label": "object",
+          "frame": "",
+          "at": 0.21,
+          "num": [
+            {
+              "k": "x1",
+              "v": 160
+            },
+            {
+              "k": "y1",
+              "v": 400
+            },
+            {
+              "k": "x2",
+              "v": 160
+            },
+            {
+              "k": "y2",
+              "v": 280
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "image",
+          "type": "arrow",
+          "color": "force",
+          "label": "inverted image",
+          "frame": "",
+          "at": 0.28,
+          "num": [
+            {
+              "k": "x1",
+              "v": 520
+            },
+            {
+              "k": "y1",
+              "v": 400
+            },
+            {
+              "k": "x2",
+              "v": 520
+            },
+            {
+              "k": "y2",
+              "v": 460
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "ray",
+          "type": "polyline",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.35,
+          "num": [],
+          "txt": [],
+          "pts": [
+            [
+              160,
+              280
+            ],
+            [
+              400,
+              280
+            ],
+            [
+              520,
+              460
+            ]
+          ]
+        },
+        {
+          "id": "image_convention",
+          "type": "arrow",
+          "color": "force",
+          "label": "positive toward image",
+          "frame": "image",
+          "at": 0.42,
+          "num": [
+            {
+              "k": "x1",
+              "v": 430
+            },
+            {
+              "k": "y1",
+              "v": 600
+            },
+            {
+              "k": "x2",
+              "v": 670
+            },
+            {
+              "k": "y2",
+              "v": 600
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "orientation",
+          "type": "arrow",
+          "color": "force",
+          "label": "+y",
+          "frame": "orientation",
+          "at": 0.49,
+          "num": [
+            {
+              "k": "x1",
+              "v": 110
+            },
+            {
+              "k": "y1",
+              "v": 570
+            },
+            {
+              "k": "x2",
+              "v": 110
+            },
+            {
+              "k": "y2",
+              "v": 470
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "given0",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.56,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 690
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Focal length: +0.1 m; object distance: +0.3 m"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "given1",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.63,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 733
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Real object and real image distances positive"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s2",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Real image distance is positive on the outgoing side. Upward image height is positive; negative magnification means inversion.",
+      "subtitles": {
+        "uz": "Haqiqiy tasvir masofasi chiqish tomonida musbat. Yuqoriga tasvir balandligi musbat; manfiy kattalashtirish tasvir teskari ekanini bildiradi.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "sym0",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 90
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "f"
+            },
+            {
+              "k": "meaning",
+              "v": "focal length"
+            },
+            {
+              "k": "unit",
+              "v": "m"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym1",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.175,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 126
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "u"
+            },
+            {
+              "k": "meaning",
+              "v": "object distance"
+            },
+            {
+              "k": "unit",
+              "v": "m"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym2",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.35,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 162
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "v"
+            },
+            {
+              "k": "meaning",
+              "v": "image distance"
+            },
+            {
+              "k": "unit",
+              "v": "m"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym3",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.525,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 198
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "M"
+            },
+            {
+              "k": "meaning",
+              "v": "signed magnification"
+            },
+            {
+              "k": "unit",
+              "v": ""
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s3",
+      "kind": "explain",
+      "calcs": [],
+      "say": "The thin-lens equation gives image distance. The signed distance ratio gives image orientation and relative size.",
+      "subtitles": {
+        "uz": "Yupqa linza tenglamasi tasvir masofasini beradi. Ishorali masofalar nisbati tasvir yo‘nalishi va nisbiy o‘lchamini beradi.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "law0",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 440
+            },
+            {
+              "k": "size",
+              "v": 30
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "\\frac{1}{f}=\\frac{1}{u}+\\frac{1}{v},\\qquad M=-\\frac{v}{u}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s4",
+      "kind": "checkpoint",
+      "calcs": [],
+      "say": "What does negative magnification mean?",
+      "subtitles": {
+        "uz": "Davom etishdan oldin tushunganingizni tekshiring.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "What does negative magnification mean?",
+          "type": "choice",
+          "choices": [
+            "The image is inverted",
+            "The focal length is negative"
+          ],
+          "answer": "0",
+          "hint": "Magnification compares signed image height with object height.",
+          "reexplain_hint": "Draw an upward object arrow and a downward image arrow: their signed height ratio is negative."
+        }
+      ]
+    },
+    {
+      "id": "s5",
+      "kind": "explain",
+      "calcs": [
+        {
+          "expr": "1/(1/f-1/u)",
+          "values": [
+            {
+              "name": "f",
+              "value": 0.1
+            },
+            {
+              "name": "u",
+              "value": 0.3
+            }
+          ],
+          "expected": 0.15,
+          "unit": "m",
+          "unit_spoken": "meters",
+          "quantity_kind": "oriented",
+          "positive": "toward image",
+          "frame": "image",
+          "id": "c1"
+        }
+      ],
+      "say": "Image distance is {c1}; the image is real.",
+      "subtitles": {
+        "uz": "Tasvir masofasi {c1}; tasvir haqiqiy.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "result1",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 575
+            },
+            {
+              "k": "size",
+              "v": 32
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "v = {c1:3sf}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s6",
+      "kind": "explain",
+      "calcs": [
+        {
+          "expr": "-c1/u",
+          "values": [
+            {
+              "name": "u",
+              "value": 0.3
+            }
+          ],
+          "expected": -0.5,
+          "unit": "1",
+          "unit_spoken": "",
+          "quantity_kind": "oriented",
+          "positive": "+y",
+          "frame": "orientation",
+          "id": "c2"
+        }
+      ],
+      "say": "Magnification is {c2}: inverted and smaller than the object.",
+      "subtitles": {
+        "uz": "Kattalashtirish {c2}: tasvir teskari va jismdan kichik.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "result2",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 670
+            },
+            {
+              "k": "size",
+              "v": 32
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "M = {c2:3sf}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s7",
+      "kind": "checkpoint",
+      "calcs": [],
+      "say": "Enter the first calculated result, using its displayed unit.",
+      "subtitles": {
+        "uz": "Birinchi hisoblangan natijani ko‘rsatilgan birlikda kiriting.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "What is the first calculated result?",
+          "type": "number",
+          "choices": [],
+          "answer": "{c1:3sf}",
+          "hint": "Read the first result and its unit.",
+          "reexplain_hint": "Draw an upward object arrow and a downward image arrow: their signed height ratio is negative."
+        }
+      ]
+    },
+    {
+      "id": "s8",
+      "kind": "summary",
+      "calcs": [],
+      "say": "Keep the distance convention consistent. A positive image distance and negative magnification describe a real, inverted image.",
+      "subtitles": {
+        "uz": "Masofa ishoralari qoidasini izchil saqlang. Musbat tasvir masofasi va manfiy kattalashtirish haqiqiy, teskari tasvirni bildiradi.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": []
+    }
+  ]
+}

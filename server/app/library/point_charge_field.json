@@ -1,0 +1,503 @@
+{
+  "source": {
+    "type": "problem",
+    "text": "A positive point charge of 4 nanocoulombs is in vacuum. Find field magnitude at distance 0.2 m. Use k = 8.99e9 N*m^2/C^2."
+  },
+  "title": "Electric field of a point charge",
+  "level": "university",
+  "steps": [
+    {
+      "id": "s1",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Let us solve this worked example using the givens on the board.",
+      "subtitles": {
+        "uz": "Doskadagi berilgan kattaliklar yordamida ushbu misolni yechamiz.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "heading",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 70
+            },
+            {
+              "k": "size",
+              "v": 26
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Electric field of a point charge"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "source",
+          "type": "point_charge",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.117,
+          "num": [
+            {
+              "k": "x",
+              "v": 340
+            },
+            {
+              "k": "y",
+              "v": 350
+            }
+          ],
+          "txt": [
+            {
+              "k": "sign",
+              "v": "+"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "field",
+          "type": "radial_field_lines",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.233,
+          "num": [
+            {
+              "k": "x",
+              "v": 340
+            },
+            {
+              "k": "y",
+              "v": 350
+            },
+            {
+              "k": "r_start",
+              "v": 35
+            },
+            {
+              "k": "r_end",
+              "v": 210
+            }
+          ],
+          "txt": [
+            {
+              "k": "direction",
+              "v": "out"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "probe",
+          "type": "point",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.35,
+          "num": [
+            {
+              "k": "x",
+              "v": 550
+            },
+            {
+              "k": "y",
+              "v": 350
+            },
+            {
+              "k": "r",
+              "v": 7
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "given0",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.467,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 690
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Source charge: +4 nC; distance: 0.2 m"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "given1",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.583,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 733
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Coulomb constant: 8.99e9 N·m²/C²"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s2",
+      "kind": "explain",
+      "calcs": [],
+      "say": "A positive source charge creates an outward field. Field direction is the force direction for a positive test charge.",
+      "subtitles": {
+        "uz": "Musbat manba zaryad tashqariga yo‘nalgan maydon hosil qiladi. Maydon yo‘nalishi musbat sinov zaryadiga ta’sir kuchi yo‘nalishidir.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "sym0",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 90
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "q"
+            },
+            {
+              "k": "meaning",
+              "v": "source charge"
+            },
+            {
+              "k": "unit",
+              "v": "C"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym1",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.175,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 126
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "r"
+            },
+            {
+              "k": "meaning",
+              "v": "distance from charge"
+            },
+            {
+              "k": "unit",
+              "v": "m"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym2",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.35,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 162
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "k"
+            },
+            {
+              "k": "meaning",
+              "v": "Coulomb constant"
+            },
+            {
+              "k": "unit",
+              "v": "N·m²/C²"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym3",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.525,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 198
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "E"
+            },
+            {
+              "k": "meaning",
+              "v": "field magnitude"
+            },
+            {
+              "k": "unit",
+              "v": "N/C"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s3",
+      "kind": "explain",
+      "calcs": [],
+      "say": "The field describes force per unit positive test charge. Its magnitude follows an inverse-square law.",
+      "subtitles": {
+        "uz": "Maydon musbat sinov zaryadining birlik miqdoriga ta’sir kuchini ifodalaydi. Moduli masofa kvadratiga teskari proporsional.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "law0",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 440
+            },
+            {
+              "k": "size",
+              "v": 30
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "E=\\frac{kq}{r^2}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s4",
+      "kind": "checkpoint",
+      "calcs": [],
+      "say": "Near a positive point charge, which way does the electric field point?",
+      "subtitles": {
+        "uz": "Davom etishdan oldin tushunganingizni tekshiring.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "Near a positive point charge, which way does the electric field point?",
+          "type": "choice",
+          "choices": [
+            "Away from the charge",
+            "Toward the charge"
+          ],
+          "answer": "0",
+          "hint": "Imagine a tiny positive test charge.",
+          "reexplain_hint": "Two positive charges repel, so the test charge would be pushed outward."
+        }
+      ]
+    },
+    {
+      "id": "s5",
+      "kind": "explain",
+      "calcs": [
+        {
+          "expr": "k*q/r**2",
+          "values": [
+            {
+              "name": "k",
+              "value": 8990000000.0
+            },
+            {
+              "name": "q",
+              "value": 4e-09
+            },
+            {
+              "name": "r",
+              "value": 0.2
+            }
+          ],
+          "expected": 899,
+          "unit": "N/C",
+          "unit_spoken": "newtons per coulomb",
+          "quantity_kind": "magnitude",
+          "positive": "",
+          "frame": "",
+          "id": "c1"
+        }
+      ],
+      "say": "Field magnitude is {c1}; the direction is outward.",
+      "subtitles": {
+        "uz": "Maydon moduli {c1}; yo‘nalishi tashqariga.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "result1",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 575
+            },
+            {
+              "k": "size",
+              "v": 32
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "E = {c1:3sf}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s6",
+      "kind": "checkpoint",
+      "calcs": [],
+      "say": "Enter the first calculated result, using its displayed unit.",
+      "subtitles": {
+        "uz": "Birinchi hisoblangan natijani ko‘rsatilgan birlikda kiriting.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "What is the first calculated result?",
+          "type": "number",
+          "choices": [],
+          "answer": "{c1:3sf}",
+          "hint": "Read the first result and its unit.",
+          "reexplain_hint": "Two positive charges repel, so the test charge would be pushed outward."
+        }
+      ]
+    },
+    {
+      "id": "s7",
+      "kind": "summary",
+      "calcs": [],
+      "say": "The source sets the field. A test charge feels a force determined by its own charge and that field.",
+      "subtitles": {
+        "uz": "Maydonni manba zaryad belgilaydi. Sinov zaryadiga ta’sir kuchi uning zaryadi va maydonga bog‘liq.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": []
+    }
+  ]
+}
