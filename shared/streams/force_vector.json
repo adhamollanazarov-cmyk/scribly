@@ -1,0 +1,66 @@
+[
+  {
+    "event": "meta",
+    "data": {
+      "id": "31e41ebe-4e25-4f36-9c53-3e0580baee31",
+      "title": "A rightward force",
+      "level": "simple",
+      "step_count": 1
+    }
+  },
+  {
+    "event": "step",
+    "data": {
+      "id": "s1",
+      "kind": "explain",
+      "say": "The arrow shows a force of two newtons pointing right.",
+      "subtitles": {
+        "uz": null,
+        "ru": null
+      },
+      "draw": [
+        {
+          "id": "body",
+          "color": null,
+          "at": null,
+          "label": null,
+          "group": null,
+          "type": "rect",
+          "x": 400.0,
+          "y": 400.0,
+          "w": 40.0,
+          "h": 40.0,
+          "dashed": false
+        },
+        {
+          "id": "force",
+          "color": "force",
+          "at": null,
+          "label": null,
+          "group": null,
+          "type": "vector",
+          "from": [
+            420.0,
+            420.0
+          ],
+          "to": [
+            620.0,
+            420.0
+          ],
+          "name": "F = 2 N"
+        }
+      ],
+      "focus": null,
+      "checkpoint": null,
+      "sliders": [],
+      "warning": null,
+      "audio_url": "/audio/2082f5b0f74f6ca125708b86da4dfe5ea10bf3a70cc8bc9ea41617d57699e838.mp3"
+    }
+  },
+  {
+    "event": "done",
+    "data": {
+      "id": "31e41ebe-4e25-4f36-9c53-3e0580baee31"
+    }
+  }
+]

@@ -1,0 +1,501 @@
+[
+  {
+    "event": "meta",
+    "data": {
+      "id": "6f1c2b9e-0d3a-4c7e-9b1a-3e5f7a9c2d41",
+      "title": "Gauss's law",
+      "level": "simple",
+      "step_count": 7
+    }
+  },
+  {
+    "event": "step",
+    "data": {
+      "id": "s1",
+      "kind": "explain",
+      "say": "Let's start with one positive point charge. We call its charge capital Q.",
+      "subtitles": {
+        "uz": "Bitta musbat nuqtaviy zaryaddan boshlaymiz. Uning zaryadini katta Q deb belgilaymiz.",
+        "ru": null
+      },
+      "draw": [
+        {
+          "id": "q1-charge",
+          "color": "charge_pos",
+          "at": 0.1,
+          "label": "Q",
+          "group": "q1",
+          "type": "circle",
+          "cx": 450.0,
+          "cy": 500.0,
+          "r": 18.0,
+          "dashed": false
+        },
+        {
+          "id": "q1-sign-h",
+          "color": "charge_pos",
+          "at": 0.1,
+          "label": null,
+          "group": "q1",
+          "type": "line",
+          "x1": 440.1,
+          "y1": 500.0,
+          "x2": 459.9,
+          "y2": 500.0,
+          "dashed": false
+        },
+        {
+          "id": "q1-sign-v",
+          "color": "charge_pos",
+          "at": 0.1,
+          "label": null,
+          "group": "q1",
+          "type": "line",
+          "x1": 450.0,
+          "y1": 490.1,
+          "x2": 450.0,
+          "y2": 509.9,
+          "dashed": false
+        },
+        {
+          "id": "sym-q",
+          "color": null,
+          "at": 0.7,
+          "label": null,
+          "group": null,
+          "type": "symbol",
+          "x": 60.0,
+          "y": 80.0,
+          "symbol": "Q",
+          "meaning": "charge inside",
+          "unit": "C"
+        }
+      ],
+      "focus": null,
+      "checkpoint": null,
+      "sliders": [],
+      "warning": null,
+      "audio_url": "/audio/67af114886a37e3c771a38d8b4c08e7bb1a20c103fe4e6080d8b83e2d6dce2b4.mp3"
+    }
+  },
+  {
+    "event": "step",
+    "data": {
+      "id": "s2",
+      "kind": "explain",
+      "say": "A positive charge sends electric field lines straight out in every direction, like spokes on a wheel. Here are twelve of them.",
+      "subtitles": {
+        "uz": "Musbat zaryad elektr maydon chiziqlarini g'ildirak kegaylari kabi hamma tomonga to'g'ri chiqaradi. Mana ulardan o'n ikkitasi.",
+        "ru": null
+      },
+      "draw": [
+        {
+          "id": "lines1-1",
+          "color": "field",
+          "at": 0.15,
+          "label": null,
+          "group": "lines1",
+          "type": "arrow",
+          "x1": 480.0,
+          "y1": 500.0,
+          "x2": 750.0,
+          "y2": 500.0,
+          "dashed": false
+        },
+        {
+          "id": "lines1-2",
+          "color": "field",
+          "at": 0.15,
+          "label": null,
+          "group": "lines1",
+          "type": "arrow",
+          "x1": 476.0,
+          "y1": 485.0,
+          "x2": 709.8,
+          "y2": 350.0,
+          "dashed": false
+        },
+        {
+          "id": "lines1-3",
+          "color": "field",
+          "at": 0.15,
+          "label": null,
+          "group": "lines1",
+          "type": "arrow",
+          "x1": 465.0,
+          "y1": 474.0,
+          "x2": 600.0,
+          "y2": 240.2,
+          "dashed": false
+        },
+        {
+          "id": "lines1-4",
+          "color": "field",
+          "at": 0.15,
+          "label": null,
+          "group": "lines1",
+          "type": "arrow",
+          "x1": 450.0,
+          "y1": 470.0,
+          "x2": 450.0,
+          "y2": 200.0,
+          "dashed": false
+        },
+        {
+          "id": "lines1-5",
+          "color": "field",
+          "at": 0.15,
+          "label": null,
+          "group": "lines1",
+          "type": "arrow",
+          "x1": 435.0,
+          "y1": 474.0,
+          "x2": 300.0,
+          "y2": 240.2,
+          "dashed": false
+        },
+        {
+          "id": "lines1-6",
+          "color": "field",
+          "at": 0.15,
+          "label": null,
+          "group": "lines1",
+          "type": "arrow",
+          "x1": 424.0,
+          "y1": 485.0,
+          "x2": 190.2,
+          "y2": 350.0,
+          "dashed": false
+        },
+        {
+          "id": "lines1-7",
+          "color": "field",
+          "at": 0.15,
+          "label": null,
+          "group": "lines1",
+          "type": "arrow",
+          "x1": 420.0,
+          "y1": 500.0,
+          "x2": 150.0,
+          "y2": 500.0,
+          "dashed": false
+        },
+        {
+          "id": "lines1-8",
+          "color": "field",
+          "at": 0.15,
+          "label": null,
+          "group": "lines1",
+          "type": "arrow",
+          "x1": 424.0,
+          "y1": 515.0,
+          "x2": 190.2,
+          "y2": 650.0,
+          "dashed": false
+        },
+        {
+          "id": "lines1-9",
+          "color": "field",
+          "at": 0.15,
+          "label": null,
+          "group": "lines1",
+          "type": "arrow",
+          "x1": 435.0,
+          "y1": 526.0,
+          "x2": 300.0,
+          "y2": 759.8,
+          "dashed": false
+        },
+        {
+          "id": "lines1-10",
+          "color": "field",
+          "at": 0.15,
+          "label": null,
+          "group": "lines1",
+          "type": "arrow",
+          "x1": 450.0,
+          "y1": 530.0,
+          "x2": 450.0,
+          "y2": 800.0,
+          "dashed": false
+        },
+        {
+          "id": "lines1-11",
+          "color": "field",
+          "at": 0.15,
+          "label": null,
+          "group": "lines1",
+          "type": "arrow",
+          "x1": 465.0,
+          "y1": 526.0,
+          "x2": 600.0,
+          "y2": 759.8,
+          "dashed": false
+        },
+        {
+          "id": "lines1-12",
+          "color": "field",
+          "at": 0.15,
+          "label": null,
+          "group": "lines1",
+          "type": "arrow",
+          "x1": 476.0,
+          "y1": 515.0,
+          "x2": 709.8,
+          "y2": 650.0,
+          "dashed": false
+        }
+      ],
+      "focus": null,
+      "checkpoint": null,
+      "sliders": [],
+      "warning": null,
+      "audio_url": "/audio/7dbb88b1b466d2b4e346a4d960f3bab233c8401a5d9080308d85a099f3ba120f.mp3"
+    }
+  },
+  {
+    "event": "step",
+    "data": {
+      "id": "s3",
+      "kind": "explain",
+      "say": "Now imagine a closed bubble around the charge. It is not real, just a tool. We call it a Gaussian surface.",
+      "subtitles": {
+        "uz": "Endi zaryad atrofida yopiq pufakni tasavvur qiling. U haqiqiy emas, faqat vosita. Uni Gauss sirti deymiz.",
+        "ru": null
+      },
+      "draw": [
+        {
+          "id": "surface1-sphere",
+          "color": "surface",
+          "at": 0.1,
+          "label": "Gaussian surface",
+          "group": "surface1",
+          "type": "circle",
+          "cx": 450.0,
+          "cy": 500.0,
+          "r": 130.0,
+          "dashed": true
+        }
+      ],
+      "focus": null,
+      "checkpoint": null,
+      "sliders": [],
+      "warning": null,
+      "audio_url": "/audio/4e634dfc4a9c341c5a367358d1e7a23fe89caad431c64848ca8734cf772b825b.mp3"
+    }
+  },
+  {
+    "event": "step",
+    "data": {
+      "id": "s4",
+      "kind": "explain",
+      "say": "Electric flux measures how much field pokes through a surface. We write it as phi. Here, twelve lines cross the bubble, so the flux is twelve lines' worth.",
+      "subtitles": {
+        "uz": "Elektr oqimi sirtdan qancha maydon o'tishini ko'rsatadi. Uni fi (Φ) bilan belgilaymiz. Bu yerda pufakdan o'n ikkita chiziq o'tadi, demak oqim o'n ikki chiziqqa teng.",
+        "ru": null
+      },
+      "draw": [
+        {
+          "id": "sym-phi",
+          "color": null,
+          "at": 0.2,
+          "label": null,
+          "group": null,
+          "type": "symbol",
+          "x": 60.0,
+          "y": 130.0,
+          "symbol": "\\Phi",
+          "meaning": "electric flux",
+          "unit": "N·m²/C"
+        },
+        {
+          "id": "phi-label",
+          "color": null,
+          "at": 0.3,
+          "label": null,
+          "group": null,
+          "type": "text",
+          "x": 790.0,
+          "y": 250.0,
+          "text": "flux = Φ",
+          "size": null
+        },
+        {
+          "id": "count",
+          "color": "accent",
+          "at": 0.6,
+          "label": null,
+          "group": null,
+          "type": "math",
+          "x": 790.0,
+          "y": 320.0,
+          "latex": "\\Phi \\propto 12\\ \\text{lines}",
+          "size": null
+        }
+      ],
+      "focus": null,
+      "checkpoint": null,
+      "sliders": [],
+      "warning": null,
+      "audio_url": "/audio/e5cb19645bc2fd016b8848879f5ef6ab1f583c3531ed6ba687850635cf642676.mp3"
+    }
+  },
+  {
+    "event": "step",
+    "data": {
+      "id": "s5",
+      "kind": "checkpoint",
+      "say": "Here is a bigger bubble around the same charge. Your turn: what happens to the flux through it?",
+      "subtitles": {
+        "uz": "Mana shu zaryad atrofida kattaroq pufak. Navbat sizda: undan o'tadigan oqim qanday o'zgaradi?",
+        "ru": null
+      },
+      "draw": [
+        {
+          "id": "surface2-sphere",
+          "color": "surface",
+          "at": 0.1,
+          "label": "bigger surface",
+          "group": "surface2",
+          "type": "circle",
+          "cx": 450.0,
+          "cy": 500.0,
+          "r": 230.0,
+          "dashed": true
+        }
+      ],
+      "focus": null,
+      "checkpoint": {
+        "question": "The bigger surface surrounds the same charge. The flux through it...",
+        "type": "choice",
+        "choices": [
+          "doubles",
+          "stays the same",
+          "halves"
+        ],
+        "answer": 1,
+        "tolerance": null,
+        "unit": null,
+        "hint": "Count the lines that cross the bigger bubble.",
+        "reexplain_hint": "Use the count-the-lines picture again: every line that crosses the small bubble also crosses the big one."
+      },
+      "sliders": [],
+      "warning": null,
+      "audio_url": "/audio/20e452f681c2b8f02952214df1626de7c56540542e03f8bb66bb9a83dca2b7af.mp3"
+    }
+  },
+  {
+    "event": "step",
+    "data": {
+      "id": "s6",
+      "kind": "explain",
+      "say": "Same lines, same flux. Flux depends only on the charge inside: phi equals Q over epsilon zero. For three nanocoulombs, that is about 339 newton meters squared per coulomb.",
+      "subtitles": {
+        "uz": "Chiziqlar bir xil, oqim ham bir xil. Oqim faqat ichkaridagi zaryadga bog'liq: fi Q ni epsilon nolga bo'linganiga teng. Uch nanokulon uchun bu taxminan 339 N·m²/C.",
+        "ru": null
+      },
+      "draw": [
+        {
+          "id": "eps-label",
+          "color": null,
+          "at": 0.0,
+          "label": null,
+          "group": null,
+          "type": "text",
+          "x": 790.0,
+          "y": 430.0,
+          "text": "ε₀ = 8.85 × 10⁻¹² C²/(N·m²)",
+          "size": null
+        },
+        {
+          "id": "sym-eps",
+          "color": null,
+          "at": 0.15,
+          "label": null,
+          "group": null,
+          "type": "symbol",
+          "x": 60.0,
+          "y": 180.0,
+          "symbol": "\\varepsilon_0",
+          "meaning": "permittivity of free space",
+          "unit": "C²/(N·m²)"
+        },
+        {
+          "id": "formula",
+          "color": null,
+          "at": 0.3,
+          "label": null,
+          "group": null,
+          "type": "math",
+          "x": 790.0,
+          "y": 510.0,
+          "latex": "\\Phi = \\dfrac{Q}{\\varepsilon_0}",
+          "size": 40.0
+        },
+        {
+          "id": "example",
+          "color": null,
+          "at": 0.65,
+          "label": null,
+          "group": null,
+          "type": "math",
+          "x": 790.0,
+          "y": 610.0,
+          "latex": "Q = 3\\ \\text{nC} \\;\\Rightarrow\\; \\Phi \\approx 338.8\\ \\text{N}\\cdot\\text{m}^2/\\text{C}",
+          "size": null
+        }
+      ],
+      "focus": null,
+      "checkpoint": null,
+      "sliders": [],
+      "warning": null,
+      "audio_url": "/audio/d79599622a6b0c6cb70b56627a5ea832b33589fb0edf1935af073bd51cbc351a.mp3"
+    }
+  },
+  {
+    "event": "step",
+    "data": {
+      "id": "s7",
+      "kind": "summary",
+      "say": "To sum up: flux counts field lines through a closed surface. Any closed surface around the same charge gives the same flux, Q over epsilon zero.",
+      "subtitles": {
+        "uz": "Xulosa: oqim yopiq sirtdan o'tgan maydon chiziqlarini sanaydi. Shu zaryad atrofidagi har qanday yopiq sirt bir xil oqim beradi: Q ni epsilon nolga bo'lingani.",
+        "ru": null
+      },
+      "draw": [
+        {
+          "id": "formula-hl",
+          "color": null,
+          "at": 0.5,
+          "label": null,
+          "group": null,
+          "type": "highlight",
+          "target_id": "formula"
+        },
+        {
+          "id": "summary",
+          "color": "accent",
+          "at": 0.7,
+          "label": null,
+          "group": null,
+          "type": "text",
+          "x": 790.0,
+          "y": 720.0,
+          "text": "any closed surface around Q → same Φ",
+          "size": null
+        }
+      ],
+      "focus": null,
+      "checkpoint": null,
+      "sliders": [],
+      "warning": null,
+      "audio_url": "/audio/de09ba5160d5fb144d469e6715c1e4dd9087ddc094f94e3f604519cba216a063.mp3"
+    }
+  },
+  {
+    "event": "done",
+    "data": {
+      "id": "6f1c2b9e-0d3a-4c7e-9b1a-3e5f7a9c2d41"
+    }
+  }
+]

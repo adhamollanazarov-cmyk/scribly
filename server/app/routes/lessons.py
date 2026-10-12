@@ -10,10 +10,11 @@ from fastapi.sse import EventSourceResponse, ServerSentEvent
 from pydantic import BaseModel, ConfigDict, Field
 
 from app.lesson.claude import ClaudeLessonLLM, LessonLLM
-from app.lesson.fixtures import load_fixture
+from app.lesson.fixtures import fixture_for_text, load_fixture
 from app.lesson.generate import Header, generate_lesson
 from app.lesson.models import Lesson, Source, StreamedStep
 from app.lesson.pipeline import LessonError, prepare_lesson
+from app.lesson.stream_export import lesson_meta
 from app.settings import Settings, get_settings
 from app.tts import AudioCache, EdgeTTSProvider, TTSError, TTSProvider
 
@@ -60,7 +61,7 @@ async def create_lesson(
             yield event
         return
     try:
-        lesson, _ = prepare_lesson(load_fixture("gauss_law"))
+        lesson, _ = prepare_lesson(load_fixture(fixture_for_text(request.text)))
     except LessonError as e:
         logger.error("Mock lesson failed: error_type=LessonError")
         yield error_event(str(e))
@@ -76,8 +77,7 @@ async def create_lesson(
 async def lesson_events(
     lesson: Lesson, settings: Settings, tts: TTSProvider, cache: AudioCache
 ) -> AsyncIterator[ServerSentEvent]:
-    meta = {"id": lesson.id, "title": lesson.title, "level": lesson.level}
-    yield ServerSentEvent(event="meta", data=meta | {"step_count": len(lesson.steps)})
+    yield ServerSentEvent(event="meta", data=lesson_meta(lesson, len(lesson.steps)))
     for step in lesson.steps:
         audio_url = await narrate(step.say, settings, tts, cache)
         streamed = StreamedStep.model_validate(step.model_dump() | {"audio_url": audio_url})

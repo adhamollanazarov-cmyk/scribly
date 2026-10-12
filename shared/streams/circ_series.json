@@ -1,0 +1,557 @@
+[
+  {
+    "event": "meta",
+    "data": {
+      "id": "82136159-4d36-4eba-9a12-11b0c1b4eab6",
+      "title": "Three resistors in series",
+      "level": "university",
+      "step_count": 9
+    }
+  },
+  {
+    "event": "step",
+    "data": {
+      "id": "s1",
+      "kind": "explain",
+      "say": "Three resistors in series share one path, so the same current flows through all of them. A battery drives it.",
+      "subtitles": {
+        "uz": "Uchta rezistor ketma-ket ulangan, shuning uchun hammasidan bir xil tok o'tadi. Uni batareya hosil qiladi.",
+        "ru": "Три резистора соединены последовательно, поэтому через все течёт один и тот же ток. Его создаёт батарея."
+      },
+      "draw": [
+        {
+          "id": "bat",
+          "color": "ink",
+          "at": 0.0,
+          "label": "9.0 V battery",
+          "group": null,
+          "type": "line",
+          "x1": 100.0,
+          "y1": 300.0,
+          "x2": 100.0,
+          "y2": 420.0,
+          "dashed": false
+        },
+        {
+          "id": "wire-top",
+          "color": "ink",
+          "at": 0.2,
+          "label": null,
+          "group": null,
+          "type": "polyline",
+          "points": [
+            [
+              100.0,
+              300.0
+            ],
+            [
+              100.0,
+              200.0
+            ],
+            [
+              200.0,
+              200.0
+            ]
+          ],
+          "closed": false
+        },
+        {
+          "id": "r1",
+          "color": "surface",
+          "at": 0.4,
+          "label": "R1",
+          "group": null,
+          "type": "rect",
+          "x": 200.0,
+          "y": 180.0,
+          "w": 100.0,
+          "h": 40.0,
+          "dashed": false
+        },
+        {
+          "id": "w12",
+          "color": "ink",
+          "at": 0.5,
+          "label": null,
+          "group": null,
+          "type": "line",
+          "x1": 300.0,
+          "y1": 200.0,
+          "x2": 340.0,
+          "y2": 200.0,
+          "dashed": false
+        },
+        {
+          "id": "r2",
+          "color": "surface",
+          "at": 0.6,
+          "label": "R2",
+          "group": null,
+          "type": "rect",
+          "x": 340.0,
+          "y": 180.0,
+          "w": 100.0,
+          "h": 40.0,
+          "dashed": false
+        },
+        {
+          "id": "w23",
+          "color": "ink",
+          "at": 0.7,
+          "label": null,
+          "group": null,
+          "type": "line",
+          "x1": 440.0,
+          "y1": 200.0,
+          "x2": 480.0,
+          "y2": 200.0,
+          "dashed": false
+        },
+        {
+          "id": "r3",
+          "color": "surface",
+          "at": 0.8,
+          "label": "R3",
+          "group": null,
+          "type": "rect",
+          "x": 480.0,
+          "y": 180.0,
+          "w": 100.0,
+          "h": 40.0,
+          "dashed": false
+        },
+        {
+          "id": "wire-right",
+          "color": "ink",
+          "at": 0.9,
+          "label": null,
+          "group": null,
+          "type": "polyline",
+          "points": [
+            [
+              580.0,
+              200.0
+            ],
+            [
+              640.0,
+              200.0
+            ],
+            [
+              640.0,
+              420.0
+            ],
+            [
+              100.0,
+              420.0
+            ]
+          ],
+          "closed": false
+        }
+      ],
+      "focus": null,
+      "checkpoint": null,
+      "sliders": [],
+      "warning": null,
+      "audio_url": "/audio/f8e217e5ef70f2f7d068e22a5ef8a501deede2f22185f3f7ec9949590a94d03c.mp3"
+    }
+  },
+  {
+    "event": "step",
+    "data": {
+      "id": "s2",
+      "kind": "explain",
+      "say": "Let us name our symbols. V is the battery voltage, I the current, and R the resistance of each resistor.",
+      "subtitles": {
+        "uz": "Belgilarni nomlaymiz. V batareya kuchlanishi, I tok, R esa har bir rezistorning qarshiligi.",
+        "ru": "Назовём обозначения. V — напряжение батареи, I — ток, R — сопротивление каждого резистора."
+      },
+      "draw": [
+        {
+          "id": "sym-v",
+          "color": "ink",
+          "at": 0.0,
+          "label": null,
+          "group": null,
+          "type": "symbol",
+          "x": 740.0,
+          "y": 60.0,
+          "symbol": "V",
+          "meaning": "battery voltage",
+          "unit": "V"
+        },
+        {
+          "id": "sym-i",
+          "color": "ink",
+          "at": 0.4,
+          "label": null,
+          "group": null,
+          "type": "symbol",
+          "x": 740.0,
+          "y": 105.0,
+          "symbol": "I",
+          "meaning": "current in the circuit",
+          "unit": "A"
+        },
+        {
+          "id": "sym-r",
+          "color": "ink",
+          "at": 0.7,
+          "label": null,
+          "group": null,
+          "type": "symbol",
+          "x": 740.0,
+          "y": 150.0,
+          "symbol": "R",
+          "meaning": "resistance",
+          "unit": "ohm"
+        },
+        {
+          "id": "cur-arrow",
+          "color": "force",
+          "at": 0.8,
+          "label": "I",
+          "group": null,
+          "type": "arrow",
+          "x1": 120.0,
+          "y1": 250.0,
+          "x2": 120.0,
+          "y2": 340.0,
+          "dashed": false
+        }
+      ],
+      "focus": null,
+      "checkpoint": null,
+      "sliders": [],
+      "warning": null,
+      "audio_url": "/audio/3b12195fa8503ab68761c50f9c42777fa787e91c9fe40315b140944cfc3e7eed.mp3"
+    }
+  },
+  {
+    "event": "step",
+    "data": {
+      "id": "s3",
+      "kind": "explain",
+      "say": "In series, resistances simply add. The equivalent resistance is 600 ohms.",
+      "subtitles": {
+        "uz": "Ketma-ket ulanishda qarshiliklar qo'shiladi. Ekvivalent qarshilik 600 Ω.",
+        "ru": "При последовательном соединении сопротивления складываются. Эквивалентное сопротивление равно 600 Ω."
+      },
+      "draw": [
+        {
+          "id": "sym-r1",
+          "color": "ink",
+          "at": 0.0,
+          "label": null,
+          "group": null,
+          "type": "symbol",
+          "x": 740.0,
+          "y": 195.0,
+          "symbol": "R_1",
+          "meaning": "first resistor",
+          "unit": "ohm"
+        },
+        {
+          "id": "sym-r2",
+          "color": "ink",
+          "at": 0.05,
+          "label": null,
+          "group": null,
+          "type": "symbol",
+          "x": 740.0,
+          "y": 240.0,
+          "symbol": "R_2",
+          "meaning": "second resistor",
+          "unit": "ohm"
+        },
+        {
+          "id": "sym-r3",
+          "color": "ink",
+          "at": 0.1,
+          "label": null,
+          "group": null,
+          "type": "symbol",
+          "x": 740.0,
+          "y": 285.0,
+          "symbol": "R_3",
+          "meaning": "third resistor",
+          "unit": "ohm"
+        },
+        {
+          "id": "sym-req",
+          "color": "ink",
+          "at": 0.15,
+          "label": null,
+          "group": null,
+          "type": "symbol",
+          "x": 740.0,
+          "y": 330.0,
+          "symbol": "R_{eq}",
+          "meaning": "equivalent resistance",
+          "unit": "ohm"
+        },
+        {
+          "id": "req-eq",
+          "color": "accent",
+          "at": 0.3,
+          "label": null,
+          "group": null,
+          "type": "math",
+          "x": 740.0,
+          "y": 430.0,
+          "latex": "R_{eq} = R_1 + R_2 + R_3 = 100\\,\\Omega + 200\\,\\Omega + 300\\,\\Omega = 600\\,\\mathrm{\\Omega}",
+          "size": null
+        }
+      ],
+      "focus": null,
+      "checkpoint": null,
+      "sliders": [],
+      "warning": null,
+      "audio_url": "/audio/94d1a6c847b9ed66f5eef2f47738232b27fe7bb4cc7dd68eb1c7f3b31c1f9cd5.mp3"
+    }
+  },
+  {
+    "event": "step",
+    "data": {
+      "id": "s4",
+      "kind": "checkpoint",
+      "say": "Quick check. Suppose only R1 and R2 were connected in series. What would their equivalent resistance be?",
+      "subtitles": {
+        "uz": "Tez tekshiruv. Faqat R1 va R2 ketma-ket ulangan bo'lsa, ekvivalent qarshilik qancha bo'ladi?",
+        "ru": "Быстрая проверка. Если бы последовательно были соединены только R1 и R2, чему равнялось бы эквивалентное сопротивление?"
+      },
+      "draw": [],
+      "focus": null,
+      "checkpoint": {
+        "question": "If only R1 = 100 ohm and R2 = 200 ohm were in series, what is their equivalent resistance in ohms?",
+        "type": "number",
+        "choices": null,
+        "answer": 300.0,
+        "tolerance": 0.02,
+        "unit": "Ω",
+        "hint": "In series, just add the resistances.",
+        "reexplain_hint": "Think of two narrow pipes one after another: the total difficulty for water is the sum of each pipe's difficulty."
+      },
+      "sliders": [],
+      "warning": null,
+      "audio_url": "/audio/40f3ea4bf9235f5a7054ec0bafabd28fd381692f49cd90667823df36bd1e2645.mp3"
+    }
+  },
+  {
+    "event": "step",
+    "data": {
+      "id": "s5",
+      "kind": "explain",
+      "say": "Ohm's law gives the current: I equals V over R equivalent. That is 0.0150 amperes.",
+      "subtitles": {
+        "uz": "Om qonuni tokni beradi: I = V / R ekv. Bu 0.0150 A ga teng.",
+        "ru": "Закон Ома даёт ток: I равно V делить на R эквивалентное. Это 0.0150 A."
+      },
+      "draw": [
+        {
+          "id": "sym-omega",
+          "color": "ink",
+          "at": 0.0,
+          "label": null,
+          "group": null,
+          "type": "symbol",
+          "x": 740.0,
+          "y": 375.0,
+          "symbol": "\\Omega",
+          "meaning": "ohm, unit of resistance",
+          "unit": "ohm"
+        },
+        {
+          "id": "i-eq",
+          "color": "accent",
+          "at": 0.3,
+          "label": null,
+          "group": null,
+          "type": "math",
+          "x": 740.0,
+          "y": 340.0,
+          "latex": "I = \\frac{V}{R_{eq}} = \\frac{9.0\\,\\text{V}}{600\\,\\Omega} = 0.0150\\,\\mathrm{A}",
+          "size": null
+        },
+        {
+          "id": "i-hl",
+          "color": "highlight",
+          "at": 0.8,
+          "label": null,
+          "group": null,
+          "type": "highlight",
+          "target_id": "i-eq"
+        }
+      ],
+      "focus": null,
+      "checkpoint": null,
+      "sliders": [],
+      "warning": null,
+      "audio_url": "/audio/113c3023626502aabd13eb1ddd5af73c5ad5f5974d3169a9090d88884868f849.mp3"
+    }
+  },
+  {
+    "event": "step",
+    "data": {
+      "id": "s6",
+      "kind": "explain",
+      "say": "The same current flows through R2, so its voltage is I times R2. That is 3.00 volts.",
+      "subtitles": {
+        "uz": "R2 dan ham xuddi shu tok o'tadi, shuning uchun uning kuchlanishi I ko'paytirilgan R2. Bu 3.00 V.",
+        "ru": "Через R2 течёт тот же ток, поэтому её напряжение равно I умножить на R2. Это 3.00 V."
+      },
+      "draw": [
+        {
+          "id": "v2-sym",
+          "color": "ink",
+          "at": 0.0,
+          "label": null,
+          "group": null,
+          "type": "symbol",
+          "x": 740.0,
+          "y": 195.0,
+          "symbol": "V_2",
+          "meaning": "voltage across R2",
+          "unit": "V"
+        },
+        {
+          "id": "v2-eq",
+          "color": "accent",
+          "at": 0.4,
+          "label": null,
+          "group": null,
+          "type": "math",
+          "x": 740.0,
+          "y": 420.0,
+          "latex": "V_2 = I R_2 = 0.0150\\,\\mathrm{A} \\times 200\\,\\Omega = 3.00\\,\\mathrm{V}",
+          "size": null
+        },
+        {
+          "id": "r2-hl",
+          "color": "highlight",
+          "at": 0.7,
+          "label": null,
+          "group": null,
+          "type": "highlight",
+          "target_id": "r2"
+        }
+      ],
+      "focus": null,
+      "checkpoint": null,
+      "sliders": [],
+      "warning": null,
+      "audio_url": "/audio/e5423c4982459de02c0297b0b9c84b4e703936c95110ded4eec16ab4952fc8c9.mp3"
+    }
+  },
+  {
+    "event": "step",
+    "data": {
+      "id": "s7",
+      "kind": "explain",
+      "say": "Check the loop rule: the other drops are 1.50 volts across R1 and 4.50 volts across R3. All drops together must equal the battery voltage.",
+      "subtitles": {
+        "uz": "Kontur qoidasini tekshiramiz: R1 da 1.50 V, R3 da 4.50 V tushadi. Barcha tushishlar yig'indisi batareya kuchlanishiga teng bo'lishi kerak.",
+        "ru": "Проверим правило контура: на R1 падает 1.50 V, на R3 падает 4.50 V. Сумма всех падений должна равняться напряжению батареи."
+      },
+      "draw": [
+        {
+          "id": "loop-chk",
+          "color": "right",
+          "at": 0.5,
+          "label": null,
+          "group": null,
+          "type": "math",
+          "x": 740.0,
+          "y": 500.0,
+          "latex": "1.50\\,\\mathrm{V} + 3.00\\,\\mathrm{V} + 4.50\\,\\mathrm{V} = 9.0\\,\\text{V} = V",
+          "size": null
+        }
+      ],
+      "focus": null,
+      "checkpoint": null,
+      "sliders": [],
+      "warning": null,
+      "audio_url": "/audio/1a94284eb6432e2af154901df2a06e0fd4fc338cdaeea7f887af5e4b525ea381.mp3"
+    }
+  },
+  {
+    "event": "step",
+    "data": {
+      "id": "s8",
+      "kind": "checkpoint",
+      "say": "One last question. Which resistor gets the largest share of the battery voltage, and why?",
+      "subtitles": {
+        "uz": "Oxirgi savol. Batareya kuchlanishining eng katta qismi qaysi rezistorga tushadi va nima uchun?",
+        "ru": "Последний вопрос. На каком резисторе падает наибольшая часть напряжения батареи и почему?"
+      },
+      "draw": [],
+      "focus": null,
+      "checkpoint": {
+        "question": "In a series circuit, which resistor has the largest voltage across it?",
+        "type": "choice",
+        "choices": [
+          "R1, because it is first in the circuit",
+          "R2, because it is in the middle",
+          "R3, because it has the largest resistance and the same current",
+          "All equal, because the battery voltage is shared equally"
+        ],
+        "answer": 2,
+        "tolerance": null,
+        "unit": null,
+        "hint": "The current is the same in every resistor, so compare V = I R.",
+        "reexplain_hint": "Picture a queue of people pushing the same cart: the part with the most friction takes the biggest push. With equal current, bigger R means bigger voltage."
+      },
+      "sliders": [],
+      "warning": null,
+      "audio_url": "/audio/f2f98c6190208cff7c9470c9c1cae333c2dfd408351d8d35321b9cb710ca73ab.mp3"
+    }
+  },
+  {
+    "event": "step",
+    "data": {
+      "id": "s9",
+      "kind": "summary",
+      "say": "Summary: add series resistances to get 600 ohms, find the current with Ohm's law, then multiply by R2 for its voltage.",
+      "subtitles": {
+        "uz": "Xulosa: ketma-ket qarshiliklarni qo'shib 600 om oling, Om qonuni bilan tokni toping, so'ng R2 ga ko'paytirib kuchlanishni toping.",
+        "ru": "Итог: сложите сопротивления, получите 600 Ом, найдите ток по закону Ома, затем умножьте на R2, чтобы получить напряжение."
+      },
+      "draw": [
+        {
+          "id": "sum1",
+          "color": "ink",
+          "at": 0.2,
+          "label": null,
+          "group": null,
+          "type": "math",
+          "x": 740.0,
+          "y": 600.0,
+          "latex": "I = 0.0150\\,\\mathrm{A}",
+          "size": null
+        },
+        {
+          "id": "sum2",
+          "color": "ink",
+          "at": 0.6,
+          "label": null,
+          "group": null,
+          "type": "math",
+          "x": 740.0,
+          "y": 660.0,
+          "latex": "V_2 = 3.00\\,\\mathrm{V}",
+          "size": null
+        }
+      ],
+      "focus": null,
+      "checkpoint": null,
+      "sliders": [],
+      "warning": null,
+      "audio_url": "/audio/e6bdf32bbc7da8fe0d509bb167deff72c53364a55e757d9a12926c4a12558bc2.mp3"
+    }
+  },
+  {
+    "event": "done",
+    "data": {
+      "id": "82136159-4d36-4eba-9a12-11b0c1b4eab6"
+    }
+  }
+]
