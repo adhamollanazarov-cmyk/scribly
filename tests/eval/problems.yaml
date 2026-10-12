@@ -1,11 +1,16 @@
-# Eval bank v0 (docs/COVERAGE.md §4). Run: cd server; uv run python -m scripts.eval
+# Eval bank v1 (docs/COVERAGE.md §4). Run: cd server; uv run python -m scripts.eval
 #
-# expected: reference results, matched against the lesson's SymPy-verified calcs.
-#   A value matches within rel_tol (default 0.01), also when the lesson shows it with an
-#   SI prefix (x 10^3k) or as a percent (x 100). Signs are not compared: magnitudes only.
+# expected: reference results, matched against the displayed, SymPy-verified calcs.
+#   A value matches within rel_tol (default 0.01) with its sign, in any compatible unit
+#   (scripts/eval_units.py). With `direction`, value is a magnitude (> 0) and the calc's
+#   physical direction must match too: its sign plus the calc's declared positive
+#   direction (app/lesson/direction.py: +x, -y, A->B, down the slope, ...). Problems
+#   that use x and y say so; up = +y, right = +x.
 # must_draw: draw types or template names; "a|b" means either one.
 # source: audit = the 2026-10-09 physics audit (codex/physics-audit, reference-results.json);
-#         own = written for this bank, references computed independently in plain Python.
+#         own = written for this bank, references computed independently in plain Python;
+#         hard = v1 additions (2026-10-12): non-round answers, signs, directions and
+#         multi-step reasoning; references computed independently in plain Python.
 
 - id: es-gauss-sphere
   topic: electrostatics/gauss
@@ -448,9 +453,336 @@
     positive terminal toward A, in series with R2 = 4.0 ohm. Use Kirchhoff's laws to find
     the current in each branch, including its direction.
   expected:
-    - { name: I3, value: 1.1363636363636365, unit: A }
-    - { name: I1, value: 1.5909090909090908, unit: A }
-    - { name: I2, value: 0.45454545454545453, unit: A }
+    # V_A = 75/11 V with V_B = 0. The 5.0 V battery is being charged: I2 flows A to B.
+    - { name: I3, value: 1.1363636363636365, unit: A, direction: A->B }
+    - { name: I1, value: 1.5909090909090908, unit: A, direction: B->A }
+    - { name: I2, value: 0.45454545454545453, unit: A, direction: A->B }
   must_draw: [line|polyline|rect]
-  manual_checks:
-    - Branch current directions must agree with the stated sign convention, including the summary.
+
+# --- hard (v1, 2026-10-12) ------------------------------------------------------------
+
+- id: hard-kirchhoff-opposed
+  topic: circuits/kirchhoff
+  level: university
+  source: hard
+  input: >-
+    Two nodes, A (top) and B (bottom), are joined by three branches. Left branch: an
+    ideal 12 V battery with its positive terminal toward A, in series with R1 = 3.3 ohm.
+    Middle branch: R3 = 4.7 ohm alone. Right branch: an ideal 9.0 V battery with its
+    positive terminal toward B, in series with R2 = 2.2 ohm. Find the current in each
+    branch and its direction (A to B or B to A).
+  expected:
+    - { name: I1, value: 3.778314708547267, unit: A, direction: B->A }
+    - { name: I2, value: 3.877982482633645, unit: A, direction: A->B }
+    - { name: I3, value: 0.09966777408637865, unit: A, direction: B->A }
+  must_draw: [line|polyline|rect]
+
+- id: hard-kirchhoff-charging
+  topic: circuits/kirchhoff
+  level: university
+  source: hard
+  input: >-
+    A 14.0 V battery with internal resistance 0.60 ohm and an 11.5 V battery with internal
+    resistance 0.90 ohm are connected in parallel, both with their positive terminals to
+    node A and negative terminals to node B. A 5.6 ohm load is connected between A and B.
+    Find the current through each battery and the load with directions (A to B or B to
+    A), the terminal voltage V_A - V_B, and the power delivered by the 11.5 V battery
+    (negative if the battery absorbs energy).
+  expected:
+    - { name: I1, value: 2.9753914988814296, unit: A, direction: B->A }
+    - { name: I2, value: 0.7941834451901582, unit: A, direction: A->B }
+    - { name: I_load, value: 2.1812080536912757, unit: A, direction: A->B }
+    - { name: V_AB, value: 12.214765100671142, unit: V }
+    - { name: P2, value: -9.133109619686818, unit: W }
+  must_draw: [line|polyline|rect]
+
+- id: hard-kirchhoff-potential
+  topic: circuits/kirchhoff
+  level: university
+  source: hard
+  input: >-
+    Two nodes, A (top) and B (bottom), are joined by three branches. Left branch: an
+    ideal 6.0 V battery with its positive terminal toward B, in series with R1 = 1.8 ohm.
+    Middle branch: R3 = 3.9 ohm alone. Right branch: an ideal 4.5 V battery with its
+    positive terminal toward A, in series with R2 = 2.7 ohm. Find the potential
+    difference V_A - V_B (with its sign), the current through R3 and its direction, the
+    current through the 4.5 V battery and its direction, and the power dissipated in R3.
+  expected:
+    - { name: V_AB, value: -1.4096385542168672, unit: V }
+    - { name: I3, value: 0.36144578313253006, unit: A, direction: B->A }
+    - { name: I2, value: 2.188755020080321, unit: A, direction: B->A }
+    - { name: P3, value: 0.5095079111627231, unit: W }
+  must_draw: [line|polyline|rect]
+
+- id: hard-kirchhoff-power-balance
+  topic: circuits/kirchhoff
+  level: university
+  source: hard
+  input: >-
+    Two nodes, A (top) and B (bottom), are joined by three branches. Left branch: an
+    ideal 9.0 V battery with its positive terminal toward A, in series with R1 = 1.5 ohm.
+    Middle branch: R3 = 2.0 ohm alone. Right branch: an ideal 6.0 V battery with its
+    positive terminal toward A, in series with R2 = 0.50 ohm. Find every branch current
+    with its direction, the power delivered by each battery, and check that it equals
+    the total power dissipated in the resistors.
+  expected:
+    - { name: I1, value: 2.210526315789474, unit: A, direction: B->A }
+    - { name: I2, value: 0.6315789473684212, unit: A, direction: B->A }
+    - { name: I3, value: 2.8421052631578947, unit: A, direction: A->B }
+    - { name: P1, value: 19.894736842105264, unit: W }
+    - { name: P2, value: 3.7894736842105274, unit: W }
+    - { name: P_total, value: 23.68421052631579, unit: W }
+  must_draw: [line|polyline|rect]
+
+- id: hard-vec-coulomb-2d
+  topic: electrostatics/coulomb
+  level: university
+  source: hard
+  input: >-
+    In vacuum, q1 = +2.0 microC is at the origin, q2 = -3.0 microC is at (0.40 m, 0) and
+    q3 = +1.5 microC is at (0, 0.30 m). Take +x to the right and +y up. Use epsilon_0 =
+    8.854e-12 F/m and k = 1/(4*pi*epsilon_0). Find the x and y components of the net
+    electric force on q1 (with their signs), and its magnitude.
+  expected:
+    - { name: Fx, value: 0.3370403414245581, unit: N, direction: +x }
+    - { name: Fy, value: 0.29959141459960725, unit: N, direction: -y }
+    - { name: F, value: 0.45094479423691813, unit: N }
+  must_draw: [point_charge, vector|arrow]
+
+- id: hard-vec-field-2d
+  topic: electrostatics/field
+  level: university
+  source: hard
+  input: >-
+    In vacuum, q1 = +4.0 nC is at (-0.10 m, 0) and q2 = -2.5 nC is at (+0.10 m, 0). Take
+    +x to the right and +y up. Use epsilon_0 = 8.854e-12 F/m and k = 1/(4*pi*epsilon_0).
+    Find the x and y components of the electric field at P = (0, 0.15 m) and its
+    magnitude.
+  expected:
+    - { name: Ex, value: 997.1004987947772, unit: N/C, direction: +x }
+    - { name: Ey, value: 345.1501726597305, unit: N/C, direction: +y }
+    - { name: E, value: 1055.148352784496, unit: N/C }
+  must_draw: [point_charge, vector|arrow]
+
+- id: hard-vec-displacement
+  topic: mechanics/vectors
+  level: simple
+  source: hard
+  input: >-
+    A hiker walks 3.20 km at 25 degrees north of east, then 4.75 km at 40 degrees west of
+    north, then 1.60 km due south. Take +x east and +y north. Find the x and y components
+    of the total displacement (with their signs) and its magnitude.
+  expected:
+    - { name: Rx, value: 0.15305622749378145, unit: km, direction: -x }
+    - { name: Ry, value: 3.391089542385384, unit: km, direction: +y }
+    - { name: R, value: 3.3945418679477415, unit: km }
+  must_draw: [vector|arrow]
+
+- id: hard-vec-river
+  topic: kinematics/relative
+  level: university
+  source: hard
+  input: >-
+    A river 85 m wide flows in the +x direction at 1.8 m/s; +y points straight across.
+    A boat moves at 3.5 m/s relative to the water, heading 115 degrees counterclockwise
+    from +x (25 degrees upstream of straight across). Find the components of the boat's
+    velocity relative to the ground, its ground speed, the time to cross, and how far
+    along x it lands from its starting point (with direction).
+  expected:
+    - { name: vx, value: 0.32083608390755236, unit: m/s, direction: +x }
+    - { name: vy, value: 3.172077254628275, unit: m/s, direction: +y }
+    - { name: speed, value: 3.1882612662809158, unit: m/s }
+    - { name: t, value: 26.796320889089085, unit: s }
+    - { name: drift, value: 8.597226657185484, unit: m, direction: +x }
+  must_draw: [vector|arrow]
+
+- id: hard-kin-cliff
+  topic: kinematics/projectile
+  level: university
+  source: hard
+  input: >-
+    A ball is thrown from the top of a 23.0 m high cliff at 14.5 m/s, 32 degrees above the
+    horizontal, and lands on the level ground below. Take +x horizontal (in the direction
+    of the throw) and +y up, g = 9.81 m/s^2, no air resistance. Find the time of flight,
+    the horizontal and vertical velocity components just before impact (with signs), the
+    impact speed and the horizontal distance travelled.
+  expected:
+    - { name: t, value: 3.086001767902933, unit: s }
+    - { name: vx, value: 12.296697394268177, unit: m/s, direction: +x }
+    - { name: vy, value: 22.5898480117463, unit: m/s, direction: -y }
+    - { name: speed, value: 25.71983670243651, unit: m/s }
+    - { name: range, value: 37.94762989807898, unit: m }
+  must_draw: [axes|axes_plot|curve|vector|arrow]
+
+- id: hard-energy-incline-up
+  topic: mechanics/energy
+  level: university
+  source: hard
+  input: >-
+    A 1.7 kg block is launched up a rough incline at 28 degrees to the horizontal with
+    speed 6.4 m/s. The coefficient of kinetic friction is mu_k = 0.31 (dimensionless); g =
+    9.81 m/s^2. While it slides up, find its acceleration along the slope (with
+    direction), how far up the slope it slides before stopping, and the work done on it
+    by friction during that slide (with its sign).
+  expected:
+    - { name: a, value: 7.290647955572872, unit: m/s**2, direction: down the slope }
+    - { name: d, value: 2.809078167647002, unit: m }
+    - { name: W_friction, value: -12.822667293504617, unit: J }
+  must_draw: [incline_block|free_body|vector]
+
+- id: hard-energy-spring-friction
+  topic: mechanics/energy
+  level: university
+  source: hard
+  input: >-
+    A 0.85 kg block on a rough horizontal floor compresses a spring of stiffness 420 N/m
+    by 0.12 m and is released from rest. The coefficient of kinetic friction is mu_k =
+    0.22 (dimensionless); g = 9.81 m/s^2. The block leaves the spring at the spring's
+    natural length. Use energy to find the spring energy stored, the block's speed as it
+    leaves the spring, how far it then slides before stopping, and the total work done by
+    friction from release to rest (with its sign).
+  expected:
+    - { name: U_spring, value: 3.024, unit: J }
+    - { name: v, value: 2.5685260593669397, unit: m/s }
+    - { name: s, value: 1.5284325172938236, unit: m }
+    - { name: W_friction, value: -3.024, unit: J }
+  must_draw: []
+
+- id: hard-energy-coaster
+  topic: mechanics/energy
+  level: simple
+  source: hard
+  input: >-
+    A 320 kg roller-coaster car starts from rest 18.5 m above the lowest point of the
+    track and reaches the lowest point with speed 17.2 m/s after travelling 46 m along
+    the track. g = 9.81 m/s^2. Find the work done on the car by friction (with its sign)
+    and the magnitude of the average friction force along the track.
+  expected:
+    - { name: W_friction, value: -10740.8, unit: J }
+    - { name: f, value: 233.49565217391327, unit: N }
+  must_draw: []
+
+- id: hard-energy-table-pulley
+  topic: mechanics/energy
+  level: university
+  source: hard
+  input: >-
+    A 3.0 kg block on a rough horizontal table (mu_k = 0.18, dimensionless) is tied by a
+    light string over a frictionless pulley to a hanging 1.6 kg block. The system starts
+    from rest; g = 9.81 m/s^2. Use energy to find the speed after the hanging block has
+    fallen 0.75 m, then find the acceleration of the system and the tension in the
+    string.
+  expected:
+    - { name: v, value: 1.8414254875196436, unit: m/s }
+    - { name: a, value: 2.260565217391305, unit: m/s**2 }
+    - { name: T, value: 12.079095652173914, unit: N }
+  must_draw: [free_body|vector|rect]
+
+- id: hard-energy-skier
+  topic: mechanics/energy
+  level: university
+  source: hard
+  input: >-
+    A skier starts from rest at a height of 12 m on a straight slope inclined at 35
+    degrees and slides to the bottom, then continues on a horizontal section. The
+    coefficient of kinetic friction is mu_k = 0.080 (dimensionless) everywhere; g = 9.81
+    m/s^2. Find the length of the slope, the speed at the bottom, and how far the skier
+    slides on the horizontal section before stopping.
+  expected:
+    - { name: L, value: 20.921361547453177, unit: m }
+    - { name: v, value: 14.440933026069018, unit: m/s }
+    - { name: s, value: 132.86222391909462, unit: m }
+  must_draw: [incline_block|line|polyline]
+
+- id: hard-charges-zero-field
+  topic: electrostatics/field
+  level: university
+  source: hard
+  input: >-
+    In vacuum, q1 = +3.0 microC is at x = 0 and q2 = -1.2 microC is at x = 0.50 m. Take +x
+    to the right. Use epsilon_0 = 8.854e-12 F/m and k = 1/(4*pi*epsilon_0). Find the
+    electric field at the midpoint x = 0.25 m (magnitude and direction), and the position
+    on the x axis (other than infinity) where the net field is zero. Explain why it is not
+    between the charges.
+  expected:
+    - { name: E_mid, value: 603976.2918328083, unit: N/C, direction: +x }
+    - { name: x0, value: 1.3603796100280632, unit: m }
+  must_draw: [point_charge]
+
+- id: hard-charges-potential
+  topic: electrostatics/potential
+  level: university
+  source: hard
+  input: >-
+    In vacuum, q1 = +4.0 nC is at (0.30 m, 0), q2 = -6.0 nC is at (0, 0.40 m) and q3 =
+    +2.5 nC is at (-0.20 m, -0.20 m). Use epsilon_0 = 8.854e-12 F/m and k =
+    1/(4*pi*epsilon_0). Find the electric potential at the origin, the electric potential
+    energy of the three-charge system, and the work needed to bring q4 = -1.5 nC from
+    infinity to the origin. Keep every sign.
+  expected:
+    - { name: V0, value: 64.46159958826443, unit: V }
+    - { name: U, value: -4.776764783288689e-07, unit: J }
+    - { name: W, value: -9.669239938239665e-08, unit: J }
+  must_draw: [point_charge]
+
+- id: hard-charges-line-force
+  topic: electrostatics/coulomb
+  level: university
+  source: hard
+  input: >-
+    In vacuum, three point charges lie on the x axis: q1 = +5.0 nC at x = 0, q2 = -2.0 nC
+    at x = 0.20 m and q3 = +3.0 nC at x = 0.50 m. Take +x to the right. Use epsilon_0 =
+    8.854e-12 F/m and k = 1/(4*pi*epsilon_0). Find the force on q2 from each of the
+    other charges and the net force on q2 (magnitude and direction).
+  expected:
+    - { name: F21, value: 2.2469356094970545e-06, unit: N, direction: -x }
+    - { name: F23, value: 5.991828291992146e-07, unit: N, direction: +x }
+    - { name: F_net, value: 1.6477527802978396e-06, unit: N, direction: -x }
+  must_draw: [point_charge]
+
+- id: hard-charges-electron-plates
+  topic: electrostatics/field
+  level: university
+  source: hard
+  input: >-
+    Two large parallel plates 1.8 cm apart have a potential difference of 250 V; the
+    uniform field between them points in the +y direction (up). An electron (charge
+    -1.602e-19 C, mass 9.109e-31 kg) is released from rest next to the negative plate.
+    Ignore gravity. Find the field strength, the force on the electron (magnitude and
+    direction), and its speed when it reaches the other plate.
+  expected:
+    - { name: E, value: 13888.88888888889, unit: N/C }
+    - { name: F, value: 2.225e-15, unit: N, direction: -y }
+    - { name: v, value: 9377366.865566818, unit: m/s }
+  must_draw: [vector|arrow]
+
+- id: hard-charges-equilibrium
+  topic: electrostatics/coulomb
+  level: university
+  source: hard
+  input: >-
+    In vacuum, q1 = +2.0 nC is at x = 0 and q2 = +5.0 nC is at x = 0.30 m. Take +x to the
+    right. Use epsilon_0 = 8.854e-12 F/m and k = 1/(4*pi*epsilon_0). A third charge q3 =
+    -1.0 nC is placed on the x axis between them. Find the position where the net force
+    on q3 is zero, then find the net force on q3 (magnitude and direction) if it is
+    placed at x = 0.050 m instead.
+  expected:
+    - { name: x_eq, value: 0.11622776601683792, unit: m }
+    - { name: F, value: 6.471174555351516e-06, unit: N, direction: -x }
+  must_draw: [point_charge]
+
+- id: hard-mech-elastic-collision
+  topic: mechanics/momentum
+  level: university
+  source: hard
+  input: >-
+    On a frictionless track, cart 1 (1.4 kg) moves at 3.2 m/s in the +x direction and
+    cart 2 (2.1 kg) moves at 1.7 m/s in the -x direction. They collide elastically head
+    on. Find both velocities after the collision (with directions), the impulse on cart
+    2 (with direction), and check that kinetic energy is conserved.
+  expected:
+    - { name: v1, value: 2.68, unit: m/s, direction: -x }
+    - { name: v2, value: 2.22, unit: m/s, direction: +x }
+    - { name: J2, value: 8.232, unit: N*s, direction: +x }
+    - { name: KE, value: 10.2025, unit: J }
+  must_draw: [vector|arrow]
