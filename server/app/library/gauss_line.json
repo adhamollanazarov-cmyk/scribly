@@ -1,0 +1,606 @@
+{
+  "source": {
+    "type": "problem",
+    "text": "An infinite straight line has uniform positive charge density 2 nanocoulombs per meter. Find field magnitude at radius 0.1 m in vacuum. Use epsilon_0 = 8.854e-12 C^2/(N*m^2)."
+  },
+  "title": "Gauss’s law for a line charge",
+  "level": "university",
+  "steps": [
+    {
+      "id": "s1",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Let us solve this worked example using the givens on the board.",
+      "subtitles": {
+        "uz": "Doskadagi berilgan kattaliklar yordamida ushbu misolni yechamiz.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "heading",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 70
+            },
+            {
+              "k": "size",
+              "v": 26
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Gauss’s law for a line charge"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "linecharge",
+          "type": "line",
+          "color": "charge_pos",
+          "label": "",
+          "frame": "",
+          "at": 0.087,
+          "num": [
+            {
+              "k": "x1",
+              "v": 350
+            },
+            {
+              "k": "y1",
+              "v": 170
+            },
+            {
+              "k": "x2",
+              "v": 350
+            },
+            {
+              "k": "y2",
+              "v": 580
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "cylinder_side",
+          "type": "rect",
+          "color": "surface",
+          "label": "",
+          "frame": "",
+          "at": 0.175,
+          "num": [
+            {
+              "k": "x",
+              "v": 210
+            },
+            {
+              "k": "y",
+              "v": 250
+            },
+            {
+              "k": "w",
+              "v": 280
+            },
+            {
+              "k": "h",
+              "v": 260
+            },
+            {
+              "k": "dashed",
+              "v": 1
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "topcap",
+          "type": "ellipse",
+          "color": "surface",
+          "label": "",
+          "frame": "",
+          "at": 0.262,
+          "num": [
+            {
+              "k": "cx",
+              "v": 350
+            },
+            {
+              "k": "cy",
+              "v": 250
+            },
+            {
+              "k": "rx",
+              "v": 140
+            },
+            {
+              "k": "ry",
+              "v": 35
+            },
+            {
+              "k": "dashed",
+              "v": 1
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "bottomcap",
+          "type": "ellipse",
+          "color": "surface",
+          "label": "",
+          "frame": "",
+          "at": 0.35,
+          "num": [
+            {
+              "k": "cx",
+              "v": 350
+            },
+            {
+              "k": "cy",
+              "v": 510
+            },
+            {
+              "k": "rx",
+              "v": 140
+            },
+            {
+              "k": "ry",
+              "v": 35
+            },
+            {
+              "k": "dashed",
+              "v": 1
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "field",
+          "type": "arrow",
+          "color": "force",
+          "label": "outward field",
+          "frame": "",
+          "at": 0.438,
+          "num": [
+            {
+              "k": "x1",
+              "v": 490
+            },
+            {
+              "k": "y1",
+              "v": 380
+            },
+            {
+              "k": "x2",
+              "v": 620
+            },
+            {
+              "k": "y2",
+              "v": 380
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "given0",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.525,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 690
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Linear charge density: +2 nC/m; radius: 0.1 m"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "given1",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.612,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 733
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Vacuum permittivity: 8.854e-12 C²/(N·m²)"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s2",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Use a cylinder coaxial with the line. The field points radially outward and has the same magnitude around its curved surface.",
+      "subtitles": {
+        "uz": "Chiziq bilan o‘qdosh silindr olamiz. Maydon radial tashqariga yo‘naladi va yon sirtda moduli bir xil bo‘ladi.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "sym0",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 90
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "\\lambda"
+            },
+            {
+              "k": "meaning",
+              "v": "linear charge density"
+            },
+            {
+              "k": "unit",
+              "v": "C/m"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym1",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.14,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 126
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "r"
+            },
+            {
+              "k": "meaning",
+              "v": "radial distance"
+            },
+            {
+              "k": "unit",
+              "v": "m"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym2",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.28,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 162
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "L"
+            },
+            {
+              "k": "meaning",
+              "v": "cylinder length"
+            },
+            {
+              "k": "unit",
+              "v": "m"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym3",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.42,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 198
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "E"
+            },
+            {
+              "k": "meaning",
+              "v": "field magnitude"
+            },
+            {
+              "k": "unit",
+              "v": "N/C"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym4",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.56,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 234
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "\\epsilon_0"
+            },
+            {
+              "k": "meaning",
+              "v": "vacuum permittivity"
+            },
+            {
+              "k": "unit",
+              "v": "C²/(N·m²)"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s3",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Only the curved surface contributes flux. Cylinder length cancels between the enclosed charge and surface area.",
+      "subtitles": {
+        "uz": "Oqimga faqat yon sirt hissa qo‘shadi. Silindr uzunligi ichki zaryad va sirt yuzasi orasida qisqaradi.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "law0",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 440
+            },
+            {
+              "k": "size",
+              "v": 30
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "E(2\\pi rL)=\\frac{\\lambda L}{\\epsilon_0}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s4",
+      "kind": "checkpoint",
+      "calcs": [],
+      "say": "Why is flux through the cylinder’s flat ends zero?",
+      "subtitles": {
+        "uz": "Davom etishdan oldin tushunganingizni tekshiring.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "Why is flux through the cylinder’s flat ends zero?",
+          "type": "choice",
+          "choices": [
+            "Field is parallel to those faces",
+            "The line has no charge"
+          ],
+          "answer": "0",
+          "hint": "Flux uses the perpendicular field component.",
+          "reexplain_hint": "Picture arrows sliding along a tabletop rather than passing through it."
+        }
+      ]
+    },
+    {
+      "id": "s5",
+      "kind": "explain",
+      "calcs": [
+        {
+          "expr": "lam/(2*pi*eps*r)",
+          "values": [
+            {
+              "name": "lam",
+              "value": 2e-09
+            },
+            {
+              "name": "eps",
+              "value": 8.854e-12
+            },
+            {
+              "name": "r",
+              "value": 0.1
+            }
+          ],
+          "expected": 359.5096975195295,
+          "unit": "N/C",
+          "unit_spoken": "newtons per coulomb",
+          "quantity_kind": "magnitude",
+          "positive": "",
+          "frame": "",
+          "id": "c1"
+        }
+      ],
+      "say": "The outward field has magnitude {c1}.",
+      "subtitles": {
+        "uz": "Tashqariga yo‘nalgan maydon moduli {c1}.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "result1",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 575
+            },
+            {
+              "k": "size",
+              "v": 32
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "E = {c1:3sf}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s6",
+      "kind": "checkpoint",
+      "calcs": [],
+      "say": "Enter the first calculated result, using its displayed unit.",
+      "subtitles": {
+        "uz": "Birinchi hisoblangan natijani ko‘rsatilgan birlikda kiriting.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "What is the first calculated result?",
+          "type": "number",
+          "choices": [],
+          "answer": "{c1:3sf}",
+          "hint": "Read the first result and its unit.",
+          "reexplain_hint": "Picture arrows sliding along a tabletop rather than passing through it."
+        }
+      ]
+    },
+    {
+      "id": "s7",
+      "kind": "summary",
+      "calcs": [],
+      "say": "An infinite line gives an inverse-distance field. The cylinder is a mathematical surface, not a physical conductor.",
+      "subtitles": {
+        "uz": "Cheksiz chiziq maydoni masofaga teskari proporsional. Silindr haqiqiy o‘tkazgich emas, matematik sirtdir.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": []
+    }
+  ]
+}

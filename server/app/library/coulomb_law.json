@@ -1,0 +1,564 @@
+{
+  "source": {
+    "type": "problem",
+    "text": "Two positive point charges, 2 microcoulombs and 3 microcoulombs, are separated by 0.3 m in vacuum. Use k = 8.99e9 N*m^2/C^2. Find force magnitude."
+  },
+  "title": "Coulomb’s law",
+  "level": "university",
+  "steps": [
+    {
+      "id": "s1",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Let us solve this worked example using the givens on the board.",
+      "subtitles": {
+        "uz": "Doskadagi berilgan kattaliklar yordamida ushbu misolni yechamiz.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "heading",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 70
+            },
+            {
+              "k": "size",
+              "v": 26
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Coulomb’s law"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "left",
+          "type": "point_charge",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.1,
+          "num": [
+            {
+              "k": "x",
+              "v": 250
+            },
+            {
+              "k": "y",
+              "v": 350
+            }
+          ],
+          "txt": [
+            {
+              "k": "sign",
+              "v": "+"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "right",
+          "type": "point_charge",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.2,
+          "num": [
+            {
+              "k": "x",
+              "v": 510
+            },
+            {
+              "k": "y",
+              "v": 350
+            }
+          ],
+          "txt": [
+            {
+              "k": "sign",
+              "v": "+"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "forceleft",
+          "type": "arrow",
+          "color": "force",
+          "label": "repulsion",
+          "frame": "",
+          "at": 0.3,
+          "num": [
+            {
+              "k": "x1",
+              "v": 230
+            },
+            {
+              "k": "y1",
+              "v": 350
+            },
+            {
+              "k": "x2",
+              "v": 130
+            },
+            {
+              "k": "y2",
+              "v": 350
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "forceright",
+          "type": "arrow",
+          "color": "force",
+          "label": "repulsion",
+          "frame": "",
+          "at": 0.4,
+          "num": [
+            {
+              "k": "x1",
+              "v": 530
+            },
+            {
+              "k": "y1",
+              "v": 350
+            },
+            {
+              "k": "x2",
+              "v": 650
+            },
+            {
+              "k": "y2",
+              "v": 350
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "given0",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.5,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 690
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Charges: +2 μC and +3 μC; separation: 0.3 m"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "given1",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.6,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 733
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Coulomb constant: 8.99e9 N·m²/C²"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s2",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Both charges are positive, so they repel. Each experiences the same force magnitude in opposite directions.",
+      "subtitles": {
+        "uz": "Ikkala zaryad musbat, shuning uchun ular itarishadi. Kuchlar moduli teng, yo‘nalishlari qarama-qarshi.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "sym0",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 90
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "q_1"
+            },
+            {
+              "k": "meaning",
+              "v": "first charge"
+            },
+            {
+              "k": "unit",
+              "v": "C"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym1",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.14,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 126
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "q_2"
+            },
+            {
+              "k": "meaning",
+              "v": "second charge"
+            },
+            {
+              "k": "unit",
+              "v": "C"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym2",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.28,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 162
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "r"
+            },
+            {
+              "k": "meaning",
+              "v": "separation"
+            },
+            {
+              "k": "unit",
+              "v": "m"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym3",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.42,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 198
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "k"
+            },
+            {
+              "k": "meaning",
+              "v": "Coulomb constant"
+            },
+            {
+              "k": "unit",
+              "v": "N·m²/C²"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym4",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.56,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 234
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "F"
+            },
+            {
+              "k": "meaning",
+              "v": "force magnitude"
+            },
+            {
+              "k": "unit",
+              "v": "N"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s3",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Force magnitude grows with either charge and falls with the square of separation.",
+      "subtitles": {
+        "uz": "Kuch moduli zaryadlar bilan ortadi va ular orasidagi masofa kvadratiga teskari proporsional.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "law0",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 440
+            },
+            {
+              "k": "size",
+              "v": 30
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "F=\\frac{kq_1q_2}{r^2}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s4",
+      "kind": "checkpoint",
+      "calcs": [],
+      "say": "If separation doubles while charges stay fixed, how does force change?",
+      "subtitles": {
+        "uz": "Davom etishdan oldin tushunganingizni tekshiring.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "If separation doubles while charges stay fixed, how does force change?",
+          "type": "choice",
+          "choices": [
+            "It becomes one quarter",
+            "It doubles"
+          ],
+          "answer": "0",
+          "hint": "Square the distance factor.",
+          "reexplain_hint": "Spread the interaction over a sphere: doubling its radius quadruples its area."
+        }
+      ]
+    },
+    {
+      "id": "s5",
+      "kind": "explain",
+      "calcs": [
+        {
+          "expr": "k*q1*q2/r**2",
+          "values": [
+            {
+              "name": "k",
+              "value": 8990000000.0
+            },
+            {
+              "name": "q1",
+              "value": 2e-06
+            },
+            {
+              "name": "q2",
+              "value": 3e-06
+            },
+            {
+              "name": "r",
+              "value": 0.3
+            }
+          ],
+          "expected": 0.5993333333333334,
+          "unit": "N",
+          "unit_spoken": "newtons",
+          "quantity_kind": "magnitude",
+          "positive": "",
+          "frame": "",
+          "id": "c1"
+        }
+      ],
+      "say": "Each repulsive force has magnitude {c1}.",
+      "subtitles": {
+        "uz": "Har bir itarish kuchining moduli {c1}.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "result1",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 575
+            },
+            {
+              "k": "size",
+              "v": 32
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "F = {c1:3sf}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s6",
+      "kind": "checkpoint",
+      "calcs": [],
+      "say": "Enter the first calculated result, using its displayed unit.",
+      "subtitles": {
+        "uz": "Birinchi hisoblangan natijani ko‘rsatilgan birlikda kiriting.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "What is the first calculated result?",
+          "type": "number",
+          "choices": [],
+          "answer": "{c1:3sf}",
+          "hint": "Read the first result and its unit.",
+          "reexplain_hint": "Spread the interaction over a sphere: doubling its radius quadruples its area."
+        }
+      ]
+    },
+    {
+      "id": "s7",
+      "kind": "summary",
+      "calcs": [],
+      "say": "First determine attraction or repulsion from the charge signs, then calculate the force magnitude.",
+      "subtitles": {
+        "uz": "Avval zaryad ishoralaridan tortishish yoki itarishishni aniqlang, so‘ng kuch modulini hisoblang.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": []
+    }
+  ]
+}

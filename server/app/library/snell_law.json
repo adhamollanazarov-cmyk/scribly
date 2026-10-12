@@ -1,0 +1,653 @@
+{
+  "source": {
+    "type": "problem",
+    "text": "Light travels from air of refractive index 1.0 into glass of index 1.5 at incidence angle 30 degrees to the normal. Find refraction angle to the normal."
+  },
+  "title": "Snell’s law",
+  "level": "university",
+  "steps": [
+    {
+      "id": "s1",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Let us solve this worked example using the givens on the board.",
+      "subtitles": {
+        "uz": "Doskadagi berilgan kattaliklar yordamida ushbu misolni yechamiz.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "heading",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 70
+            },
+            {
+              "k": "size",
+              "v": 26
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Snell’s law"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "interface",
+          "type": "line",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.064,
+          "num": [
+            {
+              "k": "x1",
+              "v": 130
+            },
+            {
+              "k": "y1",
+              "v": 370
+            },
+            {
+              "k": "x2",
+              "v": 650
+            },
+            {
+              "k": "y2",
+              "v": 370
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "normal",
+          "type": "line",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.127,
+          "num": [
+            {
+              "k": "x1",
+              "v": 350
+            },
+            {
+              "k": "y1",
+              "v": 170
+            },
+            {
+              "k": "x2",
+              "v": 350
+            },
+            {
+              "k": "y2",
+              "v": 580
+            },
+            {
+              "k": "dashed",
+              "v": 1
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "incoming",
+          "type": "arrow",
+          "color": "force",
+          "label": "",
+          "frame": "",
+          "at": 0.191,
+          "num": [
+            {
+              "k": "x1",
+              "v": 240
+            },
+            {
+              "k": "y1",
+              "v": 180
+            },
+            {
+              "k": "x2",
+              "v": 350
+            },
+            {
+              "k": "y2",
+              "v": 370
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "refracted",
+          "type": "arrow",
+          "color": "force",
+          "label": "",
+          "frame": "",
+          "at": 0.255,
+          "num": [
+            {
+              "k": "x1",
+              "v": 350
+            },
+            {
+              "k": "y1",
+              "v": 370
+            },
+            {
+              "k": "x2",
+              "v": 420
+            },
+            {
+              "k": "y2",
+              "v": 568
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "incidentlabel",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.318,
+          "num": [
+            {
+              "k": "x",
+              "v": 140
+            },
+            {
+              "k": "y",
+              "v": 280
+            },
+            {
+              "k": "size",
+              "v": 26
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "incident ray"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "refractedlabel",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.382,
+          "num": [
+            {
+              "k": "x",
+              "v": 450
+            },
+            {
+              "k": "y",
+              "v": 550
+            },
+            {
+              "k": "size",
+              "v": 26
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "refracted ray"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "air",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.445,
+          "num": [
+            {
+              "k": "x",
+              "v": 600
+            },
+            {
+              "k": "y",
+              "v": 270
+            },
+            {
+              "k": "size",
+              "v": 26
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "air"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "glass",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.509,
+          "num": [
+            {
+              "k": "x",
+              "v": 600
+            },
+            {
+              "k": "y",
+              "v": 490
+            },
+            {
+              "k": "size",
+              "v": 26
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "glass"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "given0",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.573,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 690
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Air index: 1.0; glass index: 1.5"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "given1",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.636,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 733
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Incidence angle: 30 degrees from normal"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s2",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Measure both angles from the normal, perpendicular to the boundary. Entering higher-index glass bends the ray toward the normal.",
+      "subtitles": {
+        "uz": "Ikkala burchakni chegaraga perpendikulyar normaldan o‘lchang. Katta sindirish ko‘rsatkichli shishaga kirganda nur normalga yaqinlashadi.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "sym0",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 90
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "n_1"
+            },
+            {
+              "k": "meaning",
+              "v": "incident refractive index"
+            },
+            {
+              "k": "unit",
+              "v": ""
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym1",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.175,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 126
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "n_2"
+            },
+            {
+              "k": "meaning",
+              "v": "transmitted refractive index"
+            },
+            {
+              "k": "unit",
+              "v": ""
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym2",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.35,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 162
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "\\theta_1"
+            },
+            {
+              "k": "meaning",
+              "v": "incidence angle"
+            },
+            {
+              "k": "unit",
+              "v": "degrees"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym3",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.525,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 198
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "\\theta_2"
+            },
+            {
+              "k": "meaning",
+              "v": "refraction angle"
+            },
+            {
+              "k": "unit",
+              "v": "degrees"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s3",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Snell’s law balances refractive index times the sine of each angle. Solve for the transmitted angle with inverse sine.",
+      "subtitles": {
+        "uz": "Snell qonunida sindirish ko‘rsatkichi va burchak sinusi ko‘paytmalari teng. Singan burchakni arksinus orqali topamiz.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "law0",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 440
+            },
+            {
+              "k": "size",
+              "v": 30
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "n_1\\sin\\theta_1=n_2\\sin\\theta_2"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s4",
+      "kind": "checkpoint",
+      "calcs": [],
+      "say": "Are incidence and refraction angles measured from the surface or the normal?",
+      "subtitles": {
+        "uz": "Davom etishdan oldin tushunganingizni tekshiring.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "Are incidence and refraction angles measured from the surface or the normal?",
+          "type": "choice",
+          "choices": [
+            "The normal",
+            "The surface"
+          ],
+          "answer": "0",
+          "hint": "The normal is perpendicular to the boundary.",
+          "reexplain_hint": "Draw a perpendicular guide at the contact point, then compare each ray to that guide."
+        }
+      ]
+    },
+    {
+      "id": "s5",
+      "kind": "explain",
+      "calcs": [
+        {
+          "expr": "asin(n1*sin(theta*pi/180)/n2)*180/pi",
+          "values": [
+            {
+              "name": "n1",
+              "value": 1
+            },
+            {
+              "name": "n2",
+              "value": 1.5
+            },
+            {
+              "name": "theta",
+              "value": 30
+            }
+          ],
+          "expected": 19.47122063449069,
+          "unit": "degrees",
+          "unit_spoken": "degrees",
+          "quantity_kind": "magnitude",
+          "positive": "",
+          "frame": "",
+          "id": "c1"
+        }
+      ],
+      "say": "The refraction angle is {c1}, measured from the normal.",
+      "subtitles": {
+        "uz": "Sinish burchagi {c1}, normaldan o‘lchanadi.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "result1",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 575
+            },
+            {
+              "k": "size",
+              "v": 32
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "\\theta_2 = {c1:3sf}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s6",
+      "kind": "checkpoint",
+      "calcs": [],
+      "say": "Enter the first calculated result, using its displayed unit.",
+      "subtitles": {
+        "uz": "Birinchi hisoblangan natijani ko‘rsatilgan birlikda kiriting.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "What is the first calculated result?",
+          "type": "number",
+          "choices": [],
+          "answer": "{c1:3sf}",
+          "hint": "Read the first result and its unit.",
+          "reexplain_hint": "Draw a perpendicular guide at the contact point, then compare each ray to that guide."
+        }
+      ]
+    },
+    {
+      "id": "s7",
+      "kind": "summary",
+      "calcs": [],
+      "say": "A larger refractive index makes the transmitted ray closer to the normal in this example.",
+      "subtitles": {
+        "uz": "Bu misolda kattaroq sindirish ko‘rsatkichi singan nurni normalga yaqinlashtiradi.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": []
+    }
+  ]
+}

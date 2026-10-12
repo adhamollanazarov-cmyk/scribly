@@ -1,0 +1,594 @@
+{
+  "source": {
+    "type": "problem",
+    "text": "A taut uniform string has tension 80 N and linear mass density 0.005 kg/m. A transverse sinusoidal wave has frequency 50 Hz and amplitude 0.1 m. Find wave speed and wavelength. The drawn wave is a snapshot with arbitrary phase."
+  },
+  "title": "Wave speed on a string",
+  "level": "university",
+  "steps": [
+    {
+      "id": "s1",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Let us solve this worked example using the givens on the board.",
+      "subtitles": {
+        "uz": "Doskadagi berilgan kattaliklar yordamida ushbu misolni yechamiz.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "heading",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 70
+            },
+            {
+              "k": "size",
+              "v": 26
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Wave speed on a string"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "wave",
+          "type": "axes_plot",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.14,
+          "num": [
+            {
+              "k": "x",
+              "v": 120
+            },
+            {
+              "k": "y",
+              "v": 220
+            },
+            {
+              "k": "w",
+              "v": 550
+            },
+            {
+              "k": "h",
+              "v": 310
+            },
+            {
+              "k": "x_min",
+              "v": 0
+            },
+            {
+              "k": "x_max",
+              "v": 5.059644256269407
+            },
+            {
+              "k": "y_min",
+              "v": -0.15
+            },
+            {
+              "k": "y_max",
+              "v": 0.15
+            }
+          ],
+          "txt": [
+            {
+              "k": "xlabel",
+              "v": "position (m)"
+            },
+            {
+              "k": "ylabel",
+              "v": "displacement (m)"
+            },
+            {
+              "k": "expr",
+              "v": "0.1*sin(2*pi*x/2.5298221281347035)"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "travel",
+          "type": "arrow",
+          "color": "force",
+          "label": "wave travel",
+          "frame": "",
+          "at": 0.28,
+          "num": [
+            {
+              "k": "x1",
+              "v": 180
+            },
+            {
+              "k": "y1",
+              "v": 600
+            },
+            {
+              "k": "x2",
+              "v": 600
+            },
+            {
+              "k": "y2",
+              "v": 600
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "given0",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.42,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 690
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Tension: 80 N; linear density: 0.005 kg/m"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "given1",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.56,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 733
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Wave frequency: 50 Hz; amplitude: 0.1 m"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s2",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Tension provides the restoring force; string mass provides inertia. The wave travels while each string segment oscillates transversely.",
+      "subtitles": {
+        "uz": "Taranglik qaytaruvchi kuchni, massa esa inersiyani beradi. To‘lqin tarqaladi, har bir ip bo‘lagi esa ko‘ndalang tebranadi.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "sym0",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 90
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "T"
+            },
+            {
+              "k": "meaning",
+              "v": "string tension"
+            },
+            {
+              "k": "unit",
+              "v": "N"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym1",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.14,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 126
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "\\mu"
+            },
+            {
+              "k": "meaning",
+              "v": "mass per length"
+            },
+            {
+              "k": "unit",
+              "v": "kg/m"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym2",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.28,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 162
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "v"
+            },
+            {
+              "k": "meaning",
+              "v": "wave speed"
+            },
+            {
+              "k": "unit",
+              "v": "m/s"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym3",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.42,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 198
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "f"
+            },
+            {
+              "k": "meaning",
+              "v": "frequency"
+            },
+            {
+              "k": "unit",
+              "v": "Hz"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym4",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.56,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 234
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "\\lambda"
+            },
+            {
+              "k": "meaning",
+              "v": "wavelength"
+            },
+            {
+              "k": "unit",
+              "v": "m"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s3",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Tension and linear density set speed. A wavelength is the distance the wave travels during one period.",
+      "subtitles": {
+        "uz": "Taranglik va chiziqli zichlik tezlikni belgilaydi. To‘lqin uzunligi bir davrda to‘lqin bosib o‘tgan masofadir.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "law0",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 440
+            },
+            {
+              "k": "size",
+              "v": 30
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "v=\\sqrt{\\frac{T}{\\mu}},\\qquad \\lambda=\\frac{v}{f}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s4",
+      "kind": "checkpoint",
+      "calcs": [],
+      "say": "If tension increases while density stays fixed, wave speed does what?",
+      "subtitles": {
+        "uz": "Davom etishdan oldin tushunganingizni tekshiring.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "If tension increases while density stays fixed, wave speed does what?",
+          "type": "choice",
+          "choices": [
+            "Increases",
+            "Decreases"
+          ],
+          "answer": "0",
+          "hint": "A stronger restoring effect propagates disturbance faster.",
+          "reexplain_hint": "Compare a slack rope with a tightly stretched rope: the tighter rope transmits a disturbance faster."
+        }
+      ]
+    },
+    {
+      "id": "s5",
+      "kind": "explain",
+      "calcs": [
+        {
+          "expr": "sqrt(T/mu)",
+          "values": [
+            {
+              "name": "T",
+              "value": 80
+            },
+            {
+              "name": "mu",
+              "value": 0.005
+            }
+          ],
+          "expected": 126.49110640673517,
+          "unit": "m/s",
+          "unit_spoken": "meters per second",
+          "quantity_kind": "magnitude",
+          "positive": "",
+          "frame": "",
+          "id": "c1"
+        }
+      ],
+      "say": "Wave speed is {c1}.",
+      "subtitles": {
+        "uz": "To‘lqin tezligi {c1}.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "result1",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 575
+            },
+            {
+              "k": "size",
+              "v": 32
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "v = {c1:3sf}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s6",
+      "kind": "explain",
+      "calcs": [
+        {
+          "expr": "c1/f",
+          "values": [
+            {
+              "name": "f",
+              "value": 50
+            }
+          ],
+          "expected": 2.5298221281347035,
+          "unit": "m",
+          "unit_spoken": "meters",
+          "quantity_kind": "magnitude",
+          "positive": "",
+          "frame": "",
+          "id": "c2"
+        }
+      ],
+      "say": "Wavelength is {c2}.",
+      "subtitles": {
+        "uz": "To‘lqin uzunligi {c2}.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "result2",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 670
+            },
+            {
+              "k": "size",
+              "v": 32
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "\\lambda = {c2:3sf}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s7",
+      "kind": "checkpoint",
+      "calcs": [],
+      "say": "Enter the first calculated result, using its displayed unit.",
+      "subtitles": {
+        "uz": "Birinchi hisoblangan natijani ko‘rsatilgan birlikda kiriting.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "What is the first calculated result?",
+          "type": "number",
+          "choices": [],
+          "answer": "{c1:3sf}",
+          "hint": "Read the first result and its unit.",
+          "reexplain_hint": "Compare a slack rope with a tightly stretched rope: the tighter rope transmits a disturbance faster."
+        }
+      ]
+    },
+    {
+      "id": "s8",
+      "kind": "summary",
+      "calcs": [],
+      "say": "Wave speed describes propagation, not the up-and-down speed of a string segment.",
+      "subtitles": {
+        "uz": "To‘lqin tezligi tarqalishni bildiradi, ip bo‘lagining yuqoriga-pastga harakat tezligini emas.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": []
+    }
+  ]
+}

@@ -1,0 +1,681 @@
+{
+  "source": {
+    "type": "problem",
+    "text": "A weightless horizontal beam pivots at its left end. A 30 N load acts downward 2 m from the pivot. An upward support force acts 3 m from the pivot. Find load torque and support force."
+  },
+  "title": "Torque and rotational equilibrium",
+  "level": "university",
+  "steps": [
+    {
+      "id": "s1",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Let us solve this worked example using the givens on the board.",
+      "subtitles": {
+        "uz": "Doskadagi berilgan kattaliklar yordamida ushbu misolni yechamiz.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "heading",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 70
+            },
+            {
+              "k": "size",
+              "v": 26
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Torque and rotational equilibrium"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "beam",
+          "type": "line",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.078,
+          "num": [
+            {
+              "k": "x1",
+              "v": 150
+            },
+            {
+              "k": "y1",
+              "v": 350
+            },
+            {
+              "k": "x2",
+              "v": 630
+            },
+            {
+              "k": "y2",
+              "v": 350
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "pivot",
+          "type": "point",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.156,
+          "num": [
+            {
+              "k": "x",
+              "v": 150
+            },
+            {
+              "k": "y",
+              "v": 350
+            },
+            {
+              "k": "r",
+              "v": 14
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "load",
+          "type": "arrow",
+          "color": "force",
+          "label": "load",
+          "frame": "",
+          "at": 0.233,
+          "num": [
+            {
+              "k": "x1",
+              "v": 470
+            },
+            {
+              "k": "y1",
+              "v": 350
+            },
+            {
+              "k": "x2",
+              "v": 470
+            },
+            {
+              "k": "y2",
+              "v": 510
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "support",
+          "type": "arrow",
+          "color": "force",
+          "label": "support",
+          "frame": "",
+          "at": 0.311,
+          "num": [
+            {
+              "k": "x1",
+              "v": 630
+            },
+            {
+              "k": "y1",
+              "v": 350
+            },
+            {
+              "k": "x2",
+              "v": 630
+            },
+            {
+              "k": "y2",
+              "v": 190
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "rotation_arc",
+          "type": "curve",
+          "color": "force",
+          "label": "",
+          "frame": "",
+          "at": 0.389,
+          "num": [],
+          "txt": [],
+          "pts": [
+            [
+              240,
+              350
+            ],
+            [
+              230,
+              305
+            ],
+            [
+              195,
+              270
+            ],
+            [
+              150,
+              260
+            ],
+            [
+              105,
+              270
+            ],
+            [
+              80,
+              300
+            ]
+          ]
+        },
+        {
+          "id": "rotation",
+          "type": "arrow",
+          "color": "force",
+          "label": "positive ccw",
+          "frame": "rotation",
+          "at": 0.467,
+          "num": [
+            {
+              "k": "x1",
+              "v": 80
+            },
+            {
+              "k": "y1",
+              "v": 300
+            },
+            {
+              "k": "x2",
+              "v": 65
+            },
+            {
+              "k": "y2",
+              "v": 335
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "given0",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.544,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 690
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Load: 30 N at 2 m from pivot"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "given1",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.622,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 733
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Support: upward at 3 m; weightless beam"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s2",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Take counterclockwise torque as positive. The downward load turns clockwise about the pivot.",
+      "subtitles": {
+        "uz": "Soat miliga teskari momentni musbat olamiz. Pastga yo‘nalgan yuk tayanch atrofida soat mili bo‘ylab aylantiradi.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "sym0",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 90
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "P"
+            },
+            {
+              "k": "meaning",
+              "v": "load force"
+            },
+            {
+              "k": "unit",
+              "v": "N"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym1",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.14,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 126
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "d"
+            },
+            {
+              "k": "meaning",
+              "v": "load arm"
+            },
+            {
+              "k": "unit",
+              "v": "m"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym2",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.28,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 162
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "L"
+            },
+            {
+              "k": "meaning",
+              "v": "support arm"
+            },
+            {
+              "k": "unit",
+              "v": "m"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym3",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.42,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 198
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "\\tau"
+            },
+            {
+              "k": "meaning",
+              "v": "load torque"
+            },
+            {
+              "k": "unit",
+              "v": "N·m"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym4",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.56,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 234
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "F"
+            },
+            {
+              "k": "meaning",
+              "v": "support force"
+            },
+            {
+              "k": "unit",
+              "v": "N"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s3",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Perpendicular force times lever arm gives torque. The support must cancel the load torque for rotational equilibrium.",
+      "subtitles": {
+        "uz": "Perpendikulyar kuch bilan yelka ko‘paytmasi momentni beradi. Muvozanat uchun tayanch yuk momentini bekor qilishi kerak.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "law0",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 440
+            },
+            {
+              "k": "size",
+              "v": 30
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "\\tau=-Pd,\\qquad \\tau+FL=0"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s4",
+      "kind": "checkpoint",
+      "calcs": [],
+      "say": "For rotational equilibrium, what must the net torque be?",
+      "subtitles": {
+        "uz": "Davom etishdan oldin tushunganingizni tekshiring.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "For rotational equilibrium, what must the net torque be?",
+          "type": "choice",
+          "choices": [
+            "Zero",
+            "Positive"
+          ],
+          "answer": "0",
+          "hint": "No angular acceleration means balanced torques.",
+          "reexplain_hint": "Imagine a seesaw: a smaller force can balance a larger force using a longer arm."
+        }
+      ]
+    },
+    {
+      "id": "s5",
+      "kind": "explain",
+      "calcs": [
+        {
+          "expr": "-P*d",
+          "values": [
+            {
+              "name": "P",
+              "value": 30
+            },
+            {
+              "name": "d",
+              "value": 2
+            }
+          ],
+          "expected": -60,
+          "unit": "N*m",
+          "unit_spoken": "newton meters",
+          "quantity_kind": "oriented",
+          "positive": "ccw",
+          "frame": "rotation",
+          "id": "c1"
+        }
+      ],
+      "say": "Load torque is {c1}; its negative sign means clockwise.",
+      "subtitles": {
+        "uz": "Yuk momenti {c1}; manfiy ishora soat mili yo‘nalishini bildiradi.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "result1",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 575
+            },
+            {
+              "k": "size",
+              "v": 32
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "\\tau = {c1:3sf}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s6",
+      "kind": "explain",
+      "calcs": [
+        {
+          "expr": "-c1/L",
+          "values": [
+            {
+              "name": "L",
+              "value": 3
+            }
+          ],
+          "expected": 20,
+          "unit": "N",
+          "unit_spoken": "newtons",
+          "quantity_kind": "magnitude",
+          "positive": "",
+          "frame": "",
+          "id": "c2"
+        }
+      ],
+      "say": "The upward support force has magnitude {c2}.",
+      "subtitles": {
+        "uz": "Yuqoriga yo‘nalgan tayanch kuchi moduli {c2}.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "result2",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 670
+            },
+            {
+              "k": "size",
+              "v": 32
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "F = {c2:3sf}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s7",
+      "kind": "checkpoint",
+      "calcs": [],
+      "say": "Enter the first calculated result, using its displayed unit.",
+      "subtitles": {
+        "uz": "Birinchi hisoblangan natijani ko‘rsatilgan birlikda kiriting.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "What is the first calculated result?",
+          "type": "number",
+          "choices": [],
+          "answer": "{c1:3sf}",
+          "hint": "Read the first result and its unit.",
+          "reexplain_hint": "Imagine a seesaw: a smaller force can balance a larger force using a longer arm."
+        }
+      ]
+    },
+    {
+      "id": "s8",
+      "kind": "summary",
+      "calcs": [],
+      "say": "Torque equilibrium balances turning effects. The pivot reaction separately ensures vertical force equilibrium.",
+      "subtitles": {
+        "uz": "Momentlar muvozanati aylantiruvchi ta’sirlarni tenglashtiradi. Tayanch reaksiyasi vertikal kuchlar muvozanatini ta’minlaydi.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": []
+    }
+  ]
+}

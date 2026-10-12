@@ -2,6 +2,13 @@
 
 Update this file at the end of every task (newest entry on top, 3–8 lines).
 
+## 2026-10-12 — codex — Offline physics library (`codex/library`)
+**Done:** 20 authored JSON worked examples with English narration and Uzbek subtitles; `app.library.find_library_lesson(text) -> Lesson | None` validates/compiles through the production step checker, with no API, TTS or route wiring. Files retain draft placeholders and sign/frame metadata; examples keep their own stated givens. Work isolated in `.worktrees/library`; Phase 5 areas and mock pipeline untouched.
+**Topics:** 1D kinematics; projectile motion; Newton’s second law on an incline with friction; circular motion; work–energy; momentum and 1D collision; torque and rotational equilibrium; spring SHM; simple pendulum; Coulomb’s law; point-charge field; Gauss line charge; Gauss plane; electric potential and parallel-plate capacitor; Kirchhoff two-loop circuit; magnetic force on a moving charge; Faraday moving rod; string wave speed; Snell’s law; thin converging lens.
+**Checks:** 698 pytest (97 library cases, independently recomputing all 37 numeric answers in plain Python); Ruff lint/format; mypy app/scripts; 117 Vitest; ESLint/tsc; Prettier; 8 Playwright including Gauss audio/drawing playback. Schema/streams unchanged on regeneration. All 20 rendered boards visually reviewed; no clipped formulas/legends. MOCK_AI=1; no Anthropic calls or real TTS. Playwright passed cleanly after rerunning outside the sandbox to resolve a test-server teardown hang.
+**Next:** Human merges; Phase 5 calls the lookup and displays the returned example’s source problem. Lookup is topic matching, not arbitrary problem solving; ambiguous multi-topic requests return None.
+**Found issues:** None new; existing Phase 1c/3 limitations remain.
+
 ## 2026-10-12 — founder — roadmap change after trying Phase 2
 **Done:** Phase 2 integrated and merged. Founder feedback: lesson is fine; must run on top
 of any app, not a website; no step list for users; new character with several movements.

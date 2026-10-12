@@ -1,0 +1,515 @@
+{
+  "source": {
+    "type": "problem",
+    "text": "An infinite nonconducting sheet has uniform positive surface charge density 3 nanocoulombs per square meter in vacuum. Find field magnitude on either side. Use epsilon_0 = 8.854e-12 C^2/(N*m^2)."
+  },
+  "title": "Gauss’s law for a plane",
+  "level": "university",
+  "steps": [
+    {
+      "id": "s1",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Let us solve this worked example using the givens on the board.",
+      "subtitles": {
+        "uz": "Doskadagi berilgan kattaliklar yordamida ushbu misolni yechamiz.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "heading",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 70
+            },
+            {
+              "k": "size",
+              "v": 26
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Gauss’s law for a plane"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sheet",
+          "type": "charged_plane",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.117,
+          "num": [
+            {
+              "k": "x",
+              "v": 350
+            },
+            {
+              "k": "y",
+              "v": 350
+            },
+            {
+              "k": "length",
+              "v": 390
+            },
+            {
+              "k": "field_length",
+              "v": 130
+            }
+          ],
+          "txt": [
+            {
+              "k": "orientation",
+              "v": "vertical"
+            },
+            {
+              "k": "sign",
+              "v": "+"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "pillbox",
+          "type": "rect",
+          "color": "surface",
+          "label": "",
+          "frame": "",
+          "at": 0.233,
+          "num": [
+            {
+              "k": "x",
+              "v": 190
+            },
+            {
+              "k": "y",
+              "v": 290
+            },
+            {
+              "k": "w",
+              "v": 320
+            },
+            {
+              "k": "h",
+              "v": 120
+            },
+            {
+              "k": "dashed",
+              "v": 1
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "given0",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.35,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 690
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Surface charge density: +3 nC/m²"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "given1",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.467,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 733
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Infinite nonconducting sheet in vacuum"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "given2",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.583,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 776
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Vacuum permittivity: 8.854e-12 C²/(N·m²)"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s2",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Use a pillbox crossing the sheet. Symmetry gives equal outward fields on both sides.",
+      "subtitles": {
+        "uz": "Varaqni kesib o‘tuvchi yupqa quti olamiz. Simmetriya ikkala tomonda teng, tashqariga yo‘nalgan maydon beradi.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "sym0",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 90
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "\\sigma"
+            },
+            {
+              "k": "meaning",
+              "v": "surface charge density"
+            },
+            {
+              "k": "unit",
+              "v": "C/m²"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym1",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.175,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 126
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "A"
+            },
+            {
+              "k": "meaning",
+              "v": "each cap area"
+            },
+            {
+              "k": "unit",
+              "v": "m²"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym2",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.35,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 162
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "E"
+            },
+            {
+              "k": "meaning",
+              "v": "field magnitude"
+            },
+            {
+              "k": "unit",
+              "v": "N/C"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym3",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.525,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 198
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "\\epsilon_0"
+            },
+            {
+              "k": "meaning",
+              "v": "vacuum permittivity"
+            },
+            {
+              "k": "unit",
+              "v": "C²/(N·m²)"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s3",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Both caps contribute flux. The side contributes none because the field lies along it.",
+      "subtitles": {
+        "uz": "Ikkala qopqoq oqimga hissa qo‘shadi. Yon sirtda maydon sirt bo‘ylab yotgani uchun oqim nol.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "law0",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 440
+            },
+            {
+              "k": "size",
+              "v": 30
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "2EA=\\frac{\\sigma A}{\\epsilon_0}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s4",
+      "kind": "checkpoint",
+      "calcs": [],
+      "say": "How many pillbox caps contribute electric flux?",
+      "subtitles": {
+        "uz": "Davom etishdan oldin tushunganingizni tekshiring.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "How many pillbox caps contribute electric flux?",
+          "type": "choice",
+          "choices": [
+            "Both caps",
+            "Only one cap"
+          ],
+          "answer": "0",
+          "hint": "The sheet has a field on each side.",
+          "reexplain_hint": "Imagine water leaving a box through both end openings; count both contributions."
+        }
+      ]
+    },
+    {
+      "id": "s5",
+      "kind": "explain",
+      "calcs": [
+        {
+          "expr": "sigma/(2*eps)",
+          "values": [
+            {
+              "name": "sigma",
+              "value": 3e-09
+            },
+            {
+              "name": "eps",
+              "value": 8.854e-12
+            }
+          ],
+          "expected": 169.414953693246,
+          "unit": "N/C",
+          "unit_spoken": "newtons per coulomb",
+          "quantity_kind": "magnitude",
+          "positive": "",
+          "frame": "",
+          "id": "c1"
+        }
+      ],
+      "say": "Field magnitude on either side is {c1}.",
+      "subtitles": {
+        "uz": "Har ikki tomondagi maydon moduli {c1}.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "result1",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 575
+            },
+            {
+              "k": "size",
+              "v": 32
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "E = {c1:3sf}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s6",
+      "kind": "checkpoint",
+      "calcs": [],
+      "say": "Enter the first calculated result, using its displayed unit.",
+      "subtitles": {
+        "uz": "Birinchi hisoblangan natijani ko‘rsatilgan birlikda kiriting.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "What is the first calculated result?",
+          "type": "number",
+          "choices": [],
+          "answer": "{c1:3sf}",
+          "hint": "Read the first result and its unit.",
+          "reexplain_hint": "Imagine water leaving a box through both end openings; count both contributions."
+        }
+      ]
+    },
+    {
+      "id": "s7",
+      "kind": "summary",
+      "calcs": [],
+      "say": "The ideal infinite sheet produces a distance-independent field. A finite sheet behaves differently near its edges.",
+      "subtitles": {
+        "uz": "Ideal cheksiz varaq maydoni masofaga bog‘liq emas. Chekli varaqning chetlarida maydon boshqacha bo‘ladi.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": []
+    }
+  ]
+}

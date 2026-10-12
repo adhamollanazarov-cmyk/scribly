@@ -1,0 +1,708 @@
+{
+  "source": {
+    "type": "problem",
+    "text": "A 2 kg block slides down a 30 degree incline with kinetic friction coefficient 0.2. Use g = 9.8 m/s^2. Find normal force and acceleration."
+  },
+  "title": "Newton’s second law: incline with friction",
+  "level": "university",
+  "steps": [
+    {
+      "id": "s1",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Let us solve this worked example using the givens on the board.",
+      "subtitles": {
+        "uz": "Doskadagi berilgan kattaliklar yordamida ushbu misolni yechamiz.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "heading",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 70
+            },
+            {
+              "k": "size",
+              "v": 26
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Newton’s second law: incline with friction"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "ramp",
+          "type": "incline_block",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.1,
+          "num": [
+            {
+              "k": "x",
+              "v": 130
+            },
+            {
+              "k": "y",
+              "v": 560
+            },
+            {
+              "k": "base",
+              "v": 470
+            },
+            {
+              "k": "angle_deg",
+              "v": 30
+            },
+            {
+              "k": "block",
+              "v": 65
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "slope",
+          "type": "arrow",
+          "color": "force",
+          "label": "positive down the slope",
+          "frame": "slope",
+          "at": 0.2,
+          "num": [
+            {
+              "k": "x1",
+              "v": 250
+            },
+            {
+              "k": "y1",
+              "v": 520
+            },
+            {
+              "k": "x2",
+              "v": 430
+            },
+            {
+              "k": "y2",
+              "v": 624
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "forces",
+          "type": "free_body",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.3,
+          "pts": [],
+          "num": [
+            {
+              "k": "x",
+              "v": 600
+            },
+            {
+              "k": "y",
+              "v": 170
+            },
+            {
+              "k": "size",
+              "v": 25
+            },
+            {
+              "k": "angle_deg",
+              "v": 60
+            },
+            {
+              "k": "length",
+              "v": 65
+            },
+            {
+              "k": "angle_deg",
+              "v": 270
+            },
+            {
+              "k": "length",
+              "v": 85
+            },
+            {
+              "k": "angle_deg",
+              "v": 150
+            },
+            {
+              "k": "length",
+              "v": 60
+            }
+          ],
+          "txt": [
+            {
+              "k": "name",
+              "v": "normal"
+            },
+            {
+              "k": "name",
+              "v": "weight"
+            },
+            {
+              "k": "name",
+              "v": "friction"
+            }
+          ]
+        },
+        {
+          "id": "given0",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.4,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 690
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Mass: 2 kg; angle: 30 degrees"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "given1",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.5,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 733
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Kinetic friction coefficient: 0.2 (dimensionless)"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "given2",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.6,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 776
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Gravity: 9.8 m/s²; block sliding downward"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s2",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Take down the slope as positive. Friction points uphill because the block slides downhill.",
+      "subtitles": {
+        "uz": "Qiyalik bo‘ylab pastga yo‘nalishni musbat olamiz. Jism pastga sirpangani uchun ishqalanish tepaga yo‘naladi.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "sym0",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 90
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "m"
+            },
+            {
+              "k": "meaning",
+              "v": "block mass"
+            },
+            {
+              "k": "unit",
+              "v": "kg"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym1",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.117,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 126
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "g"
+            },
+            {
+              "k": "meaning",
+              "v": "gravity"
+            },
+            {
+              "k": "unit",
+              "v": "m/s²"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym2",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.233,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 162
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "\\theta"
+            },
+            {
+              "k": "meaning",
+              "v": "slope angle"
+            },
+            {
+              "k": "unit",
+              "v": "degrees"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym3",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.35,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 198
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "\\mu"
+            },
+            {
+              "k": "meaning",
+              "v": "friction coefficient"
+            },
+            {
+              "k": "unit",
+              "v": ""
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym4",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.467,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 234
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "N"
+            },
+            {
+              "k": "meaning",
+              "v": "normal force"
+            },
+            {
+              "k": "unit",
+              "v": "N"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym5",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.583,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 270
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "a"
+            },
+            {
+              "k": "meaning",
+              "v": "acceleration"
+            },
+            {
+              "k": "unit",
+              "v": "m/s²"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s3",
+      "kind": "explain",
+      "calcs": [],
+      "say": "The normal force balances the perpendicular weight component. Along the slope, subtract friction from the downhill weight component.",
+      "subtitles": {
+        "uz": "Normal kuch og‘irlikning perpendikulyar qismini muvozanatlaydi. Qiyalik bo‘ylab og‘irlik qismidan ishqalanishni ayiramiz.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "law0",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 440
+            },
+            {
+              "k": "size",
+              "v": 30
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "N=mg\\cos\\theta,\\quad ma=mg\\sin\\theta-\\mu N"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s4",
+      "kind": "checkpoint",
+      "calcs": [],
+      "say": "For a block sliding downhill, where does kinetic friction point?",
+      "subtitles": {
+        "uz": "Davom etishdan oldin tushunganingizni tekshiring.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "For a block sliding downhill, where does kinetic friction point?",
+          "type": "choice",
+          "choices": [
+            "Uphill",
+            "Downhill"
+          ],
+          "answer": "0",
+          "hint": "Friction opposes sliding.",
+          "reexplain_hint": "Imagine rubbing your hand downhill along the surface: the surface resists that sliding."
+        }
+      ]
+    },
+    {
+      "id": "s5",
+      "kind": "explain",
+      "calcs": [
+        {
+          "expr": "m*g*cos(theta*pi/180)",
+          "values": [
+            {
+              "name": "m",
+              "value": 2
+            },
+            {
+              "name": "g",
+              "value": 9.8
+            },
+            {
+              "name": "theta",
+              "value": 30
+            }
+          ],
+          "expected": 16.974097914175,
+          "unit": "N",
+          "unit_spoken": "newtons",
+          "quantity_kind": "magnitude",
+          "positive": "",
+          "frame": "",
+          "id": "c1"
+        }
+      ],
+      "say": "Normal force is {c1}, perpendicular to the surface.",
+      "subtitles": {
+        "uz": "Normal kuch {c1}, sirtga perpendikulyar.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "result1",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 575
+            },
+            {
+              "k": "size",
+              "v": 32
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "N = {c1:3sf}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s6",
+      "kind": "explain",
+      "calcs": [
+        {
+          "expr": "g*sin(theta*pi/180)-mu*c1/m",
+          "values": [
+            {
+              "name": "g",
+              "value": 9.8
+            },
+            {
+              "name": "theta",
+              "value": 30
+            },
+            {
+              "name": "mu",
+              "value": 0.2
+            },
+            {
+              "name": "m",
+              "value": 2
+            }
+          ],
+          "expected": 3.2025902085825,
+          "unit": "m/s**2",
+          "unit_spoken": "meters per second squared",
+          "quantity_kind": "component",
+          "positive": "down the slope",
+          "frame": "slope",
+          "id": "c2"
+        }
+      ],
+      "say": "Acceleration is {c2}, down the slope.",
+      "subtitles": {
+        "uz": "Tezlanish {c2}, qiyalik bo‘ylab pastga.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "result2",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 670
+            },
+            {
+              "k": "size",
+              "v": 32
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "a = {c2:3sf}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s7",
+      "kind": "checkpoint",
+      "calcs": [],
+      "say": "Enter the first calculated result, using its displayed unit.",
+      "subtitles": {
+        "uz": "Birinchi hisoblangan natijani ko‘rsatilgan birlikda kiriting.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "What is the first calculated result?",
+          "type": "number",
+          "choices": [],
+          "answer": "{c1:3sf}",
+          "hint": "Read the first result and its unit.",
+          "reexplain_hint": "Imagine rubbing your hand downhill along the surface: the surface resists that sliding."
+        }
+      ]
+    },
+    {
+      "id": "s8",
+      "kind": "summary",
+      "calcs": [],
+      "say": "Resolve weight into perpendicular and parallel components before applying the force law.",
+      "subtitles": {
+        "uz": "Kuch qonunini qo‘llashdan oldin og‘irlikni perpendikulyar va parallel qismlarga ajrating.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": []
+    }
+  ]
+}

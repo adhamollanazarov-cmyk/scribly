@@ -1,0 +1,579 @@
+{
+  "source": {
+    "type": "problem",
+    "text": "A simple pendulum has length 1 m and small angular amplitude 5 degrees. Use g = 9.8 m/s^2. Find period and frequency; neglect damping."
+  },
+  "title": "Simple pendulum",
+  "level": "university",
+  "steps": [
+    {
+      "id": "s1",
+      "kind": "explain",
+      "calcs": [],
+      "say": "Let us solve this worked example using the givens on the board.",
+      "subtitles": {
+        "uz": "Doskadagi berilgan kattaliklar yordamida ushbu misolni yechamiz.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "heading",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 70
+            },
+            {
+              "k": "size",
+              "v": 26
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Simple pendulum"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "pivot",
+          "type": "point",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.1,
+          "num": [
+            {
+              "k": "x",
+              "v": 350
+            },
+            {
+              "k": "y",
+              "v": 170
+            },
+            {
+              "k": "r",
+              "v": 9
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "string",
+          "type": "line",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.2,
+          "num": [
+            {
+              "k": "x1",
+              "v": 350
+            },
+            {
+              "k": "y1",
+              "v": 170
+            },
+            {
+              "k": "x2",
+              "v": 380
+            },
+            {
+              "k": "y2",
+              "v": 510
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "bob",
+          "type": "circle",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.3,
+          "num": [
+            {
+              "k": "cx",
+              "v": 380
+            },
+            {
+              "k": "cy",
+              "v": 510
+            },
+            {
+              "k": "r",
+              "v": 25
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "vertical",
+          "type": "line",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.4,
+          "num": [
+            {
+              "k": "x1",
+              "v": 350
+            },
+            {
+              "k": "y1",
+              "v": 170
+            },
+            {
+              "k": "x2",
+              "v": 350
+            },
+            {
+              "k": "y2",
+              "v": 550
+            },
+            {
+              "k": "dashed",
+              "v": 1
+            }
+          ],
+          "txt": [],
+          "pts": []
+        },
+        {
+          "id": "given0",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.5,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 690
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Length: 1 m; amplitude: 5 degrees (small)"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "given1",
+          "type": "text",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.6,
+          "num": [
+            {
+              "k": "x",
+              "v": 100
+            },
+            {
+              "k": "y",
+              "v": 733
+            },
+            {
+              "k": "size",
+              "v": 22
+            }
+          ],
+          "txt": [
+            {
+              "k": "text",
+              "v": "Gravity: 9.8 m/s²; damping neglected"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s2",
+      "kind": "explain",
+      "calcs": [],
+      "say": "For small angles, gravity provides an approximately linear restoring effect. The pendulum repeats its motion with a nearly constant period.",
+      "subtitles": {
+        "uz": "Kichik burchaklarda tortishishning qaytaruvchi ta’siri taxminan chiziqli bo‘ladi. Tebranish davri deyarli o‘zgarmaydi.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "sym0",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 90
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "L"
+            },
+            {
+              "k": "meaning",
+              "v": "pendulum length"
+            },
+            {
+              "k": "unit",
+              "v": "m"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym1",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.175,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 126
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "g"
+            },
+            {
+              "k": "meaning",
+              "v": "gravity"
+            },
+            {
+              "k": "unit",
+              "v": "m/s²"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym2",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.35,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 162
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "T"
+            },
+            {
+              "k": "meaning",
+              "v": "period"
+            },
+            {
+              "k": "unit",
+              "v": "s"
+            }
+          ],
+          "pts": []
+        },
+        {
+          "id": "sym3",
+          "type": "symbol",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.525,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 198
+            }
+          ],
+          "txt": [
+            {
+              "k": "symbol",
+              "v": "f"
+            },
+            {
+              "k": "meaning",
+              "v": "frequency"
+            },
+            {
+              "k": "unit",
+              "v": "Hz"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s3",
+      "kind": "explain",
+      "calcs": [],
+      "say": "The small-angle period depends on length and gravity. Frequency is the reciprocal of period.",
+      "subtitles": {
+        "uz": "Kichik burchakdagi davr uzunlik va erkin tushish tezlanishiga bog‘liq. Chastota davrning teskarisidir.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "law0",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 440
+            },
+            {
+              "k": "size",
+              "v": 30
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "T=2\\pi\\sqrt{\\frac{L}{g}},\\qquad f=\\frac{1}{T}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s4",
+      "kind": "checkpoint",
+      "calcs": [],
+      "say": "In the small-angle approximation, does bob mass change the period?",
+      "subtitles": {
+        "uz": "Davom etishdan oldin tushunganingizni tekshiring.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "In the small-angle approximation, does bob mass change the period?",
+          "type": "choice",
+          "choices": [
+            "No",
+            "Yes"
+          ],
+          "answer": "0",
+          "hint": "Mass cancels between inertia and gravitational force.",
+          "reexplain_hint": "A heavier bob has more weight but proportionally more inertia, leaving the same timing."
+        }
+      ]
+    },
+    {
+      "id": "s5",
+      "kind": "explain",
+      "calcs": [
+        {
+          "expr": "2*pi*sqrt(L/g)",
+          "values": [
+            {
+              "name": "L",
+              "value": 1
+            },
+            {
+              "name": "g",
+              "value": 9.8
+            }
+          ],
+          "expected": 2.007089923154493,
+          "unit": "s",
+          "unit_spoken": "seconds",
+          "quantity_kind": "magnitude",
+          "positive": "",
+          "frame": "",
+          "id": "c1"
+        }
+      ],
+      "say": "The small-angle period is {c1}.",
+      "subtitles": {
+        "uz": "Kichik burchakdagi tebranish davri {c1}.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "result1",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 575
+            },
+            {
+              "k": "size",
+              "v": 32
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "T = {c1:3sf}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s6",
+      "kind": "explain",
+      "calcs": [
+        {
+          "expr": "1/c1",
+          "values": [],
+          "expected": 0.498233780392024,
+          "unit": "Hz",
+          "unit_spoken": "hertz",
+          "quantity_kind": "magnitude",
+          "positive": "",
+          "frame": "",
+          "id": "c2"
+        }
+      ],
+      "say": "Frequency is {c2}.",
+      "subtitles": {
+        "uz": "Chastota {c2}.",
+        "ru": ""
+      },
+      "draw": [
+        {
+          "id": "result2",
+          "type": "math",
+          "color": "ink",
+          "label": "",
+          "frame": "",
+          "at": 0.0,
+          "num": [
+            {
+              "k": "x",
+              "v": 790
+            },
+            {
+              "k": "y",
+              "v": 670
+            },
+            {
+              "k": "size",
+              "v": 32
+            }
+          ],
+          "txt": [
+            {
+              "k": "latex",
+              "v": "f = {c2:3sf}"
+            }
+          ],
+          "pts": []
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "id": "s7",
+      "kind": "checkpoint",
+      "calcs": [],
+      "say": "Enter the first calculated result, using its displayed unit.",
+      "subtitles": {
+        "uz": "Birinchi hisoblangan natijani ko‘rsatilgan birlikda kiriting.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "What is the first calculated result?",
+          "type": "number",
+          "choices": [],
+          "answer": "{c1:3sf}",
+          "hint": "Read the first result and its unit.",
+          "reexplain_hint": "A heavier bob has more weight but proportionally more inertia, leaving the same timing."
+        }
+      ]
+    },
+    {
+      "id": "s8",
+      "kind": "summary",
+      "calcs": [],
+      "say": "This period is an approximation for small swings. Large swings require a more accurate model.",
+      "subtitles": {
+        "uz": "Bu davr kichik tebranishlar uchun yaqinlashuvdir. Katta tebranishlar aniqroq modelni talab qiladi.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": []
+    }
+  ]
+}
