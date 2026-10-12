@@ -77,7 +77,7 @@ field | surface | force | highlight | wrong | right`.
 | `math` | x, y, latex, size? (KaTeX) |
 | `symbol` | x, y, symbol (LaTeX), meaning, unit? (SI unit text; null = dimensionless) |
 | `axes` | x, y, w, h, xlabel, ylabel |
-| `plot` | axes_id, expr (SymPy, variable x), x_min, x_max |
+| `plot` | axes_id, expr (SymPy, variable x), x_min, x_max, y_min, y_max, samples? (41, range 2–200) |
 | `highlight` | target_id (draws a loose circle around another primitive or group) |
 | `mark_wrong` | target_id, reason (red circle + short note) |
 | `erase` | target_id (a primitive or a whole group) |
@@ -94,8 +94,16 @@ a `math` formula must first be introduced by a `symbol` entry drawn earlier (an 
 step, or earlier in the same step's `draw`). Generated lessons are checked for this
 (`server/app/lesson/lint.py`); the golden fixtures follow it too.
 
-`plot` is not drawable yet: it has no y-range and the browser cannot evaluate SymPy.
-Use the `axes_plot` template, which the server samples into a `curve`.
+`plot` references an `axes` primitive drawn earlier (including in an earlier step).
+Both x and y ranges are required, finite and increasing: the server does not invent
+the y scale. It samples the expression with the same bounded, allowlisted parser as
+`axes_plot`, maps values into the axes box (SVG y points down), and clips to the y
+range. Unsafe expressions, invalid references and sampling/domain errors fail
+validation before that step is streamed. The output is a `curve` with the plot's
+original id, timing, label and color, so subsequent highlights/erases still work.
+The browser receives points and never evaluates expressions. `plot_square.json`
+and its generated stream cover this contract; `axes_plot` remains the convenience
+template that creates both axes and curve.
 
 ## Templates
 Expanded by the server (`server/app/lesson/templates.py`) before anything is streamed.

@@ -112,8 +112,17 @@ describe('geometry', () => {
     expect(latexGlyphs('\\dfrac{Q}{\\varepsilon_0}')).toBeLessThan(4)
   })
 
-  it('never draws plot or template primitives', () => {
-    const plot: Primitive = { id: 'p', type: 'plot', axes_id: 'a', expr: 'x', x_min: 0, x_max: 1 }
+  it('does not evaluate raw plots in the browser (the server sends curves)', () => {
+    const plot: Primitive = {
+      id: 'p',
+      type: 'plot',
+      axes_id: 'a',
+      expr: 'x',
+      x_min: 0,
+      x_max: 1,
+      y_min: 0,
+      y_max: 1,
+    }
     expect(naturalDuration(plot)).toBe(0)
   })
 

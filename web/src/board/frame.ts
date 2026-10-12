@@ -11,6 +11,7 @@ export interface DrawnPrim {
   opacity: number
   /** Box around the target of a highlight / mark_wrong. */
   target: Box | null
+  bounds?: Box | null
 }
 
 export interface Frame {
@@ -34,6 +35,7 @@ export function boardFrame(
   steps: readonly { draw: Primitive[] }[],
   index: number,
   playhead: Playhead | null,
+  measured: ReadonlyMap<string, Box> = new Map(),
 ): Frame {
   const drawn: DrawnPrim[] = []
   const byId = new Map<string, DrawnPrim>()
@@ -46,19 +48,25 @@ export function boardFrame(
     step.draw.forEach((prim, i) => {
       const progress = stepProgress(s === index ? playhead : 'done', i)
       if (progress <= 0) return
-      const entry: DrawnPrim = { prim, progress, opacity: 1, target: null }
+      const entry: DrawnPrim = {
+        prim,
+        progress,
+        opacity: 1,
+        target: null,
+        bounds: measured.get(prim.id),
+      }
       if ('target_id' in prim && TARGETED.has(prim.type)) {
         const targets = targetsOf(prim.target_id)
         if (prim.type === 'erase') {
           for (const t of targets) t.opacity = Math.min(t.opacity, 1 - progress)
         } else {
-          entry.target = unionBox(targets.flatMap((t) => boxOf(t.prim) ?? []))
+          entry.target = unionBox(targets.flatMap((t) => t.bounds ?? boxOf(t.prim) ?? []))
         }
       }
       drawn.push(entry)
       byId.set(prim.id, entry)
       if (prim.group) byGroup.set(prim.group, [...(byGroup.get(prim.group) ?? []), entry])
-      if (progress < 1) pen = penAt(prim, progress, entry.target) ?? pen
+      if (progress < 1) pen = penAt(prim, progress, entry.target, entry.bounds) ?? pen
     })
   })
   return { prims: drawn, pen }

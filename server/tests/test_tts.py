@@ -100,5 +100,5 @@ def test_edge_provider_collects_only_audio_chunks(
     if has_audio:
         assert asyncio.run(EdgeTTSProvider().synthesize("Hi", "v", "+0%")) == b"ID3audio"
     else:
-        with pytest.raises(TTSError, match="no audio"):
+        with pytest.raises(TTSError, match="after two attempts"):
             asyncio.run(EdgeTTSProvider().synthesize("Hi", "v", "+0%"))

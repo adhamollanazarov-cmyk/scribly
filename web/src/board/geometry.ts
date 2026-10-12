@@ -1,5 +1,5 @@
 // Pure geometry for primitives: sizes, bounding boxes, stroke lengths and where the pen is.
-// Text and formula widths are estimates (no DOM), good enough for highlights and the mascot.
+// Text estimates are fallbacks before browser font measurements are available.
 
 import type { Primitive, Rect, XY } from '../lesson/types'
 
@@ -17,6 +17,7 @@ export interface Box {
   y: number
   w: number
   h: number
+  advances?: number[]
 }
 
 export const dist = (a: XY, b: XY) => Math.hypot(b[0] - a[0], b[1] - a[1])
@@ -155,7 +156,12 @@ function axesPoints(prim: { x: number; y: number; w: number; h: number }): XY[] 
 }
 
 /** Where the pen tip is when `k` (0–1) of the primitive is drawn; null if nothing is drawn. */
-export function penAt(prim: Primitive, k: number, target?: Box | null): XY | null {
+export function penAt(
+  prim: Primitive,
+  k: number,
+  target?: Box | null,
+  measured?: Box | null,
+): XY | null {
   switch (prim.type) {
     case 'point':
       return [prim.x, prim.y]
@@ -178,11 +184,15 @@ export function penAt(prim: Primitive, k: number, target?: Box | null): XY | nul
       return alongPolyline(axesPoints(prim), k)
     case 'text': {
       const size = prim.size ?? TEXT_SIZE
-      return [prim.x + textWidth(prim.text, size) * k, prim.y]
+      if (measured?.advances) {
+        const a = measured.advances
+        return [prim.x + a[Math.ceil(clamp(k, 0, 1) * (a.length - 1))], prim.y]
+      }
+      return [prim.x + (measured?.w ?? textWidth(prim.text, size)) * k, prim.y]
     }
     case 'math':
     case 'symbol': {
-      const box = boxOf(prim)
+      const box = measured ?? boxOf(prim)
       return box ? [box.x + box.w * k, prim.y] : null
     }
     case 'highlight':

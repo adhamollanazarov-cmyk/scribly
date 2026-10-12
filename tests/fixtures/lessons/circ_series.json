@@ -150,7 +150,7 @@
           "at": 0.0,
           "type": "symbol",
           "x": 740.0,
-          "y": 60.0,
+          "y": 60,
           "symbol": "V",
           "meaning": "battery voltage",
           "unit": "V"
@@ -161,7 +161,7 @@
           "at": 0.4,
           "type": "symbol",
           "x": 740.0,
-          "y": 105.0,
+          "y": 110,
           "symbol": "I",
           "meaning": "current in the circuit",
           "unit": "A"
@@ -172,7 +172,7 @@
           "at": 0.7,
           "type": "symbol",
           "x": 740.0,
-          "y": 150.0,
+          "y": 160,
           "symbol": "R",
           "meaning": "resistance",
           "unit": "ohm"
@@ -206,7 +206,7 @@
           "at": 0.0,
           "type": "symbol",
           "x": 740.0,
-          "y": 195.0,
+          "y": 210,
           "symbol": "R_1",
           "meaning": "first resistor",
           "unit": "ohm"
@@ -217,7 +217,7 @@
           "at": 0.05,
           "type": "symbol",
           "x": 740.0,
-          "y": 240.0,
+          "y": 260,
           "symbol": "R_2",
           "meaning": "second resistor",
           "unit": "ohm"
@@ -228,7 +228,7 @@
           "at": 0.1,
           "type": "symbol",
           "x": 740.0,
-          "y": 285.0,
+          "y": 310,
           "symbol": "R_3",
           "meaning": "third resistor",
           "unit": "ohm"
@@ -239,7 +239,7 @@
           "at": 0.15,
           "type": "symbol",
           "x": 740.0,
-          "y": 330.0,
+          "y": 360,
           "symbol": "R_{eq}",
           "meaning": "equivalent resistance",
           "unit": "ohm"
@@ -249,9 +249,20 @@
           "color": "accent",
           "at": 0.3,
           "type": "math",
-          "x": 740.0,
-          "y": 430.0,
-          "latex": "R_{eq} = R_1 + R_2 + R_3 = 100\\,\\Omega + 200\\,\\Omega + 300\\,\\Omega = 600\\,\\mathrm{\\Omega}"
+          "x": 80,
+          "y": 550,
+          "latex": "R_{eq} = R_1 + R_2 + R_3",
+          "size": 34
+        },
+        {
+          "id": "req-values",
+          "color": "accent",
+          "at": 0.3,
+          "type": "math",
+          "x": 740,
+          "y": 550,
+          "latex": "100\\,\\Omega + 200\\,\\Omega + 300\\,\\Omega = 600\\,\\mathrm{\\Omega}",
+          "size": 27
         }
       ]
     },
@@ -289,7 +300,7 @@
           "at": 0.0,
           "type": "symbol",
           "x": 740.0,
-          "y": 375.0,
+          "y": 410,
           "symbol": "\\Omega",
           "meaning": "ohm, unit of resistance",
           "unit": "ohm"
@@ -299,9 +310,10 @@
           "color": "accent",
           "at": 0.3,
           "type": "math",
-          "x": 740.0,
-          "y": 340.0,
-          "latex": "I = \\frac{V}{R_{eq}} = \\frac{9.0\\,\\text{V}}{600\\,\\Omega} = 0.0150\\,\\mathrm{A}"
+          "x": 80,
+          "y": 640,
+          "latex": "I = \\frac{V}{R_{eq}} = \\frac{9.0\\,\\text{V}}{600\\,\\Omega} = 0.0150\\,\\mathrm{A}",
+          "size": 32
         },
         {
           "id": "i-hl",
@@ -327,7 +339,7 @@
           "at": 0.0,
           "type": "symbol",
           "x": 740.0,
-          "y": 195.0,
+          "y": 460,
           "symbol": "V_2",
           "meaning": "voltage across R2",
           "unit": "V"
@@ -337,9 +349,10 @@
           "color": "accent",
           "at": 0.4,
           "type": "math",
-          "x": 740.0,
-          "y": 420.0,
-          "latex": "V_2 = I R_2 = 0.0150\\,\\mathrm{A} \\times 200\\,\\Omega = 3.00\\,\\mathrm{V}"
+          "x": 80,
+          "y": 730,
+          "latex": "V_2 = I R_2 = 0.0150\\,\\mathrm{A} \\times 200\\,\\Omega = 3.00\\,\\mathrm{V}",
+          "size": 32
         },
         {
           "id": "r2-hl",
@@ -364,9 +377,10 @@
           "color": "right",
           "at": 0.5,
           "type": "math",
-          "x": 740.0,
-          "y": 500.0,
-          "latex": "1.50\\,\\mathrm{V} + 3.00\\,\\mathrm{V} + 4.50\\,\\mathrm{V} = 9.0\\,\\text{V} = V"
+          "x": 80,
+          "y": 820,
+          "latex": "1.50\\,\\mathrm{V} + 3.00\\,\\mathrm{V} + 4.50\\,\\mathrm{V} = 9.0\\,\\text{V} = V",
+          "size": 32
         }
       ]
     },
@@ -407,18 +421,20 @@
           "color": "ink",
           "at": 0.2,
           "type": "math",
-          "x": 740.0,
-          "y": 600.0,
-          "latex": "I = 0.0150\\,\\mathrm{A}"
+          "x": 80,
+          "y": 930,
+          "latex": "I = 0.0150\\,\\mathrm{A}",
+          "size": 34
         },
         {
           "id": "sum2",
           "color": "ink",
           "at": 0.6,
           "type": "math",
-          "x": 740.0,
-          "y": 660.0,
-          "latex": "V_2 = 3.00\\,\\mathrm{V}"
+          "x": 800,
+          "y": 930,
+          "latex": "V_2 = 3.00\\,\\mathrm{V}",
+          "size": 34
         }
       ]
     }

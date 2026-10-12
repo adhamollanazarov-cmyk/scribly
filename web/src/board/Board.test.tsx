@@ -48,7 +48,7 @@ const EVERY_TYPE: Primitive[] = [
     unit: 'N·m²/C',
   },
   { id: 'ax', type: 'axes', x: 1000, y: 400, w: 400, h: 300, xlabel: 't (s)', ylabel: 'v (m/s)' },
-  { id: 'pp', type: 'plot', axes_id: 'ax', expr: 'x**2', x_min: 0, x_max: 1 },
+  { id: 'pp', type: 'plot', axes_id: 'ax', expr: 'x**2', x_min: 0, x_max: 1, y_min: 0, y_max: 1 },
   { id: 'hl', type: 'highlight', target_id: 'mt' },
   { id: 'mw', type: 'mark_wrong', target_id: 'rc', reason: 'R1 is 100 ohm, not 10' },
   { id: 'er', type: 'erase', target_id: 'g1' },
@@ -79,7 +79,7 @@ describe('Board', () => {
     const { container } = render(<Board state={finished([step(EVERY_TYPE)])} title="t" />)
 
     const drawn = drawnIds(container)
-    const skipped = ['pp', 'er', 'ln'] // plot is not drawable; erase draws nothing and hid `ln`
+    const skipped = ['pp', 'er', 'ln'] // raw plot needs server expansion; erase hid `ln`
     expect(drawn.sort()).toEqual(
       EVERY_TYPE.map((p) => p.id)
         .filter((id) => !skipped.includes(id))

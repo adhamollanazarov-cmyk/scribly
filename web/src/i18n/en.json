@@ -14,6 +14,8 @@
   "board.topic": "Topic",
   "board.given": "Given:",
   "board.empty": "Ask for a topic or paste a problem, and Scribbly will draw it out.",
+  "board.loading": "Loading the board…",
+  "warning.audio": "Audio unavailable for this step. Follow the text while the drawing continues.",
   "controls.label": "Lesson controls",
   "controls.play": "Play",
   "controls.pause": "Pause",

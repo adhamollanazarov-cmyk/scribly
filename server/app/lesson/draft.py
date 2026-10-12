@@ -34,6 +34,7 @@ PLAIN_TYPES = (
     "math",
     "symbol",
     "axes",
+    "plot",
     "highlight",
     "mark_wrong",
     "erase",

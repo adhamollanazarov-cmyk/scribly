@@ -5,7 +5,7 @@ seen on screen. Children are named `<template id>-<part>` and carry `group=<temp
 """
 
 import math
-from collections.abc import Callable
+from collections.abc import Callable, Mapping
 from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
@@ -17,9 +17,11 @@ from app.lesson.models import (
     CurvePrim,
     Lesson,
     LinePrim,
+    PlotPrim,
     Point,
     PointPrim,
     PolylinePrim,
+    PrimitiveBase,
     RectPrim,
     Step,
     TemplatePrim,
@@ -28,7 +30,7 @@ from app.lesson.models import (
 )
 from app.lesson.safe_expr import ExpressionError, evaluate, parse
 
-Child = BaseModel  # any concrete primitive model
+Child = PrimitiveBase  # any concrete primitive model
 
 
 class TemplateError(ValueError):
@@ -305,16 +307,65 @@ def expand_template(prim: TemplatePrim) -> list[Child]:
     return expanded
 
 
-def expand_step(step: Step) -> Step:
+def expand_plot(prim: PlotPrim, drawn: Mapping[str, PrimitiveBase]) -> CurvePrim:
+    axes = drawn.get(prim.axes_id)
+    if not isinstance(axes, AxesPrim):
+        raise TemplateError("plot needs axes drawn earlier")
+    if prim.x_max <= prim.x_min or prim.y_max <= prim.y_min:
+        raise TemplateError("plot needs increasing finite x and y ranges")
+    # Reuse the bounded allow-listed expression evaluator and coordinate mapping.
+    try:
+        params = AxesPlotParams(
+            x=axes.x,
+            y=axes.y,
+            w=axes.w,
+            h=axes.h,
+            expr=prim.expr,
+            x_min=prim.x_min,
+            x_max=prim.x_max,
+            y_min=prim.y_min,
+            y_max=prim.y_max,
+            samples=prim.samples,
+        )
+        sampled = axes_plot(prim.id, params)[1]
+        return CurvePrim.model_validate(
+            sampled.model_dump()
+            | {
+                "id": prim.id,
+                "color": prim.color or "accent",
+                "at": prim.at,
+                "label": prim.label,
+                "group": prim.group,
+            }
+        )
+    except (ValidationError, ExpressionError, OverflowError, ZeroDivisionError) as e:
+        raise TemplateError("plot could not be sampled safely") from e
+
+
+def expand_step(step: Step, prior: Mapping[str, PrimitiveBase] | None = None) -> Step:
     draw: list[Any] = []
+    drawn = dict(prior or {})
     for prim in step.draw:
-        draw.extend(expand_template(prim) if isinstance(prim, TemplatePrim) else [prim])
+        if isinstance(prim, TemplatePrim):
+            children = expand_template(prim)
+        elif isinstance(prim, PlotPrim):
+            children = [expand_plot(prim, drawn)]
+        else:
+            children = [prim]
+        draw.extend(children)
+        drawn.update((p.id, p) for p in children)
     return step.model_copy(update={"draw": draw})
 
 
 def expand_lesson(lesson: Lesson) -> Lesson:
     """Expand all templates and re-validate, so the result is a fully checked Lesson."""
-    expanded = lesson.model_copy(update={"steps": [expand_step(s) for s in lesson.steps]})
+    drawn: dict[str, PrimitiveBase] = {}
+    steps = []
+    for step in lesson.steps:
+        expanded_step = expand_step(step, drawn)
+        steps.append(expanded_step)
+        drawn.update((p.id, p) for p in expanded_step.draw)
+    expanded = lesson.model_copy(update={"steps": steps})
     try:
         return Lesson.model_validate(expanded.model_dump())
     except ValidationError as e:

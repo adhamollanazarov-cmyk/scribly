@@ -3,6 +3,8 @@ import type { Color, Primitive, XY } from '../lesson/types'
 import type { DrawnPrim } from './frame'
 import { MATH_SIZE, SYMBOL_SIZE, TEXT_SIZE, symbolLine, textWidth, type Box } from './geometry'
 import { HtmlOnBoard } from './HtmlOnBoard'
+import { Handwriting } from './handwriting'
+import { measureHand } from './measure'
 import { renderLatex } from './katex'
 import { strokeProgress, strokesFor, type Stroke } from './strokes'
 
@@ -11,13 +13,15 @@ const DEFAULT_COLOR: Partial<Record<Primitive['type'], Color>> = {
   mark_wrong: 'wrong',
 }
 const LABEL_SIZE = 30
-// erase draws nothing itself; plot needs server sampling (use axes_plot); templates arrive expanded
+// erase draws nothing itself; plots and templates arrive expanded by the server
 const NOT_DRAWN = new Set<Primitive['type']>(['erase', 'plot', 'template'])
 
 const colorVar = (prim: Primitive) => `var(--c-${prim.color ?? DEFAULT_COLOR[prim.type] ?? 'ink'})`
 
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v))
 const typed = (text: string, k: number) => [...text].slice(0, Math.ceil(k * [...text].length))
+const handWidth = (text: string, size: number) =>
+  measureHand(text, size)?.w ?? textWidth(text, size)
 
 function StrokePath({ stroke, k, color, width }: StrokeProps) {
   const maskId = useId()
@@ -66,7 +70,7 @@ function strokeWidth(prim: Primitive): number {
 
 /** Where a primitive's `label` goes, as a text baseline start. */
 function labelAnchor(prim: Primitive, label: string): XY | null {
-  const w = textWidth(label, LABEL_SIZE)
+  const w = handWidth(label, LABEL_SIZE)
   switch (prim.type) {
     case 'circle':
       return [prim.cx + prim.r * 0.72 + 10, prim.cy - prim.r * 0.72 - 10]
@@ -112,7 +116,7 @@ function HandText(props: {
   if (k <= 0) return null
   return (
     <text x={x} y={y} fontSize={size} fill={color} className="hand">
-      {typed(text, k).join('')}
+      <Handwriting text={typed(text, k).join('')} svg />
     </text>
   )
 }
@@ -146,7 +150,9 @@ function Body({ drawn, color }: { drawn: DrawnPrim; color: string }) {
       return (
         <HtmlOnBoard x={prim.x} y={prim.y} size={SYMBOL_SIZE} reveal={progress} color={color}>
           <span dangerouslySetInnerHTML={{ __html: renderLatex(prim.symbol) }} />
-          <span className="hand symbol-meaning">{symbolLine(prim)}</span>
+          <span className="hand symbol-meaning">
+            <Handwriting text={symbolLine(prim)} />
+          </span>
         </HtmlOnBoard>
       )
     case 'mark_wrong': {
@@ -171,7 +177,7 @@ function Extras({ drawn, color }: { drawn: DrawnPrim; color: string }) {
   }
   if (prim.type === 'axes') {
     const k = clamp01((progress - 0.6) / 0.4)
-    const xlabelX = prim.x + prim.w - textWidth(prim.xlabel, LABEL_SIZE)
+    const xlabelX = prim.x + prim.w - handWidth(prim.xlabel, LABEL_SIZE)
     const common = { k, size: LABEL_SIZE, color }
     return (
       <>
@@ -203,6 +209,7 @@ function PrimViewImpl({ drawn }: { drawn: DrawnPrim }) {
       data-prim={prim.id}
       data-type={prim.type}
       data-drawn={progress >= 1 ? 'true' : 'false'}
+      data-bounds={drawn.bounds ? JSON.stringify(drawn.bounds) : undefined}
       opacity={opacity < 1 ? opacity : undefined}
     >
       {strokes.map((s, i) => (
@@ -216,7 +223,13 @@ function PrimViewImpl({ drawn }: { drawn: DrawnPrim }) {
 
 export const PrimView = memo(PrimViewImpl, (a, b) => {
   const [x, y] = [a.drawn, b.drawn]
-  return x.prim === y.prim && x.progress === y.progress && x.opacity === y.opacity && sameBox(x, y)
+  return (
+    x.prim === y.prim &&
+    x.progress === y.progress &&
+    x.opacity === y.opacity &&
+    x.bounds === y.bounds &&
+    sameBox(x, y)
+  )
 })
 
 function sameBox(a: DrawnPrim, b: DrawnPrim): boolean {

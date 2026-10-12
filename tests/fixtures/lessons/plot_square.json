@@ -1,0 +1,29 @@
+{
+  "version": "1",
+  "id": "9b8dc29f-766e-4611-aa18-36c9a508f0af",
+  "title": "A square function",
+  "level": "simple",
+  "source": {"type": "topic", "text": "Plot y = x squared from x = 0 to x = 2."},
+  "steps": [
+    {
+      "id": "s1", "kind": "explain", "say": "Our horizontal axis is the input. Our vertical axis shows its square.",
+      "draw": [
+        {"id": "sx", "type": "symbol", "x": 1050, "y": 100, "symbol": "x", "meaning": "dimensionless input", "unit": "1"},
+        {"id": "sy", "type": "symbol", "x": 1050, "y": 160, "symbol": "y", "meaning": "dimensionless output", "unit": "1"},
+        {"id": "axes", "type": "axes", "x": 120, "y": 260, "w": 800, "h": 500, "xlabel": "x", "ylabel": "y"},
+        {"id": "rule", "type": "math", "x": 1050, "y": 350, "latex": "y=x^2"}
+      ]
+    },
+    {
+      "id": "s2", "kind": "explain", "say": "Squaring the input makes the curve rise faster as we move right.",
+      "draw": [
+        {"id": "square", "type": "plot", "axes_id": "axes", "expr": "x^2", "x_min": 0, "x_max": 2, "y_min": 0, "y_max": 4, "samples": 41, "at": 0.1}
+      ]
+    },
+    {
+      "id": "s3", "kind": "summary", "say": "The rising curve shows how the output grows with the input.",
+      "draw": [{"id": "curve-highlight", "type": "highlight", "target_id": "square"}]
+    }
+  ],
+  "calcs": []
+}

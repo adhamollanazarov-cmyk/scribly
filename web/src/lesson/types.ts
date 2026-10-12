@@ -112,6 +112,9 @@ export interface PlotPrim extends Base {
   expr: string
   x_min: number
   x_max: number
+  y_min: number
+  y_max: number
+  samples?: number
 }
 export interface TargetPrim extends Base {
   type: 'highlight' | 'erase'

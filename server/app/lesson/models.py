@@ -152,6 +152,9 @@ class PlotPrim(PrimitiveBase):
     expr: str
     x_min: float
     x_max: float
+    y_min: float
+    y_max: float
+    samples: int = Field(default=41, ge=2, le=200)
 
 
 class HighlightPrim(PrimitiveBase):
