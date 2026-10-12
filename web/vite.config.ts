@@ -1,4 +1,5 @@
 /// <reference types="vitest/config" />
+import { fileURLToPath } from 'node:url'
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 
@@ -8,6 +9,11 @@ export default defineConfig({
   build: {
     manifest: true,
     rolldownOptions: {
+      // index.html: the web dev harness; overlay.html: the desktop overlay (desktop/).
+      input: {
+        main: fileURLToPath(new URL('./index.html', import.meta.url)),
+        overlay: fileURLToPath(new URL('./overlay.html', import.meta.url)),
+      },
       output: {
         codeSplitting: { groups: [{ name: 'katex', test: /node_modules[\\/]katex[\\/]/ }] },
       },
@@ -19,6 +25,7 @@ export default defineConfig({
     // The FastAPI server (AGENTS.md §6). Same origin, so no CORS and audio lip sync works.
     proxy: {
       '/lessons': 'http://localhost:8000',
+      '/explain-region': 'http://localhost:8000',
       '/audio': 'http://localhost:8000',
       '/health': 'http://localhost:8000',
     },

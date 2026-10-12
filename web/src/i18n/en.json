@@ -47,5 +47,18 @@
   "warning.unverified": "Number not verified",
   "error.network": "Cannot reach the Scribbly server. Is it running on port 8000?",
   "error.bad_request": "Please type a topic or a problem first.",
-  "error.server": "The server had a problem. Please try again."
+  "error.server": "The server had a problem. Please try again.",
+  "overlay.hint": "Drag over what you want explained · Esc to cancel",
+  "overlay.demo": "Demo lesson — explaining your own screen arrives soon",
+  "overlay.close": "Close lesson",
+  "tray.tooltip": "Scribbly — press Ctrl+Shift+Space to explain part of your screen",
+  "tray.explain": "Explain a region",
+  "tray.settings": "Settings",
+  "tray.voice": "Voice",
+  "tray.speed": "Speed",
+  "tray.subtitles": "Second subtitle line",
+  "tray.login": "Launch at login",
+  "tray.quit": "Quit Scribbly",
+  "tray.hotkeyTaken": "Ctrl+Shift+Space is used by another app. Use the tray menu instead.",
+  "tray.captureFailed": "Could not capture the screen. Please try again."
 }

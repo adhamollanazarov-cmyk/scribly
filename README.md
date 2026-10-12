@@ -6,7 +6,7 @@ Product spec: `docs/SPEC.md`. Rules for contributors and agents: `AGENTS.md`.
 ```
 server/   FastAPI (Python 3.12) — lessons, TTS, verification
 web/      Vite + React + TypeScript — board, mascot, controls
-desktop/  Electron overlay (Phase 5)
+desktop/  Electron tray app: Ctrl+Shift+Space draws a lesson over any app (see desktop/README.md)
 shared/   generated lesson JSON Schema and mock SSE streams
 docs/     spec, schema, status, decisions
 tests/fixtures/lessons/   golden lessons

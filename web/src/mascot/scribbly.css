@@ -11,6 +11,13 @@
 .mascot-anchor[data-moving='pen'] {
   transition: transform 0.12s linear;
 }
+/* Overlay flights: keep in sync with FLY_MS in overlay/motion.ts. */
+.mascot-anchor[data-moving='fly'] {
+  transition: transform 0.7s cubic-bezier(0.45, 0, 0.3, 1);
+}
+.mascot-anchor[data-moving='none'] {
+  transition: none;
+}
 .mascot-body {
   fill: var(--mascot-body);
 }
@@ -76,6 +83,22 @@
 .mascot-listening {
   transform: rotate(-6deg);
 }
+/* Overlay movements; durations match APPEAR_MS / DISAPPEAR_MS in overlay/motion.ts. */
+.mascot-appearing {
+  animation: mascot-pop-in 0.45s cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+.mascot-disappearing {
+  animation: mascot-pop-out 0.35s ease-in both;
+}
+.mascot-flying {
+  transform: rotate(-12deg);
+}
+.mascot-pointing {
+  transform: rotate(-4deg);
+}
+.mascot-trail path {
+  opacity: 0.55;
+}
 
 @keyframes mascot-bob {
   50% {
@@ -95,6 +118,22 @@
     transform: rotate(-2deg);
   }
 }
+@keyframes mascot-pop-in {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes mascot-pop-out {
+  to {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
 @keyframes mascot-pulse {
   50% {
     opacity: 0.35;
@@ -103,7 +142,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .mascot-anchor,
-  .mascot-anchor[data-moving='pen'] {
+  .mascot-anchor[data-moving='pen'],
+  .mascot-anchor[data-moving='fly'] {
     transition: none;
   }
   .mascot,
