@@ -128,7 +128,7 @@ def test_not_unit_tokens(token: str) -> None:
 OHMS = [Given(100, has_unit=True)]
 
 
-@pytest.mark.parametrize("latex", [r"R = 100\,\Omega", r"R = 100\Omega", r"R = 100\ \Omega"])
+@pytest.mark.parametrize("latex", [r"R = 100\,\Omega", r"R = 100\ \Omega"])
 def test_omega_after_a_number_is_a_unit_not_a_symbol(latex: str) -> None:
     assert formula_symbols(latex) == ["R"]
     assert lint_numbers(latex, "math", OHMS, latex=True) == []
@@ -161,5 +161,5 @@ def test_fractions_are_coefficients_only_in_formulas() -> None:
     assert lint_numbers("There are 2 charges and 4 lines.", "say", []) == []
 
 
-def test_numbers_written_in_a_calc_expression_are_inputs() -> None:
+def test_expression_literals_include_coefficients_not_just_inputs() -> None:
     assert expr_numbers("0.5*m*v^2 + 3e-9*eps0/c1") == [0.5, 2.0, 3e-9]

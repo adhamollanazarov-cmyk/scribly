@@ -486,8 +486,8 @@
     resistance 0.90 ohm are connected in parallel, both with their positive terminals to
     node A and negative terminals to node B. A 5.6 ohm load is connected between A and B.
     Find the current through each battery and the load with directions (A to B or B to
-    A), the terminal voltage V_A - V_B, and the power delivered by the 11.5 V battery
-    (negative if the battery absorbs energy).
+    A), the terminal voltage V_A - V_B, and the power delivered by the ideal emf of the
+    11.5 V battery (excluding its internal resistor; negative if the ideal emf absorbs energy).
   expected:
     - { name: I1, value: 2.9753914988814296, unit: A, direction: B->A }
     - { name: I2, value: 0.7941834451901582, unit: A, direction: A->B }

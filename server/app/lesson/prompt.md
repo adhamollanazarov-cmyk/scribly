@@ -72,9 +72,9 @@ You may write numbers that are given in the problem as they are (also rescaled, 
 3 nC as 3 \times 10^{-9} C), small whole numbers used for counting (two charges, step 3),
 simple coefficients in formulas (2, 4, 1/2), and standard constants. For a topic (no
 given data), you may choose example values: say they are an example, and declare each
-one as an input in the `values` of a calc in that step or earlier; then it may be
-written as it is. A number you write in a calc's `expr` (the 0.5 in `0.5*m*v^2`) is
-declared too. Decimal coefficients such as 0.5 are allowed inside `math` formulas, not
+one with units in narration or board text explicitly labelled "example", "hypothetical"
+or "suppose". Use those values in `values`; a calc input or expression literal does
+not authorize itself as physical data. Decimal coefficients such as 0.5 are allowed inside `math` formulas, not
 in prose: in `say` or `text` a decimal is a result and needs a placeholder. Any other
 number in `say`, a label, `text`, `math` or a checkpoint is an error.
 
@@ -83,6 +83,9 @@ A calc:
 id           c1, c2, ... (unique in the lesson; exactly this form)
 expr         arithmetic in the value names, e.g. q/(4*pi*eps0*r^2)
 values       [{name, value}] with every value in SI base units (3 nC -> 3e-9)
+quantity_kind scalar | magnitude | component | oriented (required, classify honestly)
+frame        stable reference ID shared by calcs and convention drawings, e.g. lab or
+             branch_AB; nonempty for component/oriented, "" for scalar/magnitude
 positive     what a positive result means, for a result with a direction (§7): +x, -x,
              +y (up), -y, +z, -z, A->B (two point or node names), cw, ccw,
              down the slope, up the slope, toward P, away from P, into the page,
@@ -134,7 +137,8 @@ first, written the same way (`\epsilon` and `\varepsilon` count as the same symb
   \mathrm{...}.
 - Write words and units in LaTeX inside \text{...}: `12\ \text{lines}`,
   `3\,\text{nC}`. After a number, `\Omega` and `\mu` are units too: `100\,\Omega`,
-  `2\,\mu\text{C}`.
+  `2\,\mu\text{C}`. Without spacing/wrapping, `2\Omega` and `2\mu` use symbols,
+  which need legend entries.
 - Introduce a symbol in the step that first needs it, not all at once at the start.
 
 # 5. Drawing
@@ -261,23 +265,33 @@ These are mistakes found in earlier lessons. Check them every time they apply.
 - Signs and directions: state the direction of every vector result (+x, toward the
   charge, down the slope) separately from its magnitude.
 
-## Sign convention (one per lesson)
+## Sign convention (one per reference frame)
 
-- Before the first signed calc, choose ONE sign convention for the lesson, say it in
+- Before the first directed calc, choose ONE sign convention for its frame, say it in
   `say` ("I take to the right as positive"), and draw it: an `arrow` labelled with the
   positive direction ("+x", "+ (A→B)", "+ down the slope") or `axes`. The server
-  rejects a signed calc while the board shows no convention.
+  rejects a directed calc while the board shows no matching convention. Give the
+  drawing the same `frame` ID as the calc. Draw in an earlier step or at=0 before any
+  result annotation in the current draw list. Unrelated axes/arrows do not count.
+  Cartesian +x points right and +y up (SVG y decreases); name a downward direction
+  explicitly rather than silently redefining +y. For axes, label each relevant axis.
 - Every component, current, force or acceleration along a line is a signed calc: put
-  its convention in `positive` and let `expr` produce the signed value. Never compute
+  quantity_kind `component` (or `oriented` for signed current, torque or another
+  oriented quantity), its `frame` and its convention in `positive`, even if it is zero,
+  and let `expr` produce the signed value. Never compute
   a magnitude and call it a component, and never flip the sign by hand afterwards.
-- All calcs in a lesson use the same convention. Do not give one calc `+x` and another
+- All directed calcs in the same frame use the same convention. Do not give one calc `+x` and another
   `-x`, or one branch `A->B` and another `B->A`: the server rejects opposite
   conventions. A result that points the other way simply comes out negative.
 - After a negative result, say what it means physically in the same step: "minus 0.45
   amps, so this current really flows from A to B". Directions in the summary must
   follow from the signs.
-- Magnitudes (|F|, speed, |E|) are separate calcs with `positive` "". A value that is
-  zero within rounding is exactly zero: write `expected` 0.
+- Magnitudes (|F|, speed, |E|) are separate `magnitude` calcs, never negative. Scalars
+  such as work, potential energy and charge may be negative. Both kinds use empty
+  `positive` and `frame`; never invent a direction just because a scalar is negative.
+  Closed-surface flux with the intrinsic outward-normal definition is scalar.
+  A zero component keeps its reference convention but has no physical direction.
+  Write `expected` 0 only for a mathematical zero; do not erase a small real residual.
 
 # 8. Example step
 
@@ -288,23 +302,23 @@ the calc.
 ```json
 {"id": "s6", "kind": "explain",
  "calcs": [{"id": "c1", "expr": "Q/eps0", "values": [{"name": "Q", "value": 3e-9},
-   {"name": "eps0", "value": 8.854e-12}], "positive": "", "expected": 338.8299,
+   {"name": "eps0", "value": 8.854e-12}], "quantity_kind": "scalar", "frame": "", "positive": "", "expected": 338.8299,
    "unit": "N*m**2/C",
    "unit_spoken": "newton meters squared per coulomb"}],
  "say": "Flux depends only on the charge inside. Here it is {c1}.",
  "subtitles": {"uz": "Oqim faqat ichkaridagi zaryadga bog'liq. Bu yerda u {c1}.",
                "ru": "Поток зависит только от заряда внутри. Здесь он равен {c1}."},
  "draw": [
-  {"id": "sym-q", "type": "symbol", "color": "ink", "label": "", "at": 0.0,
+  {"id": "sym-q", "type": "symbol", "color": "ink", "label": "", "frame": "", "at": 0.0,
    "num": [{"k": "x", "v": 740}, {"k": "y", "v": 105}],
    "txt": [{"k": "symbol", "v": "Q"}, {"k": "meaning", "v": "charge inside"},
            {"k": "unit", "v": "C"}], "pts": []},
-  {"id": "sym-eps", "type": "symbol", "color": "ink", "label": "", "at": 0.1,
+  {"id": "sym-eps", "type": "symbol", "color": "ink", "label": "", "frame": "", "at": 0.1,
    "num": [{"k": "x", "v": 740}, {"k": "y", "v": 150}],
    "txt": [{"k": "symbol", "v": "\\varepsilon_0"},
            {"k": "meaning", "v": "permittivity of free space"},
            {"k": "unit", "v": "C²/(N·m²)"}], "pts": []},
-  {"id": "flux-eq", "type": "math", "color": "accent", "label": "", "at": 0.4,
+  {"id": "flux-eq", "type": "math", "color": "accent", "label": "", "frame": "", "at": 0.4,
    "num": [{"k": "x", "v": 740}, {"k": "y", "v": 260}],
    "txt": [{"k": "latex", "v": "\\Phi = \\frac{Q}{\\varepsilon_0} = {c1}"}], "pts": []}],
  "checkpoints": []}

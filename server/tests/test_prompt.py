@@ -37,6 +37,6 @@ def test_prompt_carries_the_audit_safeguards() -> None:
         "choose ONE sign convention",
         "the server rejects opposite",
         "never flip the sign by hand",
-        "write `expected` 0",
+        "Write `expected` 0 only for a mathematical zero",
     ):
         assert phrase in prompt, phrase

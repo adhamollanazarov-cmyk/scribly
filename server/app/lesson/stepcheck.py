@@ -15,19 +15,18 @@ from pydantic import ValidationError
 
 from app.lesson.direction import normalize
 from app.lesson.draft import CheckpointDraft, StepDraft, TextArg, contract_primitive
-from app.lesson.ledger import CALC_ID, Context, Entry, LedgerError, answer_value, fill
+from app.lesson.ledger import CALC_ID, PLACEHOLDER, Context, Entry, LedgerError, answer_value, fill
 from app.lesson.lint import (
-    Given,
     LintState,
     Violation,
-    expr_numbers,
+    displayed_conventions,
+    extract_givens,
     legend_symbols,
     lint_checkpoint_spacing,
     lint_numbers,
     lint_sign,
     lint_symbols,
     lint_words,
-    shows_convention,
     violation,
 )
 from app.lesson.models import (
@@ -73,8 +72,8 @@ class Checked:
     entries: dict[str, Entry] = field(default_factory=dict)
     used: set[str] = field(default_factory=set)
     symbols: set[str] = field(default_factory=set)
-    conventions: set[str] = field(default_factory=set)
-    convention_drawn: bool = False
+    conventions: set[tuple[str, str]] = field(default_factory=set)
+    drawn_conventions: set[tuple[str, str]] = field(default_factory=set)
 
     @property
     def fatal(self) -> bool:
@@ -124,7 +123,7 @@ def commit(state: LessonState, checked: Checked, unverified: bool = False) -> St
     check_step_references(step, state.drawn, state.groups)
     state.lint.defined_symbols |= checked.symbols
     state.lint.conventions |= checked.conventions
-    state.lint.convention_drawn |= checked.convention_drawn
+    state.lint.drawn_conventions |= checked.drawn_conventions
     state.lint.run_without_checkpoint = (
         0 if step.kind == "checkpoint" else state.lint.run_without_checkpoint + 1
     )
@@ -221,7 +220,13 @@ def _check_calcs(draft: StepDraft, state: LessonState, out: Checked) -> None:
         if result.value is not None:
             verified = result.ok and inputs_ok
             out.entries[calc.id] = Entry(
-                result.value, model.unit, calc.unit_spoken, verified, calc.positive
+                result.value,
+                model.unit,
+                calc.unit_spoken,
+                verified,
+                calc.positive,
+                calc.quantity_kind,
+                calc.frame,
             )
 
 
@@ -288,13 +293,16 @@ def fill_step(draft: StepDraft, ledger: dict[str, Entry]) -> tuple[StepDraft, se
 
 
 def _lint_numbers(draft: StepDraft, state: LessonState) -> list[Violation]:
-    # Inputs declared in calcs (e.g. a hypothetical 3 nC in a topic lesson) are stated
-    # data, not results, so they may be written as they are.
-    inputs = [v for c in state.calcs for v in [*c.values.values(), *expr_numbers(c.expr)]]
-    inputs += [
-        v for c in draft.calcs for v in [*(x.value for x in c.values), *expr_numbers(c.expr)]
-    ]
-    givens = state.lint.givens + [Given(value, has_unit=False) for value in inputs]
+    # Calc values/literals cannot grant themselves provenance. Only problem data
+    # and explicitly labelled hypothetical examples authorize raw physical numbers.
+    givens = list(state.lint.givens)
+    for previous in [*state.drafts, draft]:
+        texts = [previous.say, *(item.label for item in previous.draw)]
+        texts += [a.v for item in previous.draw for a in item.txt if a.k == "text"]
+        for text in texts:
+            for sentence in re.split(r"(?<=[.!?])\s+", text):
+                if re.search(r"\b(example|hypothetical|suppose)\b", sentence, re.IGNORECASE):
+                    givens += [g for g in extract_givens(sentence) if g.has_unit]
     out = lint_numbers(draft.say, f"step {draft.id} say", givens)
     for lang in ("uz", "ru"):
         text = getattr(draft.subtitles, lang)
@@ -317,19 +325,50 @@ def _lint_numbers(draft: StepDraft, state: LessonState) -> list[Violation]:
 
 
 def _lint_signs(draft: StepDraft, state: LessonState, out: Checked) -> list[Violation]:
-    """One sign convention per lesson, drawn on the board before the first signed calc."""
-    out.convention_drawn = any(
-        shows_convention(item.type, item.label, next((a.v for a in item.txt if a.k == "name"), ""))
-        for item in draft.draw
-    )
-    drawn = state.lint.convention_drawn or out.convention_drawn
+    """Match a displayed convention by frame and direction, before first use."""
+    annotations: list[tuple[int, float, str, str]] = []
+    for index, item in enumerate(draft.draw):
+        if not item.frame:
+            continue
+        directions = displayed_conventions(
+            item.type, item.label, {a.k: a.v for a in item.txt}, {a.k: a.v for a in item.num}
+        )
+        for direction in directions:
+            annotations.append((index, item.at, item.frame, direction))
+            out.drawn_conventions.add((item.frame, direction))
     problems: list[Violation] = []
     for calc in draft.calcs:
-        known = state.lint.conventions | out.conventions
-        problems += lint_sign(calc.id, calc.positive, known, drawn)
+        if calc.quantity_kind in ("scalar", "magnitude"):
+            continue
+        # Narration can use a result immediately. In this step the convention must
+        # start at zero and precede any result annotation in draw-list order.
+        first_use = next(
+            (
+                i
+                for i, item in enumerate(draft.draw)
+                if any(
+                    m.group(1) == calc.id
+                    for text in [item.label, *(a.v for a in item.txt)]
+                    for m in PLACEHOLDER.finditer(text)
+                )
+            ),
+            len(draft.draw),
+        )
+        visible = state.lint.drawn_conventions | {
+            (frame, direction)
+            for index, at, frame, direction in annotations
+            if at == 0 and index < first_use
+        }
+        known = {
+            direction
+            for frame, direction in state.lint.conventions | out.conventions
+            if frame == calc.frame
+        }
         canonical = normalize(calc.positive)
+        drawn = (calc.frame, canonical) in visible
+        problems += lint_sign(calc.id, calc.positive, known, drawn)
         if canonical:
-            out.conventions.add(canonical)
+            out.conventions.add((calc.frame, canonical))
     return problems
 
 

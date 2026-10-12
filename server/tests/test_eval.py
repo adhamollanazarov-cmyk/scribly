@@ -285,14 +285,16 @@ I2 = Expected("I2", 0.4545, "A", direction="A->B")
 def test_expected_direction_follows_from_sign_and_convention(
     value: float, positive: str, ok: bool
 ) -> None:
-    assert value_matches(I2, [Entry(value, "A", "amps", True, positive)]) is ok
+    assert (
+        value_matches(I2, [Entry(value, "A", "amps", True, positive, "oriented", "circuit")]) is ok
+    )
 
 
 def test_wrong_direction_is_reported_separately_from_a_wrong_magnitude() -> None:
     steps = good_steps()
     steps[3]["calcs"].append(calc("c2", "I", {"I": 0.4545}, 0.4545, "A", "amps", "B->A"))
     steps[3]["draw"].append(
-        item("conv", "arrow", {"x1": 60, "y1": 900, "x2": 260, "y2": 900}, label="+ (B→A)")
+        item("conv", "arrow", {"x1": 60, "y1": 900, "x2": 260, "y2": 900}, label="+ (B→A)", at=0)
     )
     steps[3]["say"] = "So the flux is {c1}, and the current is {c2}."
     metrics = generated_metrics(steps)

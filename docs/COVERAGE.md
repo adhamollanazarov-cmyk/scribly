@@ -64,6 +64,11 @@ present 4. layout problems count (§2) 5. visual QA score (§5, when available)
 6. time to first step 7. cost in USD.
 Report: `docs/eval/YYYY-MM-DD.md` with a table per topic (pass rate, avg cost,
 avg latency) and the list of failures.
+Grading v4 requires explicit component/oriented quantity and frame metadata for
+direction matches, and rejects unreadable expected directions. An expected zero has
+empty physical direction; its component calc still declares its reference convention.
+This does not check result-direction claims in narration or arrows; those remain
+part of the Phase 3 visual QA loop. Older scores are not equivalent to v4 scores.
 **Rule:** a change to the lesson prompt, models or templates may not lower the
 overall pass rate or any topic's pass rate by more than 5 points. Codex checks
 this in review.

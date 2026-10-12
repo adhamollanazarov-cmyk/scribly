@@ -2,6 +2,12 @@
 
 Update this file at the end of every task (newest entry on top, 3–8 lines).
 
+## 2026-10-12 — codex — Phase 1b.2 medium/low fixes (`codex/phase1b2-review`)
+**Done:** Fixed M1–M6 and L1–L2 from `docs/reviews/2026-10-12-phase1b2.md`: required quantity/frame metadata and conditional `positive` (including zero), relevant convention drawings before use, grounded numeric exemptions, spaced unit macros, fail-closed expected directions, ideal-emf battery wording, script typing and finite direction inputs. Prompt/docs/saved draft metadata updated together; renderer contract/schema unchanged.
+**Checks:** PowerShell 5.1, mock/fake providers: 567 pytest (76 follow-up cases), Ruff lint/format, mypy app (26 files) and scripts (4), schema regeneration passed; 5 Vitest, ESLint+tsc, Prettier and 1 Chromium smoke test passed. No real API/TTS calls; live pass rate, latency and fix cost were not measured.
+**Found issues / known limitation:** M7, “prose/arrows contradict metadata”, remains intentionally unfixed for the Phase 3 visual QA loop: numeric direction metadata does not prove narration, result labels or arrows agree. Named/projected geometry also needs visual review. Existing Phase 2 Gauss audio/drawing playback coverage and inherited Phase 1b findings remain open.
+**Next:** Human merges; Phase 3 visual QA compares rendered steps with narration. Future API evals use grading v4 (older scores are not equivalent); no historical reports were re-scored. Added `types-PyYAML` with a dependency reason and script mypy to §6.
+
 ## 2026-10-12 — codex — Phase 1b.2 review (`codex/phase1b2-review`)
 **Done:** Reviewed `claude/phase1b2` (`323f3b7`) against `main` (`33b1886`). Fixed high: zero-tolerance bound falsely accepted wrong answers and erased real residuals; ambiguous calculations now use bounded higher-precision/stability rechecks. Independently recomputed all 20 hard problems / 69 answers; targets agree (battery-power wording needs clarification). Evidence and severity list: `docs/reviews/2026-10-12-phase1b2.md` and companion JSON.
 **Checks:** PowerShell 5.1, mock/fake providers: 492 pytest (30 added), Ruff lint/format, mypy app, unchanged regenerated schema; 5 Vitest, ESLint+tsc, Prettier and 1 Chromium smoke test passed. No real API/TTS calls; declared already-locked mpmath directly, with no version changes.

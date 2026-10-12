@@ -167,17 +167,25 @@ budget (about 70 properties), so the draft is lean:
 - Every field is required; `""` and `[]` replace null. Order is generation order.
 - Lesson: `title, level, steps`. Step: `id, kind, calcs, say, subtitles{uz,ru}, draw,
   checkpoints` (0 or 1 item). Calcs are **step-local** and come before `say`.
-- Calc: `id` (`c1`, `c2`, …), `expr`, `values: [{name, value}]`, `positive`, `expected`,
+- Calc: `id` (`c1`, `c2`, …), `expr`, `values: [{name, value}]`, `quantity_kind`, `frame`, `positive`, `expected`,
   `unit` (SymPy style), `unit_spoken`. `expr` may use an earlier calc id as a name; the
   server substitutes its full-precision value. `positive` says what a positive result
   means (`+x`, `-y`, `A->B`, `cw`, `down the slope`, `toward P`, …; `""` for no
   direction; vocabulary in `server/app/lesson/direction.py`); the signed value plus
   `positive` gives the physical direction. It stays in the draft and the ledger: the
-  lesson's `Calc` contract is unchanged.
-- Draw item: `id, type, color, label, at, num: [{k, v}], txt: [{k, v}], pts`. `type` is a
+  lesson's `Calc` contract is unchanged. `quantity_kind` is required: `component` or
+  `oriented` requires a readable, nonempty `positive` and a nonempty, trimmed `frame`
+  ID, even at zero; `scalar` and `magnitude` require both fields to be empty.
+  Negative work, energy and charge may be scalars; magnitudes cannot be negative.
+  Closed-surface flux with the intrinsic outward-normal definition is scalar;
+  an explicitly oriented normal field component is a component. Metadata describes
+  the actual quantity, never a way to avoid a direction check.
+- Draw item: `id, type, color, label, frame, at, num: [{k, v}], txt: [{k, v}], pts`. `type` is a
   primitive type or a template name; arguments are the contract fields by name (vector:
   `x1,y1,x2,y2`; booleans as 1/0; `free_body` repeats `name`/`angle_deg`/`length` once
-  per force; template text args set to `""` keep the default).
+  per force; template text args set to `""` keep the default). A convention drawing
+  uses the same `frame` ID as its calcs; other drawings use `""`. Frame metadata is
+  consumed during generation, not sent as primitive arguments to the renderer.
 - Checkpoint: `question, type, choices, answer, hint, reexplain_hint`; `answer` is the
   choice index as digits, or one placeholder (`"{c4:3sf}"`) for a number checkpoint, whose
   `unit` and `tolerance` (0.02) the server sets.
@@ -186,9 +194,13 @@ budget (about 70 properties), so the draft is lean:
 `{c1:2dp}` (default 3 significant figures). The server fills in the SymPy value plus its
 unit: spoken unit in `say`, `N·m²/C` on the board, `\,\mathrm{N\cdot m^{2}/C}` in LaTeX;
 scientific notation below 0.01 or from 10⁴. A number in narration, labels, text, math or
-checkpoints that is neither a placeholder, a given number (also SI-rescaled), a declared
-calc input (in `values` or written in `expr`), a standard constant, nor a small whole
+checkpoints that is neither a placeholder, a given number (also SI-rescaled), an
+explicitly labelled example with units, a standard constant, nor a small whole
 count is a lint error; halves and quarters (0.5, 0.25) pass only inside LaTeX formulas.
+Neither `values` nor expression literals authorize themselves as physical givens.
+Example declarations in narration/board text use “example”, “hypothetical” or “suppose”;
+their unit-bearing numbers remain available in later steps. This is a lexical lint,
+not a proof of the physical provenance or dimensional meaning of every input.
 An ambiguous result near its floating-point rounding bound is rechecked at 800 decimal
 digits, then checked for stability at 1000 digits, with a bounded arithmetic interpreter.
 The bound selects a recheck; it does not authorize zero snapping or a tolerance match.
@@ -199,14 +211,20 @@ repair. No value renders as "-0.00".
 
 **Checks per step** (`stepcheck.py`, `lint.py`): draft shape → ids → calcs (SymPy, grammar)
 → ledger fill → say ≤ 30 words after filling → ≤ 4 steps without a checkpoint → symbols
-in `math` introduced by an earlier `symbol` entry (a unit macro such as `\Omega` after a
-number is a unit, not a symbol) → no hand-written computed numbers → units on given
-numbers → one sign convention per lesson (a readable `positive`, never the opposite of an
-earlier one, and drawn on the board as axes or a "+"-labelled arrow before the first
-signed calc) → contract validation, template expansion, references. A step with
+in `math` introduced by an earlier `symbol` entry (unit macros need explicit spacing
+after numbers or unit wrappers: `2\Omega` remains a symbol, `2\,\Omega` is a unit)
+→ no hand-written computed numbers → units on given numbers → one sign convention
+per reference frame (a readable `positive`, never the opposite of an earlier one in
+that frame). The relevant convention must be drawn in an earlier step, or at=0 before
+result annotations in the current draw list. Match canonical direction and frame;
+unrelated axes/arrows cannot authorize it. Cartesian convention-arrow geometry is
+checked with physical +x right, +y up (SVG y decreases); axes authorize only their
+matching x/y labels (plot templates have x/y defaults). Other projected/named
+geometry and result prose/arrows remain Phase 3 visual QA responsibilities.
+→ contract validation, template expansion, references. A step with
 problems is regenerated **once, alone**, with the exact list (the fix may insert a
 checkpoint step before it). Still broken: a contract problem (words, checkpoint spacing,
-placeholders, validation) ends the lesson with an `error` event; a hand-written number
+placeholders, validation, sign convention) ends the lesson with an `error` event; a hand-written number
 left in a step marks it `unverified`; other leftovers are logged.
 
 ## Streaming

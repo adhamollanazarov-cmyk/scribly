@@ -135,10 +135,10 @@ def test_collision_repair_is_one_step_and_only_valid_ids_are_emitted() -> None:
     assert len(ids) == len(set(ids))
 
 
-def test_a_number_written_in_a_calc_expression_counts_as_declared() -> None:
+def test_a_formula_coefficient_is_not_a_declared_physical_input() -> None:
     kinetic = calc("c1", "0.5*m*v^2", {"m": 2, "v": 3}, 9, "J", "joules")
     declared = step("s1", "Take 0.5 times m v squared: {c1}.", calcs=[kinetic])
     undeclared = step("s1", "Take 0.5 times m v squared.")
 
-    assert not [v for v in check_step(declared, state()).violations if v.rule == "number"]
+    assert [v for v in check_step(declared, state()).violations if v.rule == "number"]
     assert [v for v in check_step(undeclared, state()).violations if v.rule == "number"]

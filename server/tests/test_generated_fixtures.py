@@ -1,6 +1,8 @@
-"""Replay recorded Claude replies (CLAUDE.md prompt tests) through the real pipeline,
-offline. A change to the checks, ledger or contract that would break real model output
-fails here first."""
+"""Offline replay of recorded replies adapted to the current draft metadata.
+
+See tests/fixtures/drafts/README.md for the authored migration. Expressions and
+teaching text are original; these are not new API generations.
+"""
 
 import asyncio
 import json

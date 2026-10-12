@@ -40,7 +40,7 @@ from scripts.eval_units import convert
 PROBLEMS = REPO_ROOT / "tests" / "eval" / "problems.yaml"
 REPORT_DIR = REPO_ROOT / "docs" / "eval"
 CACHE_DIR = REPO_ROOT / "server" / ".cache" / "eval"
-GRADING_VERSION = 3
+GRADING_VERSION = 4
 
 
 @dataclass(frozen=True)
@@ -50,6 +50,17 @@ class Expected:
     unit: str
     rel_tol: float = 0.01
     direction: str = ""  # set: value is a magnitude, matched with this physical direction
+
+    def __post_init__(self) -> None:
+        if not isinstance(self.direction, str):
+            raise ValueError("expected direction must be a string")
+        if not math.isfinite(self.value) or not math.isfinite(self.rel_tol) or self.rel_tol < 0:
+            raise ValueError("expected values and nonnegative tolerances must be finite")
+        if self.direction and (not normalize(self.direction) or self.value <= 0):
+            raise ValueError(
+                "expected direction must be readable with a positive magnitude; "
+                "zero has no direction"
+            )
 
 
 @dataclass(frozen=True)
@@ -130,6 +141,11 @@ def load_problems(path: Path = PROBLEMS) -> list[Problem]:
 def value_matches(expected: Expected, values: list[Entry], magnitude_only: bool = False) -> bool:
     """A displayed verified value equals the expected one: signed, or for an expected
     direction, the magnitude plus the direction given by the calc's sign convention."""
+    if not isinstance(expected.direction, str):
+        return False
+    canonical = normalize(expected.direction)
+    if expected.direction and (not canonical or expected.value <= 0):
+        return False
     for entry in values:
         if not entry.verified:
             continue
@@ -140,7 +156,8 @@ def value_matches(expected: Expected, values: list[Entry], magnitude_only: bool 
         if expected.direction:
             if not math.isclose(abs(value), expected.value, rel_tol=expected.rel_tol, abs_tol=0):
                 continue
-            if magnitude_only or physical(value, entry.positive) == normalize(expected.direction):
+            directed = entry.quantity_kind in ("component", "oriented") and bool(entry.frame)
+            if magnitude_only or (directed and physical(value, entry.positive) == canonical):
                 return True
         elif math.isclose(value, expected.value, rel_tol=expected.rel_tol, abs_tol=0):
             return True
@@ -404,13 +421,13 @@ def render_report(results: list[Result], meta: dict[str, Any], top: int = 3) -> 
         lines.append(f"- **{r.id}**: {'; '.join(reasons)}")
     if not failures:
         lines.append("None.")
-    reasons: Counter[str] = Counter()
+    fix_reasons: Counter[str] = Counter()
     rules: Counter[str] = Counter()
     for r in ran:
-        reasons.update(r.fix_reasons)
+        fix_reasons.update(r.fix_reasons)
         rules.update(r.leftovers)
     lines += ["", "## Why steps were sent back for a fix (steps per rule)", ""]
-    lines += [f"- {rule}: {count}" for rule, count in reasons.most_common()] or ["None."]
+    lines += [f"- {rule}: {count}" for rule, count in fix_reasons.most_common()] or ["None."]
     lines += ["", "## Lint problems left after the one fix", ""]
     lines += [f"- {rule}: {count}" for rule, count in rules.most_common()] or ["None."]
     worst = sorted(ran, key=badness)[:top]

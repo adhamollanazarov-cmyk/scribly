@@ -11,7 +11,7 @@ from app.lesson.stepcheck import LessonState, check_step, commit
 from tests.drafts import calc, item, step
 
 SOURCE = Source(type="problem", text="Charges q1 = 2 nC and q2 = -3 nC are 0.3 m apart.")
-PLUS_X = item("conv", "arrow", {"x1": 100, "y1": 900, "x2": 300, "y2": 900}, label="+x")
+PLUS_X = item("conv", "arrow", {"x1": 100, "y1": 900, "x2": 300, "y2": 900}, label="+x", at=0)
 
 
 @pytest.mark.parametrize(
@@ -86,7 +86,8 @@ def test_signed_calc_with_a_drawn_convention_passes_and_carries_its_sign() -> No
     assert not checked.violations
     assert checked.entries["c1"].positive == "+x"
     commit(context, checked)
-    assert context.lint.conventions == {"+x"} and context.lint.convention_drawn
+    assert context.lint.conventions == {("lab", "+x")}
+    assert context.lint.drawn_conventions == {("lab", "+x")}
 
 
 def test_signed_calc_needs_a_drawn_convention() -> None:
@@ -95,12 +96,21 @@ def test_signed_calc_needs_a_drawn_convention() -> None:
 
 
 def test_axes_or_a_plus_labelled_vector_also_show_the_convention() -> None:
-    axes = item("ax", "axes", {"x": 100, "y": 100, "w": 400, "h": 300}, {"xlabel": "x"})
-    vector = item(
-        "v", "vector", {"x1": 1, "y1": 1, "x2": 9, "y2": 1}, {"name": "+ (A→B)"}, color="force"
+    axes = item(
+        "ax", "axes", {"x": 100, "y": 100, "w": 400, "h": 300}, {"xlabel": "x", "ylabel": "y"}, at=0
     )
-    for drawing in (axes, vector):
-        assert check(step("s1", "The force is {c1}.", [drawing], calcs=[force("c1", "+x")])) == []
+    vector = item(
+        "v",
+        "vector",
+        {"x1": 1, "y1": 1, "x2": 9, "y2": 1},
+        {"name": "+ (A→B)"},
+        color="force",
+        at=0,
+    )
+    for drawing, positive in ((axes, "+x"), (vector, "A->B")):
+        assert (
+            check(step("s1", "The force is {c1}.", [drawing], calcs=[force("c1", positive)])) == []
+        )
 
 
 def test_unlabelled_arrow_is_not_a_convention() -> None:
@@ -112,24 +122,27 @@ def test_opposite_conventions_in_one_lesson_are_rejected() -> None:
     raw = step(
         "s1",
         "The currents are {c1} and {c2}.",
-        [PLUS_X],
+        [{**PLUS_X, "label": "+ (A->B)"}],
         calcs=[force("c1", "A->B"), force("c2", "from B to A")],
     )
     messages = check(raw)
-    assert len(messages) == 1 and "one sign convention" in messages[0]
-    assert "c2" in messages[0]
+    assert any("one sign convention" in message and "c2" in message for message in messages)
 
 
 def test_opposite_of_an_earlier_step_is_rejected() -> None:
     context = LessonState(SOURCE, LintState([]))
     commit(context, check_step(step("s1", "{c1}.", [PLUS_X], calcs=[force("c1", "+x")]), context))
     assert check(step("s2", "{c2}.", calcs=[force("c2", "-x")]), context)
-    assert check(step("s3", "{c3}.", calcs=[force("c3", "+y")]), context) == []
+    assert check(step("s3", "{c3}.", calcs=[force("c3", "+y")]), context)
 
 
 def test_unreadable_positive_direction_is_sent_back() -> None:
-    messages = check(step("s1", "{c1}.", [PLUS_X], calcs=[force("c1", "sideways")]))
-    assert len(messages) == 1 and "+x, -x" in messages[0]
+    checked = check_step(
+        step("s1", "{c1}.", [PLUS_X], calcs=[force("c1", "sideways")]),
+        LessonState(SOURCE, LintState([])),
+    )
+    assert checked.fatal and not checked.entries
+    assert any("readable positive" in v.message for v in checked.violations)
 
 
 def test_scalar_calcs_need_no_convention() -> None:

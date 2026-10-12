@@ -26,6 +26,8 @@ class Entry:
     unit_spoken: str
     verified: bool
     positive: str = ""  # what a positive value means (direction.py); "" for no direction
+    quantity_kind: str = "scalar"
+    frame: str = ""
 
 
 @dataclass(frozen=True)

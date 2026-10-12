@@ -24,6 +24,7 @@
        "type": "point_charge",
        "color": "charge_pos",
        "label": "",
+       "frame": "",
        "at": 0.2,
        "num": [
         {
@@ -56,6 +57,7 @@
        "type": "gaussian_sphere",
        "color": "surface",
        "label": "closed surface",
+       "frame": "",
        "at": 0.5,
        "num": [
         {
@@ -84,6 +86,7 @@
        "type": "radial_field_lines",
        "color": "field",
        "label": "",
+       "frame": "",
        "at": 0.8,
        "num": [
         {
@@ -133,6 +136,7 @@
        "type": "symbol",
        "color": "ink",
        "label": "",
+       "frame": "",
        "at": 0.1,
        "num": [
         {
@@ -165,6 +169,7 @@
        "type": "symbol",
        "color": "ink",
        "label": "",
+       "frame": "",
        "at": 0.3,
        "num": [
         {
@@ -197,6 +202,7 @@
        "type": "symbol",
        "color": "ink",
        "label": "",
+       "frame": "",
        "at": 0.5,
        "num": [
         {
@@ -229,6 +235,7 @@
        "type": "math",
        "color": "accent",
        "label": "",
+       "frame": "",
        "at": 0.7,
        "num": [
         {
@@ -266,6 +273,7 @@
        "type": "math",
        "color": "accent",
        "label": "",
+       "frame": "",
        "at": 0.5,
        "num": [
         {
@@ -328,6 +336,7 @@
        "type": "symbol",
        "color": "ink",
        "label": "",
+       "frame": "",
        "at": 0.1,
        "num": [
         {
@@ -360,6 +369,7 @@
        "type": "symbol",
        "color": "ink",
        "label": "",
+       "frame": "",
        "at": 0.2,
        "num": [
         {
@@ -392,6 +402,7 @@
        "type": "math",
        "color": "right",
        "label": "",
+       "frame": "",
        "at": 0.6,
        "num": [
         {
@@ -416,6 +427,7 @@
        "type": "highlight",
        "color": "highlight",
        "label": "",
+       "frame": "",
        "at": 0.9,
        "num": [],
        "txt": [
@@ -435,6 +447,9 @@
      "calcs": [
       {
        "id": "c1",
+       "quantity_kind": "scalar",
+       "frame": "",
+       "positive": "",
        "expr": "Q/eps0",
        "values": [
         {
@@ -462,6 +477,7 @@
        "type": "math",
        "color": "accent",
        "label": "",
+       "frame": "",
        "at": 0.5,
        "num": [
         {
@@ -499,6 +515,7 @@
        "type": "gaussian_sphere",
        "color": "surface",
        "label": "",
+       "frame": "",
        "at": 0.1,
        "num": [
         {
@@ -527,6 +544,7 @@
        "type": "point_charge",
        "color": "charge_pos",
        "label": "",
+       "frame": "",
        "at": 0.3,
        "num": [
         {
@@ -559,6 +577,7 @@
        "type": "arrow",
        "color": "field",
        "label": "in",
+       "frame": "",
        "at": 0.6,
        "num": [
         {
@@ -590,6 +609,7 @@
        "type": "arrow",
        "color": "field",
        "label": "out",
+       "frame": "",
        "at": 0.8,
        "num": [
         {
@@ -625,6 +645,9 @@
      "calcs": [
       {
        "id": "c2",
+       "quantity_kind": "scalar",
+       "frame": "",
+       "positive": "",
        "expr": "Q/eps0",
        "values": [
         {
@@ -673,6 +696,7 @@
        "type": "text",
        "color": "ink",
        "label": "",
+       "frame": "",
        "at": 0.3,
        "num": [
         {
@@ -714,6 +738,7 @@
        "type": "symbol",
        "color": "ink",
        "label": "",
+       "frame": "",
        "at": 0.1,
        "num": [
         {
@@ -746,6 +771,7 @@
        "type": "math",
        "color": "accent",
        "label": "",
+       "frame": "",
        "at": 0.5,
        "num": [
         {
@@ -787,6 +813,7 @@
        "type": "math",
        "color": "right",
        "label": "",
+       "frame": "",
        "at": 0.5,
        "num": [
         {
@@ -853,6 +880,7 @@
        "type": "math",
        "color": "right",
        "label": "",
+       "frame": "",
        "at": 0.5,
        "num": [
         {
@@ -898,6 +926,7 @@
        "type": "symbol",
        "color": "ink",
        "label": "",
+       "frame": "",
        "at": 0.1,
        "num": [
         {
@@ -930,6 +959,7 @@
        "type": "symbol",
        "color": "ink",
        "label": "",
+       "frame": "",
        "at": 0.3,
        "num": [
         {
@@ -962,6 +992,7 @@
        "type": "math",
        "color": "accent",
        "label": "",
+       "frame": "",
        "at": 0.5,
        "num": [
         {

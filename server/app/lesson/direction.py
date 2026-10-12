@@ -3,6 +3,7 @@ slope`); the sign of its value then gives the physical direction. One small voca
 shared by the step lint and the eval grader. Pure functions.
 """
 
+import math
 import re
 
 AXIS = re.compile(r"^(?:([+-])\s*|(positive|negative)\s+)?([xyz])(?:\s*(?:axis|direction))?$")
@@ -72,6 +73,6 @@ def opposite(direction: str) -> str:
 def physical(value: float, positive: str) -> str | None:
     """Where a signed result points, or None for a scalar, zero or an unreadable sign."""
     canonical = normalize(positive)
-    if not canonical or value == 0:
+    if not canonical or value == 0 or not math.isfinite(value):
         return None
     return canonical if value > 0 else opposite(canonical)

@@ -25,7 +25,7 @@ class Violation:
     fatal: bool  # True: the lesson cannot be shown with it; False: keep the step, log it
 
 
-FATAL_RULES = {"words", "checkpoint", "placeholder", "contract"}
+FATAL_RULES = {"words", "checkpoint", "placeholder", "contract", "sign"}
 
 
 def violation(rule: str, message: str) -> Violation:
@@ -246,7 +246,7 @@ def _unit_after_number(s: str, i: int) -> bool:
 
 
 def _after_number(before: str) -> bool:
-    return re.search(r"\d(?:\s|\\[,;:! ]|~)*$", before) is not None
+    return re.search(r"\d(?:\s|\\[,;:! ]|~)+$", before) is not None
 
 
 UNIT_PIECE = re.compile(r"[A-Za-zΩμµ°%]+|/|\^\s*\{?\s*-?\d+\s*\}?")
@@ -460,7 +460,7 @@ def extract_givens(source: str) -> list[Given]:
 
 
 def expr_numbers(expr: str) -> list[float]:
-    """Numbers written in a calc expression (the 0.5 in 0.5*m*v^2): declared inputs."""
+    """Expression literals, including coefficients; these are not physical givens."""
     return [float(m.group(0)) for m in PLAIN_NUMBER.finditer(expr)]
 
 
@@ -554,12 +554,52 @@ def lint_numbers(
 # --- signs and directions -------------------------------------------------------------
 
 
-def shows_convention(item_type: str, label: str, name: str = "") -> bool:
-    """Axes, or an arrow labelled with its positive direction ("+x", "+ (A→B)")."""
+def displayed_conventions(
+    item_type: str, label: str, args: dict[str, str], nums: dict[str, float]
+) -> set[str]:
+    """Read convention annotations; reject reversed Cartesian convention arrows.
+
+    Physics +y is up (SVG y decreases). Named paths/slopes still need visual QA.
+    This reads convention annotations, not arbitrary result arrows or narration.
+    """
     if item_type in ("axes", "axes_plot"):
-        return True
-    text = f"{label} {name}"
-    return item_type in ("arrow", "vector") and ("+" in text or "positive" in text.lower())
+        # These primitives draw x right and y up; labels cannot reverse geometry
+        # or authorize a node/slope frame. Plot templates have x/y defaults.
+        return {
+            direction
+            for key, direction in (("xlabel", "+x"), ("ylabel", "+y"))
+            if normalize(args.get(key, direction if item_type == "axes_plot" else "")) == direction
+        }
+    if item_type not in ("arrow", "vector"):
+        return set()
+    out: set[str] = set()
+    for text in (label, args.get("name", "")):
+        text = text.strip()
+        if not (text.startswith(("+", "-")) or text.lower().startswith("positive ")):
+            continue
+        text = re.sub(r"^positive\s+", "", text, flags=re.IGNORECASE)
+        if text.startswith("+") and text[1:].strip().startswith("("):
+            text = text[1:].strip()[1:-1].strip()
+        elif text.startswith("+ "):
+            text = text[1:].strip()
+        canonical = normalize(text)
+        if not canonical:
+            continue
+        if not all(k in nums for k in ("x1", "y1", "x2", "y2")):
+            continue
+        dx, dy = nums["x2"] - nums["x1"], nums["y2"] - nums["y1"]
+        if dx == dy == 0:
+            continue
+        if canonical in ("+x", "-x") and not (
+            math.isclose(dy, 0, abs_tol=1e-9) and dx * (1 if canonical == "+x" else -1) > 0
+        ):
+            continue
+        if canonical in ("+y", "-y") and not (
+            math.isclose(dx, 0, abs_tol=1e-9) and dy * (-1 if canonical == "+y" else 1) > 0
+        ):
+            continue
+        out.add(canonical)
+    return out
 
 
 def lint_sign(calc_id: str, positive: str, conventions: set[str], drawn: bool) -> list[Violation]:
@@ -583,7 +623,7 @@ def lint_sign(calc_id: str, positive: str, conventions: set[str], drawn: bool) -
                 "sign",
                 f"calc {calc_id} takes {positive} as positive, but an earlier calc takes the "
                 f"opposite ({opposite(canonical)}) as positive. Use one sign convention for "
-                "the whole lesson: keep the earlier one and let the sign of the result show "
+                "this reference frame: keep the earlier one and let the sign of the result show "
                 "the direction.",
             )
         )
@@ -592,7 +632,8 @@ def lint_sign(calc_id: str, positive: str, conventions: set[str], drawn: bool) -
             violation(
                 "sign",
                 f"calc {calc_id} is signed (positive = {positive}), but the board does not "
-                "show the sign convention yet. In this step or earlier, draw an arrow "
+                "show the sign convention yet in its frame. Draw it in an earlier step or "
+                "at=0 before this result in the draw list, with the same frame ID: an arrow "
                 'labelled with the positive direction (e.g. "+x" or "+ (A→B)") or axes, and '
                 "say the convention in `say`.",
             )
@@ -608,5 +649,5 @@ class LintState:
     givens: list[Given]
     defined_symbols: set[str] = field(default_factory=set)
     run_without_checkpoint: int = 0
-    conventions: set[str] = field(default_factory=set)  # canonical positive directions
-    convention_drawn: bool = False
+    conventions: set[tuple[str, str]] = field(default_factory=set)  # frame, direction
+    drawn_conventions: set[tuple[str, str]] = field(default_factory=set)

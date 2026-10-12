@@ -18,12 +18,16 @@ def item(
     color: str = "ink",
     label: str = "",
     at: float = 0.5,
+    frame: str | None = None,
 ) -> dict[str, Any]:
     return {
         "id": id,
         "type": type,
         "color": color,
         "label": label,
+        "frame": frame
+        if frame is not None
+        else ("lab" if type in ("axes", "axes_plot", "arrow", "vector") else ""),
         "at": at,
         "num": [{"k": k, "v": v} for k, v in (num or {}).items()],
         "txt": [{"k": k, "v": v} for k, v in (txt or {}).items()],
@@ -49,12 +53,16 @@ def calc(
     unit: str,
     unit_spoken: str,
     positive: str = "",
+    quantity_kind: str | None = None,
+    frame: str | None = None,
 ) -> dict[str, Any]:
     return {
         "id": id,
         "expr": expr,
         "values": [{"name": k, "value": v} for k, v in values.items()],
         "positive": positive,
+        "quantity_kind": quantity_kind or ("component" if positive else "scalar"),
+        "frame": frame if frame is not None else ("lab" if positive else ""),
         "expected": expected,
         "unit": unit,
         "unit_spoken": unit_spoken,

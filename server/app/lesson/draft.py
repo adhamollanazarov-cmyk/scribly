@@ -16,6 +16,7 @@ from typing import Any, Literal, Self
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
+from app.lesson.direction import normalize
 from app.lesson.models import Color
 from app.lesson.templates import TEMPLATES
 
@@ -54,14 +55,32 @@ class CalcDraft(Draft):
     id: str = Field(description="c1, c2, ... unique in the lesson")
     expr: str = Field(description="Arithmetic in the value names; allowed functions only")
     values: list[ValueDraft]
+    quantity_kind: Literal["scalar", "magnitude", "component", "oriented"]
+    frame: str = Field(
+        description='Reference ID shared with convention drawings; "" for scalars/magnitudes'
+    )
     positive: str = Field(
-        default="",
         description='What a positive result means, e.g. +x, A->B, down the slope; "" if '
         "the result has no direction",
     )
     expected: float = Field(description="Your own full-precision signed result of expr")
     unit: str = Field(description="SymPy-style unit of the result, e.g. N*m**2/C; 1 if none")
     unit_spoken: str = Field(description="Unit as spoken, e.g. newton meters squared per coulomb")
+
+    @model_validator(mode="after")
+    def check_direction(self) -> Self:
+        if self.quantity_kind in ("component", "oriented"):
+            if not normalize(self.positive):
+                raise ValueError(
+                    "components/oriented quantities need readable positive, including zero"
+                )
+            if not self.frame.strip() or self.frame != self.frame.strip():
+                raise ValueError("components/oriented quantities need a nonempty, trimmed frame ID")
+        elif self.positive != "" or self.frame != "":
+            raise ValueError("scalars/magnitudes need empty positive and frame")
+        if self.quantity_kind == "magnitude" and self.expected < 0:
+            raise ValueError("a magnitude cannot be negative")
+        return self
 
 
 class NumArg(Draft):
@@ -79,6 +98,7 @@ class DrawDraft(Draft):
     type: DrawType
     color: Color
     label: str = Field(description='Short label, or "" for none')
+    frame: str = Field(default="", description='Reference ID for convention drawings; otherwise ""')
     at: float = Field(description="0-1: when in the narration it starts")
     num: list[NumArg] = Field(description="Numeric arguments by name; booleans as 1 or 0")
     txt: list[TextArg] = Field(description="Text arguments by name")
