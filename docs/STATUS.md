@@ -2,6 +2,13 @@
 
 Update this file at the end of every task (newest entry on top, 3–8 lines).
 
+## 2026-10-12 — founder — roadmap change after trying Phase 2
+**Done:** Phase 2 integrated and merged. Founder feedback: lesson is fine; must run on top
+of any app, not a website; no step list for users; new character with several movements.
+**Next:** Phase 5 overlay MVP (PROMPTS.md), then the lesson library. Eval for 1b.2 and the
+Phase 1c eval still wait for API credit.
+**Found issues:** none new.
+
 ## 2026-10-12 — claude — Phase 2 integration (`claude/phase2-integrate`)
 **Done:** Merged `codex/phase2-review` (3 highs: SSE terminal frame, media error/stall fallback, zero-target checkpoints) + `claude/phase2-review` (5 fixes: TTS retry + no-audio notice, circuit layout, measured font bounds + super/subscripts, lazy board/KaTeX chunks, server-sampled plots) + `ag/phase2-qa` (QA notes). Only docs conflicted; every entry kept, no fix overlapped. Then fixed the open Codex findings: M1 background clock catch-up, M2 dense/late stroke budget, M3 ticker active flag, M4 abort request on unmount, M5 hidden per-step board transcript (MathML, `aria-details`), L2 visible radio focus. The 3 strict xfail probes are normal tests now. L1 bundle already fixed by `claude/phase2-review`.
 **Checks:** PowerShell-compatible, MOCK_AI=1, no API/TTS calls: 601 pytest; ruff lint/format; mypy app (27) + scripts (5); schema/streams regenerate unchanged; 117 Vitest (was 108 + 3 xfail); ESLint+tsc; Prettier; Playwright 8/8 with `--workers=1`, Gauss 4/4 repeated.

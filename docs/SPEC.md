@@ -32,6 +32,21 @@ ask, checkpoints, replay, save lesson.
 Differentiators (must win): screen overlay, "explain this AI solution and find its
 mistake", verified numbers, Uzbek/Russian subtitles, Windows.
 
+## Roadmap order (founder decision 2026-10-12)
+Stage A — physics, working anywhere on screen:
+  1. Phase 5 — overlay MVP (Electron, on top of any app; minimal UI)
+  2. Lesson library — 20+ verified physics lessons written by agents (no API cost)
+  3. Phase 4 — explain a selected screen region (needs API credit)
+  4. Phase 1c — grid layout + TTS retry/prefetch
+  5. Phase 3 — raise hand, re-explain
+  6. Phase 7 — all physics + final mascot with full movements
+  7. Phase 6 — memory, practice, export
+Stage B — other subjects (math, chemistry): new templates + eval banks.
+Stage C — HeyClicky-style features: whole-screen vision, live voice conversation,
+pointing at on-screen elements.
+The web app stays as the developer/test harness (step list, debug controls); end
+users get the overlay.
+
 ## 5. Features by phase
 ### Phase 1 — Lesson engine (web)
 Split into 1a (no AI, done), 1b (real generation: structured outputs, result
@@ -75,7 +90,17 @@ Driven by the 2026-10-09 physics audit (branch codex/physics-audit).
   (SymPy expression + expected value + units). Server evaluates; mismatch → one
   regeneration, still wrong → show the warning "I'm not sure about this number".
 
-### Phase 5 — Windows overlay (Electron)
+### Phase 5 — Windows overlay (Electron)  ← next (see Roadmap order)
+Founder feedback after Phase 2: "it must work anywhere, not on a website", "the step
+list looks fine on the site but we don't need it", "change the character and give it
+several movements".
+- Reuse the web player, board and Scribbly component; no duplicated drawing code.
+- Overlay UI is minimal: Scribbly, the drawing on top of the screen, subtitles, and a
+  small floating pill (pause/resume, replay, speed, close). **No step list** in the
+  overlay; the web app keeps it as a dev harness.
+- Scribbly movements (state machine, art swappable from `docs/brand/`): appear (pop in
+  from a screen corner), disappear, fly/walk to the drawing area, draw, talk, point at a
+  spot, think (while generating), happy (jump), encourage, idle (bob + blink).
 - Global hotkey `Ctrl+Shift+Space` → dim screen → drag to select a region →
   capture only that region.
 - Transparent, always-on-top, click-through window; the lesson is drawn **on top of

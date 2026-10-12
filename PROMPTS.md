@@ -4,6 +4,9 @@ Copy one prompt at a time into the named agent. Wait until it is merged before t
 next build prompt. Order: **build (Claude Code) → review (Codex) → test in browser
 (Antigravity) → you check → merge.**
 
+Current order (2026-10-12): Phase 5 overlay MVP → Lesson library → Phase 4 →
+Phase 1c → Phase 3 → Phase 7 → Phase 6. See docs/SPEC.md "Roadmap order".
+
 ---
 
 ## Phase 0 — Scaffold  ·  Claude Code
@@ -125,18 +128,56 @@ Implement Phase 4 from docs/SPEC.md.
   flux). Tests prove the mistake is marked and correct steps are not.
 ```
 
-## Phase 5 — Windows overlay  ·  Claude Code
+## Phase 5 — Overlay MVP (works on top of any app)  ·  Claude Code  ← NEXT
 ```
-Implement Phase 5 from docs/SPEC.md in desktop/ with Electron, reusing the web
-renderer (no duplicated drawing code).
-- Global hotkey Ctrl+Shift+Space → dim overlay → drag-select region → capture only
-  that region (desktopCapturer) → send to the Phase 4 endpoint.
-- Transparent, always-on-top, click-through window that draws the lesson aligned
-  to the selected region on screen; mascot walks there. Esc closes.
-- Small floating panel: controls + subtitles; tray icon; settings (voice, speed,
-  subtitle language). Handle multiple monitors and Windows display scaling
-  (125%/150%).
-- Build a Windows installer (electron-builder). Document it in README.
+Phase 5 on a new branch claude/phase5 from main. Read AGENTS.md and docs/SPEC.md
+("Roadmap order" and Phase 5). No Anthropic API credit: MOCK_AI=1 only, never call
+the Anthropic API. Show the plan first, then build.
+
+Build desktop/ with Electron + TypeScript, reusing web/ player, board and Scribbly
+(shared package or imports — no duplicated drawing code).
+1. Tray app, starts hidden. Global hotkey Ctrl+Shift+Space → dim the screen →
+   drag-select a region → capture only that region (desktopCapturer).
+2. Transparent, always-on-top window over the whole screen: the lesson is drawn
+   aligned to the selected region; clicks pass through everywhere except Scribbly
+   and the floating pill. Esc closes the lesson.
+3. Minimal UI: Scribbly + drawing + subtitles (EN + UZ line) + a small floating pill
+   (pause/resume, replay, speed, close). No step list.
+4. Scribbly movement state machine: appear (pop in from a corner), disappear,
+   fly to the drawing area, draw (follows pen), talk, point, think (while waiting),
+   happy, encourage, idle (bob + blink). Keep the art in one component so a new
+   character from docs/brand/ can replace it later.
+5. Until Phase 4: after the region is captured, send it to a server endpoint
+   POST /explain-region that in mock mode returns a library/fixture lesson (say so
+   in the subtitle: "demo lesson"). The screenshot stays in memory only.
+6. Multi-monitor and Windows display scaling (100/125/150 %) must align drawings
+   with the captured region. Tray menu: settings (voice, speed, subtitle language),
+   quit. Launch at login: off by default.
+7. electron-builder Windows installer; README steps for PowerShell.
+Security: contextIsolation on, nodeIntegration off, strict CSP, preload with a
+minimal API. Tests: unit tests for region→board coordinate mapping (incl. scaling),
+state machine transitions; one Playwright-Electron smoke test.
+Run all AGENTS §6 checks (+ desktop checks you add to §6), commit, update STATUS.md.
+```
+
+## Lesson library — verified physics lessons without API  ·  Claude Code
+```
+Branch claude/library from main. No Anthropic API calls: YOU write the lessons.
+Write 20 lesson JSON files in server/app/library/ (or tests/fixtures/library/ if
+better), each passing the full pipeline: Pydantic validation, teaching-rule lint,
+sign/direction lint, template expansion and SymPy calc verification. Use templates
+where they exist. English narration + uz subtitles.
+Topics (university intro physics): 1D kinematics, projectile motion, Newton's 2nd law
+on an incline with friction, circular motion, work–energy theorem, momentum and a 1D
+collision, torque and rotational equilibrium, spring SHM, simple pendulum, Coulomb's
+law, field of a point charge, Gauss's law for a line charge, Gauss's law for a plane,
+electric potential and a parallel-plate capacitor, Kirchhoff's two-loop circuit,
+magnetic force on a moving charge, Faraday's law with a moving rod, wave speed on a
+string, Snell's law, thin converging lens.
+For every numeric answer, recompute it independently in a test (plain Python).
+Serve library lessons by topic match in mock mode AND as a cache in real mode
+(instant, no API). Add a topic picker to the web dev harness.
+Run all AGENTS §6 checks, commit, update STATUS.md with the list of topics.
 ```
 
 ## Phase 6 — Memory, practice, export  ·  Claude Code
