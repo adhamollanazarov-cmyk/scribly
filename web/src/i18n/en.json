@@ -47,5 +47,8 @@
   "warning.unverified": "Number not verified",
   "error.network": "Cannot reach the Scribbly server. Is it running on port 8000?",
   "error.bad_request": "Please type a topic or a problem first.",
-  "error.server": "The server had a problem. Please try again."
+  "error.server": "The server had a problem. Please try again.",
+  "overlay.hint": "Drag over what you want explained · Esc to cancel",
+  "overlay.demo": "Demo lesson — explaining your own screen arrives soon",
+  "overlay.close": "Close lesson"
 }

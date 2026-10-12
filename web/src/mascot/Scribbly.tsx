@@ -34,6 +34,18 @@ const LOOK: Record<MascotState, [number, number]> = {
   thinking: [2, -2.5],
   happy: [0, 0],
   encouraging: [0, 1],
+  pointing: [-2.5, 2],
+  flying: [2.5, 0],
+  appearing: [0, 0],
+  disappearing: [0, 0],
+}
+
+/** How the anchor glides to a new position: with the pen, a long flight, or a short step. */
+const MOVING: Partial<Record<MascotState, string>> = {
+  drawing: 'pen',
+  pointing: 'pen',
+  flying: 'fly',
+  appearing: 'none',
 }
 
 function useBlink(still: boolean): boolean {
@@ -135,6 +147,20 @@ function Extras({ state }: { state: MascotState }) {
           <path d="M74 -70 l1.5 -4.5 l1.5 4.5 l4.5 1.5 l-4.5 1.5 l-1.5 4.5 l-1.5 -4.5 l-4.5 -1.5 z" />
         </g>
       )
+    case 'flying':
+      return (
+        <g className="mascot-trail mascot-line" fill="none" strokeWidth={2}>
+          <path d="M2 -30 h-14" />
+          <path d="M4 -42 h-20" />
+          <path d="M6 -54 h-12" />
+        </g>
+      )
+    case 'pointing':
+      return (
+        <g className="mascot-sparkles">
+          <path d="M-6 -2 l1.5 -4.5 l1.5 4.5 l4.5 1.5 l-4.5 1.5 l-1.5 4.5 l-1.5 -4.5 l-4.5 -1.5 z" />
+        </g>
+      )
     case 'encouraging':
       return (
         <g>
@@ -161,7 +187,7 @@ export function Scribbly(props: ScribblyProps) {
       data-testid="mascot"
       data-state={state}
       style={{ transform: `translate(${x}px, ${y}px) scale(${scale})` }}
-      data-moving={state === 'drawing' ? 'pen' : 'rest'}
+      data-moving={MOVING[state] ?? 'rest'}
       aria-hidden="true"
     >
       <g className={`mascot mascot-${state}`}>
@@ -184,7 +210,11 @@ export function Scribbly(props: ScribblyProps) {
         </g>
         {/* arm holding the pencil; mirrored to point up when the body is below the tip */}
         <g transform={below ? 'scale(1 -1)' : undefined}>
-          <path d="M17 -26 Q12 -20 13 -15" className="mascot-arm" fill="none" />
+          <path
+            d={state === 'pointing' ? 'M17 -26 Q8 -18 6 -10' : 'M17 -26 Q12 -20 13 -15'}
+            className="mascot-arm"
+            fill="none"
+          />
           <g className="mascot-pencil">
             <line x1={4} y1={-6} x2={18} y2={-22} className="pencil-wood" />
             <line x1={0} y1={0} x2={4} y2={-6} className="pencil-lead" />

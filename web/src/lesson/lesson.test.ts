@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 import schema from '../../../shared/lesson.schema.json'
 import { streamOf } from '../test/fakes'
-import { StreamError, streamLesson } from './client'
+import { StreamError, streamEvents, streamLesson } from './client'
 import { extractGivens, formatGiven, introPrimitives, wrapText } from './intro'
 import { SAMPLES } from './samples'
 import { createSseParser, type SseMessage } from './sse'
@@ -138,5 +138,34 @@ describe('contract', () => {
   it('has samples that match golden fixtures, so mock mode serves them', () => {
     const sources = Object.values(fixtures).map((f) => f.default.source.text)
     for (const sample of SAMPLES) expect(sources).toContain(sample.request.text)
+  })
+})
+
+describe('streamEvents', () => {
+  it('posts any body to any path and shows the response headers before the first event', async () => {
+    const events = streamOf('gauss_law')
+    const fetchImpl = vi.fn(async () => {
+      const response = responseFrom(sseText(events), 64)
+      response.headers.set('X-Scribbly-Demo', '1')
+      return response
+    })
+    const order: string[] = []
+
+    await streamEvents(
+      '/explain-region',
+      { image_png_base64: 'AA==' },
+      (e) => order.push(e.event),
+      {
+        fetchImpl,
+        onOpen: (headers) => order.push(`open:${headers.get('X-Scribbly-Demo')}`),
+      },
+    )
+
+    expect(order[0]).toBe('open:1')
+    expect(order.slice(1)).toEqual(events.map((e) => e.event))
+    expect(fetchImpl).toHaveBeenCalledWith(
+      '/explain-region',
+      expect.objectContaining({ body: '{"image_png_base64":"AA=="}' }),
+    )
   })
 })

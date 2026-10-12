@@ -47,5 +47,8 @@
   "warning.unverified": "Son tekshirilmagan",
   "error.network": "Scribbly serveriga ulanib bo'lmadi. U 8000-portda ishlayaptimi?",
   "error.bad_request": "Avval mavzu yoki masala yozing.",
-  "error.server": "Serverda muammo yuz berdi. Qaytadan urinib ko'ring."
+  "error.server": "Serverda muammo yuz berdi. Qaytadan urinib ko'ring.",
+  "overlay.hint": "Tushuntirish kerak bo'lgan joyni belgilang · Esc — bekor qilish",
+  "overlay.demo": "Namuna dars — ekraningizni tushuntirish tez orada",
+  "overlay.close": "Darsni yopish"
 }

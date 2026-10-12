@@ -1,0 +1,153 @@
+/* The overlay page sits in a transparent, click-through window over the whole display.
+   Only elements marked data-interactive take the mouse (see useClickThrough). */
+html:has(.overlay-page),
+body.overlay-page {
+  background: transparent;
+  overflow: hidden;
+  height: 100%;
+  user-select: none;
+}
+.overlay-page #root,
+.overlay-lesson {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+.overlay-page [data-interactive] {
+  pointer-events: auto;
+}
+
+/* Region selector: the whole display is dimmed, the dragged rectangle is a clear hole. */
+.selector {
+  position: fixed;
+  inset: 0;
+  cursor: crosshair;
+  pointer-events: auto;
+  background: rgb(0 0 0 / 0.38);
+}
+.selector[data-dragging='true'] {
+  background: transparent;
+}
+.selector-rect {
+  position: absolute;
+  border: 2px solid var(--mascot-body, #7f77dd);
+  border-radius: 4px;
+  box-shadow: 0 0 0 100vmax rgb(0 0 0 / 0.38);
+}
+.selector-hint {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: rgb(20 18 40 / 0.8);
+  color: #fff;
+  font-size: 16px;
+}
+
+/* The lesson board over the selected region: paper, slightly see-through. */
+.overlay-board {
+  position: absolute;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgb(0 0 0 / 0.25);
+  transition: opacity 0.3s ease;
+}
+.overlay-board .board {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+}
+.overlay-board .board-bg {
+  fill-opacity: 0.94;
+}
+.overlay-lesson[data-dismissed='true'] .overlay-board,
+.overlay-lesson[data-dismissed='true'] .overlay-dock {
+  opacity: 0;
+}
+
+/* Subtitles and the pill, docked under (or over) the board. */
+.overlay-dock {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  transition: opacity 0.3s ease;
+}
+.overlay-subtitles {
+  width: 100%;
+  overflow: hidden;
+}
+.overlay-subtitles .subtitles {
+  min-height: 0;
+  background: rgb(20 18 40 / 0.82);
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 4px 16px rgb(0 0 0 / 0.2);
+}
+.overlay-subtitles .sub-second,
+.overlay-subtitles .muted {
+  color: #d9d6f5;
+}
+.badge.demo {
+  margin: 0 0 6px;
+  text-align: center;
+  font-size: 13px;
+  color: #fff;
+}
+.badge.demo {
+  display: block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgb(83 74 183 / 0.9);
+  width: fit-content;
+  margin-inline: auto;
+}
+.pill {
+  display: inline-flex;
+  gap: 2px;
+  padding: 4px;
+  border-radius: 999px;
+  background: rgb(20 18 40 / 0.88);
+  box-shadow: 0 4px 16px rgb(0 0 0 / 0.25);
+}
+.pill button {
+  min-width: 36px;
+  height: 32px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #fff;
+  font: inherit;
+  font-size: 15px;
+  cursor: pointer;
+}
+.pill button:hover:not(:disabled),
+.pill button:focus-visible {
+  background: rgb(255 255 255 / 0.16);
+  outline: none;
+}
+.pill button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.pill-speed {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Scribbly flies over the whole display, so it lives in its own full-window layer. */
+.overlay-mascot {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+.overlay-mascot-hit {
+  cursor: pointer;
+}
