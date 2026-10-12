@@ -25,6 +25,7 @@ class Entry:
     unit: str  # SymPy style, e.g. N*m**2/C; "1" or "" if dimensionless
     unit_spoken: str
     verified: bool
+    positive: str = ""  # what a positive value means (direction.py); "" for no direction
 
 
 @dataclass(frozen=True)
@@ -47,15 +48,16 @@ def parse_spec(spec: str | None) -> Spec:
 
 
 def rounded(value: float, spec: Spec) -> float:
-    """The value as the student sees it."""
+    """The value as the student sees it (never -0.0)."""
     if spec.mode == "dp" or value == 0:
-        return round(value, spec.digits if spec.mode == "dp" else 0)
+        return round(value, spec.digits if spec.mode == "dp" else 0) + 0.0
     return float(f"{value:.{spec.digits - 1}e}")
 
 
 def format_number(value: float, spec: Spec, context: Context) -> str:
     if spec.mode == "dp":
-        return _signed(f"{abs(value):.{spec.digits}f}", value, context)
+        text = f"{abs(value):.{spec.digits}f}"
+        return _signed(text, value, context) if float(text) else text  # never "-0.00"
     if value == 0:
         return "0"
     magnitude = abs(value)

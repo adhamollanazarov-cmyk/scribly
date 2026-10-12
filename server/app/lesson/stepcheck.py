@@ -13,17 +13,21 @@ from typing import Any
 
 from pydantic import ValidationError
 
+from app.lesson.direction import normalize
 from app.lesson.draft import CheckpointDraft, StepDraft, TextArg, contract_primitive
 from app.lesson.ledger import CALC_ID, Context, Entry, LedgerError, answer_value, fill
 from app.lesson.lint import (
     Given,
     LintState,
     Violation,
+    expr_numbers,
     legend_symbols,
     lint_checkpoint_spacing,
     lint_numbers,
+    lint_sign,
     lint_symbols,
     lint_words,
+    shows_convention,
     violation,
 )
 from app.lesson.models import (
@@ -69,6 +73,8 @@ class Checked:
     entries: dict[str, Entry] = field(default_factory=dict)
     used: set[str] = field(default_factory=set)
     symbols: set[str] = field(default_factory=set)
+    conventions: set[str] = field(default_factory=set)
+    convention_drawn: bool = False
 
     @property
     def fatal(self) -> bool:
@@ -83,6 +89,7 @@ def check_step(raw: Any, state: LessonState) -> Checked:
     out = Checked([], draft=draft)
     out.violations += _check_ids(draft, state)
     _check_calcs(draft, state, out)
+    out.violations += _lint_signs(draft, state, out)
     ledger = {**state.ledger, **out.entries}
     filled, used, problems = fill_step(draft, ledger)
     out.used = used
@@ -116,6 +123,8 @@ def commit(state: LessonState, checked: Checked, unverified: bool = False) -> St
     ]
     check_step_references(step, state.drawn, state.groups)
     state.lint.defined_symbols |= checked.symbols
+    state.lint.conventions |= checked.conventions
+    state.lint.convention_drawn |= checked.convention_drawn
     state.lint.run_without_checkpoint = (
         0 if step.kind == "checkpoint" else state.lint.run_without_checkpoint + 1
     )
@@ -211,7 +220,9 @@ def _check_calcs(draft: StepDraft, state: LessonState, out: Checked) -> None:
         inputs_ok = all(known[n].verified for n in CALC_NAME.findall(calc.expr) if n in known)
         if result.value is not None:
             verified = result.ok and inputs_ok
-            out.entries[calc.id] = Entry(result.value, model.unit, calc.unit_spoken, verified)
+            out.entries[calc.id] = Entry(
+                result.value, model.unit, calc.unit_spoken, verified, calc.positive
+            )
 
 
 def _valid_name(name: str) -> bool:
@@ -279,8 +290,10 @@ def fill_step(draft: StepDraft, ledger: dict[str, Entry]) -> tuple[StepDraft, se
 def _lint_numbers(draft: StepDraft, state: LessonState) -> list[Violation]:
     # Inputs declared in calcs (e.g. a hypothetical 3 nC in a topic lesson) are stated
     # data, not results, so they may be written as they are.
-    inputs = [v for c in state.calcs for v in c.values.values()]
-    inputs += [v.value for c in draft.calcs for v in c.values]
+    inputs = [v for c in state.calcs for v in [*c.values.values(), *expr_numbers(c.expr)]]
+    inputs += [
+        v for c in draft.calcs for v in [*(x.value for x in c.values), *expr_numbers(c.expr)]
+    ]
     givens = state.lint.givens + [Given(value, has_unit=False) for value in inputs]
     out = lint_numbers(draft.say, f"step {draft.id} say", givens)
     for lang in ("uz", "ru"):
@@ -301,6 +314,23 @@ def _lint_numbers(draft: StepDraft, state: LessonState) -> list[Violation]:
         for choice in cp.choices:
             out += lint_numbers(choice, f"step {draft.id} checkpoint choice", givens)
     return out
+
+
+def _lint_signs(draft: StepDraft, state: LessonState, out: Checked) -> list[Violation]:
+    """One sign convention per lesson, drawn on the board before the first signed calc."""
+    out.convention_drawn = any(
+        shows_convention(item.type, item.label, next((a.v for a in item.txt if a.k == "name"), ""))
+        for item in draft.draw
+    )
+    drawn = state.lint.convention_drawn or out.convention_drawn
+    problems: list[Violation] = []
+    for calc in draft.calcs:
+        known = state.lint.conventions | out.conventions
+        problems += lint_sign(calc.id, calc.positive, known, drawn)
+        canonical = normalize(calc.positive)
+        if canonical:
+            out.conventions.add(canonical)
+    return problems
 
 
 def _lint_symbols(filled: StepDraft, state: LessonState, out: Checked) -> list[Violation]:

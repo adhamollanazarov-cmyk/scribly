@@ -100,3 +100,31 @@ def test_zero_expected_value_has_no_implicit_absolute_tolerance(expr: str, ok: b
 
 def test_tolerance_boundary_is_inclusive() -> None:
     assert verify_calc(calc(expr="1.5", expected=1, rel_tol=0.5)).ok
+
+
+@pytest.mark.parametrize(
+    ("expr", "values"),
+    [
+        ("F*d*cos(theta*pi/180)", {"F": 3.0, "d": 2.0, "theta": 90.0}),
+        ("k*q/r^2 - k*q/r^2", {"k": 8.99e9, "q": 3e-9, "r": 0.3}),
+        ("0.1 + 0.2 - 0.3", {}),
+    ],
+)
+def test_a_true_zero_verifies_and_is_stored_as_exactly_zero(
+    expr: str, values: dict[str, float]
+) -> None:
+    result = verify_calc(calc(expr=expr, values=values, expected=0))
+
+    assert result.ok and result.value == 0.0
+
+
+def test_a_small_real_result_is_not_mistaken_for_zero() -> None:
+    values = {"k": 8.99e9, "q": 1e-24, "r": 0.5}
+    result = verify_calc(calc(expr="k*q/r^2", values=values, expected=0))
+    assert not result.ok and result.value is not None and result.value > 0
+    assert verify_calc(calc(expr="k*q/r^2", values=values, expected=3.596e-14)).ok
+
+
+def test_a_real_residual_is_not_zero() -> None:
+    values = {"k": 8.99e9, "q1": 3e-9, "q2": 2.9e-9, "r": 0.3}
+    assert not verify_calc(calc(expr="k*q1/r^2 - k*q2/r^2", values=values, expected=0)).ok

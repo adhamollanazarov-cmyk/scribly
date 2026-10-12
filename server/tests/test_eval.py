@@ -7,6 +7,7 @@ from typing import Any
 import pytest
 
 from app.lesson.claude import LLMRefused
+from app.lesson.direction import normalize
 from app.lesson.generate import Metrics, generate_lesson
 from app.lesson.ledger import Entry
 from app.lesson.models import Source
@@ -24,7 +25,7 @@ from scripts.eval import (
     value_matches,
 )
 from scripts.eval_units import convert, parse_unit
-from tests.drafts import SOURCE_TEXT, calc, draft_json, good_steps
+from tests.drafts import SOURCE_TEXT, calc, draft_json, good_steps, item
 from tests.fake_llm import FakeLLM
 
 FLUX = Problem(
@@ -244,14 +245,61 @@ def test_missing_draws_accepts_alternatives() -> None:
 
 def test_eval_bank_is_well_formed() -> None:
     problems = load_problems()
-    assert len(problems) == 30
-    assert len({p.id for p in problems}) == 30
+    assert len(problems) == 50
+    assert len({p.id for p in problems}) == 50
     assert sum(p.source == "audit" for p in problems) == 10
+    assert sum(p.source == "hard" for p in problems) == 20
     assert all(p.expected for p in problems)
     for problem in problems:
         for expected in problem.expected:
             parse_unit(expected.unit)
+            if expected.direction:
+                assert expected.value > 0, (problem.id, expected.name)
+                assert normalize(expected.direction), (problem.id, expected.direction)
     groups = {p.group for p in problems}
     assert {"mechanics", "kinematics", "circuits", "electrostatics"} <= groups
+    hard = [p for p in problems if p.source == "hard"]
+    assert sum(any(e.direction for e in p.expected) for p in hard) >= 12
     kirchhoff = next(p for p in problems if p.id == "circ-kirchhoff")
-    assert kirchhoff.manual_checks and "directions" in kirchhoff.manual_checks[0]
+    assert {e.name: e.direction for e in kirchhoff.expected} == {
+        "I1": "B->A",
+        "I2": "A->B",
+        "I3": "A->B",
+    }
+
+
+I2 = Expected("I2", 0.4545, "A", direction="A->B")
+
+
+@pytest.mark.parametrize(
+    ("value", "positive", "ok"),
+    [
+        (-0.4545, "B->A", True),  # assumed B to A, came out negative: flows A to B
+        (0.4545, "A->B", True),
+        (0.4545, "from A to B", True),
+        (0.4545, "B->A", False),  # the circ-kirchhoff bug: magnitude in the assumed direction
+        (-0.4545, "A->B", False),
+        (0.4545, "", False),  # a bare magnitude says nothing about the direction
+    ],
+)
+def test_expected_direction_follows_from_sign_and_convention(
+    value: float, positive: str, ok: bool
+) -> None:
+    assert value_matches(I2, [Entry(value, "A", "amps", True, positive)]) is ok
+
+
+def test_wrong_direction_is_reported_separately_from_a_wrong_magnitude() -> None:
+    steps = good_steps()
+    steps[3]["calcs"].append(calc("c2", "I", {"I": 0.4545}, 0.4545, "A", "amps", "B->A"))
+    steps[3]["draw"].append(
+        item("conv", "arrow", {"x1": 60, "y1": 900, "x2": 260, "y2": 900}, label="+ (B→A)")
+    )
+    steps[3]["say"] = "So the flux is {c1}, and the current is {c2}."
+    metrics = generated_metrics(steps)
+    problem = replace(FLUX, expected=[I2, Expected("I9", 9.0, "A", direction="A->B")])
+
+    result = grade(problem, metrics, None)
+
+    assert result.numbers == {"I2": False, "I9": False}
+    assert result.wrong_direction == ["I2"]
+    assert "right magnitude, wrong direction: I2" in render_report([result], META)

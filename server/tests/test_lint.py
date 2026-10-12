@@ -1,12 +1,17 @@
 import pytest
 
 from app.lesson.lint import (
+    Given,
+    expr_numbers,
     extract_givens,
     find_numbers,
+    formula_symbols,
     is_unit_token,
+    latex_unit_word,
     lint_checkpoint_spacing,
     lint_numbers,
     lint_words,
+    unit_follows,
 )
 
 PROJECTILE = (
@@ -116,3 +121,45 @@ def test_unit_tokens(token: str) -> None:
 @pytest.mark.parametrize("token", ["and", "lines", "charges", "times", "x", "the"])
 def test_not_unit_tokens(token: str) -> None:
     assert not is_unit_token(token)
+
+
+# --- Phase 1b.2: unit macros, fractions in prose, numbers in calc expressions -----------
+
+OHMS = [Given(100, has_unit=True)]
+
+
+@pytest.mark.parametrize("latex", [r"R = 100\,\Omega", r"R = 100\Omega", r"R = 100\ \Omega"])
+def test_omega_after_a_number_is_a_unit_not_a_symbol(latex: str) -> None:
+    assert formula_symbols(latex) == ["R"]
+    assert lint_numbers(latex, "math", OHMS, latex=True) == []
+
+
+def test_other_unit_macros_after_a_number_are_units() -> None:
+    assert formula_symbols(r"q = 3\,\mu\text{C}") == ["q"]
+    assert formula_symbols(r"q = 3\,\mu C") == ["q"]
+    assert unit_follows(r"\,\mu\text{C} + x", latex=True)
+    assert unit_follows(r"\,\Omega\cdot m", latex=True)
+    assert lint_numbers(r"q = 3\,\mu C", "math", [Given(3e-6, has_unit=True)], latex=True) == []
+
+
+def test_unit_macros_elsewhere_are_still_symbols() -> None:
+    assert formula_symbols(r"\Omega = 2\pi f") == [r"\Omega", "f"]
+    assert formula_symbols(r"f = 0.2\,\mu_k N") == ["f", r"\mu_k", "N"]
+    assert formula_symbols(r"f_s \le 2\mu_s N") == ["f_s", r"\mu_s", "N"]
+
+
+def test_latex_unit_word_reads_macros_and_groups() -> None:
+    assert latex_unit_word(r"\mu\text{C} = q") == ("μC", len(r"\mu\text{C}"))
+    assert latex_unit_word(r"\Omega") == ("Ω", 6)
+    assert latex_unit_word("m/s^{2} + v")[0] == "m/s^2"
+
+
+def test_fractions_are_coefficients_only_in_formulas() -> None:
+    assert rules(lint_numbers("The acceleration is 0.25 m/s squared.", "say", [])) == ["number"]
+    assert rules(lint_numbers("Half of it: 1.5 J.", "say", [])) == ["number"]
+    assert lint_numbers(r"K = 0.5\,m v^2", "math", [], latex=True) == []
+    assert lint_numbers("There are 2 charges and 4 lines.", "say", []) == []
+
+
+def test_numbers_written_in_a_calc_expression_are_inputs() -> None:
+    assert expr_numbers("0.5*m*v^2 + 3e-9*eps0/c1") == [0.5, 2.0, 3e-9]

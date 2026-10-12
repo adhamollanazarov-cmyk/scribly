@@ -73,15 +73,22 @@ You may write numbers that are given in the problem as they are (also rescaled, 
 simple coefficients in formulas (2, 4, 1/2), and standard constants. For a topic (no
 given data), you may choose example values: say they are an example, and declare each
 one as an input in the `values` of a calc in that step or earlier; then it may be
-written as it is. Any other number in `say`, a label, `text`, `math` or a checkpoint is
-an error.
+written as it is. A number you write in a calc's `expr` (the 0.5 in `0.5*m*v^2`) is
+declared too. Decimal coefficients such as 0.5 are allowed inside `math` formulas, not
+in prose: in `say` or `text` a decimal is a result and needs a placeholder. Any other
+number in `say`, a label, `text`, `math` or a checkpoint is an error.
 
 A calc:
 ```
 id           c1, c2, ... (unique in the lesson; exactly this form)
 expr         arithmetic in the value names, e.g. q/(4*pi*eps0*r^2)
 values       [{name, value}] with every value in SI base units (3 nC -> 3e-9)
-expected     your own result of expr at full precision (the server compares)
+positive     what a positive result means, for a result with a direction (§7): +x, -x,
+             +y (up), -y, +z, -z, A->B (two point or node names), cw, ccw,
+             down the slope, up the slope, toward P, away from P, into the page,
+             out of the page. "" for a quantity without direction (energy, a
+             magnitude, a resistance)
+expected     your own signed result of expr at full precision (the server compares)
 unit         the result's unit in SymPy style: N*m**2/C, m/s**2, ohm, 1 if none
 unit_spoken  the unit as spoken: newton meters squared per coulomb
 ```
@@ -126,7 +133,8 @@ first, written the same way (`\epsilon` and `\varepsilon` count as the same symb
   differential d (dA, dt), e used as e^{...}, anything inside \text{...} or
   \mathrm{...}.
 - Write words and units in LaTeX inside \text{...}: `12\ \text{lines}`,
-  `3\,\text{nC}`.
+  `3\,\text{nC}`. After a number, `\Omega` and `\mu` are units too: `100\,\Omega`,
+  `2\,\mu\text{C}`.
 - Introduce a symbol in the step that first needs it, not all at once at the start.
 
 # 5. Drawing
@@ -246,12 +254,30 @@ These are mistakes found in earlier lessons. Check them every time they apply.
   total; the voltages around a loop sum to zero; battery power equals total dissipated
   power. Check these before the summary.
 - For several branches between two nodes, choose and draw one reference direction
-  (for example A to B) for every branch current. Solve for signed currents in that
+  (for example A to B, `positive` "A->B") for every branch current. Solve for signed currents in that
   convention. A negative current flows from B to A. Before the summary, check each
   physical direction against its signed result, and state both endpoint names again
   in the summary. Never describe all currents as flowing in the assumed direction.
 - Signs and directions: state the direction of every vector result (+x, toward the
   charge, down the slope) separately from its magnitude.
+
+## Sign convention (one per lesson)
+
+- Before the first signed calc, choose ONE sign convention for the lesson, say it in
+  `say` ("I take to the right as positive"), and draw it: an `arrow` labelled with the
+  positive direction ("+x", "+ (A→B)", "+ down the slope") or `axes`. The server
+  rejects a signed calc while the board shows no convention.
+- Every component, current, force or acceleration along a line is a signed calc: put
+  its convention in `positive` and let `expr` produce the signed value. Never compute
+  a magnitude and call it a component, and never flip the sign by hand afterwards.
+- All calcs in a lesson use the same convention. Do not give one calc `+x` and another
+  `-x`, or one branch `A->B` and another `B->A`: the server rejects opposite
+  conventions. A result that points the other way simply comes out negative.
+- After a negative result, say what it means physically in the same step: "minus 0.45
+  amps, so this current really flows from A to B". Directions in the summary must
+  follow from the signs.
+- Magnitudes (|F|, speed, |E|) are separate calcs with `positive` "". A value that is
+  zero within rounding is exactly zero: write `expected` 0.
 
 # 8. Example step
 
@@ -262,7 +288,8 @@ the calc.
 ```json
 {"id": "s6", "kind": "explain",
  "calcs": [{"id": "c1", "expr": "Q/eps0", "values": [{"name": "Q", "value": 3e-9},
-   {"name": "eps0", "value": 8.854e-12}], "expected": 338.8299, "unit": "N*m**2/C",
+   {"name": "eps0", "value": 8.854e-12}], "positive": "", "expected": 338.8299,
+   "unit": "N*m**2/C",
    "unit_spoken": "newton meters squared per coulomb"}],
  "say": "Flux depends only on the charge inside. Here it is {c1}.",
  "subtitles": {"uz": "Oqim faqat ichkaridagi zaryadga bog'liq. Bu yerda u {c1}.",

@@ -28,6 +28,7 @@ from typing import Any
 import yaml
 
 from app.lesson.claude import ClaudeLessonLLM, LessonLLM
+from app.lesson.direction import normalize, physical
 from app.lesson.generate import Metrics, generate_lesson
 from app.lesson.ledger import PLACEHOLDER, Entry, parse_spec, rounded
 from app.lesson.models import Source
@@ -39,7 +40,7 @@ from scripts.eval_units import convert
 PROBLEMS = REPO_ROOT / "tests" / "eval" / "problems.yaml"
 REPORT_DIR = REPO_ROOT / "docs" / "eval"
 CACHE_DIR = REPO_ROOT / "server" / ".cache" / "eval"
-GRADING_VERSION = 2
+GRADING_VERSION = 3
 
 
 @dataclass(frozen=True)
@@ -48,6 +49,7 @@ class Expected:
     value: float
     unit: str
     rel_tol: float = 0.01
+    direction: str = ""  # set: value is a magnitude, matched with this physical direction
 
 
 @dataclass(frozen=True)
@@ -74,6 +76,7 @@ class Result:
     valid: bool
     error: str | None
     numbers: dict[str, bool] = field(default_factory=dict)
+    wrong_direction: list[str] = field(default_factory=list)  # magnitude found, sign not
     missing_draws: list[str] = field(default_factory=list)
     leftovers: dict[str, int] = field(default_factory=dict)
     steps: int = 0
@@ -124,7 +127,9 @@ def load_problems(path: Path = PROBLEMS) -> list[Problem]:
 # --- grading --------------------------------------------------------------------------
 
 
-def value_matches(expected: Expected, values: list[Entry]) -> bool:
+def value_matches(expected: Expected, values: list[Entry], magnitude_only: bool = False) -> bool:
+    """A displayed verified value equals the expected one: signed, or for an expected
+    direction, the magnitude plus the direction given by the calc's sign convention."""
     for entry in values:
         if not entry.verified:
             continue
@@ -132,9 +137,24 @@ def value_matches(expected: Expected, values: list[Entry]) -> bool:
             value = convert(entry.value, entry.unit, expected.unit)
         except (ValueError, OverflowError, ZeroDivisionError):
             continue
-        if math.isclose(value, expected.value, rel_tol=expected.rel_tol, abs_tol=0):
+        if expected.direction:
+            if not math.isclose(abs(value), expected.value, rel_tol=expected.rel_tol, abs_tol=0):
+                continue
+            if magnitude_only or physical(value, entry.positive) == normalize(expected.direction):
+                return True
+        elif math.isclose(value, expected.value, rel_tol=expected.rel_tol, abs_tol=0):
             return True
     return False
+
+
+def wrong_directions(problem: Problem, values: list[Entry]) -> list[str]:
+    return [
+        e.name
+        for e in problem.expected
+        if e.direction
+        and not value_matches(e, values)
+        and value_matches(e, values, magnitude_only=True)
+    ]
 
 
 def missing_draws(must_draw: list[str], drawn: set[str]) -> list[str]:
@@ -178,6 +198,7 @@ def grade(problem: Problem, metrics: Metrics, error: str | None) -> Result:
         valid=error is None and lesson is not None and metrics.final_error is None,
         error=error or metrics.final_error,
         numbers={e.name: value_matches(e, verified) for e in problem.expected},
+        wrong_direction=wrong_directions(problem, verified),
         missing_draws=missing_draws(problem.must_draw, drawn),
         leftovers=dict(leftovers),
         steps=len(lesson.steps) if lesson else len(state.steps) if state else 0,
@@ -335,11 +356,12 @@ def render_report(results: list[Result], meta: dict[str, Any], top: int = 3) -> 
         "",
         "Pass = valid lesson AND every expected number matched, with its sign and compatible "
         "units, by a displayed verified calc AND every required drawing present AND no "
-        "unverified steps or pending manual checks. Signed numeric matching does not "
-        "check semantic directions or associate quantities with their names; bank cases "
+        "unverified steps or pending manual checks. An expected number with a direction "
+        "is matched by magnitude and by the physical direction that follows from the "
+        "calc's sign and its declared positive direction. Matching does not associate "
+        "quantities with their names or read directions written in prose; bank cases "
         "flagged with manual checks cannot automatically pass. First step = time until "
-        "step 1 is checked and ready "
-        "(no TTS).",
+        "step 1 is checked and ready (no TTS).",
         "",
         "| topic | n | pass | valid | numbers | drawings | avg cost | median first step (s) "
         "| avg total (s) |",
@@ -371,6 +393,8 @@ def render_report(results: list[Result], meta: dict[str, Any], top: int = 3) -> 
         wrong = [n for n, ok in r.numbers.items() if not ok]
         if wrong:
             reasons.append(f"numbers not found among verified calcs: {', '.join(wrong)}")
+        if r.wrong_direction:
+            reasons.append(f"right magnitude, wrong direction: {', '.join(r.wrong_direction)}")
         if r.missing_draws:
             reasons.append(f"missing drawings: {', '.join(r.missing_draws)}")
         if r.unverified_steps:
@@ -483,7 +507,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--rerender", type=Path, help="rewrite the report of this .json, no API")
     parser.add_argument("--topic")
-    parser.add_argument("--source", choices=["audit", "own"])
+    parser.add_argument("--source", choices=["audit", "own", "hard"])
     parser.add_argument("--ids", help="comma-separated problem ids")
     parser.add_argument("--limit", type=int)
     parser.add_argument("--thinking", choices=["between_tools", "adaptive"])

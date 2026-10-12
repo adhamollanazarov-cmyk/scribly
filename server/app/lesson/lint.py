@@ -2,8 +2,8 @@
 
 Rules: narration length, checkpoint spacing, symbols introduced by a legend entry before
 any formula uses them, no computed numbers written by hand (they must come from the
-result ledger), and units on given numbers. Messages are written for the model: the
-step fix receives them verbatim.
+result ledger), units on given numbers, and one drawn sign convention. Messages are
+written for the model: the step fix receives them verbatim.
 """
 
 import math
@@ -11,6 +11,7 @@ import re
 from collections.abc import Iterable
 from dataclasses import dataclass, field
 
+from app.lesson.direction import VOCABULARY, normalize, opposite
 from app.lesson.ledger import PLACEHOLDER
 from app.lesson.models import MAX_SAY_WORDS, MAX_STEPS_WITHOUT_CHECKPOINT
 
@@ -19,7 +20,7 @@ from app.lesson.models import MAX_SAY_WORDS, MAX_STEPS_WITHOUT_CHECKPOINT
 
 @dataclass(frozen=True)
 class Violation:
-    rule: str  # words | checkpoint | placeholder | calc | contract | symbol | number | unit
+    rule: str  # words | checkpoint | placeholder | calc | contract | symbol | number | unit | sign
     message: str
     fatal: bool  # True: the lesson cannot be shown with it; False: keep the step, log it
 
@@ -113,6 +114,18 @@ SKIP_CONTENT = {"text", "mathrm", "textrm", "mbox", "operatorname", "textbf", "t
 OPERATOR_PREFIX = {"Delta", "delta", "partial", "nabla"}
 DECORATORS = {"vec", "mathbf", "boldsymbol", "hat", "bar", "overline", "overrightarrow", "tilde"}
 SPACING = re.compile(r"^(?:\s|\\[,;:! ]|~)+")
+# LaTeX commands that write a unit or an SI prefix: `100\,\Omega`, `3\,\mu\text{C}`.
+UNIT_MACROS = {
+    "Omega": "Ω",
+    "ohm": "Ω",
+    "mu": "μ",
+    "micro": "μ",
+    "circ": "°",
+    "degree": "°",
+    "celsius": "°C",
+    "percent": "%",
+}
+UNIT_GROUP = re.compile(r"\\(?:text|mathrm|textrm|rm|unit)\s*\{([^{}]*)\}")
 
 
 def formula_symbols(latex: str) -> list[str]:
@@ -120,7 +133,7 @@ def formula_symbols(latex: str) -> list[str]:
 
     Not symbols: numbers, function names (\\sin, \\ln), \\pi, words in \\text{} or
     \\mathrm{}, a differential d (dA, dt), e as a base of ^ (Euler's number), and a unit
-    such as `3\\,nC` written right after a number."""
+    such as `3\\,nC` or `100\\,\\Omega` written right after a number."""
     out: list[str] = []
     i = 0
     while i < len(latex):
@@ -131,6 +144,11 @@ def formula_symbols(latex: str) -> list[str]:
                 i += 2
                 continue
             name = m.group(1)
+            if name in UNIT_MACROS and _after_number(latex[:i]):
+                word, length = latex_unit_word(latex[i:])
+                if is_unit_token(word):
+                    i += length
+                    continue
             i += len(m.group(0))
             if name in SKIP_CONTENT:
                 i = _skip_group(latex, i)
@@ -225,6 +243,37 @@ def _unit_after_number(s: str, i: int) -> bool:
     before = s[:i]
     m = re.search(r"\d(?:\s|\\[,;: ]|~)+$", before)
     return bool(m) and is_unit_token(s[i : _letters_end(s, i)])
+
+
+def _after_number(before: str) -> bool:
+    return re.search(r"\d(?:\s|\\[,;:! ]|~)*$", before) is not None
+
+
+UNIT_PIECE = re.compile(r"[A-Za-zΩμµ°%]+|/|\^\s*\{?\s*-?\d+\s*\}?")
+COMMAND = re.compile(r"\\([A-Za-z]+)\s*")
+
+
+def latex_unit_word(s: str) -> tuple[str, int]:
+    """The unit at the start of LaTeX text in plain characters, and its length in `s`:
+    `\\mu\\text{C}` -> ("μC", 11). Stops at the first thing that is not part of a unit."""
+    word, i = "", 0
+    while i < len(s):
+        if m := UNIT_GROUP.match(s, i):
+            piece = COMMAND.sub(lambda c: UNIT_MACROS.get(c.group(1), c.group(0)), m.group(1))
+        elif m := COMMAND.match(s, i):
+            if m.group(1) == "cdot":
+                piece = "·"
+            elif m.group(1) in UNIT_MACROS:
+                piece = UNIT_MACROS[m.group(1)]
+            else:
+                break
+        elif m := UNIT_PIECE.match(s, i):
+            piece = re.sub(r"[\s{}]", "", m.group(0))
+        else:
+            break
+        word += piece
+        i = m.end()
+    return word, i
 
 
 def legend_symbols(symbol_latex: str) -> set[str]:
@@ -397,13 +446,9 @@ def _blank(match: re.Match[str]) -> str:
 def unit_follows(after: str, latex: bool) -> bool:
     if latex:
         after = SPACING.sub("", after)
-        m = re.match(r"\\(?:text|mathrm|unit)\s*\{([^{}]*)\}", after)
-        if m:
+        if UNIT_GROUP.match(after) or re.match(r"(\^\s*\{?\\circ|\\%|°)", after):
             return True
-        if re.match(r"(\^\s*\{?\\circ|\\%|°)", after):
-            return True
-        letters = re.match(r"[A-Za-zΩμ°%]+", after)
-        return letters is not None and is_unit_token(letters.group(0))
+        return is_unit_token(latex_unit_word(after)[0])
     if after[:1] in ("%", "°"):
         return True
     word = re.match(r"\s*([^\s,;:!?]+)", after)
@@ -412,6 +457,11 @@ def unit_follows(after: str, latex: bool) -> bool:
 
 def extract_givens(source: str) -> list[Given]:
     return [Given(f.value, unit_follows(f.after, latex=False)) for f in find_numbers(source)]
+
+
+def expr_numbers(expr: str) -> list[float]:
+    """Numbers written in a calc expression (the 0.5 in 0.5*m*v^2): declared inputs."""
+    return [float(m.group(0)) for m in PLAIN_NUMBER.finditer(expr)]
 
 
 CONSTANTS = (
@@ -452,10 +502,12 @@ def matching_given(value: float, givens: Iterable[Given]) -> Given | None:
     return None
 
 
-def is_allowed_constant(value: float) -> bool:
-    value = abs(value)
-    if value <= 12 and (value * 4).is_integer():
-        return True  # small counts, halves and quarters
+def is_allowed_constant(value: float, formula: bool = False) -> bool:
+    value = abs(float(value))
+    if value <= 12 and value.is_integer():
+        return True  # small counts
+    if formula and value <= 12 and (value * 4).is_integer():
+        return True  # halves and quarters as coefficients (0.5 m v^2); in prose a result
     if value >= 10 and math.log10(value).is_integer():
         return True  # 10, 100, 1000: conversions
     return any(_same(value, c, rel=0.01) for c in CONSTANTS)
@@ -486,7 +538,7 @@ def lint_numbers(
                     )
                 )
             continue
-        if is_allowed_constant(found.value) or is_angle(found):
+        if is_allowed_constant(found.value, formula=latex) or is_angle(found):
             continue
         out.append(
             violation(
@@ -494,6 +546,55 @@ def lint_numbers(
                 f"{where}: {found.value:g} is not a given number. Every "
                 "computed number must come from a calc placeholder such as {c3} or "
                 "{c3:2sf}, so it is verified.",
+            )
+        )
+    return out
+
+
+# --- signs and directions -------------------------------------------------------------
+
+
+def shows_convention(item_type: str, label: str, name: str = "") -> bool:
+    """Axes, or an arrow labelled with its positive direction ("+x", "+ (A→B)")."""
+    if item_type in ("axes", "axes_plot"):
+        return True
+    text = f"{label} {name}"
+    return item_type in ("arrow", "vector") and ("+" in text or "positive" in text.lower())
+
+
+def lint_sign(calc_id: str, positive: str, conventions: set[str], drawn: bool) -> list[Violation]:
+    """`positive`: what a positive result of the calc means; `conventions`: the canonical
+    positive directions of earlier calcs; `drawn`: the board shows a convention."""
+    if not positive.strip():
+        return []
+    canonical = normalize(positive)
+    if canonical is None:
+        return [
+            violation(
+                "sign",
+                f"calc {calc_id}: positive {positive!r} is not a direction the server can "
+                f'read. Use one of: {VOCABULARY}; or "" if the result has no direction.',
+            )
+        ]
+    out = []
+    if opposite(canonical) in conventions:
+        out.append(
+            violation(
+                "sign",
+                f"calc {calc_id} takes {positive} as positive, but an earlier calc takes the "
+                f"opposite ({opposite(canonical)}) as positive. Use one sign convention for "
+                "the whole lesson: keep the earlier one and let the sign of the result show "
+                "the direction.",
+            )
+        )
+    if not drawn:
+        out.append(
+            violation(
+                "sign",
+                f"calc {calc_id} is signed (positive = {positive}), but the board does not "
+                "show the sign convention yet. In this step or earlier, draw an arrow "
+                'labelled with the positive direction (e.g. "+x" or "+ (A→B)") or axes, and '
+                "say the convention in `say`.",
             )
         )
     return out
@@ -507,3 +608,5 @@ class LintState:
     givens: list[Given]
     defined_symbols: set[str] = field(default_factory=set)
     run_without_checkpoint: int = 0
+    conventions: set[str] = field(default_factory=set)  # canonical positive directions
+    convention_drawn: bool = False

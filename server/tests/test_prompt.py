@@ -34,5 +34,9 @@ def test_prompt_carries_the_audit_safeguards() -> None:
         "not allowed: abs, Min, Max",
         "Solve for signed currents",
         "state both endpoint names again",
+        "choose ONE sign convention",
+        "the server rejects opposite",
+        "never flip the sign by hand",
+        "write `expected` 0",
     ):
         assert phrase in prompt, phrase

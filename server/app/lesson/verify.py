@@ -4,7 +4,11 @@ import math
 from dataclasses import dataclass
 
 from app.lesson.models import UNVERIFIED_NOTE, Calc, Lesson
-from app.lesson.safe_expr import ExpressionError, evaluate_text
+from app.lesson.safe_expr import ExpressionError, evaluate_text_with_error
+
+# A result within this many rounding-error bounds of zero is zero: cancelling terms
+# (q - q, cos 90°) leave float noise such as 6e-17 that must not reach the board.
+ZERO_TOLERANCE = 1e3
 
 
 @dataclass(frozen=True)
@@ -21,10 +25,13 @@ def verify_calc(calc: Calc) -> CalcResult:
             calc.id, ok=False, value=None, error="expected value and tolerance must be finite"
         )
     try:
-        value = evaluate_text(calc.expr, calc.values)
+        value, rounding = evaluate_text_with_error(calc.expr, calc.values)
     except ExpressionError as e:
         return CalcResult(calc.id, ok=False, value=None, error=str(e))
-    if abs(value - calc.expected) > calc.rel_tol * abs(calc.expected):
+    abs_tol = ZERO_TOLERANCE * rounding if math.isfinite(rounding) else 0.0
+    if abs(value) <= abs_tol:
+        value = 0.0
+    if abs(value - calc.expected) > max(calc.rel_tol * abs(calc.expected), abs_tol):
         error = f"computed {value:.6g}, expected {calc.expected:.6g} {calc.unit}"
         return CalcResult(calc.id, ok=False, value=value, error=error)
     return CalcResult(calc.id, ok=True, value=value)

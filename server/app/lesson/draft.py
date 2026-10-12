@@ -54,7 +54,12 @@ class CalcDraft(Draft):
     id: str = Field(description="c1, c2, ... unique in the lesson")
     expr: str = Field(description="Arithmetic in the value names; allowed functions only")
     values: list[ValueDraft]
-    expected: float = Field(description="Your own full-precision result of expr")
+    positive: str = Field(
+        default="",
+        description='What a positive result means, e.g. +x, A->B, down the slope; "" if '
+        "the result has no direction",
+    )
+    expected: float = Field(description="Your own full-precision signed result of expr")
     unit: str = Field(description="SymPy-style unit of the result, e.g. N*m**2/C; 1 if none")
     unit_spoken: str = Field(description="Unit as spoken, e.g. newton meters squared per coulomb")
 

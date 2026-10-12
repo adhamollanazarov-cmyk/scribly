@@ -1,3 +1,5 @@
+import math
+
 import pytest
 
 from app.lesson.ledger import (
@@ -9,6 +11,7 @@ from app.lesson.ledger import (
     format_number,
     parse_spec,
     render,
+    rounded,
     unit_latex,
     unit_text,
 )
@@ -100,3 +103,15 @@ def test_answer_value_is_the_value_as_shown() -> None:
         answer_value("339", LEDGER)
     with pytest.raises(LedgerError, match="names no calc"):
         answer_value("{c7}", LEDGER)
+
+
+@pytest.mark.parametrize("context", ["text", "spoken", "latex"])
+def test_a_value_that_rounds_to_zero_has_no_minus_sign(context: str) -> None:
+    assert format_number(-0.001, Spec(2, "dp"), context) == "0.00"  # type: ignore[arg-type]
+    assert format_number(-0.0, Spec(3, "sf"), context) == "0"  # type: ignore[arg-type]
+    assert format_number(-0.006, Spec(2, "dp"), context).endswith("0.01")  # type: ignore[arg-type]
+
+
+def test_rounded_value_is_never_negative_zero() -> None:
+    assert math.copysign(1, rounded(-0.001, Spec(2, "dp"))) == 1
+    assert math.copysign(1, rounded(-0.0, Spec(3, "sf"))) == 1

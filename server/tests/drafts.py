@@ -42,12 +42,19 @@ def math(id: str, latex: str, y: float = 300) -> dict[str, Any]:
 
 
 def calc(
-    id: str, expr: str, values: dict[str, float], expected: float, unit: str, unit_spoken: str
+    id: str,
+    expr: str,
+    values: dict[str, float],
+    expected: float,
+    unit: str,
+    unit_spoken: str,
+    positive: str = "",
 ) -> dict[str, Any]:
     return {
         "id": id,
         "expr": expr,
         "values": [{"name": k, "value": v} for k, v in values.items()],
+        "positive": positive,
         "expected": expected,
         "unit": unit,
         "unit_spoken": unit_spoken,

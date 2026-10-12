@@ -76,18 +76,26 @@ def parse(text: str, variables: Iterable[str]) -> sympy.Expr:
 def evaluate(expr: sympy.Expr, values: Mapping[str, float]) -> float:
     """Evaluate with plain floats. Never let SymPy simplify untrusted input: rebuilding
     `9^9^9^9` with evaluation on makes it compute a number with millions of digits."""
+    return evaluate_with_error(expr, values)[0]
+
+
+def evaluate_with_error(expr: sympy.Expr, values: Mapping[str, float]) -> tuple[float, float]:
+    """The value and a first-order bound on its floating-point rounding error. The bound
+    tells a true zero (q - q, cos 90°) from a small result: cancelling terms leave noise
+    of about the bound, a real result is far larger than it."""
     missing = {str(s) for s in expr.free_symbols} - set(values)
     if missing:
         raise ExpressionError(f"no value for {sorted(missing)}")
     try:
-        result = _to_float(expr, values)
+        result, error = _to_float(expr, values)
     except (ValueError, OverflowError, ZeroDivisionError) as e:
         raise ExpressionError("expression does not evaluate to a finite real number") from e
     if not math.isfinite(result):
         raise ExpressionError("expression does not evaluate to a finite real number")
-    return result
+    return result, error
 
 
+UNIT_ROUNDOFF = 2.0**-53
 MATH_FUNCTIONS: dict[Any, Callable[[float], float]] = {
     sympy.sin: math.sin,
     sympy.cos: math.cos,
@@ -98,30 +106,62 @@ MATH_FUNCTIONS: dict[Any, Callable[[float], float]] = {
     sympy.exp: math.exp,
     sympy.log: math.log,
 }
+# |f'(x)|, for propagating the error of the argument; asin/acos are capped at |x| = 1.
+SLOPES: dict[Any, Callable[[float], float]] = {
+    sympy.sin: lambda x: abs(math.cos(x)),
+    sympy.cos: lambda x: abs(math.sin(x)),
+    sympy.tan: lambda x: 1 + math.tan(x) ** 2,
+    sympy.asin: lambda x: 1 / math.sqrt(max(1 - x * x, UNIT_ROUNDOFF)),
+    sympy.acos: lambda x: 1 / math.sqrt(max(1 - x * x, UNIT_ROUNDOFF)),
+    sympy.atan: lambda x: 1 / (1 + x * x),
+    sympy.exp: math.exp,
+    sympy.log: lambda x: 1 / abs(x),
+}
 
 
-def _to_float(expr: sympy.Basic, values: Mapping[str, float]) -> float:
+def _to_float(expr: sympy.Basic, values: Mapping[str, float]) -> tuple[float, float]:
+    """(value, rounding error bound)"""
     if isinstance(expr, sympy.Symbol):
-        return float(values[expr.name])
+        value = float(values[expr.name])
+        return value, abs(value) * UNIT_ROUNDOFF
     if isinstance(expr, sympy.Number) or expr in (sympy.pi, sympy.E):
-        return float(expr)
-    args = [_to_float(arg, values) for arg in expr.args]
+        value = float(expr)
+        return value, abs(value) * UNIT_ROUNDOFF
+    pairs = [_to_float(arg, values) for arg in expr.args]
+    args = [v for v, _ in pairs]
     if isinstance(expr, sympy.Add):
-        return math.fsum(args)
-    if isinstance(expr, sympy.Mul):
-        return math.prod(args)
-    if isinstance(expr, sympy.Pow):
-        base, exponent = args
+        value = math.fsum(args)
+        error = math.fsum(e for _, e in pairs)
+    elif isinstance(expr, sympy.Mul):
+        value = math.prod(args)
+        error = math.fsum(
+            e * math.prod(abs(a) for j, a in enumerate(args) if j != i)
+            for i, (_, e) in enumerate(pairs)
+        )
+    elif isinstance(expr, sympy.Pow):
+        (base, base_error), (exponent, exponent_error) = pairs
         if base == 0 and exponent < 0:
             raise ZeroDivisionError("division by zero")
-        return math.pow(base, exponent)
-    if expr.func in MATH_FUNCTIONS and len(args) == 1:
-        return MATH_FUNCTIONS[expr.func](args[0])
-    raise ValueError(f"unsupported operation {expr.func}")
+        value = math.pow(base, exponent)
+        if base == 0:
+            error = base_error**exponent if exponent > 0 else 0.0
+        else:
+            error = abs(exponent * value / base) * base_error
+            error += abs(value * math.log(abs(base))) * exponent_error
+    elif expr.func in MATH_FUNCTIONS and len(args) == 1:
+        value = MATH_FUNCTIONS[expr.func](args[0])
+        error = SLOPES[expr.func](args[0]) * pairs[0][1]
+    else:
+        raise ValueError(f"unsupported operation {expr.func}")
+    return value, error + abs(value) * UNIT_ROUNDOFF
 
 
 def evaluate_text(text: str, values: Mapping[str, float]) -> float:
     return evaluate(parse(text, values.keys()), values)
+
+
+def evaluate_text_with_error(text: str, values: Mapping[str, float]) -> tuple[float, float]:
+    return evaluate_with_error(parse(text, values.keys()), values)
 
 
 def _check_syntax(text: str) -> None:
