@@ -27,7 +27,7 @@ First real user: the founder, a university student learning physics in English.
 server/      FastAPI (Python 3.12, Pydantic v2) — lesson generation, TTS, verification
 web/         Vite + React + TypeScript (strict) — board renderer, mascot, controls
 desktop/     Electron (Phase 5) — hotkey, region capture, transparent overlay
-shared/      lesson JSON Schema generated from the Pydantic models
+shared/      lesson JSON Schema + mock SSE streams, generated from the server
 docs/        SPEC.md, LESSON_SCHEMA.md, STATUS.md, DECISIONS.md,
              prototype/gauss_lesson_prototype.html (look-and-feel reference)
 tests/fixtures/lessons/   golden lessons (gauss_law.json is the reference lesson)
@@ -94,6 +94,7 @@ uv run ruff format --check .
 uv run mypy app
 uv run mypy scripts
 uv run python -m scripts.gen_schema  # after changing app/lesson/models.py
+uv run python -m scripts.gen_streams # after changing fixtures or the pipeline
 # server — eval bank (REAL API calls, costs ~$0.10 per problem; not part of the checks)
 uv run python -m scripts.eval --topic circuits --limit 3 --max-cost 2
 # web — run (http://localhost:5173)

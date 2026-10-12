@@ -7,7 +7,7 @@ Product spec: `docs/SPEC.md`. Rules for contributors and agents: `AGENTS.md`.
 server/   FastAPI (Python 3.12) — lessons, TTS, verification
 web/      Vite + React + TypeScript — board, mascot, controls
 desktop/  Electron overlay (Phase 5)
-shared/   generated lesson JSON Schema
+shared/   generated lesson JSON Schema and mock SSE streams
 docs/     spec, schema, status, decisions
 tests/fixtures/lessons/   golden lessons
 ```
@@ -60,6 +60,11 @@ uv run fastapi dev app/main.py
 
 `$env:MOCK_AI` lasts for the current terminal only. You can also set `MOCK_AI=1` in `.env`.
 
+Then open http://localhost:5173 and click **Gauss's law** or **Series circuit**. The web
+dev server forwards `/lessons` and `/audio` to port 8000. In mock mode the server plays the
+golden lesson whose problem text matches what you typed (Gauss's law otherwise). Speech
+comes from edge-tts and needs internet; a step whose speech fails still plays, without sound.
+
 ## Checks (run before saying a task is done)
 
 ```powershell
@@ -68,6 +73,7 @@ uv run pytest
 uv run ruff check .
 uv run ruff format --check .
 uv run mypy app
+uv run mypy scripts
 cd ..\web
 npm test
 npm run lint
