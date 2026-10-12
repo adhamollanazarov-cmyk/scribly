@@ -20,7 +20,7 @@ describe('i18n', () => {
     ['uz', uz],
     ['ru', ru],
   ] as const)('uses the requested %s locale', (locale, messages) => {
-    expect(t('app.placeholder', locale)).toBe(messages['app.placeholder'])
-    expect(t('app.placeholder', locale)).not.toBe(en['app.placeholder'])
+    expect(t('app.tagline', locale)).toBe(messages['app.tagline'])
+    expect(t('app.tagline', locale)).not.toBe(en['app.tagline'])
   })
 })

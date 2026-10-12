@@ -1,0 +1,113 @@
+/* Scribbly's colors are its own (not board tokens), so the board theme never recolors it. */
+.mascot-anchor {
+  --mascot-body: #7f77dd;
+  --mascot-belly: #9d96e8;
+  --mascot-ink: #26215c;
+  --mascot-tip: #ef9f27;
+  --mascot-wood: #ef9f27;
+  color: var(--mascot-ink);
+  transition: transform 0.45s ease-in-out;
+}
+.mascot-anchor[data-moving='pen'] {
+  transition: transform 0.12s linear;
+}
+.mascot-body {
+  fill: var(--mascot-body);
+}
+.mascot-belly {
+  fill: var(--mascot-belly);
+}
+.mascot-ink {
+  fill: var(--mascot-ink);
+}
+.mascot-tip {
+  fill: var(--mascot-tip);
+}
+.mascot-line {
+  stroke: var(--mascot-ink);
+  stroke-width: 2;
+  stroke-linecap: round;
+  fill: none;
+}
+.mascot-arm {
+  stroke: var(--mascot-body);
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+.pencil-wood {
+  stroke: var(--mascot-wood);
+  stroke-width: 5;
+  stroke-linecap: round;
+}
+.pencil-lead {
+  stroke: var(--mascot-ink);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+.mascot-thought circle {
+  fill: var(--mascot-belly);
+  animation: mascot-pulse 1.2s ease-in-out infinite;
+}
+.mascot-thought circle:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.mascot-thought circle:nth-child(3) {
+  animation-delay: 0.4s;
+}
+.mascot-sparkles path {
+  fill: var(--mascot-tip);
+}
+.mascot-heart {
+  fill: #e0566b;
+}
+.mascot {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+.mascot-idle {
+  animation: mascot-bob 2.8s ease-in-out infinite;
+}
+.mascot-happy {
+  animation: mascot-hop 0.6s ease-out 2;
+}
+.mascot-encouraging {
+  animation: mascot-nod 1.4s ease-in-out 2;
+}
+.mascot-listening {
+  transform: rotate(-6deg);
+}
+
+@keyframes mascot-bob {
+  50% {
+    transform: translateY(-3px);
+  }
+}
+@keyframes mascot-hop {
+  40% {
+    transform: translateY(-10px);
+  }
+}
+@keyframes mascot-nod {
+  30% {
+    transform: rotate(4deg);
+  }
+  60% {
+    transform: rotate(-2deg);
+  }
+}
+@keyframes mascot-pulse {
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mascot-anchor,
+  .mascot-anchor[data-moving='pen'] {
+    transition: none;
+  }
+  .mascot,
+  .mascot-thought circle {
+    animation: none !important;
+  }
+}
