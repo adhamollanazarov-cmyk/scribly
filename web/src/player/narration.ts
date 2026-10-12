@@ -102,9 +102,16 @@ export class BrowserNarration implements Narration {
 }
 
 export const animationFrameTicker: Ticker = (frame) => {
+  // `frame` may stop the ticker itself: only schedule the next frame while still active.
+  let active = true
   let id = requestAnimationFrame(function loop(now) {
+    if (!active) return
     frame(now)
-    id = requestAnimationFrame(loop)
+    if (active) id = requestAnimationFrame(loop)
   })
-  return () => cancelAnimationFrame(id)
+  return () => {
+    if (!active) return
+    active = false
+    cancelAnimationFrame(id)
+  }
 }

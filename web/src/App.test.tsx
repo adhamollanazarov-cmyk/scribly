@@ -106,6 +106,32 @@ describe('App', () => {
     expect(screen.getByText(/Cannot reach the Scribbly server/)).toBeInTheDocument()
   })
 
+  it('aborts the lesson request on unmount and plays nothing that arrives later', async () => {
+    const narration = new FakeNarration()
+    const clock = manualClock(narration)
+    const server = controllableFetch()
+    let signal: AbortSignal | null | undefined
+    const fetchImpl: typeof fetch = (_input, init) => {
+      signal = init?.signal
+      return server.fetchImpl()
+    }
+    const view = render(<App narration={narration} ticker={clock.ticker} fetchImpl={fetchImpl} />)
+    await screen.findByRole('img', { name: 'Scribbly' })
+    fireEvent.click(screen.getByRole('button', { name: 'Series circuit' }))
+    const events = streamOf('circ_series')
+    await server.send(events[0])
+    await server.send(events[1])
+    const loads = narration.loads.length
+
+    view.unmount()
+    expect(signal?.aborted).toBe(true)
+    await server.send(events[2]).catch(() => {}) // the body may already be cancelled
+    await act(() => clock.run(1))
+    expect(narration.loads).toHaveLength(loads)
+    expect(narration.isPlaying).toBe(false)
+    expect(clock.running).toBe(false)
+  })
+
   it('explains missing audio and keeps the narration visible when English subtitles are off', async () => {
     const { server } = await setup()
     fireEvent.click(screen.getByRole('button', { name: 'Series circuit' }))

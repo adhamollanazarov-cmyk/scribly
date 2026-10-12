@@ -10,7 +10,7 @@ import {
 import { t } from './i18n'
 import { StreamError, streamLesson } from './lesson/client'
 import { introPrimitives } from './lesson/intro'
-import type { LessonRequest } from './lesson/types'
+import type { LessonEvent, LessonRequest } from './lesson/types'
 import { LessonPlayer, type Narration, type Ticker } from './player/engine'
 import { BrowserNarration, animationFrameTicker } from './player/narration'
 import { CheckpointCard } from './ui/CheckpointCard'
@@ -44,7 +44,14 @@ function App({ narration, ticker, fetchImpl }: AppProps) {
   const [subtitles, setSubtitles] = useState<SubtitleSettings>({ english: true, second: 'uz' })
   const request = useRef<AbortController | null>(null)
 
-  useEffect(() => () => player.dispose(), [player])
+  useEffect(
+    () => () => {
+      request.current?.abort() // stop generation; no step may reach the disposed player
+      request.current = null
+      player.dispose()
+    },
+    [player],
+  )
 
   const start = useCallback(
     (lesson: LessonRequest) => {
@@ -53,11 +60,12 @@ function App({ narration, ticker, fetchImpl }: AppProps) {
       request.current = controller
       void audio.unlock?.() // inside the click: allows sound and lip sync
       player.begin(introPrimitives(lesson, INTRO_LABELS))
-      streamLesson(lesson, (event) => player.receive(event), controller.signal, fetchImpl).catch(
-        (error: unknown) => {
-          if (!controller.signal.aborted) player.fail(errorMessage(error))
-        },
-      )
+      const deliver = (event: LessonEvent) => {
+        if (!controller.signal.aborted) player.receive(event)
+      }
+      streamLesson(lesson, deliver, controller.signal, fetchImpl).catch((error: unknown) => {
+        if (!controller.signal.aborted) player.fail(errorMessage(error))
+      })
     },
     [audio, player, fetchImpl],
   )

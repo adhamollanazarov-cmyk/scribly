@@ -325,9 +325,10 @@ export class LessonPlayer {
         }
       }
       const audio = this.s.audioActive && !this.narration.ended()
-      this.s.t = audio
-        ? Math.max(this.s.t, this.narration.currentTime())
-        : this.s.t + dt * this.s.speed
+      // Take the audio position even when it just ended: frames may have been suspended
+      // (background tab) while the audio played on, and dt alone is capped at MAX_FRAME.
+      if (this.s.audioActive) this.s.t = Math.max(this.s.t, this.narration.currentTime())
+      if (!audio) this.s.t += dt * this.s.speed
       this.s.mouth = audio ? this.narration.level() : 0
       if (this.s.t >= stepEnd(this.s.schedule) + TAIL) this.completeStep()
       changed = true
