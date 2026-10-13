@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen } from '@testing-library/react'
+import { act, fireEvent, render, screen, within } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 import App from './App'
 import type { LessonEvent } from './lesson/types'
@@ -9,8 +9,13 @@ function controllableFetch() {
   let controller!: ReadableStreamDefaultController<Uint8Array>
   const body = new ReadableStream<Uint8Array>({ start: (c) => void (controller = c) })
   const encoder = new TextEncoder()
+  const requests: unknown[] = []
   return {
-    fetchImpl: async () => new Response(body, { headers: { 'Content-Type': 'text/event-stream' } }),
+    requests,
+    fetchImpl: async (_url?: RequestInfo | URL, init?: RequestInit) => {
+      if (init?.body) requests.push(JSON.parse(init.body as string))
+      return new Response(body, { headers: { 'Content-Type': 'text/event-stream' } })
+    },
     async send(event: LessonEvent) {
       controller.enqueue(
         encoder.encode(`event: ${event.event}\ndata: ${JSON.stringify(event.data)}\n\n`),
@@ -61,6 +66,14 @@ describe('App', () => {
     expect(intro.getAttribute('data-visible')).toBe('false')
     expect(document.querySelector('.sub-en')?.textContent).toMatch(/^Three resistors in series/)
     expect(document.querySelector('.sub-second')?.textContent).toMatch(/^Uchta rezistor/) // uz
+  })
+
+  it('asks for a library topic from the demo topics list', async () => {
+    const { server } = await setup()
+    const topics = screen.getByRole('combobox', { name: 'Library topics' })
+    expect(within(topics).getAllByRole('option')).toHaveLength(21) // prompt + 20 lessons
+    fireEvent.change(topics, { target: { value: 'Snell’s law' } })
+    expect(server.requests).toEqual([{ type: 'topic', text: 'Snell’s law' }])
   })
 
   it('switches the second subtitle line and pauses', async () => {

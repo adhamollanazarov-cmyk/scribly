@@ -1,0 +1,82 @@
+[
+  {
+    "key": "kinematics_1d",
+    "title": "1D kinematics"
+  },
+  {
+    "key": "circular_motion",
+    "title": "Circular motion"
+  },
+  {
+    "key": "coulomb_law",
+    "title": "Coulomb’s law"
+  },
+  {
+    "key": "point_charge_field",
+    "title": "Electric field of a point charge"
+  },
+  {
+    "key": "capacitor_potential",
+    "title": "Electric potential and a parallel-plate capacitor"
+  },
+  {
+    "key": "faraday_rod",
+    "title": "Faraday’s law with a moving rod"
+  },
+  {
+    "key": "gauss_line",
+    "title": "Gauss’s law for a line charge"
+  },
+  {
+    "key": "gauss_plane",
+    "title": "Gauss’s law for a plane"
+  },
+  {
+    "key": "kirchhoff_two_loop",
+    "title": "Kirchhoff’s two-loop circuit"
+  },
+  {
+    "key": "magnetic_force",
+    "title": "Magnetic force on a moving charge"
+  },
+  {
+    "key": "collision_1d",
+    "title": "Momentum and a 1D collision"
+  },
+  {
+    "key": "incline_friction",
+    "title": "Newton’s second law: incline with friction"
+  },
+  {
+    "key": "projectile_motion",
+    "title": "Projectile motion"
+  },
+  {
+    "key": "simple_pendulum",
+    "title": "Simple pendulum"
+  },
+  {
+    "key": "snell_law",
+    "title": "Snell’s law"
+  },
+  {
+    "key": "spring_shm",
+    "title": "Spring simple harmonic motion"
+  },
+  {
+    "key": "converging_lens",
+    "title": "Thin converging lens"
+  },
+  {
+    "key": "torque_equilibrium",
+    "title": "Torque and rotational equilibrium"
+  },
+  {
+    "key": "string_wave",
+    "title": "Wave speed on a string"
+  },
+  {
+    "key": "work_energy",
+    "title": "Work–energy theorem"
+  }
+]

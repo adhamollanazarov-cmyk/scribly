@@ -6,7 +6,7 @@ import pytest
 
 from app.lesson.fixtures import DEFAULT_FIXTURE, fixture_for_text, fixture_names, load_fixture
 from app.lesson.models import StreamedStep
-from app.lesson.stream_export import STREAMS_DIR, render_stream
+from app.lesson.stream_export import STREAMS_DIR, TOPICS_FILE, render_stream, render_topics
 from tests.test_lessons_api import FakeTTS, make_client, parse_sse
 
 STALE = "shared/streams is stale. Run in server/: uv run python -m scripts.gen_streams"
@@ -18,6 +18,13 @@ def test_shared_stream_is_up_to_date(name: str) -> None:
 
     assert path.is_file(), STALE
     assert path.read_text(encoding="utf-8").replace("\r\n", "\n") == render_stream(name), STALE
+
+
+def test_shared_library_topics_are_up_to_date() -> None:
+    assert TOPICS_FILE.is_file(), STALE
+    text = TOPICS_FILE.read_text(encoding="utf-8").replace("\r\n", "\n")
+    assert text == render_topics(), STALE
+    assert len(json.loads(render_topics())) == 20
 
 
 def test_no_stream_without_a_fixture() -> None:
@@ -57,3 +64,12 @@ def test_mock_route_serves_the_fixture_matching_the_request(tmp_path: Path) -> N
     events = parse_sse(response.text)
     assert events[0] == ("meta", json.loads(render_stream("circ_series"))[0]["data"])
     assert [name for name, _ in events].count("step") == len(raw["steps"])
+
+
+def test_mock_route_serves_a_library_topic_after_the_fixtures(tmp_path: Path) -> None:
+    with closing(make_client(tmp_path, FakeTTS())) as client:
+        library = client.post("/lessons", json={"type": "topic", "text": "Snell’s law"})
+        fixture = client.post("/lessons", json={"type": "topic", "text": "Explain magnetism"})
+
+    assert parse_sse(library.text)[0][1]["title"] == "Snell’s law"
+    assert parse_sse(fixture.text)[0][1]["title"] == "Gauss's law"

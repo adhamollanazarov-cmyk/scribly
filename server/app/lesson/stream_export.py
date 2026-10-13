@@ -14,6 +14,7 @@ from app.settings import REPO_ROOT, Settings
 from app.tts import audio_key
 
 STREAMS_DIR = REPO_ROOT / "shared" / "streams"
+TOPICS_FILE = REPO_ROOT / "shared" / "library_topics.json"
 
 
 def lesson_meta(lesson: Lesson, step_count: int | None) -> dict[str, Any]:
@@ -35,6 +36,13 @@ def render_stream(name: str) -> str:
     return json.dumps(events, indent=2, ensure_ascii=False) + "\n"
 
 
+def render_topics() -> str:
+    """The library topics the overlay and the web harness offer in mock mode."""
+    from app.library import library_topics  # the library imports the lesson pipeline
+
+    return json.dumps(library_topics(), indent=2, ensure_ascii=False) + "\n"
+
+
 def write_streams() -> list[str]:
     STREAMS_DIR.mkdir(parents=True, exist_ok=True)
     names = fixture_names()
@@ -45,4 +53,5 @@ def write_streams() -> list[str]:
         (STREAMS_DIR / f"{name}.json").write_text(
             render_stream(name), encoding="utf-8", newline="\n"
         )
+    TOPICS_FILE.write_text(render_topics(), encoding="utf-8", newline="\n")
     return names

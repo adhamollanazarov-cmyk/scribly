@@ -9,6 +9,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 from app.lesson.claude import LLMError
+from app.library import library_topics
 from app.routes.explain import DEMO_HEADER, MAX_IMAGE_SIDE, NOT_YET, png_size
 from app.routes.lessons import get_lesson_llm
 from tests.test_lessons_api import FakeTTS, make_client, parse_sse
@@ -172,3 +173,26 @@ def test_png_size_reads_the_header() -> None:
     assert png_size(png(13, 9)) == (13, 9)
     with pytest.raises(ValueError):
         png_size(b"\x89PNG\r\n\x1a\n")
+
+
+@pytest.mark.parametrize("topic", library_topics(), ids=lambda t: t["key"])
+def test_a_demo_topic_streams_that_library_lesson(
+    client: TestClient, topic: dict[str, str]
+) -> None:
+    response = client.post("/explain-region", json=body(topic=topic["title"]))
+
+    assert response.status_code == 200
+    events = parse_sse(response.text)
+    assert events[0][1]["title"] == topic["title"]
+    assert events[-1][0] == "done"
+
+
+@pytest.mark.parametrize("topic", [None, "", "biology", "A 2 kg block on a 30 degree incline"])
+def test_no_or_unknown_topic_falls_back_to_gauss(client: TestClient, topic: str | None) -> None:
+    response = client.post("/explain-region", json=body(topic=topic))
+
+    assert parse_sse(response.text)[0][1]["title"] == "Gauss's law"
+
+
+def test_rejects_an_overlong_topic(client: TestClient) -> None:
+    assert client.post("/explain-region", json=body(topic="x" * 201)).status_code == 422

@@ -64,5 +64,9 @@
   "overlay.done": "Done",
   "overlay.goodbye": "That's the lesson! Scribbly leaves in a few seconds.",
   "overlay.escTaken": "Esc is used by another app: close with ✕",
-  "subtitles.missing": "No subtitles in this language for this lesson"
+  "subtitles.missing": "No subtitles in this language for this lesson",
+  "tray.demoTopics": "Demo topics",
+  "tray.demoDefault": "Gauss's law (default)",
+  "form.demoTopics": "Library topics",
+  "form.demoPick": "Choose a topic…"
 }

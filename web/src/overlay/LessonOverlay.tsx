@@ -29,6 +29,7 @@ import {
   type Motion,
 } from './motion'
 import { Pill } from './Pill'
+import { demoTopicTitle } from './settings'
 import { useClickThrough } from './useClickThrough'
 
 const DEMO_HEADER = 'X-Scribbly-Demo'
@@ -155,7 +156,11 @@ export function LessonOverlay(props: Props) {
     }
     streamEvents(
       '/explain-region',
-      { image_png_base64: imagePngBase64, voice: settings.voice },
+      {
+        image_png_base64: imagePngBase64,
+        voice: settings.voice,
+        topic: demoTopicTitle(settings.demoTopic),
+      },
       deliver,
       {
         signal: controller.signal,

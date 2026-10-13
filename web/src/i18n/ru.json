@@ -64,5 +64,9 @@
   "overlay.done": "Готово",
   "overlay.goodbye": "Урок окончен! Scribbly уйдёт через несколько секунд.",
   "overlay.escTaken": "Esc занят другой программой: закройте через ✕",
-  "subtitles.missing": "Для этого урока нет субтитров на этом языке"
+  "subtitles.missing": "Для этого урока нет субтитров на этом языке",
+  "tray.demoTopics": "Демо-темы",
+  "tray.demoDefault": "Закон Гаусса (по умолчанию)",
+  "form.demoTopics": "Темы библиотеки",
+  "form.demoPick": "Выберите тему…"
 }

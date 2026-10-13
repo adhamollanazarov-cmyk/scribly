@@ -5,7 +5,13 @@ import type { LessonMode, OverlayBridge, OverlayMode } from './bridge'
 import { LessonOverlay, LINGER_MS } from './LessonOverlay'
 import { APPEAR_MS, DISAPPEAR_MS, FLY_MS } from './motion'
 import { OverlayApp } from './OverlayApp'
-import { DEFAULT_SETTINGS, nextSpeed, sanitizeSettings } from './settings'
+import {
+  DEFAULT_SETTINGS,
+  demoTopicTitle,
+  LIBRARY_TOPICS,
+  nextSpeed,
+  sanitizeSettings,
+} from './settings'
 
 class FakeBridge implements OverlayBridge {
   listener: ((mode: OverlayMode) => void) | null = null
@@ -92,6 +98,18 @@ describe('LessonOverlay', () => {
   })
   afterEach(() => {
     vi.useRealTimers()
+  })
+
+  it('sends the chosen demo topic with the region', async () => {
+    const { server } = await setup(true, streamOf('gauss_law'), {
+      ...LESSON,
+      settings: { ...LESSON.settings, demoTopic: 'faraday_rod' },
+    })
+    expect(server.requests[0].body).toEqual({
+      image_png_base64: LESSON.imagePngBase64,
+      voice: 'en-US-AriaNeural',
+      topic: 'Faraday’s law with a moving rod',
+    })
   })
 
   it('sends the captured region once, with the voice setting, and plays the lesson', async () => {
@@ -292,7 +310,21 @@ describe('overlay settings', () => {
         subtitles: 'ru',
         launchAtLogin: true,
       }),
-    ).toEqual({ voice: 'en-GB-SoniaNeural', speed: 1.5, subtitles: 'ru', launchAtLogin: true })
+    ).toEqual({
+      voice: 'en-GB-SoniaNeural',
+      speed: 1.5,
+      subtitles: 'ru',
+      launchAtLogin: true,
+      demoTopic: '',
+    })
+  })
+
+  it('keeps only a known demo topic, which the region request sends as its title', () => {
+    expect(LIBRARY_TOPICS).toHaveLength(20)
+    expect(sanitizeSettings({ demoTopic: 'snell_law' }).demoTopic).toBe('snell_law')
+    expect(sanitizeSettings({ demoTopic: '../etc' }).demoTopic).toBe('')
+    expect(demoTopicTitle('snell_law')).toBe('Snell’s law')
+    expect(demoTopicTitle('')).toBeUndefined()
   })
 
   it('launch at login is off by default', () => {

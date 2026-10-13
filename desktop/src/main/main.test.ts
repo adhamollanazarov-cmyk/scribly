@@ -36,6 +36,17 @@ describe('tray menu', () => {
     expect(sub(subtitles).find((i) => i.checked)?.label).toBe("O'zbekcha")
   })
 
+  it('lists the demo topics: the Gauss default plus every library lesson', () => {
+    const act = actions()
+    const settings = { ...DEFAULT_SETTINGS, demoTopic: 'snell_law' }
+    const topics = sub(sub(trayMenu(settings, act)[2]).find((i) => i.label === 'Demo topics')!)
+    expect(topics).toHaveLength(21)
+    expect(topics[0].label).toBe("Gauss's law (default)")
+    expect(topics.find((i) => i.checked)?.label).toBe('Snell’s law')
+    ;(topics[0].click as () => void)()
+    expect(act.update).toHaveBeenCalledWith({ demoTopic: '' })
+  })
+
   it('launch at login is an unchecked checkbox by default', () => {
     const login = sub(trayMenu(DEFAULT_SETTINGS, actions())[2]).find(
       (i) => i.label === 'Launch at login',

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { t } from '../i18n'
 import { SAMPLES } from '../lesson/samples'
+import { LIBRARY_TOPICS } from '../overlay/settings'
 import type { LessonRequest } from '../lesson/types'
 
 export function LessonForm({ onSubmit }: { onSubmit: (request: LessonRequest) => void }) {
@@ -64,6 +65,20 @@ export function LessonForm({ onSubmit }: { onSubmit: (request: LessonRequest) =>
             {t(sample.label)}
           </button>
         ))}
+        {/* Mock mode serves these offline library lessons (same list as the tray's Demo topics). */}
+        <select
+          className="chip"
+          aria-label={t('form.demoTopics')}
+          value=""
+          onChange={(e) => e.target.value && pick({ type: 'topic', text: e.target.value })}
+        >
+          <option value="">{t('form.demoPick')}</option>
+          {LIBRARY_TOPICS.map((topic) => (
+            <option key={topic.key} value={topic.title}>
+              {topic.title}
+            </option>
+          ))}
+        </select>
       </div>
     </form>
   )

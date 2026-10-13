@@ -10,11 +10,12 @@ from fastapi.sse import EventSourceResponse, ServerSentEvent
 from pydantic import BaseModel, ConfigDict, Field
 
 from app.lesson.claude import ClaudeLessonLLM, LessonLLM
-from app.lesson.fixtures import fixture_for_text, load_fixture
+from app.lesson.fixtures import DEFAULT_FIXTURE, fixture_for_text, load_fixture
 from app.lesson.generate import Header, generate_lesson
 from app.lesson.models import Lesson, Source, StreamedStep
 from app.lesson.pipeline import LessonError, prepare_lesson
 from app.lesson.stream_export import lesson_meta
+from app.library import find_library_lesson
 from app.settings import Settings, get_settings
 from app.tts import AudioCache, EdgeTTSProvider, TTSError, TTSProvider
 
@@ -52,6 +53,13 @@ def get_lesson_llm(settings: SettingsDep) -> LessonLLM:
 LLMDep = Annotated[LessonLLM, Depends(get_lesson_llm)]
 
 
+def mock_lesson(text: str) -> Lesson:
+    """Mock mode: the fixture with this source text, else a library topic, else Gauss."""
+    name = fixture_for_text(text)
+    found = find_library_lesson(text) if name == DEFAULT_FIXTURE else None
+    return found or prepare_lesson(load_fixture(name))[0]
+
+
 @router.post("/lessons", response_class=EventSourceResponse)
 async def create_lesson(
     request: LessonRequest, settings: SettingsDep, tts: TTSDep, cache: CacheDep, llm: LLMDep
@@ -61,7 +69,7 @@ async def create_lesson(
             yield event
         return
     try:
-        lesson, _ = prepare_lesson(load_fixture(fixture_for_text(request.text)))
+        lesson = mock_lesson(request.text)
     except LessonError as e:
         logger.error("Mock lesson failed: error_type=LessonError")
         yield error_event(str(e))

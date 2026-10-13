@@ -1,4 +1,7 @@
-"""Regenerate shared/streams/*.json. Run from server/: uv run python -m scripts.gen_streams"""
+"""Regenerate shared/streams/*.json and shared/library_topics.json.
+
+Run from server/: uv run python -m scripts.gen_streams
+"""
 
 from app.lesson.stream_export import STREAMS_DIR, write_streams
 

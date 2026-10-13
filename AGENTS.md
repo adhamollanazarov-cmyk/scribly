@@ -96,7 +96,7 @@ uv run ruff format --check .
 uv run mypy app
 uv run mypy scripts
 uv run python -m scripts.gen_schema  # after changing app/lesson/models.py
-uv run python -m scripts.gen_streams # after changing fixtures or the pipeline
+uv run python -m scripts.gen_streams # after changing fixtures, the library or the pipeline
 # server — eval bank (REAL API calls, costs ~$0.10 per problem; not part of the checks)
 uv run python -m scripts.eval --topic circuits --limit 3 --max-cost 2
 # web — run (http://localhost:5173)

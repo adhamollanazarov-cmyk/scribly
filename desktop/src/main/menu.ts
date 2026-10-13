@@ -1,6 +1,7 @@
 import type { MenuItemConstructorOptions } from 'electron'
 import { t } from '../../../web/src/i18n'
 import {
+  LIBRARY_TOPICS,
   SPEEDS,
   VOICES,
   type OverlaySettings,
@@ -21,7 +22,7 @@ const SUBTITLE_LABELS: [SubtitleLanguage, string][] = [
   ['off', t('subtitles.off')],
 ]
 
-/** The tray menu: explain, settings (voice, speed, subtitles, launch at login), quit. */
+/** The tray menu: explain, settings (voice, speed, subtitles, demo topic, launch at login), quit. */
 export function trayMenu(
   settings: OverlaySettings,
   act: MenuActions,
@@ -57,6 +58,16 @@ export function trayMenu(
           submenu: SUBTITLE_LABELS.map(([lang, label]) =>
             radio(lang, settings.subtitles, label, { subtitles: lang }),
           ),
+        },
+        {
+          // Mock mode until Phase 4 reads the topic from the captured region.
+          label: t('tray.demoTopics'),
+          submenu: [
+            radio('', settings.demoTopic, t('tray.demoDefault'), { demoTopic: '' }),
+            ...LIBRARY_TOPICS.map((topic) =>
+              radio(topic.key, settings.demoTopic, topic.title, { demoTopic: topic.key }),
+            ),
+          ],
         },
         { type: 'separator' },
         {

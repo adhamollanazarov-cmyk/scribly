@@ -1,7 +1,8 @@
 """POST /explain-region: the desktop overlay sends a captured screen region (PNG).
 
-Until Phase 4 (vision) this only serves a demo lesson in mock mode. The image is validated
-and then dropped: it is never written to disk or logged.
+Until Phase 4 (vision) this only serves a demo lesson in mock mode: the library lesson for
+the optional `topic` (the overlay's "Demo topics"), else the Gauss fixture. The image is
+validated and then dropped: it is never written to disk or logged.
 """
 
 import base64
@@ -15,7 +16,9 @@ from fastapi.sse import EventSourceResponse, ServerSentEvent
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from app.lesson.fixtures import DEFAULT_FIXTURE, load_fixture
+from app.lesson.models import Lesson
 from app.lesson.pipeline import LessonError, prepare_lesson
+from app.library import find_library_lesson
 from app.routes.lessons import (
     GENERIC_ERROR,
     CacheDep,
@@ -51,6 +54,8 @@ class RegionRequest(BaseModel):
     # Base64 of a PNG: 4 characters per 3 bytes.
     image_png_base64: str = Field(min_length=1, max_length=(MAX_IMAGE_BYTES + 2) // 3 * 4)
     voice: Voice | None = None
+    # A library topic title, until Phase 4 reads the topic from the image.
+    topic: str | None = Field(default=None, max_length=200)
 
     @field_validator("image_png_base64")
     @classmethod
@@ -63,6 +68,12 @@ class RegionRequest(BaseModel):
         if not (0 < width <= MAX_IMAGE_SIDE and 0 < height <= MAX_IMAGE_SIDE):
             raise ValueError(f"image sides must be 1–{MAX_IMAGE_SIDE} px")
         return value
+
+
+def demo_lesson(topic: str | None) -> Lesson:
+    """The library lesson for `topic`, or the Gauss fixture when there is none or no match."""
+    found = find_library_lesson(topic) if topic else None
+    return found or prepare_lesson(load_fixture(DEFAULT_FIXTURE))[0]
 
 
 def mark_demo(response: Response, settings: SettingsDep) -> None:
@@ -80,13 +91,13 @@ async def explain_region(
     tts: TTSDep,
     cache: CacheDep,
 ) -> AsyncIterator[ServerSentEvent]:
-    voice = request.voice
+    voice, topic = request.voice, request.topic
     del request  # the screenshot is not kept beyond validation
     if not settings.mock_ai:
         yield error_event(NOT_YET)
         return
     try:
-        lesson, _ = prepare_lesson(load_fixture(DEFAULT_FIXTURE))
+        lesson = demo_lesson(topic)
     except LessonError as e:
         logger.error("Demo region lesson failed: error_type=LessonError")
         yield error_event(str(e))

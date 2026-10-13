@@ -3,8 +3,9 @@
 A tray app. Press **Ctrl+Shift+Space**, drag over anything on screen (a ChatGPT answer, a
 PDF, a slide), and Scribbly draws and explains a lesson on top of it.
 
-Until Phase 4 (vision) the server answers every region with a **demo lesson** from the
-fixture library; the overlay says so in the subtitles.
+Until Phase 4 (vision) the server answers every region with a **demo lesson**: the
+library lesson chosen in the tray's **Settings → Demo topics** (20 physics topics), or
+Gauss's law by default. The overlay says so in the subtitles.
 
 ## How it fits together
 
@@ -39,10 +40,15 @@ npm start
 `npm start` builds `web/` and the Electron code, then starts the tray app. Press
 Ctrl+Shift+Space, drag over a region, and the demo lesson plays there.
 
-- Esc closes the lesson (or cancels the selection).
-- The pill under the board: pause/resume, replay step, speed, close.
+- Esc closes the lesson (or cancels the selection). When the lesson ends by itself the
+  pill shows **Done**, and Scribbly says goodbye and leaves after 6 s without pointer
+  movement over the lesson; closing gives Esc back to other apps.
+- The pill under the board: pause/resume, replay step, speed, close. If another app holds
+  Esc, the pill says to close with ✕.
+- Page zoom is locked in the overlay windows (it would shift the selected region).
 - Click Scribbly to pause or resume.
-- Tray icon menu: Settings (voice, speed, second subtitle line, launch at login), Quit.
+- Tray icon menu: Settings (voice, speed, second subtitle line, demo topic, launch at
+  login), Quit.
   Launch at login is off by default and only applies to the installed app.
 
 Server elsewhere: `$env:SCRIBBLY_SERVER="http://127.0.0.1:8000"` (the default).

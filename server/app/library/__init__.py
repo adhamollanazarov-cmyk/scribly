@@ -202,6 +202,15 @@ def _load_lesson(path: Path) -> Lesson:
     )
 
 
+def library_topics() -> list[dict[str, str]]:
+    """Every lesson as {key, title}, by title: the overlay's "Demo topics" menu."""
+    topics = [
+        {"key": key, "title": json.loads((_ROOT / f"{key}.json").read_text("utf-8"))["title"]}
+        for key in _TOPICS
+    ]
+    return sorted(topics, key=lambda t: t["title"].casefold())
+
+
 @cache
 def _aliases(topic: str) -> tuple[str, ...]:
     raw = json.loads((_ROOT / f"{topic}.json").read_text(encoding="utf-8"))
