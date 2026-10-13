@@ -211,6 +211,55 @@ describe('Scribbly', () => {
     expect(marker.closest('[data-layer="figure"]')).toBeNull()
   })
 
+  it('has big eyes with two highlights each, like the brand sheet', () => {
+    const highlights = (state: 'idle' | 'encouraging') => {
+      const { container, unmount } = render(
+        <svg>
+          <Scribbly state={state} x={0} y={0} still />
+        </svg>,
+      )
+      const n = container.querySelectorAll('[data-layer="eyes"] [data-part="highlight"]').length
+      unmount()
+      return n
+    }
+    expect(highlights('idle')).toBe(4)
+    expect(highlights('encouraging')).toBe(2) // one eye winks
+  })
+
+  it.each(['talking', 'happy', 'encouraging', 'appearing'] as const)(
+    'has a mitten hand with a thumb when %s',
+    (state) => {
+      const { container } = render(
+        <svg>
+          <Scribbly state={state} x={0} y={0} still />
+        </svg>,
+      )
+      expect(container.querySelector('[data-layer="arm-free"] [data-part="thumb"]')).not.toBeNull()
+      // The marker hand is a fist with its thumb around the barrel.
+      expect(
+        container.querySelector('[data-layer="arm-marker"] [data-part="thumb"]'),
+      ).not.toBeNull()
+    },
+  )
+
+  it('squashes on landing after a flight, and only then', () => {
+    const at = (state: 'flying' | 'idle' | 'talking' | 'disappearing') => (
+      <svg>
+        <Scribbly state={state} x={0} y={0} still />
+      </svg>
+    )
+    const { container, rerender } = render(at('flying'))
+    const land = () => container.querySelector('.mascot-squash')?.getAttribute('data-land')
+    expect(land()).toBe('false')
+    rerender(at('idle'))
+    expect(land()).toBe('true')
+    rerender(at('talking'))
+    expect(land()).toBe('false')
+    rerender(at('flying'))
+    rerender(at('disappearing'))
+    expect(land()).toBe('false') // leaving, not landing
+  })
+
   it('has a soft drop shadow so it shows on white pages', () => {
     const { container } = render(
       <svg>

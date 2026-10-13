@@ -2,6 +2,13 @@
 
 Update this file at the end of every task (newest entry on top, 3–8 lines).
 
+## 2026-10-13 — claude — Scribbly polish + squash-and-stretch (`claude/mascot`)
+
+**Done:** Redrew the art closer to `docs/brand/scribbly-sheet.png`: round, slightly larger body under the pencil cone (measured from the sheet), short arms with mitten hands (thumb; relaxed paw when hanging, fist around the marker, pointing and thumbs-up variants), stubby rounded legs, bigger eyes with two highlights. Squash-and-stretch: pop-in stretches, lands squashed and wobbles; flight squashes to take off and stretches; landing squash on the first pose after a flight (`data-land`); happy jump crouches, stretches, squashes. Every keyframe segment is eased, and pose tilts ease too. Body-below shift 60 → 84 so the mirrored drawing arm no longer crosses the face. All 11 poses + body-below + animation frames rendered in Chromium next to the sheet.
+**Checks:** Web: 216 Vitest (+6: two highlights per eye, mitten thumbs, landing only after a flight); ESLint+tsc; Prettier; Playwright 7/8 with `--workers=1` (incl. `gauss-lesson.spec.ts`). The 8th, `phase2-fixes` "handwriting uses loaded font advances", failed in the full run (9.68 px) and passes alone (4/4), the known order-dependent issue below.
+**Found issues:** low — no automated check that the CSS durations match `APPEAR_MS`/`FLY_MS`/`DISAPPEAR_MS`: Vitest does not load CSS (`?raw` comes back empty), so they are kept in sync by hand.
+**Next:** Antigravity QA of the motion in the overlay (appear, flight + landing) and the new hands at overlay scale 1.4.
+
 ## 2026-10-12 — claude — New Scribbly art (`claude/mascot`)
 
 **Done:** Recreated `docs/brand/scribbly-sheet.png` as a layered SVG in `web/src/mascot/Scribbly.tsx` (legs, body, pencil-tip wood/graphite, eyes, eyelids, cheeks, mouth shapes, free arm, marker arm, marker, effects) and replaced the purple character (no flag). New `mascot/pose.ts` maps every state to a pose; the existing state machines are untouched. Blinks in idle, lip-syncs while narrating, marker tip sits on the pen while drawing/pointing, marker always in the same hand, soft `feDropShadow` for white pages. Overlay headroom 110 → 130 px for the taller art. `docs/brand/README.md` updated (pose table, rules, contract).

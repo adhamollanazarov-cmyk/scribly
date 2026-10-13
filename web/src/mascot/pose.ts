@@ -88,5 +88,5 @@ export interface MarkerPlace {
 
 /** `draw` keeps the tip exactly on the pen (the anchor); `hold` raises it beside the body. */
 export function markerPlace(grip: Grip): MarkerPlace {
-  return grip === 'draw' ? { x: 0, y: 0, angle: -53 } : { x: 6, y: -54, angle: 72 }
+  return grip === 'draw' ? { x: 0, y: 0, angle: -53 } : { x: 3, y: -45, angle: 62 }
 }
