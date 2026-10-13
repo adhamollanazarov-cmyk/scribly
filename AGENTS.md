@@ -77,8 +77,9 @@ server makes one MP3 per step (TTS) → web plays audio while drawing strokes in
 - No new dependency without a one-line reason in `docs/DECISIONS.md`.
 - Names and comments in English. User-facing strings via i18n files (en, uz, ru).
 - Do not copy names, logos, mascots or assets from HeyClicky, Meta Muse, Gauth or
-  any other product. Our mascot "Scribbly" is original: round purple character, round
-  glasses, holds a pencil (see `docs/SPEC.md`).
+  any other product. Our mascot "Scribbly" is original: round cream body topped with a
+  sharpened pencil tip, big eyes, teal mitten hands and stubby legs, holds a glowing
+  marker (see `docs/brand/`).
 
 ## 6. Commands (keep this section updated when they change)
 One command per line: works in Windows PowerShell 5.1 (no `&&`) and in bash.

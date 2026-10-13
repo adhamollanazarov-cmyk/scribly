@@ -64,8 +64,10 @@ Driven by the 2026-10-09 physics audit (branch codex/physics-audit).
   (stroke animation, pen-following mascot, subtitles). Rebuild it properly in
   React from the lesson JSON; do not copy its browser speechSynthesis approach.
 - Animated hand-drawn strokes, KaTeX formulas, handwriting labels.
-- Mascot "Scribbly" (original, same name as the product): round purple body, round glasses, small antenna with orange
-  tip, holds a pencil. It walks to the pen tip while drawing, mouth moves while
+- Mascot "Scribbly" (original, same name as the product): round cream body whose top is a
+  sharpened pencil tip (yellow wood, graphite point), big eyes, orange cheeks, short teal arms
+  with mitten hands, stubby teal legs, holds a teal marker with a glowing tip
+  (`docs/brand/scribbly-sheet.png`). It walks to the pen tip while drawing, mouth moves while
   audio plays, blinks, idles in a corner when done. States: idle, drawing,
   talking, listening, thinking, happy (correct answer), encouraging (wrong answer).
 - Controls: play/pause, restart, speed 0.5–1.5×, subtitles EN + UZ (RU optional),

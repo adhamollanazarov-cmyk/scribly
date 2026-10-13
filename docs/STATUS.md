@@ -2,6 +2,13 @@
 
 Update this file at the end of every task (newest entry on top, 3–8 lines).
 
+## 2026-10-13 — claude — Merge leftovers, icons, mascot description (`claude/mascot`)
+
+**Done:** Removed the three merge markers in `docs/DECISIONS.md` (every library and Phase 5 entry kept) and the stray `HEAD` / `claude/phase5` lines in this file. An uncommitted working-tree edit had deleted the six Phase 5 DECISIONS rows along with the markers; it was backed up and replaced by this resolution. `desktop/scripts/make_icons.py` now draws Scribbly's head from the new art (round body, pencil tip, eyes with two highlights, cheeks, smile; same colors as `scribbly.css`); the 16 px tray icon drops the small details. `desktop/resources/*.png` regenerated. AGENTS.md §5, `docs/SPEC.md` and `docs/brand/README.md` describe the pencil-tip character.
+**Checks:** MOCK_AI=1, no API calls: 714 pytest; ruff lint/format; mypy app (29) + scripts (5). Desktop: 13 Vitest; ESLint+tsc; Prettier; Electron smoke 1/1. Icon script: ruff + mypy clean. Web code unchanged since the polish entry below.
+**Found issues:** none new.
+**Next:** Human merges `claude/mascot`; Antigravity checks the tray icon on a light and a dark taskbar.
+
 ## 2026-10-13 — claude — Scribbly polish + squash-and-stretch (`claude/mascot`)
 
 **Done:** Redrew the art closer to `docs/brand/scribbly-sheet.png`: round, slightly larger body under the pencil cone (measured from the sheet), short arms with mitten hands (thumb; relaxed paw when hanging, fist around the marker, pointing and thumbs-up variants), stubby rounded legs, bigger eyes with two highlights. Squash-and-stretch: pop-in stretches, lands squashed and wobbles; flight squashes to take off and stretches; landing squash on the first pose after a flight (`data-land`); happy jump crouches, stretches, squashes. Every keyframe segment is eased, and pose tilts ease too. Body-below shift 60 → 84 so the mirrored drawing arm no longer crosses the face. All 11 poses + body-below + animation frames rendered in Chromium next to the sheet.
@@ -15,8 +22,6 @@ Update this file at the end of every task (newest entry on top, 3–8 lines).
 **Checks:** MOCK_AI=1, no API calls: 714 pytest; ruff lint/format; mypy app (29) + scripts (5); schema/streams not regenerated (no server change). Web: 210 Vitest (+31: 11 state→pose cases, mouth, marker hand/tip, drop shadow, blink); ESLint+tsc; Prettier; Playwright 8/8 with `--workers=1` (incl. `gauss-lesson.spec.ts`). Desktop: 13 Vitest, ESLint+tsc, Prettier, Electron smoke 1/1. All 11 poses rendered in Chromium and compared with the sheet.
 **Found issues:** low — `docs/DECISIONS.md` still contains unresolved merge markers (`<<<<<<< HEAD` … `>>>>>>> claude/phase5`) and `docs/STATUS.md` has stray `HEAD` / `claude/phase5` lines from the library + Phase 5 merges. low — tray/app icons (`desktop/scripts/make_icons.py`) still draw the purple character. low — AGENTS.md §5 and `docs/SPEC.md` still describe Scribbly as "round purple, round glasses".
 **Next:** Antigravity QA of the new poses in the overlay and on the board (light and dark); redraw the icons from the sheet.
-
-HEAD
 
 ## 2026-10-12 — codex — Offline physics library (`codex/library`)
 
@@ -32,7 +37,6 @@ HEAD
 **Checks:** PowerShell-compatible, MOCK_AI=1, no Anthropic calls: 617 pytest (+17 `/explain-region`); ruff lint/format; mypy app (28) + scripts (5); schema/streams regenerate unchanged. Web: 179 Vitest (+62: geometry at 100/125/150 %, motion machine, overlay, settings, `streamEvents`); ESLint+tsc; Prettier; Playwright 7/8 with `--workers=1`. Desktop: 13 Vitest, ESLint+tsc, Prettier, Playwright-Electron smoke 1/1. Live on this PC (1 monitor, 125 %): real mock server, board exactly over the dragged rectangle, narration through the `app://` proxy (206 range), EN+UZ subtitles, Esc closes. Installer: `desktop/release/Scribbly Setup 0.1.0.exe` (NSIS, x64, 108 MB) built; the same Electron smoke test passes against the packaged `win-unpacked/Scribbly.exe` (resources paths, `app://` renderer root, tray icon).
 **Found issues:** low — the installer is not code-signed, so Windows SmartScreen will warn on first run. low (pre-existing) — `phase2-fixes.spec.ts` "handwriting uses loaded font advances" fails in the full web Playwright run (mascot 9.7 px from the pen) but passes alone; it also fails on unmodified `main` (16 px), so it is order/timing dependent, not caused by Phase 5. low — the installer does not bundle the Python server yet (README: start it separately). low — only 125 % scaling and a single monitor exist on this machine: 100/150 % and a second monitor are covered by unit tests, not live. low — `globalShortcut('Escape')` is taken from other apps while a lesson is open (by design, see DECISIONS). low — `npm install` did not fetch the Electron binary on first try (network); `node node_modules/electron/install.js` fixed it.
 **Next:** Antigravity QA of the overlay on real apps (ChatGPT, PDF, slides) and on a second monitor at 150 %; Codex review (security of the protocol proxy and IPC); then the lesson library.
-claude/phase5
 
 ## 2026-10-12 — founder — roadmap change after trying Phase 2
 

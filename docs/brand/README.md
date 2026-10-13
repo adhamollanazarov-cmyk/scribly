@@ -72,6 +72,6 @@ tested in `motion.test.ts`), not the art component.
 ## Files
 - `scribbly-sheet.png` — pose reference sheet (source for the SVG above).
 - `desktop/resources/icon.png` (256 px), `tray.png` / `tray@2x.png` — app and tray icons,
-  drawn by `desktop/scripts/make_icons.py` (`python desktop/scripts/make_icons.py desktop/resources`).
-  These still show the previous purple character; redraw them from the sheet in a
-  follow-up.
+  drawn by `desktop/scripts/make_icons.py` (`python desktop/scripts/make_icons.py desktop/resources`):
+  Scribbly's head with the same shapes and colors as the SVG. The 16 px tray icon drops
+  the cheeks, small eye highlights and shading. Rerun it when the art changes.
