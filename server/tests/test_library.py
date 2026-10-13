@@ -7,7 +7,9 @@ covered. Conservation checks provide a second way to check coupled problems.
 
 import json
 import math
+import re
 from pathlib import Path
+from typing import Any, cast
 
 import pytest
 
@@ -90,7 +92,54 @@ def test_full_pipeline(path: Path) -> None:
     checkpoints = [s.checkpoint for s in lesson.steps if s.checkpoint]
     assert len(checkpoints) >= 2
     assert all(cp.hint and cp.reexplain_hint and cp.hint != cp.reexplain_hint for cp in checkpoints)
-    assert checkpoints[-1].answer == pytest.approx(ANSWERS[path.stem][0], rel=0.005)
+    assert all(s.subtitles.ru is None for s in lesson.steps)  # no empty strings (review L3)
+
+
+def _raw(path: Path) -> dict[str, Any]:
+    return cast(dict[str, Any], json.loads(path.read_text(encoding="utf-8")))
+
+
+def _checkpoint_steps(raw: dict[str, Any], kind: str) -> list[dict[str, Any]]:
+    return [s for s in raw["steps"] if s["checkpoints"] and s["checkpoints"][0]["type"] == kind]
+
+
+@pytest.mark.parametrize("path", PATHS, ids=lambda p: p.stem)
+def test_concept_checkpoint_has_real_distractors_and_is_not_told_first(path: Path) -> None:
+    raw = _raw(path)
+    [step] = _checkpoint_steps(raw, "choice")
+    cp = step["checkpoints"][0]
+    assert len(cp["choices"]) >= 3  # review M1: not a coin flip
+    correct = cp["choices"][int(cp["answer"])].casefold()
+    told = " ".join(s["say"].casefold() for s in raw["steps"][: raw["steps"].index(step)])
+    assert not re.search(rf"{re.escape(correct)}", told)  # review M3: asked before told
+
+
+def test_concept_answers_are_not_always_in_the_same_place() -> None:
+    positions = {_checkpoint_steps(_raw(p), "choice")[0]["checkpoints"][0]["answer"] for p in PATHS}
+    assert len(positions) >= 3
+
+
+@pytest.mark.parametrize("path", PATHS, ids=lambda p: p.stem)
+def test_number_checkpoint_asks_for_a_prediction_before_the_reveal(path: Path) -> None:
+    # Review M2: the student predicts a result, which the next step then shows.
+    raw = _raw(path)
+    [step] = _checkpoint_steps(raw, "number")
+    [calc] = step["calcs"]
+    assert step["checkpoints"][0]["answer"] == f"{{{calc['id']}:3sf}}"
+    index = raw["steps"].index(step)
+    placeholder = "{" + calc["id"]
+    assert not any(placeholder in json.dumps(s) for s in raw["steps"][:index])
+    assert placeholder in raw["steps"][index + 1]["say"]
+
+
+def test_checkpoint_hints_and_uzbek_questions_are_specific() -> None:
+    # Review M2/M4: no copied re-explain hints, no generic Uzbek line for the question.
+    steps = [s for p in PATHS for s in _raw(p)["steps"] if s["checkpoints"]]
+    hints = [s["checkpoints"][0]["reexplain_hint"] for s in steps]
+    uzbek = [s["subtitles"]["uz"] for s in steps]
+    assert len(set(hints)) == len(hints)
+    assert len(set(uzbek)) == len(uzbek)
+    assert not any("tushunganingizni tekshiring" in u for u in uzbek)
 
 
 @pytest.mark.parametrize(
@@ -136,6 +185,25 @@ def test_lookup_phrases(query: str, key: str) -> None:
         "torques",
         "Gauss law",
         "compare spring SHM and simple pendulum",
+        # docs/reviews/library.md H1: each of these returned a lesson on different physics.
+        "A point charge of 3 nC sits at the center of a sphere of radius 0.2 m. "
+        "Find the electric flux through the sphere and the field on its surface.",
+        "Conservation of angular momentum for a spinning skater",
+        "Momentum of a photon",
+        "Elastic collision of two billiard balls",
+        "Electric potential energy of two charges",
+        "Torque on a current loop in a magnetic field",
+        "Conical pendulum",
+        "Physical pendulum",
+        "Speed of sound in air",
+        "Why does a Faraday cage block signals?",
+        "Two springs in series",
+        "Energy stored in a compressed spring",
+        "A projectile is launched from a 45 m cliff",
+        "Projectile motion launched from a cliff",
+        "Block on a frictionless inclined plane",
+        "Magnetic force on a current-carrying wire",
+        "Simple pendulum of length 2 m",
     ],
 )
 def test_unknown_substrings_and_ambiguous_requests(query: str) -> None:
@@ -143,8 +211,8 @@ def test_unknown_substrings_and_ambiguous_requests(query: str) -> None:
 
 
 def test_lookup_returns_isolated_objects() -> None:
-    first = find_library_lesson("projectile")
-    second = find_library_lesson("projectile")
+    first = find_library_lesson("projectile motion")
+    second = find_library_lesson("projectile motion")
     assert first is not None and second is not None
     first.steps.clear()
     assert second.steps and first.id == second.id

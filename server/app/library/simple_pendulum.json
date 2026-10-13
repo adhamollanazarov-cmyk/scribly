@@ -405,23 +405,25 @@
       "id": "s4",
       "kind": "checkpoint",
       "calcs": [],
-      "say": "In the small-angle approximation, does bob mass change the period?",
+      "say": "On the Moon, with weaker gravity, what would happen to the same pendulum’s period?",
       "subtitles": {
-        "uz": "Davom etishdan oldin tushunganingizni tekshiring.",
+        "uz": "Oyda, tortishish kuchsizroq bo‘lganda, o‘sha mayatnikning davri qanday o‘zgaradi?",
         "ru": ""
       },
       "draw": [],
       "checkpoints": [
         {
-          "question": "In the small-angle approximation, does bob mass change the period?",
+          "question": "On the Moon, with weaker gravity, what would happen to the same pendulum’s period?",
           "type": "choice",
           "choices": [
-            "No",
-            "Yes"
+            "It decreases",
+            "It stays the same",
+            "It becomes zero",
+            "It increases"
           ],
-          "answer": "0",
-          "hint": "Mass cancels between inertia and gravitational force.",
-          "reexplain_hint": "A heavier bob has more weight but proportionally more inertia, leaving the same timing."
+          "answer": "3",
+          "hint": "Weaker gravity gives a weaker restoring pull.",
+          "reexplain_hint": "A gentler pull back to the middle means slower swings, so each swing takes longer."
         }
       ]
     },
@@ -490,7 +492,7 @@
     },
     {
       "id": "s6",
-      "kind": "explain",
+      "kind": "checkpoint",
       "calcs": [
         {
           "expr": "1/c1",
@@ -504,6 +506,27 @@
           "id": "c2"
         }
       ],
+      "say": "Before I show it, predict the frequency from the period.",
+      "subtitles": {
+        "uz": "Ko‘rsatishdan oldin davr orqali chastotani taxmin qiling.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "Predict the frequency.",
+          "type": "number",
+          "choices": [],
+          "answer": "{c2:3sf}",
+          "hint": "Frequency is one divided by the period.",
+          "reexplain_hint": "Count swings per second: if one swing takes this long, how many fit into a second?"
+        }
+      ]
+    },
+    {
+      "id": "s7",
+      "kind": "explain",
+      "calcs": [],
       "say": "Frequency is {c2}.",
       "subtitles": {
         "uz": "Chastota {c2}.",
@@ -541,27 +564,6 @@
         }
       ],
       "checkpoints": []
-    },
-    {
-      "id": "s7",
-      "kind": "checkpoint",
-      "calcs": [],
-      "say": "Enter the first calculated result, using its displayed unit.",
-      "subtitles": {
-        "uz": "Birinchi hisoblangan natijani ko‘rsatilgan birlikda kiriting.",
-        "ru": ""
-      },
-      "draw": [],
-      "checkpoints": [
-        {
-          "question": "What is the first calculated result?",
-          "type": "number",
-          "choices": [],
-          "answer": "{c1:3sf}",
-          "hint": "Read the first result and its unit.",
-          "reexplain_hint": "A heavier bob has more weight but proportionally more inertia, leaving the same timing."
-        }
-      ]
     },
     {
       "id": "s8",

@@ -22,10 +22,16 @@ export function Subtitles({ state, settings }: { state: PlayerState; settings: S
         <>
           {(settings.english || noAudio) && <p className="sub-en">{step.say}</p>}
           {noAudio && <p className="badge warn">{t('warning.audio')}</p>}
-          {second && (
+          {second ? (
             <p className="sub-second" lang={settings.second}>
               {second}
             </p>
+          ) : (
+            settings.second !== 'off' && (
+              <p className="sub-second muted" lang={settings.second}>
+                {t('subtitles.missing', settings.second)}
+              </p>
+            )
           )}
           {step.warning === 'unverified' && (
             <p className="badge warn">⚠ {t('warning.unverified')}</p>

@@ -567,23 +567,25 @@
       "id": "s4",
       "kind": "checkpoint",
       "calcs": [],
-      "say": "Along the electric field, electric potential does what?",
+      "say": "If the plate gap doubles at the same voltage, what happens to the field between the plates?",
       "subtitles": {
-        "uz": "Davom etishdan oldin tushunganingizni tekshiring.",
+        "uz": "Plastinalar orasidagi masofa bir xil kuchlanishda ikki baravar oshsa, maydon qanday o‘zgaradi?",
         "ru": ""
       },
       "draw": [],
       "checkpoints": [
         {
-          "question": "Along the electric field, electric potential does what?",
+          "question": "If the plate gap doubles at the same voltage, what happens to the field between the plates?",
           "type": "choice",
           "choices": [
-            "Decreases",
-            "Increases"
+            "It doubles",
+            "It halves",
+            "It stays the same",
+            "It becomes zero"
           ],
-          "answer": "0",
-          "hint": "A positive charge loses potential energy along the field.",
-          "reexplain_hint": "Picture a downhill slope: the field points toward lower electric potential."
+          "answer": "1",
+          "hint": "Field is voltage per unit gap.",
+          "reexplain_hint": "Picture the same voltage drop spread over a longer hill: the slope is gentler."
         }
       ]
     },
@@ -719,7 +721,7 @@
     },
     {
       "id": "s7",
-      "kind": "explain",
+      "kind": "checkpoint",
       "calcs": [
         {
           "expr": "c2*V",
@@ -738,6 +740,27 @@
           "id": "c3"
         }
       ],
+      "say": "Before I show it, predict the charge on each plate from the capacitance and the voltage.",
+      "subtitles": {
+        "uz": "Ko‘rsatishdan oldin har bir plastinadagi zaryadni sig‘im va kuchlanish orqali taxmin qiling.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "Predict the charge magnitude on each plate.",
+          "type": "number",
+          "choices": [],
+          "answer": "{c3:3sf}",
+          "hint": "Charge equals capacitance times voltage.",
+          "reexplain_hint": "Capacitance is charge per volt: count how many volts there are."
+        }
+      ]
+    },
+    {
+      "id": "s8",
+      "kind": "explain",
+      "calcs": [],
       "say": "Each plate holds charge magnitude {c3}, with opposite signs.",
       "subtitles": {
         "uz": "Har bir plastinadagi zaryad moduli {c3}, ishoralari qarama-qarshi.",
@@ -775,27 +798,6 @@
         }
       ],
       "checkpoints": []
-    },
-    {
-      "id": "s8",
-      "kind": "checkpoint",
-      "calcs": [],
-      "say": "Enter the first calculated result, using its displayed unit.",
-      "subtitles": {
-        "uz": "Birinchi hisoblangan natijani ko‘rsatilgan birlikda kiriting.",
-        "ru": ""
-      },
-      "draw": [],
-      "checkpoints": [
-        {
-          "question": "What is the first calculated result?",
-          "type": "number",
-          "choices": [],
-          "answer": "{c1:3sf}",
-          "hint": "Read the first result and its unit.",
-          "reexplain_hint": "Picture a downhill slope: the field points toward lower electric potential."
-        }
-      ]
     },
     {
       "id": "s9",

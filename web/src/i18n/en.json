@@ -63,5 +63,6 @@
   "tray.captureFailed": "Could not capture the screen. Please try again.",
   "overlay.done": "Done",
   "overlay.goodbye": "That's the lesson! Scribbly leaves in a few seconds.",
-  "overlay.escTaken": "Esc is used by another app: close with ✕"
+  "overlay.escTaken": "Esc is used by another app: close with ✕",
+  "subtitles.missing": "No subtitles in this language for this lesson"
 }

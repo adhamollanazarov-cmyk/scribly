@@ -447,23 +447,25 @@
       "id": "s4",
       "kind": "checkpoint",
       "calcs": [],
-      "say": "Positive net work causes kinetic energy to do what?",
+      "say": "If the same force acted against the motion over the same distance, what would the cart do?",
       "subtitles": {
-        "uz": "Davom etishdan oldin tushunganingizni tekshiring.",
+        "uz": "Xuddi shu kuch harakatga qarshi o‘sha masofada ta’sir qilsa, aravacha nima qiladi?",
         "ru": ""
       },
       "draw": [],
       "checkpoints": [
         {
-          "question": "Positive net work causes kinetic energy to do what?",
+          "question": "If the same force acted against the motion over the same distance, what would the cart do?",
           "type": "choice",
           "choices": [
-            "Increase",
-            "Decrease"
+            "Speed up",
+            "Keep its speed",
+            "Slow down",
+            "Reverse instantly"
           ],
-          "answer": "0",
-          "hint": "Work transfers energy to the cart.",
-          "reexplain_hint": "Picture an energy account: positive work deposits energy into motion."
+          "answer": "2",
+          "hint": "A force against the displacement does negative work.",
+          "reexplain_hint": "Think of an energy account: negative work withdraws energy from the motion."
         }
       ]
     },
@@ -532,7 +534,7 @@
     },
     {
       "id": "s6",
-      "kind": "explain",
+      "kind": "checkpoint",
       "calcs": [
         {
           "expr": "sqrt(u**2+2*c1/m)",
@@ -555,6 +557,27 @@
           "id": "c2"
         }
       ],
+      "say": "Before I show it, predict the final speed from the energy the cart gains.",
+      "subtitles": {
+        "uz": "Ko‘rsatishdan oldin aravacha olgan energiya orqali oxirgi tezlikni taxmin qiling.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "Predict the final speed of the cart.",
+          "type": "number",
+          "choices": [],
+          "answer": "{c2:3sf}",
+          "hint": "Add the work to the initial kinetic energy, then solve for speed.",
+          "reexplain_hint": "Energy bookkeeping: final kinetic energy equals starting energy plus the work done."
+        }
+      ]
+    },
+    {
+      "id": "s7",
+      "kind": "explain",
+      "calcs": [],
       "say": "Final speed is {c2}.",
       "subtitles": {
         "uz": "Oxirgi tezlik moduli {c2}.",
@@ -592,27 +615,6 @@
         }
       ],
       "checkpoints": []
-    },
-    {
-      "id": "s7",
-      "kind": "checkpoint",
-      "calcs": [],
-      "say": "Enter the first calculated result, using its displayed unit.",
-      "subtitles": {
-        "uz": "Birinchi hisoblangan natijani ko‘rsatilgan birlikda kiriting.",
-        "ru": ""
-      },
-      "draw": [],
-      "checkpoints": [
-        {
-          "question": "What is the first calculated result?",
-          "type": "number",
-          "choices": [],
-          "answer": "{c1:3sf}",
-          "hint": "Read the first result and its unit.",
-          "reexplain_hint": "Picture an energy account: positive work deposits energy into motion."
-        }
-      ]
     },
     {
       "id": "s8",

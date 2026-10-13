@@ -435,30 +435,6 @@
     {
       "id": "s4",
       "kind": "checkpoint",
-      "calcs": [],
-      "say": "If separation doubles while charges stay fixed, how does force change?",
-      "subtitles": {
-        "uz": "Davom etishdan oldin tushunganingizni tekshiring.",
-        "ru": ""
-      },
-      "draw": [],
-      "checkpoints": [
-        {
-          "question": "If separation doubles while charges stay fixed, how does force change?",
-          "type": "choice",
-          "choices": [
-            "It becomes one quarter",
-            "It doubles"
-          ],
-          "answer": "0",
-          "hint": "Square the distance factor.",
-          "reexplain_hint": "Spread the interaction over a sphere: doubling its radius quadruples its area."
-        }
-      ]
-    },
-    {
-      "id": "s5",
-      "kind": "explain",
       "calcs": [
         {
           "expr": "k*q1*q2/r**2",
@@ -489,6 +465,27 @@
           "id": "c1"
         }
       ],
+      "say": "Before I show it, predict the force magnitude with Coulomb’s law.",
+      "subtitles": {
+        "uz": "Ko‘rsatishdan oldin Kulon qonuni orqali kuch modulini taxmin qiling.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "Predict the force magnitude on each charge.",
+          "type": "number",
+          "choices": [],
+          "answer": "{c1:3sf}",
+          "hint": "Multiply k by both charges, then divide by the separation squared.",
+          "reexplain_hint": "Coulomb’s law looks like the law of gravity: the product of the charges over distance squared."
+        }
+      ]
+    },
+    {
+      "id": "s5",
+      "kind": "explain",
+      "calcs": [],
       "say": "Each repulsive force has magnitude {c1}.",
       "subtitles": {
         "uz": "Har bir itarish kuchining moduli {c1}.",
@@ -531,19 +528,24 @@
       "id": "s6",
       "kind": "checkpoint",
       "calcs": [],
-      "say": "Enter the first calculated result, using its displayed unit.",
+      "say": "If the separation doubles while the charges stay fixed, how does the force change?",
       "subtitles": {
-        "uz": "Birinchi hisoblangan natijani ko‘rsatilgan birlikda kiriting.",
+        "uz": "Zaryadlar o‘zgarmay, masofa ikki baravar oshsa, kuch qanday o‘zgaradi?",
         "ru": ""
       },
       "draw": [],
       "checkpoints": [
         {
-          "question": "What is the first calculated result?",
-          "type": "number",
-          "choices": [],
-          "answer": "{c1:3sf}",
-          "hint": "Read the first result and its unit.",
+          "question": "If the separation doubles while the charges stay fixed, how does the force change?",
+          "type": "choice",
+          "choices": [
+            "It halves",
+            "It becomes one quarter",
+            "It doubles",
+            "It stays the same"
+          ],
+          "answer": "1",
+          "hint": "Square the change in distance.",
           "reexplain_hint": "Spread the interaction over a sphere: doubling its radius quadruples its area."
         }
       ]

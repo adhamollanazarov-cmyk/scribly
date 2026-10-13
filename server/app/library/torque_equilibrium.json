@@ -502,23 +502,25 @@
       "id": "s4",
       "kind": "checkpoint",
       "calcs": [],
-      "say": "For rotational equilibrium, what must the net torque be?",
+      "say": "If the support moved closer to the pivot, what would happen to the support force needed?",
       "subtitles": {
-        "uz": "Davom etishdan oldin tushunganingizni tekshiring.",
+        "uz": "Tayanch aylanish o‘qiga yaqinroq qo‘yilsa, kerakli tayanch kuchi qanday o‘zgaradi?",
         "ru": ""
       },
       "draw": [],
       "checkpoints": [
         {
-          "question": "For rotational equilibrium, what must the net torque be?",
+          "question": "If the support moved closer to the pivot, what would happen to the support force needed?",
           "type": "choice",
           "choices": [
-            "Zero",
-            "Positive"
+            "It decreases",
+            "It stays the same",
+            "It becomes zero",
+            "It increases"
           ],
-          "answer": "0",
-          "hint": "No angular acceleration means balanced torques.",
-          "reexplain_hint": "Imagine a seesaw: a smaller force can balance a larger force using a longer arm."
+          "answer": "3",
+          "hint": "A shorter lever arm needs a bigger force for the same torque.",
+          "reexplain_hint": "Opening a door near its hinges takes a much bigger push than at the handle."
         }
       ]
     },
@@ -587,7 +589,7 @@
     },
     {
       "id": "s6",
-      "kind": "explain",
+      "kind": "checkpoint",
       "calcs": [
         {
           "expr": "-c1/L",
@@ -606,6 +608,27 @@
           "id": "c2"
         }
       ],
+      "say": "Before I show it, predict the support force that balances the load torque.",
+      "subtitles": {
+        "uz": "Ko‘rsatishdan oldin yuk momentini muvozanatlaydigan tayanch kuchini taxmin qiling.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "Predict the upward support force magnitude.",
+          "type": "number",
+          "choices": [],
+          "answer": "{c2:3sf}",
+          "hint": "The support torque must cancel the load torque; divide by its lever arm.",
+          "reexplain_hint": "Balance the seesaw: support force times its arm equals the size of the load torque."
+        }
+      ]
+    },
+    {
+      "id": "s7",
+      "kind": "explain",
+      "calcs": [],
       "say": "The upward support force has magnitude {c2}.",
       "subtitles": {
         "uz": "Yuqoriga yo‘nalgan tayanch kuchi moduli {c2}.",
@@ -643,27 +666,6 @@
         }
       ],
       "checkpoints": []
-    },
-    {
-      "id": "s7",
-      "kind": "checkpoint",
-      "calcs": [],
-      "say": "Enter the first calculated result, using its displayed unit.",
-      "subtitles": {
-        "uz": "Birinchi hisoblangan natijani ko‘rsatilgan birlikda kiriting.",
-        "ru": ""
-      },
-      "draw": [],
-      "checkpoints": [
-        {
-          "question": "What is the first calculated result?",
-          "type": "number",
-          "choices": [],
-          "answer": "{c1:3sf}",
-          "hint": "Read the first result and its unit.",
-          "reexplain_hint": "Imagine a seesaw: a smaller force can balance a larger force using a longer arm."
-        }
-      ]
     },
     {
       "id": "s8",

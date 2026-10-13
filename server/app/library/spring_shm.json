@@ -458,23 +458,25 @@
       "id": "s4",
       "kind": "checkpoint",
       "calcs": [],
-      "say": "Where is the oscillating mass fastest?",
+      "say": "With a heavier mass on the same spring, what happens to the oscillation?",
       "subtitles": {
-        "uz": "Davom etishdan oldin tushunganingizni tekshiring.",
+        "uz": "Xuddi shu prujinaga og‘irroq yuk qo‘yilsa, tebranish qanday o‘zgaradi?",
         "ru": ""
       },
       "draw": [],
       "checkpoints": [
         {
-          "question": "Where is the oscillating mass fastest?",
+          "question": "With a heavier mass on the same spring, what happens to the oscillation?",
           "type": "choice",
           "choices": [
-            "At equilibrium",
-            "At a turning point"
+            "It speeds up: higher angular frequency",
+            "It slows: lower angular frequency",
+            "Its angular frequency stays the same",
+            "It stops oscillating"
           ],
-          "answer": "0",
-          "hint": "At equilibrium, stored spring energy is smallest.",
-          "reexplain_hint": "Imagine the spring releasing stored energy as the mass approaches the middle."
+          "answer": "1",
+          "hint": "More inertia responds more slowly to the same spring force.",
+          "reexplain_hint": "Bounce a light toy and a heavy bag on the same rubber band: the heavy one moves more sluggishly."
         }
       ]
     },
@@ -543,7 +545,7 @@
     },
     {
       "id": "s6",
-      "kind": "explain",
+      "kind": "checkpoint",
       "calcs": [
         {
           "expr": "c1*A",
@@ -562,6 +564,27 @@
           "id": "c2"
         }
       ],
+      "say": "Before I show it, predict the maximum speed from the angular frequency and the amplitude.",
+      "subtitles": {
+        "uz": "Ko‘rsatishdan oldin burchak chastota va amplituda orqali eng katta tezlikni taxmin qiling.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "Predict the maximum speed of the mass.",
+          "type": "number",
+          "choices": [],
+          "answer": "{c2:3sf}",
+          "hint": "Multiply the angular frequency by the amplitude.",
+          "reexplain_hint": "At equilibrium, all the stored spring energy has become kinetic energy."
+        }
+      ]
+    },
+    {
+      "id": "s7",
+      "kind": "explain",
+      "calcs": [],
       "say": "Maximum speed is {c2}, at equilibrium.",
       "subtitles": {
         "uz": "Eng katta tezlik {c2}, muvozanat holatida.",
@@ -599,27 +622,6 @@
         }
       ],
       "checkpoints": []
-    },
-    {
-      "id": "s7",
-      "kind": "checkpoint",
-      "calcs": [],
-      "say": "Enter the first calculated result, using its displayed unit.",
-      "subtitles": {
-        "uz": "Birinchi hisoblangan natijani ko‘rsatilgan birlikda kiriting.",
-        "ru": ""
-      },
-      "draw": [],
-      "checkpoints": [
-        {
-          "question": "What is the first calculated result?",
-          "type": "number",
-          "choices": [],
-          "answer": "{c1:3sf}",
-          "hint": "Read the first result and its unit.",
-          "reexplain_hint": "Imagine the spring releasing stored energy as the mass approaches the middle."
-        }
-      ]
     },
     {
       "id": "s8",

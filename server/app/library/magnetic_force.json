@@ -434,30 +434,6 @@
     {
       "id": "s4",
       "kind": "checkpoint",
-      "calcs": [],
-      "say": "Does the magnetic force alone change the particle’s kinetic energy?",
-      "subtitles": {
-        "uz": "Davom etishdan oldin tushunganingizni tekshiring.",
-        "ru": ""
-      },
-      "draw": [],
-      "checkpoints": [
-        {
-          "question": "Does the magnetic force alone change the particle’s kinetic energy?",
-          "type": "choice",
-          "choices": [
-            "No",
-            "Yes"
-          ],
-          "answer": "0",
-          "hint": "Force is perpendicular to velocity.",
-          "reexplain_hint": "A sideways push turns the path without adding work along the instantaneous displacement."
-        }
-      ]
-    },
-    {
-      "id": "s5",
-      "kind": "explain",
       "calcs": [
         {
           "expr": "q*v*B",
@@ -484,6 +460,27 @@
           "id": "c1"
         }
       ],
+      "say": "Before I show it, predict the force component, upward positive.",
+      "subtitles": {
+        "uz": "Ko‘rsatishdan oldin kuchning y tashkil etuvchisini taxmin qiling, yuqori musbat.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "Predict the magnetic force y component, upward positive.",
+          "type": "number",
+          "choices": [],
+          "answer": "{c1:3sf}",
+          "hint": "Multiply charge, speed and field; the right-hand rule gives the sign.",
+          "reexplain_hint": "The force is largest when velocity and field are perpendicular, as here."
+        }
+      ]
+    },
+    {
+      "id": "s5",
+      "kind": "explain",
+      "calcs": [],
       "say": "The force component is {c1}, upward.",
       "subtitles": {
         "uz": "Kuchning komponenti {c1}, yuqoriga yo‘nalgan.",
@@ -526,20 +523,25 @@
       "id": "s6",
       "kind": "checkpoint",
       "calcs": [],
-      "say": "Enter the first calculated result, using its displayed unit.",
+      "say": "If the charge were negative, with the same motion and field, which way would the force point?",
       "subtitles": {
-        "uz": "Birinchi hisoblangan natijani ko‘rsatilgan birlikda kiriting.",
+        "uz": "Zaryad manfiy bo‘lsa, harakat va maydon o‘zgarmasa, kuch qaysi tomonga yo‘naladi?",
         "ru": ""
       },
       "draw": [],
       "checkpoints": [
         {
-          "question": "What is the first calculated result?",
-          "type": "number",
-          "choices": [],
-          "answer": "{c1:3sf}",
-          "hint": "Read the first result and its unit.",
-          "reexplain_hint": "A sideways push turns the path without adding work along the instantaneous displacement."
+          "question": "If the charge were negative, with the same motion and field, which way would the force point?",
+          "type": "choice",
+          "choices": [
+            "Upward",
+            "Into the page",
+            "Downward",
+            "Out of the page"
+          ],
+          "answer": "2",
+          "hint": "A negative charge reverses the right-hand-rule result.",
+          "reexplain_hint": "Use the right-hand rule for a positive charge, then flip the arrow for a negative one."
         }
       ]
     },

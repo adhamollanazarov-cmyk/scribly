@@ -63,5 +63,6 @@
   "tray.captureFailed": "Ekranni olish imkoni bo'lmadi. Qaytadan urinib ko'ring.",
   "overlay.done": "Tayyor",
   "overlay.goodbye": "Dars tugadi! Scribbly bir necha soniyadan keyin ketadi.",
-  "overlay.escTaken": "Esc boshqa dastur tomonidan band: ✕ bilan yoping"
+  "overlay.escTaken": "Esc boshqa dastur tomonidan band: ✕ bilan yoping",
+  "subtitles.missing": "Bu dars uchun shu tilda subtitr yo'q"
 }

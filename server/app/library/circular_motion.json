@@ -434,23 +434,25 @@
       "id": "s4",
       "kind": "checkpoint",
       "calcs": [],
-      "say": "Where does the net force point during uniform circular motion?",
+      "say": "If the string suddenly breaks, which way does the object move right after?",
       "subtitles": {
-        "uz": "Davom etishdan oldin tushunganingizni tekshiring.",
+        "uz": "Ip birdan uzilsa, jism darhol qaysi tomonga harakatlanadi?",
         "ru": ""
       },
       "draw": [],
       "checkpoints": [
         {
-          "question": "Where does the net force point during uniform circular motion?",
+          "question": "If the string suddenly breaks, which way does the object move right after?",
           "type": "choice",
           "choices": [
+            "Along the tangent",
+            "Straight outward from the center",
             "Toward the center",
-            "Along the tangent"
+            "Along a spiral"
           ],
           "answer": "0",
-          "hint": "The tangent shows velocity, not its change.",
-          "reexplain_hint": "Compare nearby velocity arrows: their difference points inward."
+          "hint": "Without a net force, velocity stops changing.",
+          "reexplain_hint": "Swing a ball on a string and let go: it flies off along the line it was moving, not outward."
         }
       ]
     },
@@ -519,7 +521,7 @@
     },
     {
       "id": "s6",
-      "kind": "explain",
+      "kind": "checkpoint",
       "calcs": [
         {
           "expr": "m*c1",
@@ -538,6 +540,27 @@
           "id": "c2"
         }
       ],
+      "say": "Before I show it, predict the net inward force from the mass and the inward acceleration.",
+      "subtitles": {
+        "uz": "Ko‘rsatishdan oldin massa va markazga intilma tezlanish orqali natijaviy kuchni taxmin qiling.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "Predict the net inward force on the object.",
+          "type": "number",
+          "choices": [],
+          "answer": "{c2:3sf}",
+          "hint": "Net force equals mass times inward acceleration.",
+          "reexplain_hint": "Newton’s second law still holds in a circle; the acceleration just points inward."
+        }
+      ]
+    },
+    {
+      "id": "s7",
+      "kind": "explain",
+      "calcs": [],
       "say": "Net inward force has magnitude {c2}.",
       "subtitles": {
         "uz": "Markazga yo‘nalgan natijaviy kuch moduli {c2}.",
@@ -575,27 +598,6 @@
         }
       ],
       "checkpoints": []
-    },
-    {
-      "id": "s7",
-      "kind": "checkpoint",
-      "calcs": [],
-      "say": "Enter the first calculated result, using its displayed unit.",
-      "subtitles": {
-        "uz": "Birinchi hisoblangan natijani ko‘rsatilgan birlikda kiriting.",
-        "ru": ""
-      },
-      "draw": [],
-      "checkpoints": [
-        {
-          "question": "What is the first calculated result?",
-          "type": "number",
-          "choices": [],
-          "answer": "{c1:3sf}",
-          "hint": "Read the first result and its unit.",
-          "reexplain_hint": "Compare nearby velocity arrows: their difference points inward."
-        }
-      ]
     },
     {
       "id": "s8",

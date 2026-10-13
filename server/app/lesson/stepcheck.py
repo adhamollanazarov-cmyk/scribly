@@ -413,7 +413,8 @@ def _contract_step(
         "kind": filled.kind,
         "say": filled.say,
         "draw": draw,
-        "subtitles": {"uz": filled.subtitles.uz, "ru": filled.subtitles.ru},
+        # Drafts write "" for a missing translation; the lesson says null so players can tell.
+        "subtitles": {"uz": filled.subtitles.uz or None, "ru": filled.subtitles.ru or None},
     }
     if checkpoint is not None:
         raw["checkpoint"] = checkpoint

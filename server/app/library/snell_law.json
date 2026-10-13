@@ -528,30 +528,6 @@
     {
       "id": "s4",
       "kind": "checkpoint",
-      "calcs": [],
-      "say": "Are incidence and refraction angles measured from the surface or the normal?",
-      "subtitles": {
-        "uz": "Davom etishdan oldin tushunganingizni tekshiring.",
-        "ru": ""
-      },
-      "draw": [],
-      "checkpoints": [
-        {
-          "question": "Are incidence and refraction angles measured from the surface or the normal?",
-          "type": "choice",
-          "choices": [
-            "The normal",
-            "The surface"
-          ],
-          "answer": "0",
-          "hint": "The normal is perpendicular to the boundary.",
-          "reexplain_hint": "Draw a perpendicular guide at the contact point, then compare each ray to that guide."
-        }
-      ]
-    },
-    {
-      "id": "s5",
-      "kind": "explain",
       "calcs": [
         {
           "expr": "asin(n1*sin(theta*pi/180)/n2)*180/pi",
@@ -578,6 +554,27 @@
           "id": "c1"
         }
       ],
+      "say": "Before I show it, predict the refraction angle using Snell’s law.",
+      "subtitles": {
+        "uz": "Ko‘rsatishdan oldin Snell qonuni orqali singan burchakni taxmin qiling.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "Predict the refraction angle, measured from the normal.",
+          "type": "number",
+          "choices": [],
+          "answer": "{c1:3sf}",
+          "hint": "Set index times sine equal on both sides, then take the inverse sine.",
+          "reexplain_hint": "Glass slows light, so the ray tilts toward the normal: expect an angle smaller than the incidence angle."
+        }
+      ]
+    },
+    {
+      "id": "s5",
+      "kind": "explain",
+      "calcs": [],
       "say": "The refraction angle is {c1}, measured from the normal.",
       "subtitles": {
         "uz": "Sinish burchagi {c1}, normaldan o‘lchanadi.",
@@ -620,20 +617,25 @@
       "id": "s6",
       "kind": "checkpoint",
       "calcs": [],
-      "say": "Enter the first calculated result, using its displayed unit.",
+      "say": "Going the other way, from glass into air at the same angle, how does the ray bend?",
       "subtitles": {
-        "uz": "Birinchi hisoblangan natijani ko‘rsatilgan birlikda kiriting.",
+        "uz": "Teskari yo‘nalishda, shishadan havoga o‘sha burchakda o‘tganda, nur qanday sinadi?",
         "ru": ""
       },
       "draw": [],
       "checkpoints": [
         {
-          "question": "What is the first calculated result?",
-          "type": "number",
-          "choices": [],
-          "answer": "{c1:3sf}",
-          "hint": "Read the first result and its unit.",
-          "reexplain_hint": "Draw a perpendicular guide at the contact point, then compare each ray to that guide."
+          "question": "Going the other way, from glass into air at the same angle, how does the ray bend?",
+          "type": "choice",
+          "choices": [
+            "Toward the normal",
+            "It does not bend",
+            "Away from the normal",
+            "Along the surface"
+          ],
+          "answer": "2",
+          "hint": "A lower index means a larger angle from the normal.",
+          "reexplain_hint": "Reverse the arrows on the diagram: light paths are reversible."
         }
       ]
     },

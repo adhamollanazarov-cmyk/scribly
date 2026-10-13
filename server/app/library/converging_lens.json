@@ -489,23 +489,25 @@
       "id": "s4",
       "kind": "checkpoint",
       "calcs": [],
-      "say": "What does negative magnification mean?",
+      "say": "If the object moves closer to the lens but stays outside the focal point, where does the real image go?",
       "subtitles": {
-        "uz": "Davom etishdan oldin tushunganingizni tekshiring.",
+        "uz": "Buyum fokusdan tashqarida qolib linzaga yaqinlashsa, haqiqiy tasvir qayerga siljiydi?",
         "ru": ""
       },
       "draw": [],
       "checkpoints": [
         {
-          "question": "What does negative magnification mean?",
+          "question": "If the object moves closer to the lens but stays outside the focal point, where does the real image go?",
           "type": "choice",
           "choices": [
-            "The image is inverted",
-            "The focal length is negative"
+            "Closer to the lens, and it shrinks",
+            "To the object’s side of the lens",
+            "Farther from the lens, and it grows",
+            "Nowhere; it stays fixed"
           ],
-          "answer": "0",
-          "hint": "Magnification compares signed image height with object height.",
-          "reexplain_hint": "Draw an upward object arrow and a downward image arrow: their signed height ratio is negative."
+          "answer": "2",
+          "hint": "In the thin-lens equation, a smaller object distance needs a larger image distance.",
+          "reexplain_hint": "Picture rays from an object near the focal point: they leave almost parallel and meet far away."
         }
       ]
     },
@@ -574,7 +576,7 @@
     },
     {
       "id": "s6",
-      "kind": "explain",
+      "kind": "checkpoint",
       "calcs": [
         {
           "expr": "-c1/u",
@@ -593,6 +595,27 @@
           "id": "c2"
         }
       ],
+      "say": "Before I show it, predict the signed magnification from the two distances.",
+      "subtitles": {
+        "uz": "Ko‘rsatishdan oldin ikki masofa orqali ishorali kattalashtirishni taxmin qiling.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "Predict the signed magnification.",
+          "type": "number",
+          "choices": [],
+          "answer": "{c2:3sf}",
+          "hint": "Magnification is minus the image distance over the object distance.",
+          "reexplain_hint": "The image is closer to the lens than the object, so it is smaller; a real image is inverted."
+        }
+      ]
+    },
+    {
+      "id": "s7",
+      "kind": "explain",
+      "calcs": [],
       "say": "Magnification is {c2}: inverted and smaller than the object.",
       "subtitles": {
         "uz": "Kattalashtirish {c2}: tasvir teskari va jismdan kichik.",
@@ -630,27 +653,6 @@
         }
       ],
       "checkpoints": []
-    },
-    {
-      "id": "s7",
-      "kind": "checkpoint",
-      "calcs": [],
-      "say": "Enter the first calculated result, using its displayed unit.",
-      "subtitles": {
-        "uz": "Birinchi hisoblangan natijani ko‘rsatilgan birlikda kiriting.",
-        "ru": ""
-      },
-      "draw": [],
-      "checkpoints": [
-        {
-          "question": "What is the first calculated result?",
-          "type": "number",
-          "choices": [],
-          "answer": "{c1:3sf}",
-          "hint": "Read the first result and its unit.",
-          "reexplain_hint": "Draw an upward object arrow and a downward image arrow: their signed height ratio is negative."
-        }
-      ]
     },
     {
       "id": "s8",

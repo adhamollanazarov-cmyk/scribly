@@ -1285,23 +1285,25 @@
       "id": "s4",
       "kind": "checkpoint",
       "calcs": [],
-      "say": "What does a negative branch current mean with our convention?",
+      "say": "Around any closed loop, what do the voltage changes add up to?",
       "subtitles": {
-        "uz": "Davom etishdan oldin tushunganingizni tekshiring.",
+        "uz": "Har qanday yopiq kontur bo‘ylab kuchlanish o‘zgarishlari yig‘indisi nimaga teng?",
         "ru": ""
       },
       "draw": [],
       "checkpoints": [
         {
-          "question": "What does a negative branch current mean with our convention?",
+          "question": "Around any closed loop, what do the voltage changes add up to?",
           "type": "choice",
           "choices": [
-            "Actual flow is B to A",
-            "Charge conservation fails"
+            "The emf of the largest source",
+            "The sum of all emfs",
+            "The current times the total resistance",
+            "Zero"
           ],
-          "answer": "0",
-          "hint": "A sign compares actual flow with the chosen arrow.",
-          "reexplain_hint": "Imagine walking against a marked route: your speed along the marked direction is negative."
+          "answer": "3",
+          "hint": "Walk around a loop and return to the start: you end at the same potential.",
+          "reexplain_hint": "Think of hiking a loop trail: every climb is matched by descents, because you finish where you began."
         }
       ]
     },
@@ -1508,7 +1510,7 @@
     },
     {
       "id": "s8",
-      "kind": "explain",
+      "kind": "checkpoint",
       "calcs": [
         {
           "expr": "c1/r3",
@@ -1527,6 +1529,27 @@
           "id": "c4"
         }
       ],
+      "say": "Before I show it, predict the branch three current from A to B.",
+      "subtitles": {
+        "uz": "Ko‘rsatishdan oldin A dan B ga uchinchi tarmoq tokini taxmin qiling.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "Predict the branch three current, A to B positive.",
+          "type": "number",
+          "choices": [],
+          "answer": "{c4:3sf}",
+          "hint": "Branch three has only its resistor: divide the node voltage by its resistance.",
+          "reexplain_hint": "Ohm’s law on one resistor: the voltage across it pushes current through it."
+        }
+      ]
+    },
+    {
+      "id": "s9",
+      "kind": "explain",
+      "calcs": [],
       "say": "Branch three current is {c4}, from A to B.",
       "subtitles": {
         "uz": "Uchinchi tarmoq toki {c4}, A dan B ga.",
@@ -1564,27 +1587,6 @@
         }
       ],
       "checkpoints": []
-    },
-    {
-      "id": "s9",
-      "kind": "checkpoint",
-      "calcs": [],
-      "say": "Enter the first calculated result, using its displayed unit.",
-      "subtitles": {
-        "uz": "Birinchi hisoblangan natijani ko‘rsatilgan birlikda kiriting.",
-        "ru": ""
-      },
-      "draw": [],
-      "checkpoints": [
-        {
-          "question": "What is the first calculated result?",
-          "type": "number",
-          "choices": [],
-          "answer": "{c1:3sf}",
-          "hint": "Read the first result and its unit.",
-          "reexplain_hint": "Imagine walking against a marked route: your speed along the marked direction is negative."
-        }
-      ]
     },
     {
       "id": "s10",

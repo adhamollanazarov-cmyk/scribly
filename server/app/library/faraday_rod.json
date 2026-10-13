@@ -610,23 +610,25 @@
       "id": "s4",
       "kind": "checkpoint",
       "calcs": [],
-      "say": "The induced magnetic field opposes what?",
+      "say": "If the rod moved left instead, which way would the induced current flow?",
       "subtitles": {
-        "uz": "Davom etishdan oldin tushunganingizni tekshiring.",
+        "uz": "Tayoqcha chapga harakatlansa, induksion tok qaysi yo‘nalishda oqadi?",
         "ru": ""
       },
       "draw": [],
       "checkpoints": [
         {
-          "question": "The induced magnetic field opposes what?",
+          "question": "If the rod moved left instead, which way would the induced current flow?",
           "type": "choice",
           "choices": [
-            "The increase in inward flux",
-            "All magnetic flux everywhere"
+            "Clockwise",
+            "Counterclockwise",
+            "No current flows",
+            "It keeps switching direction"
           ],
           "answer": "0",
-          "hint": "Lenz’s law opposes the change.",
-          "reexplain_hint": "Imagine resisting a growing inward flux by adding an outward contribution."
+          "hint": "Now the inward flux decreases; the induced current tries to restore it.",
+          "reexplain_hint": "The loop always fights the change, so reversing the change reverses the current."
         }
       ]
     },
@@ -699,7 +701,7 @@
     },
     {
       "id": "s6",
-      "kind": "explain",
+      "kind": "checkpoint",
       "calcs": [
         {
           "expr": "c1/R",
@@ -718,6 +720,27 @@
           "id": "c2"
         }
       ],
+      "say": "Before I show it, predict the current from the emf and the total resistance.",
+      "subtitles": {
+        "uz": "Ko‘rsatishdan oldin EYK va umumiy qarshilik orqali tok kuchini taxmin qiling.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "Predict the current magnitude in the loop.",
+          "type": "number",
+          "choices": [],
+          "answer": "{c2:3sf}",
+          "hint": "Divide the emf by the total resistance.",
+          "reexplain_hint": "Treat the moving rod as a battery with that emf in a simple circuit."
+        }
+      ]
+    },
+    {
+      "id": "s7",
+      "kind": "explain",
+      "calcs": [],
       "say": "Current magnitude is {c2}, counterclockwise around the loop.",
       "subtitles": {
         "uz": "Tok moduli {c2}, konturda soat miliga teskari yo‘nalgan.",
@@ -755,27 +778,6 @@
         }
       ],
       "checkpoints": []
-    },
-    {
-      "id": "s7",
-      "kind": "checkpoint",
-      "calcs": [],
-      "say": "Enter the first calculated result, using its displayed unit.",
-      "subtitles": {
-        "uz": "Birinchi hisoblangan natijani ko‘rsatilgan birlikda kiriting.",
-        "ru": ""
-      },
-      "draw": [],
-      "checkpoints": [
-        {
-          "question": "What is the first calculated result?",
-          "type": "number",
-          "choices": [],
-          "answer": "{c1:3sf}",
-          "hint": "Read the first result and its unit.",
-          "reexplain_hint": "Imagine resisting a growing inward flux by adding an outward contribution."
-        }
-      ]
     },
     {
       "id": "s8",

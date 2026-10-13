@@ -415,23 +415,25 @@
       "id": "s4",
       "kind": "checkpoint",
       "calcs": [],
-      "say": "Ignoring air resistance, which velocity component stays constant?",
+      "say": "At the top of its path, what is the ball’s acceleration?",
       "subtitles": {
-        "uz": "Davom etishdan oldin tushunganingizni tekshiring.",
+        "uz": "Yo‘lning eng yuqori nuqtasida to‘pning tezlanishi qanday?",
         "ru": ""
       },
       "draw": [],
       "checkpoints": [
         {
-          "question": "Ignoring air resistance, which velocity component stays constant?",
+          "question": "At the top of its path, what is the ball’s acceleration?",
           "type": "choice",
           "choices": [
-            "Horizontal",
-            "Vertical"
+            "Downward, as everywhere else",
+            "Zero",
+            "Upward",
+            "Horizontal"
           ],
           "answer": "0",
-          "hint": "Gravity points vertically.",
-          "reexplain_hint": "Imagine a cart carrying the ball horizontally while the ball rises and falls."
+          "hint": "Gravity never switches off during the flight.",
+          "reexplain_hint": "Even at the top, a thrown ball is already speeding up downward, like a dropped one."
         }
       ]
     },
@@ -504,7 +506,7 @@
     },
     {
       "id": "s6",
-      "kind": "explain",
+      "kind": "checkpoint",
       "calcs": [
         {
           "expr": "u*cos(theta*pi/180)*c1",
@@ -527,6 +529,27 @@
           "id": "c2"
         }
       ],
+      "say": "Before I show it, predict the horizontal range from the horizontal velocity and the flight time.",
+      "subtitles": {
+        "uz": "Ko‘rsatishdan oldin gorizontal tezlik va uchish vaqti orqali uchish masofasini taxmin qiling.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "Predict the horizontal range, rightward positive.",
+          "type": "number",
+          "choices": [],
+          "answer": "{c2:3sf}",
+          "hint": "Multiply the horizontal velocity component by the flight time.",
+          "reexplain_hint": "Ride along horizontally with the ball: you move at a constant speed for the whole flight."
+        }
+      ]
+    },
+    {
+      "id": "s7",
+      "kind": "explain",
+      "calcs": [],
       "say": "Horizontal range is {c2}, to the right.",
       "subtitles": {
         "uz": "Gorizontal masofa {c2}, o‘ng tomonga.",
@@ -564,27 +587,6 @@
         }
       ],
       "checkpoints": []
-    },
-    {
-      "id": "s7",
-      "kind": "checkpoint",
-      "calcs": [],
-      "say": "Enter the first calculated result, using its displayed unit.",
-      "subtitles": {
-        "uz": "Birinchi hisoblangan natijani ko‘rsatilgan birlikda kiriting.",
-        "ru": ""
-      },
-      "draw": [],
-      "checkpoints": [
-        {
-          "question": "What is the first calculated result?",
-          "type": "number",
-          "choices": [],
-          "answer": "{c1:3sf}",
-          "hint": "Read the first result and its unit.",
-          "reexplain_hint": "Imagine a cart carrying the ball horizontally while the ball rises and falls."
-        }
-      ]
     },
     {
       "id": "s8",

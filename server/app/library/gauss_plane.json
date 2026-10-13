@@ -394,30 +394,6 @@
     {
       "id": "s4",
       "kind": "checkpoint",
-      "calcs": [],
-      "say": "How many pillbox caps contribute electric flux?",
-      "subtitles": {
-        "uz": "Davom etishdan oldin tushunganingizni tekshiring.",
-        "ru": ""
-      },
-      "draw": [],
-      "checkpoints": [
-        {
-          "question": "How many pillbox caps contribute electric flux?",
-          "type": "choice",
-          "choices": [
-            "Both caps",
-            "Only one cap"
-          ],
-          "answer": "0",
-          "hint": "The sheet has a field on each side.",
-          "reexplain_hint": "Imagine water leaving a box through both end openings; count both contributions."
-        }
-      ]
-    },
-    {
-      "id": "s5",
-      "kind": "explain",
       "calcs": [
         {
           "expr": "sigma/(2*eps)",
@@ -440,6 +416,27 @@
           "id": "c1"
         }
       ],
+      "say": "Before I show it, predict the field on either side using the pillbox.",
+      "subtitles": {
+        "uz": "Ko‘rsatishdan oldin yupqa quti yordamida varaqning har ikki tomonidagi maydonni taxmin qiling.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "Predict the field magnitude on either side of the sheet.",
+          "type": "number",
+          "choices": [],
+          "answer": "{c1:3sf}",
+          "hint": "Divide the surface charge density by two epsilon zero.",
+          "reexplain_hint": "The enclosed charge sends flux out through both caps, so each side gets half."
+        }
+      ]
+    },
+    {
+      "id": "s5",
+      "kind": "explain",
+      "calcs": [],
       "say": "Field magnitude on either side is {c1}.",
       "subtitles": {
         "uz": "Har ikki tomondagi maydon moduli {c1}.",
@@ -482,20 +479,25 @@
       "id": "s6",
       "kind": "checkpoint",
       "calcs": [],
-      "say": "Enter the first calculated result, using its displayed unit.",
+      "say": "If you move twice as far from the infinite sheet, what happens to the field?",
       "subtitles": {
-        "uz": "Birinchi hisoblangan natijani ko‘rsatilgan birlikda kiriting.",
+        "uz": "Cheksiz varaqdan ikki baravar uzoqlashsangiz, maydon qanday o‘zgaradi?",
         "ru": ""
       },
       "draw": [],
       "checkpoints": [
         {
-          "question": "What is the first calculated result?",
-          "type": "number",
-          "choices": [],
-          "answer": "{c1:3sf}",
-          "hint": "Read the first result and its unit.",
-          "reexplain_hint": "Imagine water leaving a box through both end openings; count both contributions."
+          "question": "If you move twice as far from the infinite sheet, what happens to the field?",
+          "type": "choice",
+          "choices": [
+            "It halves",
+            "It drops to one quarter",
+            "It stays the same",
+            "It doubles"
+          ],
+          "answer": "2",
+          "hint": "The pillbox caps keep the same area at any distance.",
+          "reexplain_hint": "Field lines from an infinite sheet stay parallel; they never spread out, so their density does not change."
         }
       ]
     },

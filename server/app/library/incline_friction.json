@@ -513,23 +513,25 @@
       "id": "s4",
       "kind": "checkpoint",
       "calcs": [],
-      "say": "For a block sliding downhill, where does kinetic friction point?",
+      "say": "If the incline were steeper, what would happen to the normal force on the block?",
       "subtitles": {
-        "uz": "Davom etishdan oldin tushunganingizni tekshiring.",
+        "uz": "Qiyalik tikroq bo‘lsa, jismga ta’sir qiluvchi normal kuch qanday o‘zgaradi?",
         "ru": ""
       },
       "draw": [],
       "checkpoints": [
         {
-          "question": "For a block sliding downhill, where does kinetic friction point?",
+          "question": "If the incline were steeper, what would happen to the normal force on the block?",
           "type": "choice",
           "choices": [
-            "Uphill",
-            "Downhill"
+            "It increases",
+            "It decreases",
+            "It stays the same",
+            "It points downhill"
           ],
-          "answer": "0",
-          "hint": "Friction opposes sliding.",
-          "reexplain_hint": "Imagine rubbing your hand downhill along the surface: the surface resists that sliding."
+          "answer": "1",
+          "hint": "The normal force balances the weight component perpendicular to the surface.",
+          "reexplain_hint": "Tilt a book until it is almost vertical: a block barely presses on it."
         }
       ]
     },
@@ -602,7 +604,7 @@
     },
     {
       "id": "s6",
-      "kind": "explain",
+      "kind": "checkpoint",
       "calcs": [
         {
           "expr": "g*sin(theta*pi/180)-mu*c1/m",
@@ -633,6 +635,27 @@
           "id": "c2"
         }
       ],
+      "say": "Before I show it, predict the acceleration down the slope from the forces along it.",
+      "subtitles": {
+        "uz": "Ko‘rsatishdan oldin qiyalik bo‘ylab kuchlar orqali pastga tezlanishni taxmin qiling.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "Predict the acceleration, down the slope positive.",
+          "type": "number",
+          "choices": [],
+          "answer": "{c2:3sf}",
+          "hint": "Take the downhill weight component, subtract friction, then divide by mass.",
+          "reexplain_hint": "Gravity pulls down the slope and friction pulls up it; their difference accelerates the block."
+        }
+      ]
+    },
+    {
+      "id": "s7",
+      "kind": "explain",
+      "calcs": [],
       "say": "Acceleration is {c2}, down the slope.",
       "subtitles": {
         "uz": "Tezlanish {c2}, qiyalik bo‘ylab pastga.",
@@ -670,27 +693,6 @@
         }
       ],
       "checkpoints": []
-    },
-    {
-      "id": "s7",
-      "kind": "checkpoint",
-      "calcs": [],
-      "say": "Enter the first calculated result, using its displayed unit.",
-      "subtitles": {
-        "uz": "Birinchi hisoblangan natijani ko‘rsatilgan birlikda kiriting.",
-        "ru": ""
-      },
-      "draw": [],
-      "checkpoints": [
-        {
-          "question": "What is the first calculated result?",
-          "type": "number",
-          "choices": [],
-          "answer": "{c1:3sf}",
-          "hint": "Read the first result and its unit.",
-          "reexplain_hint": "Imagine rubbing your hand downhill along the surface: the surface resists that sliding."
-        }
-      ]
     },
     {
       "id": "s8",

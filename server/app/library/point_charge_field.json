@@ -378,30 +378,6 @@
     {
       "id": "s4",
       "kind": "checkpoint",
-      "calcs": [],
-      "say": "Near a positive point charge, which way does the electric field point?",
-      "subtitles": {
-        "uz": "Davom etishdan oldin tushunganingizni tekshiring.",
-        "ru": ""
-      },
-      "draw": [],
-      "checkpoints": [
-        {
-          "question": "Near a positive point charge, which way does the electric field point?",
-          "type": "choice",
-          "choices": [
-            "Away from the charge",
-            "Toward the charge"
-          ],
-          "answer": "0",
-          "hint": "Imagine a tiny positive test charge.",
-          "reexplain_hint": "Two positive charges repel, so the test charge would be pushed outward."
-        }
-      ]
-    },
-    {
-      "id": "s5",
-      "kind": "explain",
       "calcs": [
         {
           "expr": "k*q/r**2",
@@ -428,6 +404,27 @@
           "id": "c1"
         }
       ],
+      "say": "Before I show it, predict the field magnitude at that distance.",
+      "subtitles": {
+        "uz": "Ko‘rsatishdan oldin shu masofadagi maydon modulini taxmin qiling.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "Predict the field magnitude at the given distance.",
+          "type": "number",
+          "choices": [],
+          "answer": "{c1:3sf}",
+          "hint": "Multiply k by the charge, then divide by the distance squared.",
+          "reexplain_hint": "Field is force per test charge: Coulomb’s law with the test charge divided out."
+        }
+      ]
+    },
+    {
+      "id": "s5",
+      "kind": "explain",
+      "calcs": [],
       "say": "Field magnitude is {c1}; the direction is outward.",
       "subtitles": {
         "uz": "Maydon moduli {c1}; yo‘nalishi tashqariga.",
@@ -470,20 +467,25 @@
       "id": "s6",
       "kind": "checkpoint",
       "calcs": [],
-      "say": "Enter the first calculated result, using its displayed unit.",
+      "say": "A negative test charge sits at that point. Which way is the force on it?",
       "subtitles": {
-        "uz": "Birinchi hisoblangan natijani ko‘rsatilgan birlikda kiriting.",
+        "uz": "O‘sha nuqtada manfiy sinov zaryadi turibdi. Unga ta’sir kuchi qaysi tomonga yo‘nalgan?",
         "ru": ""
       },
       "draw": [],
       "checkpoints": [
         {
-          "question": "What is the first calculated result?",
-          "type": "number",
-          "choices": [],
-          "answer": "{c1:3sf}",
-          "hint": "Read the first result and its unit.",
-          "reexplain_hint": "Two positive charges repel, so the test charge would be pushed outward."
+          "question": "A negative test charge sits at that point. Which way is the force on it?",
+          "type": "choice",
+          "choices": [
+            "Away from the source charge",
+            "Toward the source charge",
+            "There is no force",
+            "Along the field arrow"
+          ],
+          "answer": "1",
+          "hint": "Opposite charges attract.",
+          "reexplain_hint": "The field arrow shows the push on a positive charge; a negative charge is pushed the opposite way."
         }
       ]
     },

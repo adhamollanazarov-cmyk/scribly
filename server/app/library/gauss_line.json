@@ -481,30 +481,6 @@
     {
       "id": "s4",
       "kind": "checkpoint",
-      "calcs": [],
-      "say": "Why is flux through the cylinder’s flat ends zero?",
-      "subtitles": {
-        "uz": "Davom etishdan oldin tushunganingizni tekshiring.",
-        "ru": ""
-      },
-      "draw": [],
-      "checkpoints": [
-        {
-          "question": "Why is flux through the cylinder’s flat ends zero?",
-          "type": "choice",
-          "choices": [
-            "Field is parallel to those faces",
-            "The line has no charge"
-          ],
-          "answer": "0",
-          "hint": "Flux uses the perpendicular field component.",
-          "reexplain_hint": "Picture arrows sliding along a tabletop rather than passing through it."
-        }
-      ]
-    },
-    {
-      "id": "s5",
-      "kind": "explain",
       "calcs": [
         {
           "expr": "lam/(2*pi*eps*r)",
@@ -531,6 +507,27 @@
           "id": "c1"
         }
       ],
+      "say": "Before I show it, predict the field magnitude from Gauss’s law for the cylinder.",
+      "subtitles": {
+        "uz": "Ko‘rsatishdan oldin silindr uchun Gauss qonuni orqali maydon modulini taxmin qiling.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "Predict the field magnitude at the given radius.",
+          "type": "number",
+          "choices": [],
+          "answer": "{c1:3sf}",
+          "hint": "Divide the line charge density by two pi epsilon zero times the radius.",
+          "reexplain_hint": "Gauss’s law: enclosed charge over epsilon zero equals field times the curved area."
+        }
+      ]
+    },
+    {
+      "id": "s5",
+      "kind": "explain",
+      "calcs": [],
       "say": "The outward field has magnitude {c1}.",
       "subtitles": {
         "uz": "Tashqariga yo‘nalgan maydon moduli {c1}.",
@@ -573,20 +570,25 @@
       "id": "s6",
       "kind": "checkpoint",
       "calcs": [],
-      "say": "Enter the first calculated result, using its displayed unit.",
+      "say": "At twice the distance from the line, how strong is the field?",
       "subtitles": {
-        "uz": "Birinchi hisoblangan natijani ko‘rsatilgan birlikda kiriting.",
+        "uz": "Chiziqdan ikki baravar uzoqroqda maydon qanchalik kuchli bo‘ladi?",
         "ru": ""
       },
       "draw": [],
       "checkpoints": [
         {
-          "question": "What is the first calculated result?",
-          "type": "number",
-          "choices": [],
-          "answer": "{c1:3sf}",
-          "hint": "Read the first result and its unit.",
-          "reexplain_hint": "Picture arrows sliding along a tabletop rather than passing through it."
+          "question": "At twice the distance from the line, how strong is the field?",
+          "type": "choice",
+          "choices": [
+            "One quarter as strong",
+            "Twice as strong",
+            "Just as strong",
+            "Half as strong"
+          ],
+          "answer": "3",
+          "hint": "The curved surface area grows in proportion to the radius.",
+          "reexplain_hint": "The same field lines spread around a cylinder: a radius twice as large spreads them over twice the area."
         }
       ]
     },

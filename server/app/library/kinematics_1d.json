@@ -344,9 +344,9 @@
       "id": "s3",
       "kind": "explain",
       "calcs": [],
-      "say": "Final velocity adds the accumulated change. Displacement uses the average velocity over the interval.",
+      "say": "Final velocity adds the accumulated change. Displacement is the distance at the starting velocity plus the extra distance from acceleration.",
       "subtitles": {
-        "uz": "Oxirgi tezlik boshlang‘ich tezlik va uning o‘zgarishi yig‘indisidir. Siljish o‘rtacha tezlik orqali topiladi.",
+        "uz": "Oxirgi tezlik boshlang‘ich tezlik va uning o‘zgarishi yig‘indisidir. Siljish boshlang‘ich tezlikdagi masofa va tezlanish qo‘shgan masofa yig‘indisidir.",
         "ru": ""
       },
       "draw": [
@@ -386,23 +386,25 @@
       "id": "s4",
       "kind": "checkpoint",
       "calcs": [],
-      "say": "With constant positive acceleration, what happens to velocity?",
+      "say": "Halfway through the time interval, how does the cart’s speed compare with its average speed over the interval?",
       "subtitles": {
-        "uz": "Davom etishdan oldin tushunganingizni tekshiring.",
+        "uz": "Vaqt oralig‘ining o‘rtasida aravachaning tezligi butun oraliqdagi o‘rtacha tezlik bilan qanday taqqoslanadi?",
         "ru": ""
       },
       "draw": [],
       "checkpoints": [
         {
-          "question": "With constant positive acceleration, what happens to velocity?",
+          "question": "Halfway through the time interval, how does the cart’s speed compare with its average speed over the interval?",
           "type": "choice",
           "choices": [
-            "It increases steadily",
-            "It stays constant"
+            "They are equal",
+            "It is less than the average",
+            "It is greater than the average",
+            "It is zero"
           ],
           "answer": "0",
-          "hint": "Acceleration measures velocity change per second.",
-          "reexplain_hint": "Picture equal time intervals: each adds an equal amount of velocity."
+          "hint": "With constant acceleration, velocity grows by equal amounts each second.",
+          "reexplain_hint": "List the velocity at each second: the middle value is the average of the first and last."
         }
       ]
     },
@@ -475,7 +477,7 @@
     },
     {
       "id": "s6",
-      "kind": "explain",
+      "kind": "checkpoint",
       "calcs": [
         {
           "expr": "u*t+a*t**2/2",
@@ -502,6 +504,27 @@
           "id": "c2"
         }
       ],
+      "say": "Before I show it, predict the displacement over the whole interval.",
+      "subtitles": {
+        "uz": "Ko‘rsatishdan oldin butun oraliqdagi siljishni taxmin qiling.",
+        "ru": ""
+      },
+      "draw": [],
+      "checkpoints": [
+        {
+          "question": "Predict the displacement, rightward positive.",
+          "type": "number",
+          "choices": [],
+          "answer": "{c2:3sf}",
+          "hint": "Add the starting velocity times time to half the acceleration times time squared.",
+          "reexplain_hint": "Draw velocity against time: the displacement is the area of the trapezoid under the line."
+        }
+      ]
+    },
+    {
+      "id": "s7",
+      "kind": "explain",
+      "calcs": [],
       "say": "Displacement is {c2}, to the right.",
       "subtitles": {
         "uz": "Siljish {c2}, o‘ngga yo‘nalgan.",
@@ -539,27 +562,6 @@
         }
       ],
       "checkpoints": []
-    },
-    {
-      "id": "s7",
-      "kind": "checkpoint",
-      "calcs": [],
-      "say": "Enter the first calculated result, using its displayed unit.",
-      "subtitles": {
-        "uz": "Birinchi hisoblangan natijani ko‘rsatilgan birlikda kiriting.",
-        "ru": ""
-      },
-      "draw": [],
-      "checkpoints": [
-        {
-          "question": "What is the first calculated result?",
-          "type": "number",
-          "choices": [],
-          "answer": "{c1:3sf}",
-          "hint": "Read the first result and its unit.",
-          "reexplain_hint": "Picture equal time intervals: each adds an equal amount of velocity."
-        }
-      ]
     },
     {
       "id": "s8",
