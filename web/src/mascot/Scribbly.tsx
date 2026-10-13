@@ -1,44 +1,68 @@
-// Scribbly, our original mascot: round purple body, round glasses, antenna with an
-// orange tip, holds a pencil. Self-contained so the design can be swapped later: the board
-// only passes a state, the pencil-tip position and how open the mouth is.
+// Scribbly, our original mascot: a round cream body whose top is a sharpened pencil tip,
+// short teal arms with mitten hands, stubby legs, holding a glowing marker
+// (docs/brand/scribbly-sheet.png). Layered SVG: legs, body, pencil tip, face (eyes,
+// eyelids, mouth), arms, marker, effect. Each state picks a pose (pose.ts); the board only
+// passes a state, the pen position and how open the mouth is.
 
-import { useEffect, useState } from 'react'
+import { useEffect, useId, useState, type ReactNode } from 'react'
 import './scribbly.css'
+import {
+  MARKER_HAND,
+  markerPlace,
+  mouthShape,
+  poseOf,
+  type Arm,
+  type Effect,
+  type Grip,
+  type Legs,
+  type MouthShape,
+  type Pose,
+} from './pose'
 import type { MascotState } from './states'
 
 export interface ScribblyProps {
   state: MascotState
-  /** Pencil tip position, in the parent's coordinates. */
+  /** Marker tip position while drawing, in the parent's coordinates. */
   x: number
   y: number
   /** 0 = closed, 1 = wide open (from the narration loudness). */
   mouth?: number
   scale?: number
-  /** Body under the pencil tip instead of above it (used near the top edge). */
+  /** Body under the marker tip instead of above it (used near the top edge). */
   below?: boolean
   /** Turn off timers (blinking), e.g. for snapshots. */
   still?: boolean
 }
 
-const BODY = { cx: 40, cy: -36, r: 28 }
-const BELOW_SHIFT = 72 // moves the body from above the pencil tip to below it
+const BELOW_SHIFT = 84 // moves the body from above the marker tip to below it
+/** Body center and radius in art units; the round body ends in a pencil cone on top. */
+const C = { x: 43, y: -42 }
+const R = 29
+/** A point given in body radii from the center, as "x y". */
+const at = (u: number, v: number) => `${+(C.x + u * R).toFixed(1)} ${+(C.y + v * R).toFixed(1)}`
+const BODY = [
+  `M${at(-0.013, -1.33)} Q${at(0.04, -1.4)} ${at(0.093, -1.33)}`, // rounded graphite tip
+  `L${at(0.52, -0.73)}`, // cone, right side
+  `C${at(0.82, -0.6)} ${at(1, -0.34)} ${at(1, 0)}`,
+  `C${at(1, 0.58)} ${at(0.56, 1)} ${at(0, 1)}`,
+  `C${at(-0.56, 1)} ${at(-1, 0.58)} ${at(-1, 0)}`,
+  `C${at(-1, -0.34)} ${at(-0.82, -0.6)} ${at(-0.52, -0.73)} Z`,
+].join(' ')
 const EYES = [
-  { cx: 31, cy: -40 },
-  { cx: 49, cy: -40 },
+  { cx: C.x - 13.3, cy: -39 },
+  { cx: C.x + 13.3, cy: -39 },
 ]
-const LOOK: Record<MascotState, [number, number]> = {
-  idle: [0, 0.5],
-  drawing: [-2, 2.5],
-  talking: [0, 0.5],
-  listening: [0, 0],
-  thinking: [2, -2.5],
-  happy: [0, 0],
-  encouraging: [0, 1],
-  pointing: [-2.5, 2],
-  flying: [2.5, 0],
-  appearing: [0, 0],
-  disappearing: [0, 0],
-}
+const MOUTH = { x: C.x, y: -31 }
+
+/** Wood of the sharpened pencil tip: everything above a scalloped line (clipped to the body). */
+const WOOD = (() => {
+  const [left, right, top, dip] = [C.x - 0.62 * R, C.x + 0.62 * R, C.y - 0.76 * R, C.y - 0.62 * R]
+  const step = (right - left) / 5
+  let d = `M0 -120 H100 V${top} H${right}`
+  for (let x = right; x > left + 1; x -= step) d += ` Q${x - step / 2} ${dip} ${x - step} ${top}`
+  return `${d} H0 Z`
+})()
+const GRAPHITE = `M0 -120 H100 V-75 Q${C.x} -72.5 0 -76 Z`
 
 /** How the anchor glides to a new position: with the pen, a long flight, or a short step. */
 const MOVING: Partial<Record<MascotState, string>> = {
@@ -48,10 +72,10 @@ const MOVING: Partial<Record<MascotState, string>> = {
   appearing: 'none',
 }
 
-function useBlink(still: boolean): boolean {
+function useBlink(off: boolean): boolean {
   const [closed, setClosed] = useState(false)
   useEffect(() => {
-    if (still) return
+    if (off) return
     let timer: ReturnType<typeof setTimeout>
     const schedule = (open: boolean) => {
       timer = setTimeout(
@@ -63,124 +87,351 @@ function useBlink(still: boolean): boolean {
       )
     }
     schedule(true)
-    return () => clearTimeout(timer)
-  }, [still])
+    return () => {
+      clearTimeout(timer)
+      setClosed(false)
+    }
+  }, [off])
   return closed
 }
 
-function mouthPath(state: MascotState, open: number): { d: string; filled: boolean } {
-  if (open > 0.06) {
-    const drop = 3 + open * 8
-    return { d: `M32 -24 Q40 ${-24 + drop} 48 -24 Q40 ${-22 + drop * 0.35} 32 -24`, filled: true }
+/**
+ * True from the moment a flight ends until the next state change: the body squashes as it
+ * lands (a one-shot CSS animation). Tracks the previous state during render, no effect.
+ */
+function useLanding(state: MascotState): boolean {
+  const [prev, setPrev] = useState(state)
+  const [landing, setLanding] = useState(false)
+  if (state !== prev) {
+    setPrev(state)
+    setLanding(prev === 'flying' && state !== 'disappearing')
   }
-  switch (state) {
-    case 'happy':
-      return { d: 'M30 -26 Q40 -14 50 -26 Q40 -20 30 -26', filled: true }
-    case 'thinking':
-      return { d: 'M35 -23 Q41 -25 46 -22', filled: false }
-    case 'listening':
-      return { d: 'M37 -23 a3 3 0 1 0 6 0 a3 3 0 1 0 -6 0', filled: false }
-    default:
-      return { d: 'M32 -25 Q40 -18 48 -25', filled: false }
-  }
+  return landing
 }
 
-function Eyes({ state, blink }: { state: MascotState; blink: boolean }) {
-  const [lx, ly] = LOOK[state]
-  if (state === 'happy') {
-    return (
-      <g className="mascot-line">
-        {EYES.map((e) => (
-          <path
-            key={e.cx}
-            d={`M${e.cx - 5} ${e.cy + 1} Q${e.cx} ${e.cy - 6} ${e.cx + 5} ${e.cy + 1}`}
-          />
-        ))}
+/** A short teal arm: an ink outline under a teal stroke. */
+function Limb({ d, width = 7.5 }: { d: string; width?: number }) {
+  return (
+    <>
+      <path d={d} className="mascot-limb-edge" strokeWidth={width + 2.6} />
+      <path d={d} className="mascot-limb" strokeWidth={width} />
+    </>
+  )
+}
+
+// Hand shapes, drawn with the fingers along +x and the thumb on the -y side.
+const MITTEN =
+  'M-4.6 -1.2 C-4.6 -3.8 -2.4 -4.8 -0.2 -4.4 C0.6 -6.8 2.2 -8.6 3.8 -7.8 C5.2 -7 4.6 -5.2 3.6 -3.8 C6 -3 7.2 0.4 5.8 2.8 C4.4 5.2 0.4 5.6 -2.4 4.4 C-4 3.6 -4.6 1.6 -4.6 -1.2 Z'
+const FIST =
+  'M-4.4 -1 C-4.4 -3.6 -2 -4.6 0.6 -4.4 C3.6 -4.2 5.4 -2.2 5.2 0.6 C5 3.4 2.6 4.8 0 4.6 C-2.6 4.4 -4.4 2.4 -4.4 -1 Z'
+const PAW =
+  'M-4.6 -1.2 C-4.6 -3.8 -1.2 -5 2 -4.4 C5.6 -3.6 7.2 0.4 5.8 2.8 C4.4 5.2 0.4 5.6 -2.4 4.4 C-4 3.6 -4.6 1.6 -4.6 -1.2 Z'
+const THUMB_UP = 'M-0.6 -3.6 C-1 -7.6 -0.2 -10.4 1.8 -10.4 C3.6 -10.4 3.8 -7.6 3 -3.8 Z'
+
+/** mitten: open hand with a thumb; paw: relaxed, thumb hidden; grip: fist around the marker. */
+type HandShape = 'mitten' | 'paw' | 'grip' | 'point' | 'thumb'
+const HAND = { mitten: MITTEN, paw: PAW, grip: FIST, point: FIST, thumb: FIST }
+const HAND_SIZE = 1.25
+
+/** A mitten hand at (x, y), fingers turned by `angle` (deg); `flip` puts the thumb on the other side. */
+function Hand(props: { x: number; y: number; angle: number; flip?: boolean; shape?: HandShape }) {
+  const { x, y, angle, flip = false, shape = 'mitten' } = props
+  return (
+    <g
+      data-hand-shape={shape}
+      transform={`translate(${x} ${y}) rotate(${angle}) scale(${HAND_SIZE} ${flip ? -HAND_SIZE : HAND_SIZE})`}
+    >
+      {shape === 'point' && <Limb d="M3 -0.6 L8.6 -1" width={3.4} />}
+      {shape === 'thumb' && <path d={THUMB_UP} className="mascot-hand" data-part="thumb" />}
+      <path d={HAND[shape]} className="mascot-hand" />
+      {shape === 'mitten' && (
+        <path d="M0.4 -3.9 Q1.8 -3 3.4 -3.6" className="mascot-crease" data-part="thumb" />
+      )}
+      {shape === 'grip' && (
+        <path d="M-2.4 -3.2 Q0.6 -1 4.4 -1.8" className="mascot-crease" data-part="thumb" />
+      )}
+    </g>
+  )
+}
+
+/** A stubby leg ending in a rounded foot; its top hides under the body. */
+const leg = (fx: number, bottom: number) =>
+  `M${fx - 5.4} -22 L${fx - 6.6} ${bottom - 4.5} Q${fx - 7} ${bottom} ${fx - 1.5} ${bottom} H${fx + 1.5} Q${fx + 7} ${bottom} ${fx + 6.6} ${bottom - 4.5} L${fx + 5.4} -22 Z`
+
+function Legs({ legs }: { legs: Legs }) {
+  const tuck = legs === 'tuck'
+  return (
+    <g data-layer="legs" data-legs={legs}>
+      <ellipse
+        cx={C.x}
+        cy={tuck ? 1 : -4.5}
+        rx={tuck ? 12 : 20}
+        ry={tuck ? 2 : 3}
+        className="mascot-ground"
+      />
+      {[C.x - 10.4, C.x + 10.4].map((fx, i) => (
+        <path
+          key={fx}
+          d={leg(fx, tuck ? -9 : -5.5)}
+          className="mascot-hand"
+          transform={tuck ? `rotate(${i ? -16 : 16} ${fx} -16)` : undefined}
+        />
+      ))}
+    </g>
+  )
+}
+
+function Body({ clipId }: { clipId: string }) {
+  return (
+    <g data-layer="body">
+      <clipPath id={clipId}>
+        <path d={BODY} />
+      </clipPath>
+      <path d={BODY} className="mascot-body" />
+      <g clipPath={`url(#${clipId})`}>
+        <ellipse
+          cx={C.x + 6}
+          cy={C.y + 1.12 * R}
+          rx={1.05 * R}
+          ry={0.3 * R}
+          className="mascot-shade"
+        />
+        <g data-layer="pencil-tip">
+          <path d={WOOD} className="mascot-wood" />
+          <path d={GRAPHITE} className="mascot-graphite" />
+        </g>
       </g>
-    )
-  }
-  const ry = blink ? 0.8 : state === 'listening' ? 7.5 : 6.5
+      <path d={BODY} className="mascot-outline" />
+    </g>
+  )
+}
+
+const EYE = { rx: 5.6, ry: 7 }
+
+/** A big dark eye with two highlights: a large one up right, a small one down left. */
+function OpenEye({ cx, cy, look }: { cx: number; cy: number; look: Pose['look'] }) {
+  const [lx, ly] = look
+  const ex = cx + lx * 0.6
+  const ey = cy + ly * 0.6
   return (
     <g>
-      {EYES.map((e) => (
-        <g key={e.cx}>
-          <ellipse cx={e.cx} cy={e.cy} rx={6.5} ry={ry} fill="#fff" />
-          {!blink && <circle cx={e.cx + lx} cy={e.cy + ly} r={3} className="mascot-ink" />}
-        </g>
-      ))}
+      <ellipse cx={ex} cy={ey} rx={EYE.rx} ry={EYE.ry} className="mascot-ink" />
+      <circle cx={ex + 1.6} cy={ey - 2.6} r={2.2} className="mascot-shine" data-part="highlight" />
+      <circle cx={ex - 1.9} cy={ey + 2.9} r={1} className="mascot-shine" data-part="highlight" />
     </g>
   )
 }
 
-function Glasses() {
+const closedArc = (cx: number, cy: number) =>
+  `M${cx - 5.5} ${cy + 1.5} Q${cx} ${cy - 5.5} ${cx + 5.5} ${cy + 1.5}`
+
+function Eyes({ pose, blink }: { pose: Pose; blink: boolean }) {
+  const shut = (i: number) => pose.eyes === 'happy' || (pose.eyes === 'wink' && i === 0)
   return (
-    <g className="mascot-line" strokeWidth={1.8}>
-      {EYES.map((e) => (
-        <circle key={e.cx} cx={e.cx} cy={e.cy} r={9.5} fill="none" />
-      ))}
-      <path d="M38.5 -41 Q40 -43 41.5 -41" fill="none" />
+    <g data-layer="eyes" data-eyes={pose.eyes}>
+      {EYES.map((e, i) => {
+        // Brows: the right one lifts while thinking.
+        const by = e.cy - 11.5 + (pose.eyes === 'up' && i === 1 ? -2.5 : 0)
+        return (
+          <g key={e.cx}>
+            <path
+              d={`M${e.cx - 3} ${by} Q${e.cx} ${by - 2.2} ${e.cx + 3} ${by}`}
+              className="mascot-line"
+              strokeWidth={1.3}
+            />
+            {shut(i) ? (
+              <path d={closedArc(e.cx, e.cy)} className="mascot-line" strokeWidth={2.2} />
+            ) : (
+              <OpenEye cx={e.cx} cy={e.cy} look={pose.look} />
+            )}
+          </g>
+        )
+      })}
+      {blink && (
+        <g data-layer="eyelids">
+          {EYES.map((e, i) =>
+            shut(i) ? null : (
+              <g key={e.cx}>
+                <ellipse
+                  cx={e.cx}
+                  cy={e.cy}
+                  rx={EYE.rx + 1.6}
+                  ry={EYE.ry + 1.8}
+                  className="mascot-lid"
+                />
+                <path
+                  d={`M${e.cx - 5.5} ${e.cy + 0.5} Q${e.cx} ${e.cy + 4} ${e.cx + 5.5} ${e.cy + 0.5}`}
+                  className="mascot-line"
+                  strokeWidth={2}
+                />
+              </g>
+            ),
+          )}
+        </g>
+      )}
+      <ellipse cx={C.x - 17.6} cy={MOUTH.y} rx={4.4} ry={2.7} className="mascot-cheek" />
+      <ellipse cx={C.x + 17.6} cy={MOUTH.y} rx={4.4} ry={2.7} className="mascot-cheek" />
     </g>
   )
 }
 
-function Extras({ state }: { state: MascotState }) {
-  switch (state) {
-    case 'thinking':
-      return (
-        <g className="mascot-thought">
-          <circle cx={70} cy={-62} r={3} />
-          <circle cx={79} cy={-72} r={4.5} />
-          <circle cx={91} cy={-84} r={6} />
-        </g>
-      )
-    case 'listening':
-      return (
-        <g className="mascot-waves mascot-line" fill="none" strokeWidth={2}>
-          <path d="M74 -46 Q79 -36 74 -26" />
-          <path d="M80 -50 Q87 -36 80 -22" />
-        </g>
-      )
-    case 'happy':
-      return (
-        <g className="mascot-sparkles">
-          <path d="M8 -66 l2 -6 l2 6 l6 2 l-6 2 l-2 6 l-2 -6 l-6 -2 z" />
-          <path d="M74 -70 l1.5 -4.5 l1.5 4.5 l4.5 1.5 l-4.5 1.5 l-1.5 4.5 l-1.5 -4.5 l-4.5 -1.5 z" />
-        </g>
-      )
-    case 'flying':
-      return (
-        <g className="mascot-trail mascot-line" fill="none" strokeWidth={2}>
-          <path d="M2 -30 h-14" />
-          <path d="M4 -42 h-20" />
-          <path d="M6 -54 h-12" />
-        </g>
-      )
-    case 'pointing':
-      return (
-        <g className="mascot-sparkles">
-          <path d="M-6 -2 l1.5 -4.5 l1.5 4.5 l4.5 1.5 l-4.5 1.5 l-1.5 4.5 l-1.5 -4.5 l-4.5 -1.5 z" />
-        </g>
-      )
-    case 'encouraging':
-      return (
-        <g>
-          <path d="M66 -32 Q76 -40 78 -54" className="mascot-arm" fill="none" />
-          <circle cx={78} cy={-57} r={4.5} className="mascot-body" />
-          <path
-            d="M80 -72 a3 3 0 0 1 5 -2 a3 3 0 0 1 5 2 q0 4 -5 7 q-5 -3 -5 -7 z"
-            className="mascot-heart"
-          />
-        </g>
-      )
-    default:
-      return null
+function mouthPath({ shape, open }: MouthShape): string {
+  const { x, y } = MOUTH
+  switch (shape) {
+    case 'smile':
+      return `M${x - 5.5} ${y} Q${x} ${y + 5} ${x + 5.5} ${y}`
+    case 'wavy':
+      return `M${x - 5.5} ${y + 1.5} q2.75 -2 5.5 0 q2.75 2 5.5 0`
+    case 'o':
+      return `M${x - 2.6} ${y + 2.5} a2.6 3.2 0 1 0 5.2 0 a2.6 3.2 0 1 0 -5.2 0`
+    case 'grin':
+      return `M${x - 7.5} ${y - 1} Q${x} ${y + 16} ${x + 7.5} ${y - 1} Z`
+    case 'open': {
+      const w = 5 + open * 1.5
+      const depth = 3 + open * 6
+      return `M${x - w} ${y - 1} Q${x} ${y - 1 + depth * 2} ${x + w} ${y - 1} Z`
+    }
   }
 }
+
+function Mouth({ mouth }: { mouth: MouthShape }) {
+  const filled = mouth.shape === 'open' || mouth.shape === 'grin' || mouth.shape === 'o'
+  return (
+    <path
+      data-layer="mouth"
+      data-mouth={mouth.shape}
+      d={mouthPath(mouth)}
+      className={filled ? 'mascot-mouth' : 'mascot-line'}
+      strokeWidth={filled ? 1.6 : 2}
+    />
+  )
+}
+
+/** The marker, tip at (0, 0), barrel along +x. */
+function Marker({ grip }: { grip: Grip }) {
+  const { x, y, angle } = markerPlace(grip)
+  return (
+    <g data-layer="marker" data-grip={grip} transform={`translate(${x} ${y}) rotate(${angle})`}>
+      <circle
+        r={grip === 'draw' ? 8 : 5}
+        className={grip === 'draw' ? 'mascot-glow mascot-glow-pulse' : 'mascot-glow'}
+      />
+      <path d="M0 0 L5.5 -2.8 L5.5 2.8 Z" className="mascot-nib" />
+      <rect x={5.5} y={-3.3} width={3} height={6.6} rx={1} className="mascot-collar" />
+      <rect x={8.5} y={-3.9} width={18} height={7.8} rx={2.2} className="mascot-barrel" />
+    </g>
+  )
+}
+
+/** The marker hand. Always the same hand; only the grip changes. */
+function MarkerArm({ grip }: { grip: Grip }) {
+  const hold = grip === 'hold'
+  return (
+    <g data-layer="arm-marker" data-hand={MARKER_HAND}>
+      <Marker grip={grip} />
+      {/* Drawn over the marker, so the fist wraps the barrel. */}
+      <Limb d={hold ? 'M20 -28 Q16 -27 13 -28' : 'M20 -24 Q15 -19 11 -14.5'} />
+      {hold ? (
+        <Hand x={11.9} y={-28.2} angle={150} flip shape="grip" />
+      ) : (
+        <Hand x={9.8} y={-13} angle={215} flip shape="grip" />
+      )}
+    </g>
+  )
+}
+
+interface ArmShape {
+  /** Shoulder to wrist: a short curve, not a long tube. */
+  d: string
+  hand: [number, number]
+  /** Where the fingers point (deg). */
+  angle: number
+  flip?: boolean
+  shape?: HandShape
+}
+
+const FREE_ARM: Record<Arm, ArmShape> = {
+  down: { d: 'M66 -33 Q70 -30 71 -27', hand: [72, -24], angle: 80, shape: 'paw' },
+  wave: { d: 'M67 -40 Q72 -43 74 -47', hand: [75.5, -50.5], angle: -80 },
+  open: { d: 'M68 -36 Q73 -37 76 -39', hand: [79.5, -40.5], angle: -22 },
+  point: { d: 'M68 -36 Q73 -37 76 -38', hand: [79.5, -38.5], angle: -6, shape: 'point' },
+  thumb: { d: 'M68 -35 Q73 -37 75 -39', hand: [77.5, -40.5], angle: 0, shape: 'thumb' },
+  chin: { d: 'M66 -27 Q64 -20 60 -19', hand: [56.5, -19.5], angle: -125, flip: true },
+  ear: { d: 'M68 -42 Q72 -45 73 -48', hand: [73.5, -51.5], angle: -100 },
+  back: { d: 'M67 -32 Q72 -31 76 -30', hand: [79.5, -29.5], angle: 12, shape: 'paw' },
+}
+
+function FreeArm({ arm }: { arm: Arm }) {
+  const { d, hand, angle, flip, shape } = FREE_ARM[arm]
+  return (
+    <g data-layer="arm-free" data-arm={arm}>
+      <Limb d={d} />
+      <Hand x={hand[0]} y={hand[1]} angle={angle} flip={flip} shape={shape} />
+    </g>
+  )
+}
+
+function EffectLayer({ effect }: { effect: Effect }) {
+  const lines = (ds: string[], cls = 'mascot-ray') =>
+    ds.map((d) => <path key={d} d={d} className={cls} />)
+  const star = (x: number, y: number, s = 1) => (
+    <path
+      key={`${x},${y}`}
+      d={`M${x} ${y - 6 * s} L${x + 1.6 * s} ${y - 1.6 * s} L${x + 6 * s} ${y} L${x + 1.6 * s} ${y + 1.6 * s} L${x} ${y + 6 * s} L${x - 1.6 * s} ${y + 1.6 * s} L${x - 6 * s} ${y} L${x - 1.6 * s} ${y - 1.6 * s} Z`}
+      className="mascot-star"
+    />
+  )
+  let body: ReactNode = null
+  switch (effect) {
+    case 'burst':
+      body = [
+        ...lines(['M10 -72 l-6 -5', 'M8 -58 l-8 -1', 'M14 -84 l-3 -6'], 'mascot-line'),
+        star(80, -78),
+      ]
+      break
+    case 'trail':
+      body = lines(['M6 -30 h-16', 'M8 -44 h-22', 'M12 -58 h-14'])
+      break
+    case 'rays':
+      body = lines(['M86 -54 l6 -5', 'M89 -46 l8 -1', 'M82 -61 l3 -7'])
+      break
+    case 'thought':
+      body = [70, 79, 91].map((cx, i) => (
+        <circle key={cx} cx={cx} cy={-62 - i * 11} r={3 + i * 1.5} className="mascot-dot" />
+      ))
+      break
+    case 'waves':
+      body = lines(['M80 -58 Q85 -50 80 -42', 'M86 -62 Q93 -50 86 -38'], 'mascot-line')
+      break
+    case 'sparkle':
+      body = [...lines(['M30 6 l-3 5', 'M42 8 v6', 'M54 6 l3 5']), star(8, -70), star(82, -74, 0.8)]
+      break
+    case 'bubbles':
+      body = [
+        [84, -72, 2],
+        [90, -60, 1.5],
+        [86, -48, 2.5],
+      ].map(([cx, cy, r]) => <circle key={cy} cx={cx} cy={cy} r={r} className="mascot-dot" />)
+      break
+    case 'none':
+      break
+  }
+  return (
+    <g data-layer="effect" data-effect={effect}>
+      {body}
+    </g>
+  )
+}
+
+const cleanId = (id: string) => id.replace(/[^a-zA-Z0-9_-]/g, '')
 
 export function Scribbly(props: ScribblyProps) {
   const { state, x, y, mouth = 0, scale = 2, below = false, still = false } = props
-  const blink = useBlink(still)
-  const m = mouthPath(state, mouth)
+  const pose = poseOf(state)
+  const blink = useBlink(still || !pose.blinks)
+  const id = cleanId(useId())
+  const landing = useLanding(state)
+  const drawGrip = pose.grip === 'draw'
   return (
     <g
       className="mascot-anchor"
@@ -190,36 +441,40 @@ export function Scribbly(props: ScribblyProps) {
       data-moving={MOVING[state] ?? 'rest'}
       aria-hidden="true"
     >
-      <g className={`mascot mascot-${state}`}>
-        <g transform={below ? `translate(0 ${BELOW_SHIFT})` : undefined}>
-          {/* antenna */}
-          <path d="M44 -63 Q47 -76 56 -74" className="mascot-arm" fill="none" />
-          <circle cx={56} cy={-74} r={4} className="mascot-tip" />
-          {/* body */}
-          <circle cx={BODY.cx} cy={BODY.cy} r={BODY.r} className="mascot-body" />
-          <ellipse cx={40} cy={-14} rx={15} ry={4} className="mascot-belly" />
-          <Eyes state={state} blink={blink} />
-          <Glasses />
-          <path
-            d={m.d}
-            className="mascot-line"
-            fill={m.filled ? 'currentColor' : 'none'}
-            strokeWidth={2.2}
+      <defs>
+        <filter id={`${id}-shadow`} x="-40%" y="-40%" width="180%" height="180%">
+          <feDropShadow
+            dx={0}
+            dy={1.5}
+            stdDeviation={1.8}
+            floodColor="#0b2a33"
+            floodOpacity={0.35}
           />
-          <Extras state={state} />
-        </g>
-        {/* arm holding the pencil; mirrored to point up when the body is below the tip */}
-        <g transform={below ? 'scale(1 -1)' : undefined}>
-          <path
-            d={state === 'pointing' ? 'M17 -26 Q8 -18 6 -10' : 'M17 -26 Q12 -20 13 -15'}
-            className="mascot-arm"
-            fill="none"
-          />
-          <g className="mascot-pencil">
-            <line x1={4} y1={-6} x2={18} y2={-22} className="pencil-wood" />
-            <line x1={0} y1={0} x2={4} y2={-6} className="pencil-lead" />
+        </filter>
+      </defs>
+      <g className={`mascot mascot-${state}`} filter={`url(#${id}-shadow)`}>
+        <g
+          data-layer="figure"
+          data-below={below}
+          transform={below ? `translate(0 ${BELOW_SHIFT})` : undefined}
+        >
+          {/* Squash-and-stretch from the feet, apart from the marker on the pen. */}
+          <g className="mascot-squash" data-land={landing}>
+            <Legs legs={pose.legs} />
+            <Body clipId={`${id}-body`} />
+            <Eyes pose={pose} blink={blink} />
+            <Mouth mouth={mouthShape(pose, mouth)} />
+            <FreeArm arm={pose.arm} />
+            {!drawGrip && <MarkerArm grip="hold" />}
+            <EffectLayer effect={pose.effect} />
           </g>
         </g>
+        {drawGrip && (
+          // Marker tip stays on the pen; mirrored to reach up when the body is below it.
+          <g transform={below ? 'scale(1 -1)' : undefined}>
+            <MarkerArm grip="draw" />
+          </g>
+        )}
       </g>
     </g>
   )
