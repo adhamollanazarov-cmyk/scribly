@@ -2,6 +2,13 @@
 
 Update this file at the end of every task (newest entry on top, 3–8 lines).
 
+## 2026-10-13 — claude — Phase 5 review (`claude/phase5-review`)
+
+**Done:** Reviewed `main` (`4be9dda`) for Electron security, region mapping, screenshot privacy and the global Esc; findings in `docs/reviews/2026-10-13-phase5.md`. No code changed. A temporary Playwright-Electron probe (deleted, not committed) checked navigation, popups, framing, permissions, the `app://` allow-list, Esc lifecycle and `userData` for screenshot bytes. Written on a `claude/` branch at the founder's request, although AGENTS §7 gives reviews to Codex.
+**Checks:** MOCK_AI=1. Tree identical to `claude/mascot`, whose full §6 run passed today. Rerun: web overlay Vitest 57/57, desktop Vitest 13/13, Electron probe 1/1.
+**Found issues:** med — M1: a lesson that finishes on its own keeps the overlay open and Esc global until the user closes it. low — L1 422 echoes the screenshot base64; L2 packaged app honours dev/test env vars, no Electron fuses; L3 screenshot goes to whatever listens on 127.0.0.1:8000; L4 Esc registration failure ignored; L5 page zoom not locked (not verified live); L6 index fallback in capture source matching. No highs.
+**Next:** Claude fixes M1 (+ smoke-test step) and L1 on a `claude/` branch; decide on L2/L3 with the installer work.
+
 ## 2026-10-13 — claude — Merge leftovers, icons, mascot description (`claude/mascot`)
 
 **Done:** Removed the three merge markers in `docs/DECISIONS.md` (every library and Phase 5 entry kept) and the stray `HEAD` / `claude/phase5` lines in this file. An uncommitted working-tree edit had deleted the six Phase 5 DECISIONS rows along with the markers; it was backed up and replaced by this resolution. `desktop/scripts/make_icons.py` now draws Scribbly's head from the new art (round body, pencil tip, eyes with two highlights, cheeks, smile; same colors as `scribbly.css`); the 16 px tray icon drops the small details. `desktop/resources/*.png` regenerated. AGENTS.md §5, `docs/SPEC.md` and `docs/brand/README.md` describe the pencil-tip character.
