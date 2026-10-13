@@ -133,6 +133,9 @@ test('handwriting uses loaded font advances and renders the superscript minus', 
   await page.getByRole('button', { name: "Gauss's law" }).click()
   const label = page.locator('[data-prim="measured"] text')
   await expect(label.locator('tspan[baseline-shift="super"]')).toHaveText('-9')
+  // Pause only once the label is fully drawn: pausing mid-stroke leaves the pen (and the
+  // mascot) part-way along the text, which made this test depend on page-load speed.
+  await expect(page.locator('[data-prim="measured"]')).toHaveAttribute('data-drawn', 'true')
   await page.getByRole('button', { name: /Pause/ }).click()
   await page.evaluate(() => document.fonts.ready)
   const result = await label.evaluate((el) => {
