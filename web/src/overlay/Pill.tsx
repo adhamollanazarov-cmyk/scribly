@@ -9,10 +9,13 @@ interface Props {
   onReplay: () => void
   onSpeed: (speed: number) => void
   onClose: () => void
+  /** Main could not take the global Esc: say how to close instead. */
+  escapeTaken?: boolean
 }
 
-/** The overlay's only controls: pause/resume, replay step, speed, close. */
-export function Pill({ state, onPlay, onPause, onReplay, onSpeed, onClose }: Props) {
+/** The overlay's only controls: pause/resume, replay step, speed, close (+ done at the end). */
+export function Pill(props: Props) {
+  const { state, onPlay, onPause, onReplay, onSpeed, onClose, escapeTaken = false } = props
   const running = state.status === 'running'
   const playing = running && !state.paused
   return (
@@ -55,6 +58,16 @@ export function Pill({ state, onPlay, onPause, onReplay, onSpeed, onClose }: Pro
         <span aria-hidden="true">✕</span>
         <span className="sr-only">{t('overlay.close')}</span>
       </button>
+      {state.status === 'finished' && (
+        <button type="button" className="pill-done" onClick={onClose}>
+          {t('overlay.done')}
+        </button>
+      )}
+      {escapeTaken && (
+        <span className="pill-note" role="note">
+          {t('overlay.escTaken')}
+        </span>
+      )}
     </div>
   )
 }

@@ -8,7 +8,7 @@ import { pickSource } from './capture'
 import { trayMenu } from './menu'
 import { CSP, resolveInside, routeFor } from './protocol'
 import { loadSettings, saveSettings } from './settingsStore'
-import { secureWebPreferences } from './windows'
+import { isZoomKey, secureWebPreferences } from './windows'
 
 const sub = (item: MenuItemConstructorOptions | undefined) =>
   (item?.submenu ?? []) as MenuItemConstructorOptions[]
@@ -148,5 +148,18 @@ describe('window security', () => {
       webviewTag: false,
       devTools: false,
     })
+  })
+
+  it('blocks the keyboard zoom shortcuts, nothing else', () => {
+    const key = (key: string, control = true, type = 'keyDown') => ({
+      type,
+      control,
+      meta: false,
+      key,
+    })
+    for (const k of ['+', '=', '-', '0']) expect(isZoomKey(key(k))).toBe(true)
+    expect(isZoomKey(key('-', false))).toBe(false) // typing a minus
+    expect(isZoomKey(key('c'))).toBe(false) // copy
+    expect(isZoomKey(key('=', true, 'keyUp'))).toBe(false)
   })
 })

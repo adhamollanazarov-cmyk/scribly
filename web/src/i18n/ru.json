@@ -60,5 +60,8 @@
   "tray.login": "Запускать при входе в систему",
   "tray.quit": "Выйти из Scribbly",
   "tray.hotkeyTaken": "Ctrl+Shift+Space занят другой программой. Используйте меню в трее.",
-  "tray.captureFailed": "Не удалось снять экран. Попробуйте ещё раз."
+  "tray.captureFailed": "Не удалось снять экран. Попробуйте ещё раз.",
+  "overlay.done": "Готово",
+  "overlay.goodbye": "Урок окончен! Scribbly уйдёт через несколько секунд.",
+  "overlay.escTaken": "Esc занят другой программой: закройте через ✕"
 }

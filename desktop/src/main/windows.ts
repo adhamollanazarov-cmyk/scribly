@@ -19,6 +19,29 @@ export function secureWebPreferences(preload: string, devTools: boolean): WebPre
 }
 
 /**
+ * Page zoom would make CSS pixels differ from the display's DIPs, so the selected region
+ * would no longer match the capture: no pinch zoom, no Ctrl+wheel zoom, no Ctrl +/-/0.
+ */
+export function lockZoom(win: BrowserWindow): void {
+  const contents = win.webContents
+  void contents.setVisualZoomLevelLimits(1, 1)
+  contents.on('zoom-changed', () => contents.setZoomFactor(1))
+  contents.on('did-finish-load', () => contents.setZoomFactor(1))
+  contents.on('before-input-event', (event, input) => {
+    if (isZoomKey(input)) event.preventDefault()
+  })
+}
+
+/** Ctrl (or Cmd) with +, =, - or 0: Chromium's zoom shortcuts. */
+export function isZoomKey(input: { type: string; control: boolean; meta: boolean; key: string }) {
+  return (
+    input.type === 'keyDown' &&
+    (input.control || input.meta) &&
+    ['+', '=', '-', '0'].includes(input.key)
+  )
+}
+
+/**
  * A transparent, frameless, always-on-top window covering exactly one display. One window
  * per display: a window spanning monitors with different scale factors is mis-sized on
  * Windows, and per-display windows keep CSS pixels equal to that display's DIPs.
@@ -47,6 +70,7 @@ export function createOverlayWindow(
     title: 'Scribbly',
     webPreferences: secureWebPreferences(preload, devTools),
   })
+  lockZoom(win)
   win.setAlwaysOnTop(true, 'screen-saver')
   // Mixed DPI: apply the bounds again once the window lives on its display.
   win.setBounds(display.bounds)

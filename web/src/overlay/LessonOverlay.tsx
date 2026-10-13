@@ -35,6 +35,11 @@ const DEMO_HEADER = 'X-Scribbly-Demo'
 const DOCK_HEIGHT = 210 // demo notice + two EN lines + two second-language lines + pill
 const MASCOT_SCALE = 1.4
 const MASCOT_HEADROOM = 130 // window px above the marker tip the body needs
+/**
+ * Once the lesson has ended by itself (or failed), Scribbly waves goodbye and leaves after
+ * this long without pointer movement; closing the window also releases the global Esc.
+ */
+export const LINGER_MS = 6000
 
 const TIMED: Partial<Record<Motion, [number, 'arrived' | 'gone']>> = {
   appear: [APPEAR_MS, 'arrived'],
@@ -75,6 +80,35 @@ function isPointing(scene: BoardScene): boolean {
   )
 }
 
+/** Parts of the overlay the student looks at; the rest of the window is their own screen. */
+const LESSON_PARTS = '.overlay-board, .overlay-dock, [data-interactive]'
+
+/**
+ * Calls `leave` after `LINGER_MS` while `over`, restarting whenever the pointer moves over
+ * the lesson. Electron forwards every mouse move on the display to this full-screen window,
+ * so moves elsewhere (the student back at work in another app) must not keep it open.
+ */
+function useLeaveWhenOver(over: boolean, leave: () => void) {
+  useEffect(() => {
+    if (!over) return
+    let timer = setTimeout(leave, LINGER_MS)
+    let last = ''
+    const onMove = (e: MouseEvent) => {
+      const at = `${e.screenX},${e.screenY}`
+      const onLesson = e.target instanceof Element && e.target.closest(LESSON_PARTS) !== null
+      if (at === last || !onLesson) return // re-sent moves and moves elsewhere
+      last = at
+      clearTimeout(timer)
+      timer = setTimeout(leave, LINGER_MS)
+    }
+    document.addEventListener('mousemove', onMove)
+    return () => {
+      clearTimeout(timer)
+      document.removeEventListener('mousemove', onMove)
+    }
+  }, [over, leave])
+}
+
 /** Scribbly's movements: pop in from a corner, fly to the lesson, act, leave. */
 function useMascotMotion(scene: BoardScene, placement: Rect, size: Size, dismissed: boolean) {
   const [motion, dispatch] = useReducer(nextMotion, HIDDEN)
@@ -107,6 +141,8 @@ export function LessonOverlay(props: Props) {
   const scene = useBoardScene(state)
   const motion = useMascotMotion(scene, placement, size, dismissed)
   useClickThrough(bridge)
+  const over = state.status === 'finished' || state.status === 'error'
+  useLeaveWhenOver(over && !dismissed, onDismiss)
 
   useEffect(() => {
     const controller = new AbortController()
@@ -195,6 +231,12 @@ export function LessonOverlay(props: Props) {
             </p>
           )}
           <Subtitles state={state} settings={{ english: true, second }} />
+          {state.status === 'finished' && (
+            <p className="overlay-goodbye" role="status">
+              {t('overlay.goodbye')}
+              {second !== 'off' && <span lang={second}> · {t('overlay.goodbye', second)}</span>}
+            </p>
+          )}
         </div>
         <Pill
           state={state}
@@ -203,6 +245,7 @@ export function LessonOverlay(props: Props) {
           onReplay={() => player.replayStep()}
           onSpeed={(speed) => player.setSpeed(speed)}
           onClose={onDismiss}
+          escapeTaken={lesson.escapeTaken}
         />
       </div>
       <svg className="overlay-mascot" aria-hidden="true">

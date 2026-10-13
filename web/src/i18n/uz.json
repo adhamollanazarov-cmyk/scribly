@@ -60,5 +60,8 @@
   "tray.login": "Windows bilan birga ishga tushirish",
   "tray.quit": "Scribblyni yopish",
   "tray.hotkeyTaken": "Ctrl+Shift+Space boshqa dastur tomonidan band. Tray menyusidan foydalaning.",
-  "tray.captureFailed": "Ekranni olish imkoni bo'lmadi. Qaytadan urinib ko'ring."
+  "tray.captureFailed": "Ekranni olish imkoni bo'lmadi. Qaytadan urinib ko'ring.",
+  "overlay.done": "Tayyor",
+  "overlay.goodbye": "Dars tugadi! Scribbly bir necha soniyadan keyin ketadi.",
+  "overlay.escTaken": "Esc boshqa dastur tomonidan band: ✕ bilan yoping"
 }

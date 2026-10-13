@@ -35,6 +35,8 @@ export class OverlayController {
   private selectors = new Map<number, Shown>() // by webContents id
   private lesson: (Shown & { id: number }) | null = null
   private dismissTimer: ReturnType<typeof setTimeout> | null = null
+  /** False when another app holds Esc; the lesson then says to close with ✕. */
+  private escapeOk = true
   private deps: OverlayDeps
 
   constructor(deps: OverlayDeps) {
@@ -93,7 +95,13 @@ export class OverlayController {
     this.selectors.clear()
     this.lesson = { ...shown, id: sender.id }
     win.setIgnoreMouseEvents(true, { forward: true })
-    send(win, { mode: 'lesson', region, imagePngBase64: image, settings: this.deps.settings() })
+    send(win, {
+      mode: 'lesson',
+      region,
+      imagePngBase64: image,
+      settings: this.deps.settings(),
+      escapeTaken: !this.escapeOk,
+    })
     win.setOpacity(1)
   }
 
@@ -133,8 +141,9 @@ export class OverlayController {
 
   // Esc is global only while an overlay is open, so other apps keep it the rest of the time.
   private registerEscape(): void {
-    if (!globalShortcut.isRegistered('Escape'))
-      globalShortcut.register('Escape', () => this.escape())
+    if (globalShortcut.isRegistered('Escape')) return
+    this.escapeOk = globalShortcut.register('Escape', () => this.escape())
+    if (!this.escapeOk) console.warn('Esc is held by another app; the lesson closes with ✕ only.')
   }
 
   private unregisterEscape(): void {

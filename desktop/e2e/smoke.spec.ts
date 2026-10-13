@@ -16,8 +16,20 @@ interface Received {
   voice: unknown
 }
 
-function stubServer(received: Received[]): Promise<{ server: Server; url: string }> {
-  const events = JSON.parse(readFileSync(STREAM, 'utf8')) as { event: string; data: unknown }[]
+type Event = { event: string; data: unknown }
+
+/** The Gauss stream cut to its first step without a checkpoint: a lesson that ends by itself. */
+function firstStepOnly(events: Event[]): Event[] {
+  const first = events.findIndex((e) => e.event === 'step')
+  const step = { ...events[first], data: { ...(events[first].data as object), checkpoint: null } }
+  return [...events.slice(0, first), step, events.at(-1)!]
+}
+
+function stubServer(
+  received: Received[],
+  cut: (events: Event[]) => Event[] = (e) => e,
+): Promise<{ server: Server; url: string }> {
+  const events = cut(JSON.parse(readFileSync(STREAM, 'utf8')) as Event[])
   const body = events
     .map(({ event, data }) => {
       const silent = event === 'step' ? { ...(data as object), audio_url: null } : data
@@ -52,6 +64,9 @@ type Hooks = {
   hotkeyRegistered: () => boolean
   overlayActive: () => boolean
 }
+const escapeRegistered = (app: ElectronApplication) =>
+  app.evaluate(({ globalShortcut }) => globalShortcut.isRegistered('Escape'))
+
 const hooks = (app: ElectronApplication) => ({
   call: <K extends keyof Hooks>(name: K) =>
     app.evaluate(
@@ -89,6 +104,7 @@ test('tray start → select a region → demo lesson over it → Esc closes', as
     await test.call('startSelection')
     const page = await first
     await expect(page.getByTestId('selector')).toBeVisible()
+    expect(await escapeRegistered(app)).toBe(true) // only while an overlay is open
 
     // Node never reaches the page (nodeIntegration off, context isolation on).
     const leaked = await page.evaluate(() => {
@@ -145,6 +161,63 @@ test('tray start → select a region → demo lesson over it → Esc closes', as
     await closed
     expect(await test.call('overlayActive')).toBe(false)
     expect(await test.call('hasTray')).toBe(true)
+    expect(await escapeRegistered(app)).toBe(false) // other apps get Esc back
+  } finally {
+    await app.close()
+    server.close()
+  }
+})
+
+test('a lesson that ends by itself says goodbye, closes and releases Esc; zoom is locked', async () => {
+  const received: Received[] = []
+  const { server, url } = await stubServer(received, firstStepOnly)
+  const app = await electron.launch({
+    args: [ROOT],
+    env: {
+      ...process.env,
+      SCRIBBLY_E2E: '1',
+      SCRIBBLY_SERVER: url,
+      SCRIBBLY_USER_DATA: mkdtempSync(join(tmpdir(), 'scribbly-e2e-')),
+    },
+  })
+  try {
+    const test = hooks(app)
+    await expect
+      .poll(() => app.evaluate(() => '__scribblyTest' in globalThis), { timeout: 15_000 })
+      .toBe(true)
+    const first = app.waitForEvent('window')
+    await test.call('startSelection')
+    const page = await first
+    await expect(page.getByTestId('selector')).toBeVisible()
+
+    // Ctrl+wheel and Ctrl+= must not zoom: CSS px have to stay equal to the display's DIPs.
+    const width = await page.evaluate(() => window.innerWidth)
+    await page.mouse.move(300, 300)
+    await page.keyboard.down('Control')
+    await page.mouse.wheel(0, -600)
+    await page.keyboard.press('Equal')
+    await page.keyboard.up('Control')
+    await page.waitForTimeout(300)
+    expect(await page.evaluate(() => window.innerWidth)).toBe(width)
+    expect(
+      await app.evaluate(({ BrowserWindow }) =>
+        BrowserWindow.getAllWindows()[0].webContents.getZoomFactor(),
+      ),
+    ).toBe(1)
+
+    await page.mouse.move(120, 100)
+    await page.mouse.down()
+    await page.mouse.move(520, 360, { steps: 5 })
+    await page.mouse.up()
+    await expect.poll(() => received.length).toBe(1)
+
+    // The single step plays, then Scribbly says goodbye and leaves without any input.
+    await expect(page.getByRole('button', { name: 'Done' })).toBeVisible({ timeout: 30_000 })
+    await expect(page.getByRole('status')).toContainText("That's the lesson!")
+    expect(await escapeRegistered(app)).toBe(true)
+    await page.waitForEvent('close', { timeout: 15_000 })
+    expect(await test.call('overlayActive')).toBe(false)
+    expect(await escapeRegistered(app)).toBe(false)
   } finally {
     await app.close()
     server.close()

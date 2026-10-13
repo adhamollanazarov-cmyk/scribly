@@ -113,6 +113,34 @@ def test_rejects_bad_requests(client: TestClient, payload: dict[str, Any]) -> No
     assert client.post("/explain-region", json=payload).status_code == 422
 
 
+@pytest.mark.parametrize(
+    "payload",
+    [
+        {"image_png_base64": base64.b64encode(b"GIF89a-secret-screen" * 40).decode()},
+        body(png(MAX_IMAGE_SIDE + 1, 2)),
+        body(extra_field=1),
+        body(voice="en-US-SomeoneElse"),
+        {"image_png_base64": "c2VjcmV0LXNjcmVlbg" * 200 + "!"},  # not valid base64
+    ],
+)
+def test_errors_never_echo_the_screenshot(client: TestClient, payload: dict[str, Any]) -> None:
+    response = client.post("/explain-region", json=payload)
+    assert response.status_code == 422
+    sent = payload["image_png_base64"]
+    assert sent[:40] not in response.text
+    assert all(set(e) == {"type", "loc", "msg"} for e in response.json()["detail"])
+    assert response.json()["detail"][0]["loc"][0] == "body"
+
+
+def test_malformed_json_does_not_echo_the_body(client: TestClient) -> None:
+    raw = '{"image_png_base64": "' + "c2VjcmV0LXNjcmVlbg" * 200 + '"'  # missing brace
+    response = client.post(
+        "/explain-region", content=raw, headers={"Content-Type": "application/json"}
+    )
+    assert response.status_code == 422
+    assert "c2VjcmV0LXNjcmVlbg" not in response.text
+
+
 def test_rejects_an_oversized_payload_before_decoding(client: TestClient) -> None:
     huge = "A" * (9 * 1024 * 1024 * 4 // 3)
     assert client.post("/explain-region", json={"image_png_base64": huge}).status_code == 422

@@ -11,6 +11,8 @@ export interface LessonMode {
   /** The captured region (PNG). Kept in memory only, sent once to the server. */
   imagePngBase64: string
   settings: OverlaySettings
+  /** True when another app holds Esc, so Esc cannot close the lesson. */
+  escapeTaken?: boolean
 }
 
 export type OverlayMode = { mode: 'select' } | LessonMode | { mode: 'dismiss' }

@@ -137,6 +137,30 @@ body.overlay-page {
 .pill-speed {
   font-variant-numeric: tabular-nums;
 }
+.pill .pill-done {
+  background: #1e8f9b;
+  font-weight: 600;
+}
+.pill .pill-done:hover,
+.pill .pill-done:focus-visible {
+  background: #27a5b2;
+}
+.pill-note {
+  align-self: center;
+  padding: 0 10px;
+  font-size: 13px;
+  color: #ffd23f;
+}
+.overlay-goodbye {
+  margin: 6px auto 0;
+  width: fit-content;
+  padding: 3px 12px;
+  border-radius: 999px;
+  background: rgb(20 18 40 / 0.82);
+  color: #fff;
+  font-size: 14px;
+  text-align: center;
+}
 
 /* Scribbly flies over the whole display, so it lives in its own full-window layer. */
 .overlay-mascot {
