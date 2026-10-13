@@ -1,10 +1,15 @@
-import { useState } from 'react'
+import { memo, useState } from 'react'
 import { t } from '../i18n'
 import { SAMPLES } from '../lesson/samples'
 import { LIBRARY_TOPICS } from '../overlay/settings'
 import type { LessonRequest } from '../lesson/types'
 
-export function LessonForm({ onSubmit }: { onSubmit: (request: LessonRequest) => void }) {
+/** The request form. Memoized: the player re-renders the app on every animation frame. */
+export const LessonForm = memo(function LessonForm({
+  onSubmit,
+}: {
+  onSubmit: (request: LessonRequest) => void
+}) {
   const [type, setType] = useState<LessonRequest['type']>('topic')
   const [text, setText] = useState('')
 
@@ -82,4 +87,4 @@ export function LessonForm({ onSubmit }: { onSubmit: (request: LessonRequest) =>
       </div>
     </form>
   )
-}
+})
