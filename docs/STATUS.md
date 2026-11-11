@@ -2,6 +2,13 @@
 
 Update this file at the end of every task (newest entry on top, 3–8 lines).
 
+## 2026-11-11 — codex — GitHub publication (`codex/github-push`)
+
+**Done:** Connected `origin` to `https://github.com/adhamollanazarov-cmyk/scribly.git`; prepared the current project and its existing history for the founder-requested initial push to remote `main`. The destination was empty; push dry-run passed with existing Git credentials.
+**Checks:** Scanned all 603 reachable history blobs for common credential patterns and private app-data paths; none found. `.env`, screenshots and audio remain ignored. MOCK_AI=1: web production build, 226 Vitest tests, ESLint/TypeScript and Prettier passed; `git diff --check` passed. Server, desktop and browser E2E were not rerun; application code is unchanged.
+**Next:** Choose a deployment target to host the running frontend and FastAPI server; GitHub publication alone does not host the app.
+**Found issues:** PowerShell blocks `npm.ps1` on this PC; `npm.cmd` runs the checks successfully without changing execution policy.
+
 ## 2026-10-13 — claude — Phase 5 fixes + library wired in (`claude/wire-library`)
 
 **Done:** Phase 5 review M1 (a finished lesson shows "Done" + goodbye, Scribbly leaves after 6 s without pointer movement over the lesson, Esc released), L1 (no 422 echoes a submitted value), L4 (Esc taken → pill note + log), L5 (zoom locked). Library review (`claude/library-review`) H1 + M1–M5 + L3 + L5: strict lookup (phrases/titles, number+unit → None, negative keywords, the review's 14 wrong-physics queries as tests); every lesson has a misconception/changed-situation choice question (3–4 choices, rotating answer) and a "predict, then reveal" number question; Uzbek checkpoint questions; JSON is the source (author script lost); empty RU → null + "no subtitles" notice. Mock `/explain-region` serves `find_library_lesson(topic)` (tray Settings → Demo topics), mock `/lessons` serves a library topic when no fixture matches (web "Library topics"); list generated into `shared/library_topics.json`. Fixed the flaky "handwriting uses loaded font advances" E2E (it paused before the label finished drawing). `desktop/release/` was already ignored.
